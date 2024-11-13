@@ -11,5 +11,20 @@ config_version=5
 [application]
 
 config/name="Scrollmapper"
+run/main_scene="res://test.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GlobalDB="*res://scripts/global/global_db.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/cmd/plugin.cfg", "res://addons/godot-sqlite/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://addons/": "yellow"
+}
