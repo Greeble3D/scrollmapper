@@ -2,9 +2,18 @@ extends Node
 
 class_name BaseModel
 
+const CMD_STYLE_APP = "res://addons/cmd/interface/styles/cmd_styles/cmd_style_app.tres"
+const CMD_STYLE_EDITOR = "res://addons/cmd/interface/styles/cmd_styles/cmd_style_editor.tres"
+
+var cmd_style: CmdStyle = null
+
 var db: SQLite = null
 
-func _init() -> void:	
+func _init() -> void:
+	if not Engine.is_editor_hint():
+		cmd_style = load(CMD_STYLE_APP)
+	else:
+		cmd_style = load(CMD_STYLE_EDITOR)
 	if not Engine.is_editor_hint():
 		db = GlobalDB.get_db()
 	else:

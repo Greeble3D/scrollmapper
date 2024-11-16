@@ -5,6 +5,7 @@ class_name Command
 
 static var instance: Command = null
 static var commands: Dictionary = {}
+static var command_history: Array[String] = []
 
 func initiate():
 	if instance == null:
@@ -31,6 +32,7 @@ func load_commands():
 			dir.list_dir_end()
 
 static func execute(command_string:String = ""):
+	log_command(command_string)
 	var command_name = ""
 	var command_parts:PackedStringArray = command_string.split(" ")
 	
@@ -42,3 +44,13 @@ static func execute(command_string:String = ""):
 		command.execute(command_string)
 	else:
 		print("Command not found: ", command_name)
+
+static func print_to_console(text: String):
+	CmdInterface.print_text(text)
+
+static func log_command(command_string: String):
+	command_history.append(command_string)
+	print("Logged command: ", command_string)
+
+static func get_command_history() -> Array:
+	return command_history

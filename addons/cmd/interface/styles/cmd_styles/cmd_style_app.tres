@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CmdStyle" load_steps=2 format=3 uid="uid://cyg6ps7wvikxp"]
+
+[ext_resource type="Script" path="res://addons/cmd/interface/styles/cmd_styles/cmd_style.gd" id="1_ueovn"]
+
+[resource]
+script = ExtResource("1_ueovn")
+background_color = Color(0.82, 0.71, 0.55, 1)
+main_text_color = Color(0.36, 0.25, 0.2, 1)
+secondary_text_color = Color(0.5, 0.4, 0.35, 1)
+tertiary_text_color = Color(0.6, 0.5, 0.45, 1)
+quaternary_text_color = Color(0.5, 0.5, 0.5, 1)
+quinary_text_color = Color(0.4, 0.4, 0.4, 1)
+text_area_color = Color(0.819608, 0.709804, 0.54902, 1)
+cmd_input_color = null

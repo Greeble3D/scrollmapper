@@ -2,6 +2,7 @@ extends BaseModel
 
 class_name CrossReferenceModel
 
+var id: int  # Added id variable
 var from_book: String
 var from_chapter: int
 var from_verse: int
@@ -58,3 +59,18 @@ func get_cross_references_with_verses(book: String, chapter: int, verse: int) ->
 		cr.votes DESC;
 	""" % [translation, translation]
 	return get_results(query, [book, chapter, verse])
+
+# New method to get a specific cross-reference
+func get_cross_reference(id: int) -> Dictionary:
+	var query = "SELECT * FROM cross_reference WHERE id = ?;"
+	var result = get_results(query, [id])
+	if result.size() > 0:
+		return result[0]
+	return {}
+
+func delete():
+	if id != null:
+		var query = "DELETE FROM cross_reference WHERE id = ?;"
+		execute_query(query, [id])
+	else:
+		print("Cross-reference ID is not set, cannot delete the entry.")
