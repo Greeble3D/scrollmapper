@@ -26,11 +26,9 @@ func execute(command_string: String):
 		verse.text = verse_data["text"]
 		if verse.id > 0:
 			print("%s %d:%d - %s" % [book.book_name, verse.chapter, verse.verse, verse.text])
-			var formatted_verse = verse.format_verse(book.book_name, verse.chapter, verse.verse, verse.text)	
-			print(formatted_verse)
+			var formatted_verse = FormatText.format_verse(book.book_name, verse.chapter, verse.verse, verse.text)	
 			Command.print_to_console(formatted_verse)
 		else:
 			print("Verse not found.")
-		
 	else:
 		print("Book not found.")

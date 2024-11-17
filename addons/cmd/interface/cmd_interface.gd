@@ -57,11 +57,12 @@ func submit(command_text: String) -> void:
 	
 # Prints text to the text area.
 # @param text: The text to be printed.
-func print_text(text: String) -> void:
-
+func print_text(text: String) -> void:	
 	var text_area: RichTextLabel = text_area
-
+	await get_tree().create_timer(0.2).timeout
 	text_area.append_text(text + "\n")
+	
+	
 
 # Handles key press events to cycle through command history.
 func _input(event: InputEvent) -> void:

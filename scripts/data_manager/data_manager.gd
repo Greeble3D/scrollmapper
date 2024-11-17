@@ -3,10 +3,10 @@ extends Resource
 class_name DataManager
 
 # The source list is a JSON file that contains a list of books and their metadata.
-@export var source_list: String = "https://raw.githubusercontent.com/scrollmapper/book_list/refs/heads/main/book_list.json"
+const source_list: String = "https://raw.githubusercontent.com/scrollmapper/book_list/refs/heads/main/book_list.json"
 
 # Main scrollmapper data directory
-@export var scrollmapper_data_dir:String = "scrollmapper_data"
+const scrollmapper_data_dir:String = "scrollmapper_data"
 
 # Create initial directories
 func create_initial_directories():
@@ -39,3 +39,13 @@ func get_scrollmapper_db_dir() -> String:
 	var data_dir:String = get_scrollmapper_data_dir()
 	data_dir = data_dir.path_join("database")
 	return data_dir
+
+func get_source_list_path() -> String:
+	var data_dir:String = get_scrollmapper_sources_dir()
+	var book_list = data_dir.path_join("book_list.json")
+	return book_list
+
+func get_book_path(book_name:String) -> String:
+	var data_dir:String = get_scrollmapper_sources_dir()
+	var book_path = data_dir.path_join(book_name + ".json")
+	return book_path

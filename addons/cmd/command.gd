@@ -7,7 +7,6 @@ static var instance: Command = null
 static var commands: Dictionary = {}
 static var command_history: Array[String] = []
 
-# This runs as a failsafe. 
 func _ready() -> void:
 	if instance == null:
 		instance = self
