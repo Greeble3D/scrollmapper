@@ -11,12 +11,13 @@ config_version=5
 [application]
 
 config/name="Scrollmapper"
-run/main_scene="res://test.tscn"
+run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
+Load="*res://scripts/global/load.gd"
 GlobalDB="*res://scripts/global/global_db.gd"
 Globals="*res://scripts/global/globals.gd"
 
@@ -27,5 +28,8 @@ enabled=PackedStringArray("res://addons/cmd/plugin.cfg", "res://addons/godot-sql
 [file_customization]
 
 folder_colors={
-"res://addons/": "yellow"
+"res://addons/": "yellow",
+"res://images/": "blue",
+"res://scenes/": "red",
+"res://scripts/": "green"
 }

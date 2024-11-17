@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4bxs4b0db76y"]
+
+[ext_resource type="Script" path="res://scripts/data_manager/resource_downloader.gd" id="1_b5hwj"]
+[ext_resource type="Resource" uid="uid://b6isvn03o806o" path="res://scripts/data_manager/data_manager.tres" id="2_fwx4l"]
+
+[node name="ResourceDownloader" type="Node"]
+script = ExtResource("1_b5hwj")
+data_manager = ExtResource("2_fwx4l")

@@ -1,4 +1,5 @@
 @tool
+@icon("res://images/icons/editor/Terminal.svg")
 extends Control
 
 class_name CmdInterface
@@ -25,14 +26,18 @@ var ccs:CmdStyle
 func _ready() -> void:
 	if instance == null:
 		instance = self
-		
+	else:
+		return
+
 	text_area.size_flags_vertical = Control.SIZE_EXPAND_FILL  # Expand to take all available vertical space
 	text_area.bbcode_enabled = true  # Ensure BBCode is enabled
 
 	cmd_input.size_flags_vertical = Control.SIZE_SHRINK_CENTER  # Maintain its size at the bottom
 	cmd_input.text_submitted.connect(submit)
+	
 	ccs = cmd_style_app
 	if Engine.is_editor_hint():
+		
 		ccs = cmd_style_editor
 
 
@@ -52,10 +57,9 @@ func submit(command_text: String) -> void:
 	
 # Prints text to the text area.
 # @param text: The text to be printed.
-static func print_text(text: String) -> void:
-	if instance.ccs == null:
-		instance.ccs = instance.cmd_style_editor
-	var text_area: RichTextLabel = instance.text_area
+func print_text(text: String) -> void:
+
+	var text_area: RichTextLabel = text_area
 
 	text_area.append_text(text + "\n")
 

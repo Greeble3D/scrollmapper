@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcxpkinhle2o6"]
+
+[ext_resource type="PackedScene" uid="uid://c4bxs4b0db76y" path="res://scripts/data_manager/resource_downloader.tscn" id="1_bealw"]
+[ext_resource type="PackedScene" uid="uid://cq70ffau8dyki" path="res://addons/cmd/interface/cmd_interface.tscn" id="2_1xlkh"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Systems" type="Node3D" parent="."]
+
+[node name="ResourceDownloader" parent="Systems" instance=ExtResource("1_bealw")]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Cmd" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CmdInterface" parent="UI/Cmd" instance=ExtResource("2_1xlkh")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DataManager" load_steps=2 format=3 uid="uid://b6isvn03o806o"]
+
+[ext_resource type="Script" path="res://scripts/data_manager/data_manager.gd" id="1_5q2q1"]
+
+[resource]
+script = ExtResource("1_5q2q1")
+source_list = "https://raw.githubusercontent.com/scrollmapper/book_list/refs/heads/main/book_list.json"
+scrollmapper_data_dir = "scrollmapper_data"

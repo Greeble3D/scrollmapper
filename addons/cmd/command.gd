@@ -7,10 +7,16 @@ static var instance: Command = null
 static var commands: Dictionary = {}
 static var command_history: Array[String] = []
 
-func initiate():
+# This runs as a failsafe. 
+func _ready() -> void:
 	if instance == null:
 		instance = self
 
+# This runs at runtime via res://scripts/global/load.gd
+func initiate()->void:
+	if instance == null:
+		instance = self
+		
 func load_commands():
 	commands.clear()
 
@@ -46,7 +52,7 @@ static func execute(command_string:String = ""):
 		print("Command not found: ", command_name)
 
 static func print_to_console(text: String):
-	CmdInterface.print_text(text)
+	CmdInterface.instance.print_text(text)
 
 static func log_command(command_string: String):
 	command_history.append(command_string)

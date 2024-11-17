@@ -11,7 +11,9 @@ var cmd_dock: VBoxContainer
 
 func _enter_tree() -> void:
 	# Initialization of the plugin goes here.
-	CMDEditor.db.path = "res://database.sqlite"
+	var data_manager = DataManager.new()
+	data_manager.create_initial_directories()
+	CMDEditor.db.path = data_manager.get_scrollmapper_db_dir().path_join("database.sqlite")
 	CMDEditor.db.open_db()
 	
 	cmd_dock = VBoxContainer.new()
