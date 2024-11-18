@@ -1,30 +1,51 @@
-[gd_scene load_steps=5 format=3 uid="uid://cq70ffau8dyki"]
+[gd_scene load_steps=6 format=3 uid="uid://bqqnuwbchtcqm"]
 
 [ext_resource type="Script" path="res://addons/cmd/interface/cmd_interface.gd" id="1_21qk7"]
 [ext_resource type="Resource" uid="uid://fvkj56svylua" path="res://addons/cmd/interface/styles/cmd_styles/cmd_style_editor.tres" id="2_cyfg3"]
 [ext_resource type="Resource" uid="uid://cyg6ps7wvikxp" path="res://addons/cmd/interface/styles/cmd_styles/cmd_style_app.tres" id="3_lwudu"]
 
-[sub_resource type="Theme" id="Theme_8q5lq"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpfn3"]
 
-[node name="Interface" type="VBoxContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
-size_flags_horizontal = 3
+[sub_resource type="Theme" id="Theme_8iw7o"]
+
+[node name="CmdInterface" type="Panel" node_paths=PackedStringArray("controls_container", "text_area", "cmd_input")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
-theme = SubResource("Theme_8q5lq")
+theme_override_styles/panel = SubResource("StyleBoxFlat_xpfn3")
 script = ExtResource("1_21qk7")
 cmd_style_editor = ExtResource("2_cyfg3")
 cmd_style_app = ExtResource("3_lwudu")
+controls_container = NodePath("MarginContainer/ControlsContainer")
+text_area = NodePath("MarginContainer/ControlsContainer/TextArea")
+cmd_input = NodePath("MarginContainer/ControlsContainer/CmdInput")
 
-[node name="TextArea" type="RichTextLabel" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ControlsContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+theme = SubResource("Theme_8iw7o")
+
+[node name="TextArea" type="RichTextLabel" parent="MarginContainer/ControlsContainer"]
+layout_mode = 2
 focus_mode = 2
 bbcode_enabled = true
 scroll_following = true
-context_menu_enabled = true
+threaded = true
 selection_enabled = true
 
-[node name="CmdInput" type="LineEdit" parent="."]
+[node name="CmdInput" type="LineEdit" parent="MarginContainer/ControlsContainer"]
 layout_mode = 2
-size_flags_vertical = 4

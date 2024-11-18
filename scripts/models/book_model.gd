@@ -69,8 +69,17 @@ func find_book_by_name(_book_name: String):
 		self.book_name = partial_result[0]["book_name"]
 		self.translation = translation  # Assuming translation is already set
 
+
 func delete():
 	if id != null:
+		# Delete all verses connected with this book
+		var verse_model = VerseModel.new(translation)
+		var verses = verse_model.get_verses(book_name)
+		for verse in verses:
+			verse_model.id = verse["id"]
+			verse_model.delete()
+		
+		# Delete the book
 		var query = "DELETE FROM %s_books WHERE id = ?;" % translation
 		execute_query(query, [id])
 	else:

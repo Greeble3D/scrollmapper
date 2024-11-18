@@ -16,8 +16,9 @@ static var instance:CmdInterface = null
 @export var cmd_style_editor : CmdStyle
 @export var cmd_style_app : CmdStyle
 
-@onready var text_area: RichTextLabel = $TextArea
-@onready var cmd_input: LineEdit = $CmdInput
+@export var controls_container: VBoxContainer
+@export var text_area: RichTextLabel 
+@export var cmd_input: LineEdit 
 
 # The current command style (abbreviated for easy coding use)
 var ccs:CmdStyle 
@@ -35,21 +36,31 @@ func _ready() -> void:
 	if Command.cmd_instance_reference == null:
 		Command.cmd_instance_reference = self
 	
+	controls_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
 	text_area.size_flags_vertical = Control.SIZE_EXPAND_FILL  # Expand to take all available vertical space
 	text_area.bbcode_enabled = true  # Ensure BBCode is enabled
 
 	cmd_input.size_flags_vertical = Control.SIZE_SHRINK_CENTER  # Maintain its size at the bottom
 	cmd_input.text_submitted.connect(submit)
 	
-	ccs = cmd_style_app
-	if Engine.is_editor_hint():
-		
-		ccs = cmd_style_editor
-
+	# Apply the dynamic styles for editor or app mode.
+	apply_mode_styles()
+	
 
 # Called when the node is removed from the scene.
 func _exit_tree() -> void:
 	instance = null
+
+# Applies the appropriate command style to the interface based on 
+# the current mode (app or editor).
+func apply_mode_styles():
+	ccs = cmd_style_app
+	if Engine.is_editor_hint():		
+		ccs = cmd_style_editor
+	var style_box: StyleBoxFlat = get_theme_stylebox("panel").duplicate()
+	style_box.bg_color = ccs.background_color
+	add_theme_stylebox_override("panel", style_box)
 
 # Handles the submission of a command.
 # @param command_text: The text of the command to be executed.
@@ -92,3 +103,6 @@ func cycle_command_history(direction: int) -> void:
 		history_index = 0
 
 	cmd_input.text = Command.command_history[history_index]
+
+func get_cmd_style():
+	return ccs

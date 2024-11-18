@@ -15,7 +15,19 @@ func _init(book:String) -> void:
 	else:
 		self.translation = source_reference.book
 
+func check_and_delete_existing_book():
+	var book_model = BookModel.new(translation)
+	book_model.find_book_by_name(book)
+	if book_model.id != 0:
+		var verse_model = VerseModel.new(translation)
+		var verses = verse_model.get_verses(book)
+		for verse in verses:
+			verse_model.id = verse["id"]
+			verse_model.delete()
+		book_model.delete()
+
 func install():
+	check_and_delete_existing_book()
 	var data_manager:DataManager = DataManager.new()
 	var book_path = data_manager.get_book_path(book)
 	var book_file = FileAccess.open(book_path, FileAccess.READ)
@@ -48,3 +60,4 @@ func install():
 				verse_model.verse = verse_data["verse"]
 				verse_model.text = verse_data["text"]
 				verse_model.save()
+	Command.instance.print_to_console("Book %s installed."%book)
