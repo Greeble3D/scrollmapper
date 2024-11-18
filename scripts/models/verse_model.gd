@@ -7,10 +7,9 @@ var id: int = 0
 var book_id: int = 0
 var chapter: int = 0
 var verse: int = 0
-var text: String =""
+var text: String = ""
 var translation: String = ""
 #endregion
-
 
 func _init(_translation: String):
 	super._init()
@@ -60,6 +59,54 @@ func get_verse(book_id: int, chapter: int, verse: int) -> Dictionary:
 	else:
 		return {}
 
+# Get verses by book, chapter, or specific verse
+func get_verses(book_name: String, chapter: int = -1, verse: int = -1) -> Array:
+	var book_model = BookModel.new(translation)
+	book_model.find_book_by_name(book_name)
+	var book_id = book_model.id
+
+	var query = """
+	SELECT v.*, b.book_name FROM %s_verses v
+	JOIN %s_books b ON v.book_id = b.id
+	WHERE v.book_id = ?
+	""" % [translation, translation]
+	var params = [book_id]
+
+	if chapter != -1:
+		query += " AND v.chapter = ?"
+		params.append(chapter)
+	if verse != -1:
+		query += " AND v.verse = ?"
+		params.append(verse)
+
+	query += " ORDER BY v.chapter, v.verse"
+
+	return get_results(query, params)
+
+# Get verses by range
+func get_verses_by_range(start_book: String, start_chapter: int, start_verse: int, end_book: String, end_chapter: int, end_verse: int) -> Array:
+	var start_book_model = BookModel.new(translation)
+	start_book_model.find_book_by_name(start_book)
+	var start_book_id = start_book_model.id
+
+	var end_book_model = BookModel.new(translation)
+	end_book_model.find_book_by_name(end_book)
+	var end_book_id = end_book_model.id
+
+	var query = """
+	SELECT v.*, b.book_name FROM %s_verses v
+	JOIN %s_books b ON v.book_id = b.id
+	WHERE (v.book_id > ? OR (v.book_id = ? AND (v.chapter > ? OR (v.chapter = ? AND v.verse >= ?))))
+	AND (v.book_id < ? OR (v.book_id = ? AND (v.chapter < ? OR (v.chapter = ? AND v.verse <= ?))))
+	ORDER BY v.book_id, v.chapter, v.verse
+	""" % [translation, translation]
+
+	var params = [
+		start_book_id, start_book_id, start_chapter, start_chapter, start_verse,
+		end_book_id, end_book_id, end_chapter, end_chapter, end_verse
+	]
+
+	return get_results(query, params)
 
 # New delete function
 func delete():

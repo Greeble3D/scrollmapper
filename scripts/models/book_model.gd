@@ -46,16 +46,28 @@ func get_book_by_name(_book_name: String):
 		book_name = book_result[0]["book_name"]
 		translation = translation  # Assuming translation is already set
 
+# New method to get a book by id
+func get_book_by_id(_id: int):
+	var query = "SELECT * FROM %s_books WHERE id = ?;" % translation
+	var book_result = get_results(query, [_id])
+	if book_result.size() > 0:
+		id = book_result[0]["id"]
+		book_name = book_result[0]["book_name"]
+		translation = translation  # Assuming translation is already set
+
+# New method to get the entire book
+func get_entire_book(book_name: String) -> Array:
+	var verse_model = VerseModel.new(translation)
+	return verse_model.get_verses(book_name)
 
 ## Finds a book based on partial match and returns the first book found.
 func find_book_by_name(_book_name: String):
 	var query = "SELECT * FROM %s_books WHERE book_name LIKE ?;" % translation
 	var partial_result = get_results(query, ["%s" % ("%"+_book_name+"%")])
 	if partial_result.size() > 0:
-		id = partial_result[0]["id"]
-		book_name = partial_result[0]["book_name"]
-		translation = translation  # Assuming translation is already set
-
+		self.id = partial_result[0]["id"]
+		self.book_name = partial_result[0]["book_name"]
+		self.translation = translation  # Assuming translation is already set
 
 func delete():
 	if id != null:

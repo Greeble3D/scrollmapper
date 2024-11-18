@@ -26,6 +26,7 @@ func execute_query(query: String, params: Array = []):
 
 func get_results(query: String, params: Array = []):
 	db.query_with_bindings(query, params)
+	
 	var results = []
 	for result in db.query_result:
 		results.append(result)

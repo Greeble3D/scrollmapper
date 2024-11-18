@@ -11,7 +11,6 @@ static func format_source_reference(source_reference: SourceReference) -> String
 	var output: String = "%s - %s: %s (%s)" % [language_formatted, book_formatted, title_formatted, content_type_formatted]
 	return output
 
-
 static func format_verse(book:String, chapter:int, verse:int, verse_text:String)->String:
 	var cmd_style: CmdStyle = CmdStyle.new()
 	var book_formatted:String = cmd_style.color_quaternary_text(book)
