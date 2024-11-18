@@ -7,14 +7,20 @@ static var instance: Command = null
 static var commands: Dictionary = {}
 static var command_history: Array[String] = []
 
+# This is necessary because of a double-loading issue 
+# that I haven't solved yet. It is set by "res://addons/cmd/interface/cmd_interface.gd"
+# in the _ready() function.
+static var cmd_instance_reference = null
+
 func _ready() -> void:
-	if instance == null:
-		instance = self
+	initiate()
 
 # This runs at runtime via res://scripts/global/load.gd
 func initiate()->void:
 	if instance == null:
 		instance = self
+	else:
+		remove_child(self)
 		
 func load_commands():
 	commands.clear()
@@ -51,7 +57,7 @@ static func execute(command_string:String = ""):
 		print("Command not found: ", command_name)
 
 static func print_to_console(text: String):
-	CmdInterface.instance.print_text(text)
+	cmd_instance_reference.print_text(text)
 
 static func log_command(command_string: String):
 	command_history.append(command_string)

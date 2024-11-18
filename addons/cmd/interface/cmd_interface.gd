@@ -28,7 +28,13 @@ func _ready() -> void:
 		instance = self
 	else:
 		return
-
+	
+	# This is a temporary solution to a problem where this class
+	# instance variable sometimes becomes null, although in fact
+	# it seems that it is only being static instanced once. 
+	if Command.cmd_instance_reference == null:
+		Command.cmd_instance_reference = self
+	
 	text_area.size_flags_vertical = Control.SIZE_EXPAND_FILL  # Expand to take all available vertical space
 	text_area.bbcode_enabled = true  # Ensure BBCode is enabled
 
@@ -61,7 +67,6 @@ func print_text(text: String) -> void:
 	var text_area: RichTextLabel = text_area
 	await get_tree().create_timer(0.2).timeout
 	text_area.append_text(text + "\n")
-	
 	
 
 # Handles key press events to cycle through command history.
