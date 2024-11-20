@@ -60,6 +60,8 @@ func get_cross_references_with_verses(book: String, chapter: int, verse: int) ->
 	""" % [translation, translation]
 	return get_results(query, [book, chapter, verse])
 
+
+
 # New method to get a specific cross-reference
 func get_cross_reference(id: int) -> Dictionary:
 	var query = "SELECT * FROM cross_reference WHERE id = ?;"

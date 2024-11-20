@@ -33,7 +33,7 @@ func execute(command_string: String) -> void:
 	if verses.size() > 0:
 		for verse_data in verses:
 			#print("%s %d:%d - %s" % [verse_data["book_name"], verse_data["chapter"], verse_data["verse"], verse_data["text"]])
-			var formatted_verse = FormatText.format_verse(b, verse_data["chapter"], verse_data["verse"], verse_data["text"])
+			var formatted_verse = FormatText.format_verse(verse_data["book_name"], verse_data["chapter"], verse_data["verse"], verse_data["text"])
 			Command.print_to_console(formatted_verse)
 	else:
 		print("Verses not found.")
