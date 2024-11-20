@@ -7,7 +7,8 @@ var from_book: String
 var from_chapter: int
 var from_verse: int
 var to_book: String
-var to_chapter: int
+var to_chapter_start: int
+var to_chapter_end: int
 var to_verse_start: int
 var to_verse_end: int
 var votes: int
@@ -26,7 +27,8 @@ func get_create_table_query() -> String:
 		from_chapter INTEGER,
 		from_verse INTEGER,
 		to_book TEXT,
-		to_chapter INTEGER,
+		to_chapter_start INTEGER,
+		to_chapter_end INTEGER,
 		to_verse_start INTEGER,
 		to_verse_end INTEGER,
 		votes INTEGER
@@ -34,33 +36,35 @@ func get_create_table_query() -> String:
 	"""
 
 func save():
-	var query = "INSERT INTO cross_reference (from_book, from_chapter, from_verse, to_book, to_chapter, to_verse_start, to_verse_end, votes) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
-	execute_query(query, [from_book, from_chapter, from_verse, to_book, to_chapter, to_verse_start, to_verse_end, votes])
+	var query = "INSERT INTO cross_reference (from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
+	execute_query(query, [from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes])
 
 func get_all_cross_references():
 	var query = "SELECT * FROM cross_reference;"
 	return get_results(query)
 
-func get_cross_references_with_verses(book: String, chapter: int, verse: int) -> Array:
+func get_cross_references_for_verse(from_book: String, from_chapter: int, from_verse: int) -> Array:
 	var query = """
 	SELECT 
-		cr.from_book, cr.from_chapter, cr.from_verse, cr.to_book, cr.to_chapter, cr.to_verse_start, cr.to_verse_end, v.text
+		cr.*, 
+		v.id as verse_id, v.book_id, v.chapter, v.verse, v.text,
+		b.book_name
 	FROM 
 		cross_reference cr
 	JOIN 
-		%s_verses v ON cr.to_book = (SELECT name FROM %s_books WHERE id = v.book_id)
-					AND cr.to_chapter = v.chapter
+		%s_books b ON cr.to_book = b.book_name
+	JOIN 
+		%s_verses v ON b.id = v.book_id
+					AND v.chapter BETWEEN cr.to_chapter_start AND cr.to_chapter_end
 					AND v.verse BETWEEN cr.to_verse_start AND cr.to_verse_end
 	WHERE 
-		cr.from_book = ?
+		LOWER(cr.from_book) = LOWER(?)
 		AND cr.from_chapter = ?
 		AND cr.from_verse = ?
 	ORDER BY 
 		cr.votes DESC;
 	""" % [translation, translation]
-	return get_results(query, [book, chapter, verse])
-
-
+	return get_results(query, [from_book, from_chapter, from_verse])
 
 # New method to get a specific cross-reference
 func get_cross_reference(id: int) -> Dictionary:

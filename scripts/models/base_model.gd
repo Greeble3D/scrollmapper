@@ -32,6 +32,7 @@ func get_results(query: String, params: Array = []):
 		results.append(result)
 	if db.error_message != "":
 		print("Error executing query: %s" % db.error_message)
+
 	return results
 
 func create_table():

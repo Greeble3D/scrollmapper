@@ -31,22 +31,21 @@ func _init():
 		if line.is_empty():
 			continue
 		
-		var cross_reference = from_line(line)
+		var cross_reference:CrossReference = from_line(line)
 		if cross_reference:			
 			cross_references.append(cross_reference)
 	file.close()
-
 
 func from_line(line: String) -> CrossReference:
 	var parts:PackedStringArray = line.split("\t")
 	if parts.size() != 3:
 		return null
-
 	var from_book:String = ""
 	var from_chapter:int = -1
 	var from_verse:int = -1
 	var to_book:String = ""
-	var to_chapter:int = -1
+	var to_chapter_start:int = -1
+	var to_chapter_end:int = -1
 	var to_verse_start:int = -1
 	var to_verse_end:int = -1
 	var votes:int = -1
@@ -68,20 +67,23 @@ func from_line(line: String) -> CrossReference:
 	if is_destination_verse_set(line):
 		var end_parts:PackedStringArray = end.split("-")
 		end_parts_start = end_parts[0].split(".")
-		end_parts_end = end_parts[1].split(".")	
+		end_parts_end = end_parts[1].split(".")
 		to_book = book_names[end_parts_start[0]]
-		to_chapter = end_parts_start[1].to_int()		
-		to_verse_start = end_parts_start[2].to_int()		
+		to_chapter_start = end_parts_start[1].to_int()
+		to_chapter_end = end_parts_end[1].to_int()
+		to_verse_start = end_parts_start[2].to_int()
 		to_verse_end = end_parts_end[2].to_int()
 	else:
 		end_parts_start = end.split(".")
 		to_book = book_names[end_parts_start[0]]
-		to_chapter = end_parts_start[1].to_int()
+		to_chapter_start = end_parts_start[1].to_int()
+		to_chapter_end = to_chapter_start
 		to_verse_start = end_parts_start[2].to_int()
+		to_verse_end = to_verse_start
 	
-	return CrossReference.new(from_book, from_chapter, from_verse, to_book, to_chapter, to_verse_start, to_verse_end, votes)
+	return CrossReference.new(from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes)
 
-# Determins whether or not the destination cross reference is a set of verses.
+# Determines whether or not the destination cross reference is a set of verses.
 # Example that would return false: "Gen.1.1	Jer.32.17	73"
 # Example that would return true: "Gen.1.1	Ps.89.11-Ps.89.12	46"
 func is_destination_verse_set(line) -> bool:

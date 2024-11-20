@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c4bxs4b0db76y" path="res://scripts/data_manager/resource_downloader.tscn" id="1_bealw"]
 [ext_resource type="PackedScene" uid="uid://bqqnuwbchtcqm" path="res://addons/cmd/interface/cmd_interface.tscn" id="2_1xlkh"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0c60"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5jqg0"]
 bg_color = Color(0.117, 0.117, 0.117, 1)
 
 [node name="Main" type="Node3D"]
@@ -30,4 +30,4 @@ grow_vertical = 2
 
 [node name="CmdInterface" parent="UI/Cmd" instance=ExtResource("2_1xlkh")]
 layout_mode = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_v0c60")
+theme_override_styles/panel = SubResource("StyleBoxFlat_5jqg0")

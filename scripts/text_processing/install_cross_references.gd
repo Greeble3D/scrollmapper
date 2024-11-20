@@ -25,12 +25,11 @@ func install():
 		cross_reference_model.from_chapter = cross_reference.from_chapter
 		cross_reference_model.from_verse = cross_reference.from_verse
 		cross_reference_model.to_book = cross_reference.to_book
-		cross_reference_model.to_chapter = cross_reference.to_chapter
+		cross_reference_model.to_chapter_start = cross_reference.to_chapter_start
+		cross_reference_model.to_chapter_end = cross_reference.to_chapter_end
 		cross_reference_model.to_verse_start = cross_reference.to_verse_start
 		cross_reference_model.to_verse_end = cross_reference.to_verse_end
 		cross_reference_model.votes = cross_reference.votes
 		cross_reference_model.save()
-	
 		
-	
 	Command.instance.print_to_console("Cross references for translation %s installed." % translation)
