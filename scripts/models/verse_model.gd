@@ -108,6 +108,16 @@ func get_verses_by_range(start_book: String, start_chapter: int, start_verse: in
 
 	return get_results(query, params)
 
+# Function to get all chapters in a book
+func get_all_chapters(book_name: String) -> Array:
+	var book_model = BookModel.new(translation)
+	book_model.find_book_by_name(book_name)
+	var book_id = book_model.id
+
+	var query = "SELECT DISTINCT chapter FROM %s_verses WHERE book_id = ? ORDER BY chapter;" % translation
+	
+	return get_results(query, [book_id])
+
 # New delete function
 func delete():
 	if id != null:

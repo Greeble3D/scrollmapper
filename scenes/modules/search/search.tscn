@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://b47hcwlb6la61"]
+
+[ext_resource type="Script" path="res://scenes/modules/search/search.gd" id="1_3myjv"]
+
+[node name="Search" type="MarginContainer" node_paths=PackedStringArray("option_scope", "option_translation", "option_books", "option_chapters", "search_input")]
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_3myjv")
+option_scope = NodePath("VBoxContainer/HBoxContainer/OptionScope")
+option_translation = NodePath("VBoxContainer/HBoxContainer/OptionTranslation")
+option_books = NodePath("VBoxContainer/HBoxContainer/OptionBooks")
+option_chapters = NodePath("VBoxContainer/HBoxContainer/OptionChapters")
+search_input = NodePath("VBoxContainer/MarginContainer/SearchInput")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="OptionScope" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+
+[node name="OptionTranslation" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "-"
+popup/item_0/id = 1
+
+[node name="OptionBooks" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "-"
+popup/item_0/id = 1
+
+[node name="OptionChapters" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "-"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SearchInput" type="LineEdit" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2

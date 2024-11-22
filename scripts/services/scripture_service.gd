@@ -13,7 +13,7 @@ var books = {}
 func _ready():
 	load_translations()
 	load_books()
-	print(translations)
+
 
 func load_translations():
 	var translation_model = BibleTranslationModel.new()
@@ -29,7 +29,7 @@ func load_books():
 		var all_books = book_model.get_all_books()
 		for b in all_books:
 			books[b["id"]] = b
-
+			books[b["id"]]["translation"] = t["translation_abbr"]
 
 func get_verse(translation: String, book: String, chapter: int, verse: int) -> Dictionary:
 	var verse_model:VerseModel = VerseModel.new(translation)
@@ -111,6 +111,31 @@ func get_book(translation: String, book_name: String) -> Dictionary:
 		"translation": book_model.translation
 	}
 
+# Get all chapter numbers in a book
+func get_all_chapter_numbers_in_book(translation: String, book_name: String) -> Dictionary:
+	var verse_model = VerseModel.new(translation)
+	var chapters = verse_model.get_all_chapters(book_name)
+	
+	var results:Dictionary = {
+		"chapters": []
+	}
+	for c in chapters:
+		results["chapters"].append(c["chapter"])
+	return results	
+
+# Get all books for a specific translation
+func get_all_books(translation: String) -> Array:
+	var book_model = BookModel.new(translation)
+	var all_books = book_model.get_all_books()
+	var result = []
+	for b in all_books:
+		result.append({
+			"id": b["id"],
+			"book_name": b["book_name"],
+			"translation": translation
+		})
+	return result
+
 # Get information about a book by its ID
 func get_book_by_id(book_id: int) -> Dictionary:
 	if book_id in books:
@@ -129,6 +154,20 @@ func get_translation(translation_abbr: String) -> Dictionary:
 		"title": translation_data["title"],
 		"license": translation_data["license"]
 	}
+
+# Get all translations
+func get_all_translations() -> Array:
+	var translation_model = BibleTranslationModel.new()
+	var all_translations = translation_model.get_all_translations()
+	var result = []
+	for t in all_translations:
+		result.append({
+			"id": t["id"],
+			"translation_abbr": t["translation_abbr"],
+			"title": t["title"],
+			"license": t["license"]
+		})
+	return result
 
 # Get information about a translation by its ID
 func get_translation_by_id(translation_id: int) -> Dictionary:

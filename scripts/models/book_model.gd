@@ -37,6 +37,7 @@ func get_all_books():
 	var query = "SELECT * FROM %s_books;" % translation
 	return get_results(query)
 
+
 # New method to get a book by name
 func get_book_by_name(_book_name: String):
 	var query = "SELECT * FROM %s_books WHERE book_name = ?;" % translation

@@ -1,9 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bcxpkinhle2o6"]
+[gd_scene load_steps=6 format=3 uid="uid://bcxpkinhle2o6"]
 
 [ext_resource type="PackedScene" uid="uid://c4bxs4b0db76y" path="res://scripts/data_manager/resource_downloader.tscn" id="1_bealw"]
 [ext_resource type="PackedScene" uid="uid://bqqnuwbchtcqm" path="res://addons/cmd/interface/cmd_interface.tscn" id="2_1xlkh"]
+[ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="3_iu04d"]
+[ext_resource type="Script" path="res://scenes/modules/search/search.gd" id="4_lm24t"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7s7s"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l31wu"]
 bg_color = Color(0.117, 0.117, 0.117, 1)
 
 [node name="Main" type="Node3D"]
@@ -21,6 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Cmd" type="Control" parent="UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,4 +33,32 @@ grow_vertical = 2
 
 [node name="CmdInterface" parent="UI/Cmd" instance=ExtResource("2_1xlkh")]
 layout_mode = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_d7s7s")
+theme_override_styles/panel = SubResource("StyleBoxFlat_l31wu")
+
+[node name="Modules" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Modules"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SearchAndExplore" type="VBoxContainer" parent="UI/Modules/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Search" parent="UI/Modules/HBoxContainer/SearchAndExplore" instance=ExtResource("3_iu04d")]
+layout_mode = 2
+script = ExtResource("4_lm24t")
+
+[node name="StudyAndCompare" type="VBoxContainer" parent="UI/Modules/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
