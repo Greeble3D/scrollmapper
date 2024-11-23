@@ -50,6 +50,7 @@ func install():
 	for book_data in data["books"]:
 		var book_model = BookModel.new(translation)
 		book_model.book_name = book_data["name"]
+		book_model.translation_id = translation_model.id
 		book_model.save()
 
 		for chapter_data in book_data["chapters"]:

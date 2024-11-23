@@ -49,7 +49,12 @@ func get_all_translations() -> Array:
 func get_translation(translation_abbr: String) -> Dictionary:
 	var query = "SELECT * FROM translations WHERE translation_abbr = ?;"
 	var result = get_results(query, [translation_abbr])
+
 	if result.size() > 0:
+		self.id = result[0]["id"]
+		self.translation_abbr = result[0]["translation_abbr"]
+		self.title = result[0]["title"]
+		self.license = result[0]["license"]
 		return result[0]
 	return {}
 

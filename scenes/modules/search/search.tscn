@@ -2,20 +2,44 @@
 
 [ext_resource type="Script" path="res://scenes/modules/search/search.gd" id="1_3myjv"]
 
-[node name="Search" type="MarginContainer" node_paths=PackedStringArray("option_scope", "option_translation", "option_books", "option_chapters", "search_input")]
+[node name="Search" type="MarginContainer" node_paths=PackedStringArray("check_button_search_type", "margin_container_search", "h_box_container_range", "option_scope", "option_translation", "option_books", "option_chapters", "search_input", "option_verses", "option_to_books", "option_to_chapters", "option_to_verses", "button_range_search")]
+offset_right = 477.0
+offset_bottom = 86.0
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 script = ExtResource("1_3myjv")
+check_button_search_type = NodePath("VBoxContainer/HBoxContainerSearchTypes/HBoxContainer/CheckButtonSearchType")
+margin_container_search = NodePath("VBoxContainer/MarginContainerSearch")
+h_box_container_range = NodePath("VBoxContainer/HBoxContainerRange")
 option_scope = NodePath("VBoxContainer/HBoxContainer/OptionScope")
 option_translation = NodePath("VBoxContainer/HBoxContainer/OptionTranslation")
 option_books = NodePath("VBoxContainer/HBoxContainer/OptionBooks")
 option_chapters = NodePath("VBoxContainer/HBoxContainer/OptionChapters")
-search_input = NodePath("VBoxContainer/MarginContainer/SearchInput")
+search_input = NodePath("VBoxContainer/MarginContainerSearch/SearchInput")
+option_verses = NodePath("VBoxContainer/HBoxContainer/OptionVerses")
+option_to_books = NodePath("VBoxContainer/HBoxContainerRange/OptionToBooks")
+option_to_chapters = NodePath("VBoxContainer/HBoxContainerRange/OptionToChapters")
+option_to_verses = NodePath("VBoxContainer/HBoxContainerRange/OptionToVerses")
+button_range_search = NodePath("VBoxContainer/HBoxContainerRange/ButtonRangeSearch")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainerSearchTypes" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainerSearchTypes"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainerSearchTypes/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Search / Range"
+
+[node name="CheckButtonSearchType" type="CheckButton" parent="VBoxContainer/HBoxContainerSearchTypes/HBoxContainer"]
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
@@ -24,7 +48,6 @@ layout_mode = 2
 [node name="OptionScope" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-selected = 0
 
 [node name="OptionTranslation" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -49,8 +72,44 @@ selected = 0
 item_count = 1
 popup/item_0/text = "-"
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="OptionVerses" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "-"
+
+[node name="MarginContainerSearch" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="SearchInput" type="LineEdit" parent="VBoxContainer/MarginContainer"]
+[node name="SearchInput" type="LineEdit" parent="VBoxContainer/MarginContainerSearch"]
 layout_mode = 2
+
+[node name="HBoxContainerRange" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="OptionToBooks" type="OptionButton" parent="VBoxContainer/HBoxContainerRange"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "-"
+
+[node name="OptionToChapters" type="OptionButton" parent="VBoxContainer/HBoxContainerRange"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "-"
+
+[node name="OptionToVerses" type="OptionButton" parent="VBoxContainer/HBoxContainerRange"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "-"
+
+[node name="ButtonRangeSearch" type="Button" parent="VBoxContainer/HBoxContainerRange"]
+layout_mode = 2
+text = "Search Range"

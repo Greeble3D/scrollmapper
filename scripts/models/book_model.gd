@@ -5,6 +5,7 @@ class_name BookModel
 var id: int = 0
 var book_name: String = ""
 var translation: String = ""
+var translation_id: int = 0
 
 func _init(_translation: String):
 	super._init()
@@ -12,31 +13,48 @@ func _init(_translation: String):
 	create_table()
 
 func get_create_table_query() -> String:
-	return "CREATE TABLE IF NOT EXISTS %s_books (id INTEGER PRIMARY KEY AUTOINCREMENT, book_name TEXT UNIQUE);" % translation
+	return """
+	CREATE TABLE IF NOT EXISTS %s_books (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		book_name TEXT UNIQUE,
+		translation_id INTEGER,
+		FOREIGN KEY(translation_id) REFERENCES translations(id)
+	);
+	""" % translation
 
 func save():
 	# Check if the book name already exists
 	var query = "SELECT id FROM %s_books WHERE book_name = ?;" % translation
 	var save_result = get_results(query, [book_name])
-	
+
 	if save_result.size() > 0:
 		# If the book already exists, set the id and avoid insertion
 		id = save_result[0]["id"]
 		print("Book already exists with ID: %d" % id)
 	else:
+		update_translation_id()
+		print(translation_id)
 		# Insert the new book
-		var insert_query = "INSERT INTO %s_books (book_name) VALUES (?);" % translation
-		execute_query(insert_query, [book_name])
+		var insert_query = "INSERT INTO %s_books (book_name, translation_id) VALUES (?, ?);" % translation
+		execute_query(insert_query, [book_name, translation_id])
 		
 		# Retrieve the last inserted ID
 		var last_id_result = get_results("SELECT last_insert_rowid() as id;")
 		if last_id_result.size() > 0:
 			id = last_id_result[0]["id"]
 
+func update_translation_id():
+	if translation_id == 0:
+		var translation_model = BibleTranslationModel.new()
+		var translation_data = translation_model.get_translation(translation)
+		if translation_data.size() > 0:
+			translation_id = translation_data["id"]
+		else:
+			print("Translation not found for abbreviation: %s" % translation)
+
 func get_all_books():
 	var query = "SELECT * FROM %s_books;" % translation
 	return get_results(query)
-
 
 # New method to get a book by name
 func get_book_by_name(_book_name: String):
@@ -45,6 +63,7 @@ func get_book_by_name(_book_name: String):
 	if book_result.size() > 0:
 		id = book_result[0]["id"]
 		book_name = book_result[0]["book_name"]
+		translation_id = book_result[0]["translation_id"]
 		translation = translation  # Assuming translation is already set
 
 # New method to get a book by id
@@ -54,6 +73,7 @@ func get_book_by_id(_id: int):
 	if book_result.size() > 0:
 		id = book_result[0]["id"]
 		book_name = book_result[0]["book_name"]
+		translation_id = book_result[0]["translation_id"]
 		translation = translation  # Assuming translation is already set
 
 # New method to get the entire book
@@ -68,8 +88,8 @@ func find_book_by_name(_book_name: String):
 	if partial_result.size() > 0:
 		self.id = partial_result[0]["id"]
 		self.book_name = partial_result[0]["book_name"]
+		self.translation_id = partial_result[0]["translation_id"]
 		self.translation = translation  # Assuming translation is already set
-
 
 func delete():
 	if id != null:

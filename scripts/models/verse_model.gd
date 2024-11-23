@@ -66,8 +66,12 @@ func get_verses(book_name: String, chapter: int = -1, verse: int = -1) -> Array:
 	var book_id = book_model.id
 
 	var query = """
-	SELECT v.*, b.book_name FROM %s_verses v
+	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	b.id AS book_id, b.book_name, b.translation_id,
+	t.translation_abbr, t.title, t.license 
+	FROM %s_verses v
 	JOIN %s_books b ON v.book_id = b.id
+	JOIN translations t ON b.translation_id = t.id
 	WHERE v.book_id = ?
 	""" % [translation, translation]
 	var params = [book_id]
@@ -94,8 +98,12 @@ func get_verses_by_range(start_book: String, start_chapter: int, start_verse: in
 	var end_book_id = end_book_model.id
 
 	var query = """
-	SELECT v.*, b.book_name FROM %s_verses v
+	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	b.id AS book_id, b.book_name, b.translation_id,
+	t.translation_abbr, t.title, t.license 
+	FROM %s_verses v
 	JOIN %s_books b ON v.book_id = b.id
+	JOIN translations t ON b.translation_id = t.id
 	WHERE (v.book_id > ? OR (v.book_id = ? AND (v.chapter > ? OR (v.chapter = ? AND v.verse >= ?))))
 	AND (v.book_id < ? OR (v.book_id = ? AND (v.chapter < ? OR (v.chapter = ? AND v.verse <= ?))))
 	ORDER BY v.book_id, v.chapter, v.verse
@@ -108,8 +116,8 @@ func get_verses_by_range(start_book: String, start_chapter: int, start_verse: in
 
 	return get_results(query, params)
 
-# Function to get all chapters in a book
-func get_all_chapters(book_name: String) -> Array:
+# Function to get all chapter numbers in a book
+func get_all_chapter_numbers(book_name: String) -> Array:
 	var book_model = BookModel.new(translation)
 	book_model.find_book_by_name(book_name)
 	var book_id = book_model.id
@@ -117,6 +125,47 @@ func get_all_chapters(book_name: String) -> Array:
 	var query = "SELECT DISTINCT chapter FROM %s_verses WHERE book_id = ? ORDER BY chapter;" % translation
 	
 	return get_results(query, [book_id])
+
+# Function to get all verse numbers in a chapter
+func get_all_verse_numbers(book_name: String, chapter: int) -> Array:
+	var book_model = BookModel.new(translation)
+	book_model.find_book_by_name(book_name)
+	var book_id = book_model.id
+
+	var query = "SELECT DISTINCT verse FROM %s_verses WHERE book_id = ? AND chapter = ? ORDER BY verse;" % translation
+	
+	return get_results(query, [book_id, chapter])
+
+#region Text Search
+
+# Function to search text in translation
+func search_text(phrase: String, book_name: String = "", chapter: int = -1) -> Array:
+	var query = """
+	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	b.id AS book_id, b.book_name, b.translation_id,
+	t.translation_abbr, t.title, t.license 
+	FROM %s_verses v
+	JOIN %s_books b ON v.book_id = b.id
+	JOIN translations t ON b.translation_id = t.id
+	WHERE v.text LIKE ?
+	""" % [translation, translation]
+	var params = ["%%%s%%" % phrase]
+
+	if book_name != "":
+		var book_model = BookModel.new(translation)
+		book_model.find_book_by_name(book_name)
+		var book_id = book_model.id
+		query += " AND v.book_id = ?"
+		params.append(book_id)
+
+	if chapter != -1:
+		query += " AND v.chapter = ?"
+		params.append(chapter)
+
+	query += " ORDER BY v.book_id, v.chapter, v.verse"
+
+	return get_results(query, params)
+#endregion
 
 # New delete function
 func delete():
