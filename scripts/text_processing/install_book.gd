@@ -9,7 +9,11 @@ func _init(book:String) -> void:
 	self.book = book.strip_edges()
 	var source_reference_list:SourceReferenceList = SourceReferenceList.new()
 	source_reference = source_reference_list.get_book(book)
-
+	
+	if not source_reference:
+		print("Book is null. It is possible the book does not exist in scrollmapper.")
+		return
+	
 	if source_reference.content_type == "extrabiblical":
 		self.translation = "scrollmapper"
 	else:
@@ -62,3 +66,4 @@ func install():
 				verse_model.text = verse_data["text"]
 				verse_model.save()
 	Command.instance.print_to_console("Book %s installed."%book)
+	ScriptureService.emit_books_installed()

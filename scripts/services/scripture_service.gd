@@ -7,22 +7,30 @@ extends Node
 ## used by the controllers to provide data to the views.
 
 signal verses_searched(verses:Dictionary)
+signal verse_cross_references_searched(verses:Dictionary)
+signal books_installed
 
 var translations = {}
 var books = {}
 
 func _ready():
+	reload_data()
+	books_installed.connect(reload_data)
+
+func reload_data():
 	load_translations()
 	load_books()
-
+	print("Scripture service data reloaded.")
 
 func load_translations():
+	translations.clear()
 	var translation_model = BibleTranslationModel.new()
 	var all_translations = translation_model.get_all_translations()
 	for t in all_translations:
 		translations[t["id"]] = t
 
 func load_books():
+	books.clear()
 	var translation_model = BibleTranslationModel.new()
 	var all_translations = translation_model.get_all_translations()
 	for t in all_translations:
@@ -77,27 +85,12 @@ func get_cross_references_for_verse(translation: String, book: String, chapter: 
 	var cross_references = cross_reference_model.get_cross_references_for_verse(book, chapter, verse)
 	var result = []
 	for cr in cross_references:
-		result.append({
-			"id": cr["id"],
-			"from_book": cr["from_book"],
-			"from_chapter": cr["from_chapter"],
-			"from_verse": cr["from_verse"],
-			"to_book": cr["to_book"],
-			"to_chapter_start": cr["to_chapter_start"],
-			"to_chapter_end": cr["to_chapter_end"],
-			"to_verse_start": cr["to_verse_start"],
-			"to_verse_end": cr["to_verse_end"],
-			"votes": cr["votes"],
-			"verse_id": cr["verse_id"],
-			"book_id": cr["book_id"],
-			"chapter": cr["chapter"],
-			"verse": cr["verse"],
-			"text": cr["text"],
-			"book_name": cr["book_name"],
-			"translation": translation
-		})
+		result.append(cr)
 	return result
 
+func request_cross_references(translation: String, book: String, chapter: int, verse: int) -> void:
+	var cross_references = get_cross_references_for_verse(translation, book, chapter, verse)
+	propagate_cross_reference_search(translation, cross_references)
 
 ## Get information about a book
 func get_book(translation: String, book_name: String) -> Dictionary:
@@ -225,5 +218,19 @@ func propogate_search(translation_abbr:String, verse_results:Array):
 			verse_result["book"] = get_book_by_id(verse_result["translation_id"], verse_result["book_id"])
 		results.append(verse_result)
 	verses_searched.emit(results)
-	print(results)
-	
+
+func propagate_cross_reference_search(translation_abbr:String, verse_results:Array):
+	if verse_results.is_empty():
+		return
+	var results:Array = []
+	for verse_result in verse_results:
+		verse_result["translation"] = get_translation_by_id(verse_result["translation_id"])
+		if books.has(verse_result["translation_id"]):
+			verse_result["book"] = get_book_by_id(verse_result["translation_id"], verse_result["book_id"])
+		results.append(verse_result)
+	verse_cross_references_searched.emit(results)
+
+
+
+func emit_books_installed():
+	books_installed.emit()

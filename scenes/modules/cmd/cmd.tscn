@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dget04dncj64c"]
+
+[ext_resource type="PackedScene" uid="uid://bqqnuwbchtcqm" path="res://addons/cmd/interface/cmd_interface.tscn" id="1_mancq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q3iru"]
+bg_color = Color(0.117, 0.117, 0.117, 1)
+
+[node name="Cmd" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CmdInterface" parent="." instance=ExtResource("1_mancq")]
+layout_mode = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_q3iru")

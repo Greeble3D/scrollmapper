@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bcxpkinhle2o6"]
+[gd_scene load_steps=7 format=3 uid="uid://bcxpkinhle2o6"]
 
 [ext_resource type="PackedScene" uid="uid://c4bxs4b0db76y" path="res://scripts/data_manager/resource_downloader.tscn" id="1_bealw"]
-[ext_resource type="PackedScene" uid="uid://bqqnuwbchtcqm" path="res://addons/cmd/interface/cmd_interface.tscn" id="2_1xlkh"]
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="3_iu04d"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v8n03"]
-bg_color = Color(0.117, 0.117, 0.117, 1)
+[ext_resource type="PackedScene" uid="uid://b5um2unhlx8ye" path="res://scenes/modules/explore/explore.tscn" id="4_b6gii"]
+[ext_resource type="PackedScene" uid="uid://bs0uifavbkart" path="res://scenes/modules/cross_reference/cross_reference.tscn" id="4_p4rtt"]
+[ext_resource type="PackedScene" uid="uid://dget04dncj64c" path="res://scenes/modules/cmd/cmd.tscn" id="4_ymvhv"]
+[ext_resource type="Script" path="res://scenes/modules/cmd/cmd.gd" id="5_mn4tt"]
 
 [node name="Main" type="Node3D"]
 
@@ -20,19 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Cmd" type="Control" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="CmdInterface" parent="UI/Cmd" instance=ExtResource("2_1xlkh")]
-layout_mode = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_v8n03")
+mouse_filter = 2
 
 [node name="Modules" type="Control" parent="UI"]
 layout_mode = 1
@@ -41,6 +29,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Modules"]
 layout_mode = 1
@@ -49,14 +38,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="SearchAndExplore" type="VBoxContainer" parent="UI/Modules/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="Search" parent="UI/Modules/HBoxContainer/SearchAndExplore" instance=ExtResource("3_iu04d")]
+layout_mode = 2
+
+[node name="Explore" parent="UI/Modules/HBoxContainer/SearchAndExplore" instance=ExtResource("4_b6gii")]
 layout_mode = 2
 
 [node name="StudyAndCompare" type="VBoxContainer" parent="UI/Modules/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="CrossReference" parent="UI/Modules/HBoxContainer/StudyAndCompare" instance=ExtResource("4_p4rtt")]
+layout_mode = 2
+
+[node name="Cmd" parent="UI" instance=ExtResource("4_ymvhv")]
+layout_mode = 1
+script = ExtResource("5_mn4tt")

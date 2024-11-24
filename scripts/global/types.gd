@@ -13,3 +13,9 @@ enum SearchScope {
 	COMMON_CANNONICAL,
 	EXTRA_CANNONICAL,
 }
+
+enum VerseType{
+	BASIC,
+	CROSS_REFERENCE,
+	MINIMAL,
+}

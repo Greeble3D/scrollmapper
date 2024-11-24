@@ -46,9 +46,11 @@ func get_all_cross_references():
 func get_cross_references_for_verse(from_book: String, from_chapter: int, from_verse: int) -> Array:
 	var query = """
 	SELECT 
-		cr.*, 
-		v.id as verse_id, v.book_id, v.chapter, v.verse, v.text,
-		b.book_name
+		cr.id AS cross_reference_id, cr.from_book, cr.from_chapter, cr.from_verse, 
+		cr.to_book, cr.to_chapter_start, cr.to_chapter_end, cr.to_verse_start, cr.to_verse_end, cr.votes,
+		v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text,
+		b.id AS book_id, b.book_name, b.translation_id,
+		t.translation_abbr, t.title, t.license
 	FROM 
 		cross_reference cr
 	JOIN 
@@ -57,6 +59,8 @@ func get_cross_references_for_verse(from_book: String, from_chapter: int, from_v
 		%s_verses v ON b.id = v.book_id
 					AND v.chapter BETWEEN cr.to_chapter_start AND cr.to_chapter_end
 					AND v.verse BETWEEN cr.to_verse_start AND cr.to_verse_end
+	JOIN 
+		translations t ON b.translation_id = t.id
 	WHERE 
 		LOWER(cr.from_book) = LOWER(?)
 		AND cr.from_chapter = ?
