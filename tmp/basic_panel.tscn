@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8ecb77dg15s6"]
+
+[ext_resource type="Texture2D" uid="uid://dpbdut6laipkr" path="res://tmp/panel.png" id="1_4qk4s"]
+[ext_resource type="Script" path="res://tmp/drag.gd" id="2_meiyo"]
+
+[node name="BasicPanel" type="NinePatchRect"]
+offset_right = 80.0
+offset_bottom = 80.0
+texture = ExtResource("1_4qk4s")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+script = ExtResource("2_meiyo")

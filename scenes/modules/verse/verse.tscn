@@ -21,7 +21,6 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 script = ExtResource("1_v4g5i")
-copy_text = null
 scripture_reference = NodePath("MainContainer/VerseContainer/ScriptureContainer/ScriptureReference")
 scripture_text = NodePath("MainContainer/VerseContainer/ScriptureTextContainer/ScriptureText")
 actions_buttons = NodePath("ActionsButtons")
@@ -34,16 +33,6 @@ meta_info_top = NodePath("MainContainer/MetaInfoTop")
 meta_info_bottom = NodePath("MainContainer/MetaInfoBottom")
 meta_info_top_text = NodePath("MainContainer/MetaInfoTop/MetaInfo")
 meta_info_bottom_text = NodePath("MainContainer/MetaInfoBottom/MetaInfo")
-cross_reference_id = null
-from_book = null
-from_chapter = null
-from_verse = null
-to_book = null
-to_chapter_start = null
-to_chapter_end = null
-to_verse_start = null
-to_verse_end = null
-votes = null
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

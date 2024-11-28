@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://bo4ahtqmwhvd5"]
+
+[ext_resource type="Script" path="res://scenes/modules/vx/vx_node.gd" id="1_0d16a"]
+[ext_resource type="Texture2D" uid="uid://dpbdut6laipkr" path="res://tmp/panel.png" id="2_w0bnh"]
+
+[node name="VXNode" type="MarginContainer" node_paths=PackedStringArray("verse_container", "preview_text", "socket_mount")]
+custom_minimum_size = Vector2(150, 100)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_0d16a")
+verse_container = NodePath("VerseContainer")
+preview_text = NodePath("VerseContainer/PreviewText")
+socket_mount = NodePath("SocketMount")
+
+[node name="VersePanel" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_w0bnh")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+
+[node name="VerseContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PreviewText" type="RichTextLabel" parent="VerseContainer"]
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[b]John 1:1:[/b]  In the beginning was the Word, and the Word was with God, and the Word was God. The same was in the beginning with God. All things were made by him; and without him was not any thing made that was made."
+
+[node name="SocketMount" type="Control" parent="."]
+layout_mode = 2
+mouse_filter = 2

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh1iyds4cy28s"]
+
+[ext_resource type="Script" path="res://scenes/modules/vx/vx_graph.gd" id="1_sckcm"]
+[ext_resource type="PackedScene" uid="uid://cfxi6tibdx3cp" path="res://scenes/modules/vx/vx_canvas.tscn" id="2_jc8ca"]
+[ext_resource type="PackedScene" uid="uid://bo4ahtqmwhvd5" path="res://scenes/modules/vx/vx_node.tscn" id="2_lfqbj"]
+
+[node name="VXGraph" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("1_sckcm")
+
+[node name="VXCanvas" parent="." instance=ExtResource("2_jc8ca")]
+layout_mode = 1
+
+[node name="VXNode" parent="." instance=ExtResource("2_lfqbj")]
+layout_mode = 1
+
+[editable path="VXNode"]

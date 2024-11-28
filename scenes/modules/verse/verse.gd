@@ -16,27 +16,24 @@ class_name Verse
 @export var license: String
 @export var translation: Dictionary
 @export var book: Dictionary
-@export var copy_text:String
+@export var copy_text: String
 #endregion
 
 #region exported properties
 @export_group("Object References")
 @export var scripture_reference: RichTextLabel
 @export var scripture_text: RichTextLabel
-
 @export var actions_buttons: AspectRatioContainer
 @export var button_action_context: Button 
 @export var button_action_cross_reference: Button 
 @export var button_action_copy: Button 
-
 @export var hover_sensor: Area2D
 @export var hover_sensor_collision: CollisionShape2D 
 #endregion
 
 #region type adjustment
 @export_group("Context Adjustment")
-# The verse setup changes based on this type
-var verse_type:Types.VerseType = Types.VerseType.BASIC
+var verse_type: Types.VerseType = Types.VerseType.BASIC
 @export var meta_info_top: MarginContainer
 @export var meta_info_bottom: MarginContainer 
 @export var meta_info_top_text: RichTextLabel
@@ -57,7 +54,18 @@ var verse_type:Types.VerseType = Types.VerseType.BASIC
 @export var votes: int
 #endregion
 
-func initiate_from_json(verse_data: Dictionary, verse_type:Types.VerseType = Types.VerseType.BASIC) -> void:
+func _ready() -> void:
+	hover_sensor.mouse_entered.connect(show_actions_buttons)
+	hover_sensor.mouse_exited.connect(hide_actions_buttons)
+	visibility_changed.connect(set_hover_sensor_size)
+	resized.connect(set_hover_sensor_size)
+	button_action_copy.pressed.connect(copy_text_to_clipboard)
+	button_action_cross_reference.pressed.connect(request_cross_references)
+	button_action_context.pressed.connect(request_context)
+	hide_actions_buttons()
+	
+
+func initiate_from_json(verse_data: Dictionary, verse_type: Types.VerseType = Types.VerseType.BASIC) -> void:
 	verse_id = verse_data.get("verse_id", -1)
 	book_id = verse_data.get("book_id", -1)
 	chapter = verse_data.get("chapter", -1)
@@ -70,36 +78,21 @@ func initiate_from_json(verse_data: Dictionary, verse_type:Types.VerseType = Typ
 	license = verse_data.get("license", "")
 	translation = verse_data.get("translation", {})
 	book = verse_data.get("book", {})
-	copy_text = "%s %s:%s - %s"%[book_name, str(chapter), str(verse), text]
+	copy_text = "%s %s:%s - %s" % [book_name, str(chapter), str(verse), text]
 	set_object_name()
-
-	hover_sensor.mouse_entered.connect(show_actions_buttons)
-	hover_sensor.mouse_exited.connect(hide_actions_buttons)
-	visibility_changed.connect(set_hover_sensor_size)
-	resized.connect(set_hover_sensor_size)
-	
-	button_action_copy.pressed.connect(copy_text_to_clipboard)
-	button_action_cross_reference.pressed.connect(request_cross_references)
-	button_action_context.pressed.connect(request_context)
-	
-	hide_actions_buttons()
-	hide_meta_info()
-
 	match verse_type:
 		Types.VerseType.BASIC:
-			# Do nothing
-			pass
+			hide_meta_info()
 		Types.VerseType.CROSS_REFERENCE:
 			convert_to_cross_reference(verse_data)
 		Types.VerseType.MINIMAL:
-			# Do nothing
-			pass
+			hide_meta_info()
 
-func set_object_name():
-	name = "%s_%s-%s"%[book_name, str(chapter), str(verse)]
+func set_object_name() -> void:
+	name = "%s_%s-%s" % [book_name, str(chapter), str(verse)]
 
-func set_hover_sensor_size():
-	var rect_shape:RectangleShape2D = RectangleShape2D.new()
+func set_hover_sensor_size() -> void:
+	var rect_shape: RectangleShape2D = RectangleShape2D.new()
 	rect_shape.size = Vector2(size.x, size.y)
 	hover_sensor_collision.position.x = size.x / 2
 	hover_sensor_collision.position.y = size.y / 2
@@ -121,30 +114,23 @@ func hide_meta_info() -> void:
 	meta_info_top.hide()
 	meta_info_bottom.hide()
 
-# region button commands
-## Copy the verse text to the clipboard
-func copy_text_to_clipboard():
-	# Get the current contents of the clipboard
-	var current_clipboard = DisplayServer.clipboard_get()
-	# Set the contents of the clipboard
+#region button commands
+func copy_text_to_clipboard() -> void:
 	DisplayServer.clipboard_set(copy_text)
 
-func request_cross_references():
+func request_cross_references() -> void:
 	ScriptureService.request_cross_references(translation_abbr, book_name, chapter, verse)
 
-func request_context():
+func request_context() -> void:
 	pass
-# endregion 
+#endregion
 
 #region verse type conversions
-func convert_to_cross_reference(verse_data:Dictionary):
+func convert_to_cross_reference(verse_data: Dictionary) -> void:
 	verse_type = Types.VerseType.CROSS_REFERENCE
-
 	button_action_context.hide()
 	button_action_cross_reference.hide()
-
 	meta_info_top.show()
-
 	cross_reference_id = verse_data.get("cross_reference_id", -1)
 	from_book = verse_data.get("from_book", "")
 	from_chapter = verse_data.get("from_chapter", -1)
@@ -155,8 +141,7 @@ func convert_to_cross_reference(verse_data:Dictionary):
 	to_verse_start = verse_data.get("to_verse_start", -1)
 	to_verse_end = verse_data.get("to_verse_end", -1)
 	votes = verse_data.get("votes", 0)
-	
-	var meta_values:Array = [
+	var meta_values: Array = [
 		from_book, 
 		str(from_chapter), 
 		str(from_verse), 
@@ -169,17 +154,14 @@ func convert_to_cross_reference(verse_data:Dictionary):
 		str(votes)
 	]
 	if is_extended_cross_reference():
-		var meta_info:String = "%s %s:%s -> %s %s:%s-%s %s:%s   [Votes: %s]"%meta_values
+		var meta_info: String = "%s %s:%s -> %s %s:%s-%s %s:%s   [Votes: %s]" % meta_values
 		meta_info_top_text.bbcode_text = meta_info
 	else:
 		meta_values = meta_values.slice(0, 6) + meta_values.slice(9, 10)
-		var meta_info:String = "%s %s:%s -> %s %s:%s   [Votes: %s]"%meta_values
+		var meta_info: String = "%s %s:%s -> %s %s:%s   [Votes: %s]" % meta_values
 		meta_info_top_text.bbcode_text = meta_info
+	meta_info_bottom.hide() # hide the bottom meta info
 
-func is_extended_cross_reference()->bool:
-	if to_chapter_start != to_chapter_end:
-		return true
-	if to_verse_start != to_verse_end:	
-		return true
-	return false
+func is_extended_cross_reference() -> bool:
+	return to_chapter_start != to_chapter_end or to_verse_start != to_verse_end
 #endregion

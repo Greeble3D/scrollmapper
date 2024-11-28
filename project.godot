@@ -33,7 +33,8 @@ folder_colors={
 "res://images/": "blue",
 "res://scenes/": "red",
 "res://scripts/": "green",
-"res://sources/": "orange"
+"res://sources/": "orange",
+"res://tmp/": "pink"
 }
 
 [input]

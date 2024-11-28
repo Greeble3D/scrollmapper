@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn2vjyy8ajkj6"]
+
+[ext_resource type="Script" path="res://scenes/modules/vx/vx_socket.gd" id="1_rqvmn"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_jtwcp"]
+
+[node name="Socket" type="TextureRect"]
+custom_minimum_size = Vector2(10, 10)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("CanvasTexture_jtwcp")
+script = ExtResource("1_rqvmn")

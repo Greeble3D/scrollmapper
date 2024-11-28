@@ -15,7 +15,7 @@ func create_initial_directories():
 	dir.make_dir_recursive(get_scrollmapper_sources_dir())
 	dir.make_dir_recursive(get_scrollmapper_user_dir())
 	dir.make_dir_recursive(get_scrollmapper_db_dir())
-
+	
 # Main scrollmapper data directory
 func get_scrollmapper_data_dir() -> String:
 	var data_dir:String = OS.get_user_data_dir()
