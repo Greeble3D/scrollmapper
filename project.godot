@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Load="*res://scripts/global/load.gd"
 GlobalDB="*res://scripts/global/global_db.gd"
 Globals="*res://scripts/global/globals.gd"
+UserInput="*res://scripts/global/user_input.gd"
 ScriptureService="*res://scripts/services/scripture_service.gd"
 
 [editor_plugins]

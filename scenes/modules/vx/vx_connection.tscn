@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://briy8onaxc1nt"]
+
+[ext_resource type="Script" path="res://scenes/modules/vx/vx_connection.gd" id="1_fj7it"]
+
+[node name="Line2D" type="Line2D"]
+width = 2.0
+joint_mode = 2
+antialiased = true
+script = ExtResource("1_fj7it")

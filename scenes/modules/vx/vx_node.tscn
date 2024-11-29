@@ -3,14 +3,17 @@
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_node.gd" id="1_0d16a"]
 [ext_resource type="Texture2D" uid="uid://dpbdut6laipkr" path="res://tmp/panel.png" id="2_w0bnh"]
 
-[node name="VXNode" type="MarginContainer" node_paths=PackedStringArray("verse_container", "preview_text", "socket_mount")]
+[node name="VXNode" type="MarginContainer" node_paths=PackedStringArray("verse_container", "preview_text", "sockets_mount_top", "sockets_mount_bottom", "sockets_mount_left", "sockets_mount_right")]
 custom_minimum_size = Vector2(150, 100)
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_0d16a")
 verse_container = NodePath("VerseContainer")
 preview_text = NodePath("VerseContainer/PreviewText")
-socket_mount = NodePath("SocketMount")
+sockets_mount_top = NodePath("SocketMount/SocketsMountTop")
+sockets_mount_bottom = NodePath("SocketMount/SocketsMountBottom")
+sockets_mount_left = NodePath("SocketMount/SocketsMountLeft")
+sockets_mount_right = NodePath("SocketMount/SocketsMountRight")
 
 [node name="VersePanel" type="NinePatchRect" parent="."]
 layout_mode = 2
@@ -38,3 +41,53 @@ text = "[b]John 1:1:[/b]  In the beginning was the Word, and the Word was with G
 [node name="SocketMount" type="Control" parent="."]
 layout_mode = 2
 mouse_filter = 2
+
+[node name="SocketsMountTop" type="HBoxContainer" parent="SocketMount"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SocketsMountBottom" type="HBoxContainer" parent="SocketMount"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SocketsMountLeft" type="VBoxContainer" parent="SocketMount"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_right = 5.0
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SocketsMountRight" type="VBoxContainer" parent="SocketMount"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_right = 5.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1

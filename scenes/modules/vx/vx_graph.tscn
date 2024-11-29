@@ -22,4 +22,11 @@ layout_mode = 1
 [node name="VXNode" parent="." instance=ExtResource("2_lfqbj")]
 layout_mode = 1
 
+[node name="VXNode2" parent="." instance=ExtResource("2_lfqbj")]
+layout_mode = 1
+offset_left = 500.0
+offset_right = 800.0
+offset_bottom = 150.0
+
 [editable path="VXNode"]
+[editable path="VXNode2"]
