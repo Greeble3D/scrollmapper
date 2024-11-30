@@ -22,6 +22,7 @@ signal socket_updated
 signal socket_edit_started
 signal socket_edit_ended
 
+
 # Functions
 func _ready():
 	UserInput.mouse_drag_started.connect(_on_editing_started)
@@ -29,6 +30,8 @@ func _ready():
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	new_connection_created.connect(notify_node_of_new_connection)
+	
+
 
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
@@ -45,14 +48,32 @@ func set_socket_type(socket_type: Types.SocketType):
 func set_direction_type(direction_type: Types.SocketDirectionType):
 	self.socket_direction = direction_type
 
-# Connected Node
+# Set the connected node to the node supplied.
 func set_connected_node(node: VXNode):
 	connected_node = node
-	connected_node.node_moved.connect(_on_node_moved)
-	connected_node.sockets_updated.connect(_on_socket_updated)
+	if not connected_node.node_moved.is_connected(_on_node_moved):
+		connected_node.node_moved.connect(_on_node_moved)
+	if not connected_node.sockets_updated.is_connected(_on_socket_updated):
+		connected_node.sockets_updated.connect(_on_socket_updated)
 
+## Deletes the attached connection.
 func get_connected_node() -> VXNode:
 	return connected_node
+
+## Deletes a connection and signals the event in the connected node.
+func delete_connection():
+	if connection != null:
+		connection.delete_connection()
+
+	delete()
+
+
+## Delete this node.
+func delete():
+	if is_instance_valid(self):
+		queue_free()
+		var connected_node_reference:VXNode = connected_node
+		connected_node_reference.emit_connection_deleted(self)
 
 # Mouse Events
 func _on_mouse_entered() -> void:

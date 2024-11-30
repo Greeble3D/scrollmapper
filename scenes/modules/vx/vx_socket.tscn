@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_socket.gd" id="1_rqvmn"]
 [ext_resource type="Texture2D" uid="uid://dxs10vrgsr60g" path="res://images/icons/editor/Node.svg" id="2_ho0k3"]
 
-[node name="VXSocket" type="Control"]
+[node name="VXSocket" type="Control" groups=["sockets"]]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 3
 anchors_preset = 8

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_node.gd" id="1_0d16a"]
 [ext_resource type="Texture2D" uid="uid://dpbdut6laipkr" path="res://tmp/panel.png" id="2_w0bnh"]
 
-[node name="VXNode" type="MarginContainer" node_paths=PackedStringArray("verse_container", "preview_text", "sockets_mount_top", "sockets_mount_bottom", "sockets_mount_left", "sockets_mount_right")]
+[node name="VXNode" type="MarginContainer" node_paths=PackedStringArray("verse_container", "preview_text", "sockets_mount_top", "sockets_mount_bottom", "sockets_mount_left", "sockets_mount_right") groups=["nodes"]]
 custom_minimum_size = Vector2(150, 100)
 offset_right = 40.0
 offset_bottom = 40.0

@@ -32,11 +32,15 @@ class_name VXNode
 @export var socket_dimensions: Vector2 = Vector2(40, 40)
 @export var socket_padding: int = 40
 
+# Booleans
+var is_mouse_over_node:bool = false
+var dragging_already_in_progress:bool = false
+
 # Signals
 signal new_connection_created(start_socket: VXSocket, end_socket: VXSocket)
-signal node_moved(new_position: Vector2)
-signal node_move_initiated(starting_position: Vector2)
+signal connection_deleted(socket:VXSocket)
 signal node_selected(node: VXNode)
+signal node_moved(new_position: Vector2)
 signal sockets_updated
 
 # Constants
@@ -51,6 +55,30 @@ func _ready():
 	node_moved.connect(move_to_preview_node)
 	update_sockets()
 	new_connection_created.connect(update_sockets)
+	connection_deleted.connect(update_sockets)
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
+	UserInput.right_clicked.connect(delete_node)
+	UserInput.mouse_dragged.connect(drag_node)
+	UserInput.mouse_drag_ended.connect(_mouse_drag_ended_any_node)
+
+## Delete the node. 
+func delete_node():
+	if not can_edit():
+		return
+	for socket in sockets_top:
+		if is_instance_valid(socket) and socket.connection != null:
+			socket.delete_connection()
+	for socket in sockets_bottom:
+		if is_instance_valid(socket) and socket.connection != null:
+			socket.delete_connection()
+	for socket in sockets_left:
+		if is_instance_valid(socket) and socket.connection != null:
+			socket.delete_connection()
+	for socket in sockets_right:
+		if is_instance_valid(socket) and socket.connection != null:
+			socket.delete_connection()
+	queue_free()
 
 # Initialization
 func initiate(id: int, book: String, chapter: int, verse: int, text: String, translation: String):
@@ -61,20 +89,17 @@ func initiate(id: int, book: String, chapter: int, verse: int, text: String, tra
 	self.text = text
 	self.translation = translation
 
-# Drag and Drop
-func _get_drag_data(at_position: Vector2) -> Variant:
-	initiate_drag(at_position)
-	return self
+func drag_node(pos: Vector2):
+	if not can_edit():
+		return
+	var new_position: Vector2 = get_global_mouse_position() - size / 2 + placement_offset
+	node_moved.emit(new_position)
 
-func initiate_drag(at_position: Vector2) -> void:
-	hide_node()
-	var offsetter: Control = Control.new()	
-	var preview = VX_NODE.instantiate()	
-	offsetter.add_child(preview)
-	preview.position -= at_position
-	placement_offset = preview.position
-	node_move_initiated.emit(position)	
-	set_drag_preview(offsetter)
+## This makes the draggable node a preview only 
+## node, altering some characteristics. It will 
+## be deleted afterward. 
+func enter_preview_mode():
+	delete_all_sockets()
 
 # Node Movement
 func move_node(pos: Vector2):
@@ -99,12 +124,15 @@ func show_node():
 func emit_new_connection_created(start_socket: VXSocket, end_socket: VXSocket):
 	new_connection_created.emit(start_socket, end_socket)
 
-# Socket Distribution
+func emit_connection_deleted(socket:VXSocket) -> void:
+	connection_deleted.emit(socket)
+
+## Socket Distribution
+## This function maintenances all of the sockets. Distributing them and removing unused ones,
+## but ensures that at least one free socket is available for new connections.
 func update_sockets(starting_socket: VXSocket = null, ending_socket: VXSocket = null):
 	remove_invalid_sockets()
-	print(sockets_right.size())
 	discover_socket_dimensions()
-
 	remove_extra_sockets_from_array(sockets_top)
 	remove_extra_sockets_from_array(sockets_bottom)
 	remove_extra_sockets_from_array(sockets_left)
@@ -159,6 +187,20 @@ func remove_invalid_sockets():
 	for i in range(sockets_right.size() - 1, -1, -1):
 		if not is_instance_valid(sockets_right[i]):
 			sockets_right.remove_at(i)
+
+func delete_all_sockets():
+	for socket in sockets_top:
+		if is_instance_valid(socket):
+			socket.queue_free()
+	for socket in sockets_bottom:
+		if is_instance_valid(socket):
+			socket.queue_free()
+	for socket in sockets_left:
+		if is_instance_valid(socket):
+			socket.queue_free()
+	for socket in sockets_right:
+		if is_instance_valid(socket):
+			socket.queue_free()
 
 func discover_socket_dimensions():
 	var socket = create_socket(Types.SocketType.INPUT, Types.SocketDirectionType.LINEAR)
@@ -219,3 +261,21 @@ func recalculate_socket_positions_and_node_dimensions():
 		size.y = minimum_vertical_length
 
 	sockets_updated.emit()
+
+func can_edit() -> bool:
+	return is_mouse_over_node && !dragging_already_in_progress
+
+## This function is called from the _mouse_drag_ended in UserInput
+## so that if we stop dragging over some other node, that node will
+## not ignore a new drag operation. Connected from 	
+## UserInput.mouse_drag_ended.connect(_mouse_drag_ended_any_node)
+func _mouse_drag_ended_any_node(pos:Vector2):
+	dragging_already_in_progress = false
+
+func _on_mouse_entered() -> void:
+	dragging_already_in_progress = UserInput.is_dragging
+	is_mouse_over_node = true
+
+func _on_mouse_exited() -> void:
+	dragging_already_in_progress = UserInput.is_dragging
+	is_mouse_over_node = false
