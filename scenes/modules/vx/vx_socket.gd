@@ -2,10 +2,15 @@ extends Control
 class_name VXSocket
 
 # Variables
+## The type of the socket, input or output. vx_socket
 var socket_type: Types.SocketType
+## The direction of the socket, parallel or linear. vx_socket
 var socket_direction: Types.SocketDirectionType
+## The connection attached to the socket. Null if no connection. vx_connection
 var connection: VXConnection = null
+## The node that the socket is connected to. vx_node
 var connected_node: VXNode = null
+## This determines if the mouse is over the socket for editing purposes.
 var is_mouse_over_socket = false
 var is_socket_being_edited: bool = false:
 	set(new_value):

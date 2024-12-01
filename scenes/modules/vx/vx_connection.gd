@@ -23,8 +23,9 @@ var is_connection_being_edited: bool = false:
 		is_connection_being_edited = new_value
 
 ## Points per meter for the connection.
-@export var points_per_meter: int = 10
-
+@export var points_per_meter: int = 59
+# Increase this value to make the curve more extreme
+@export var control_point_offset: float = 100
 ## Initialization function
 func initiate(start_socket: VXSocket, end_socket: VXSocket = null):	
 	is_connection_being_edited = true
@@ -190,15 +191,29 @@ func finalize_connection_points():
 	if get_tree() == null:
 		return
 	await get_tree().process_frame
-	set_point_position(get_start_point_index(), get_starting_socket().get_connection_point())
-	set_point_position(get_end_point_index(), get_ending_socket().get_connection_point())
+	set_start_and_end_points_connected()
 	start_node = get_starting_socket().get_connected_node()
 	end_node = get_ending_socket().get_connected_node()
+	create_node_curve_by_connection()
 
 ## Update connection points during mouse drag
 func update_connection_points_mouse_drag():
+	create_node_curve_by_mouse()
+
+## Creates the start and end points based on the finalized connection
+func set_start_and_end_points_connected():
+	set_point_position(get_start_point_index(), get_starting_socket().get_connection_point())
+	set_point_position(get_end_point_index(), get_ending_socket().get_connection_point())
+
+## Creates the start and end points based on the mouse (starting connection and mouse position)
+func set_start_and_end_points_mouse_drag():
 	set_point_position(get_start_point_index(), get_start_point())
 	set_point_position(get_end_point_index(), get_global_mouse_position())
+
+func start_and_end_point_exists() -> bool:
+	if points.size() < 2:
+		return false
+	return true
 
 ## Returns the index of the starting point.
 func get_start_point_index() -> int:
@@ -216,4 +231,80 @@ func get_start_point() -> Vector2:
 func get_end_point() -> Vector2:
 	return points[points.size() - 1]
 
+## Gets the starting control point. Control point offset is controlled by 
+## exported control_point_offset variable above. 
+func get_start_control_point() -> Vector2:
+	var start_direction: Types.SocketDirectionType = get_starting_socket().socket_direction
+	var start_point = get_start_point()
+	var control_point = start_point
+
+	match start_direction:
+		Types.SocketDirectionType.LINEAR:
+			if get_starting_socket().socket_type == Types.SocketType.OUTPUT:
+				control_point.y += control_point_offset
+			else:
+				control_point.y -= control_point_offset
+		Types.SocketDirectionType.PARALLEL:
+			if get_starting_socket().socket_type == Types.SocketType.OUTPUT:
+				control_point.x += control_point_offset
+			else:
+				control_point.x -= control_point_offset
+
+	return control_point
+
+## Gets the ending control point. Control point offset is controlled by 
+## exported control_point_offset variable above. 
+func get_end_control_point() -> Vector2:
+	var end_direction: Types.SocketDirectionType = get_ending_socket().socket_direction
+	var end_point = get_end_point()
+	var control_point = end_point
+
+	match end_direction:
+		Types.SocketDirectionType.LINEAR:
+			if get_ending_socket().socket_type == Types.SocketType.INPUT:
+				control_point.y -= control_point_offset
+			else:
+				control_point.y += control_point_offset
+		Types.SocketDirectionType.PARALLEL:
+			if get_ending_socket().socket_type == Types.SocketType.INPUT:
+				control_point.x -= control_point_offset
+			else:
+				control_point.x += control_point_offset
+
+	return control_point
+
+func cubic_bezier(p0: Vector2, p1: Vector2, p2: Vector2, p3: Vector2, t: float):
+	var q0 = p0.lerp(p1, t)
+	var q1 = p1.lerp(p2, t)
+	var q2 = p2.lerp(p3, t)
+
+	var r0 = q0.lerp(q1, t)
+	var r1 = q1.lerp(q2, t)
+
+	var s = r0.lerp(r1, t)
+	return s
+
+func create_node_curve_by_mouse():
+	set_start_and_end_points_mouse_drag()
+	create_node_curve()
+
+func create_node_curve_by_connection():
+	set_start_and_end_points_connected()
+	create_node_curve()
+
+func create_node_curve():
+	var start_point = get_start_point()
+	var end_point = get_end_point()
+
+	var start_control = get_start_control_point()
+	# The default state of the end point is the mouse position.
+	var end_control = get_global_mouse_position()
+	# If we are not editing, and the end control point exists, then it is a finalized connection.
+	if !is_connection_being_edited && get_end_control_point() != null:
+		end_control = get_end_control_point()
+	clear_points()
+	for i in range(points_per_meter + 1):
+		var t = float(i) / float(points_per_meter)
+		var curve_point = cubic_bezier(start_point, start_control, end_control, end_point, t)
+		add_point(curve_point)
 #endregion connector points / line drawing
