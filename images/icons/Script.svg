@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="64"
+   height="64"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="Script.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     showgrid="true"
+     inkscape:zoom="4.4912329"
+     inkscape:cx="8.0156164"
+     inkscape:cy="8.3496004"
+     inkscape:window-width="1920"
+     inkscape:window-height="1094"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       id="grid2"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="1"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="1"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <path
+     fill="#e0e0e0"
+     d="M 23.571429,2.5000001 A 8.4285714,8.4285714 0 0 0 15.142857,10.928572 V 40.428571 H 2.5 V 53.071428 A 8.4285714,8.4285714 0 0 0 10.928571,61.5 h 29.5 a 8.4285714,8.4285714 0 0 0 8.428572,-8.428572 V 19.357143 H 61.5 V 10.928572 A 8.4285714,8.4285714 0 0 0 53.071428,2.5000001 Z"
+     id="path1"
+     style="stroke-width:4.21428" />
+  <path
+     fill-opacity="0.2"
+     d="m 23.571429,2.5 a 8.4285714,8.4285714 0 0 0 -8.428572,8.428572 V 40.428571 H 2.5 v 12.642857 a 8.4285714,8.4285714 0 1 0 16.857142,0 V 10.928572 a 4.214286,4.214286 0 0 1 8.428572,0 V 23.571429 H 48.857143 V 19.357143 H 32 V 10.928572 A 8.4285714,8.4285714 0 0 0 23.571429,2.5 Z M 6.714286,44.642857 h 8.428571 v 8.428571 a 4.2142857,4.2142857 0 0 1 -8.428571,0 z"
+     id="path2"
+     style="stroke-width:4.21428" />
+</svg>

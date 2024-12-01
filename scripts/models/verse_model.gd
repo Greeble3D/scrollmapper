@@ -47,10 +47,18 @@ func get_all_verses():
 	return get_results(query)
 
 func get_verse(book_id: int, chapter: int, verse: int) -> Dictionary:
-	var query = "SELECT * FROM %s_verses WHERE book_id = ? AND chapter = ? AND verse = ?;" % translation
+	var query = """
+	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	b.id AS book_id, b.book_name, b.translation_id,
+	t.translation_abbr, t.title, t.license 
+	FROM %s_verses v
+	JOIN %s_books b ON v.book_id = b.id
+	JOIN translations t ON b.translation_id = t.id
+	WHERE v.book_id = ? AND v.chapter = ? AND v.verse = ?
+	""" % [translation, translation]
 	var result = get_results(query, [book_id, chapter, verse])
 	if result.size() > 0:
-		self.id = result[0]["id"]
+		self.id = result[0]["verse_id"]
 		self.book_id = result[0]["book_id"]
 		self.chapter = result[0]["chapter"]
 		self.verse = result[0]["verse"]

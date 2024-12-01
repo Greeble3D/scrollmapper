@@ -62,6 +62,19 @@ func _ready():
 	UserInput.mouse_dragged.connect(drag_node)
 	UserInput.mouse_drag_ended.connect(_mouse_drag_ended_any_node)
 
+# Initialization
+func initiate(id: int, book: String, chapter: int, verse: int, text: String, translation: String):
+	self.id = id
+	self.book = book
+	self.chapter = chapter
+	self.verse = verse
+	self.text = text
+	self.translation = translation
+	set_preview_text()
+
+func set_preview_text():
+	preview_text.bbcode_text = "[b]%s %s:%s[/b] - %s" % [book, str(chapter), str(verse), text]
+
 ## Delete the node. 
 func delete_node():
 	if not can_edit():
@@ -80,14 +93,6 @@ func delete_node():
 			socket.delete_connection()
 	queue_free()
 
-# Initialization
-func initiate(id: int, book: String, chapter: int, verse: int, text: String, translation: String):
-	self.id = id
-	self.book = book
-	self.chapter = chapter
-	self.verse = verse
-	self.text = text
-	self.translation = translation
 
 func drag_node(pos: Vector2):
 	if not can_edit():

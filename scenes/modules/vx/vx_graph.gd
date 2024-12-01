@@ -12,6 +12,7 @@ func _ready():
 		VXGraph.instance = self
 	else:
 		queue_free()
+	ScriptureService.vx_verses_searched.connect(_on_vx_verses_searched)
 
 func _exit_tree() -> void:
 	VXGraph.instance = null
@@ -24,3 +25,22 @@ func create_connection(start_socket:VXSocket, end_socket:VXSocket = null) -> VXC
 	add_child(vx_connection)
 	vx_connection.initiate(start_socket, end_socket)	
 	return vx_connection
+
+func create_node() -> VXNode:
+	var vx_node:VXNode = VX_NODE.instantiate()
+	add_child(vx_node)
+	return vx_node
+
+## When the scripture service pushes a result, it will be caught here
+## and a new node will be created. 
+func _on_vx_verses_searched(results:Array):
+	for result in results:
+		var node = create_node()
+		node.initiate(
+			result["verse_id"],
+			result["book_name"],
+			result["chapter"],
+			result["verse"],
+			result["text"],
+			result["translation_abbr"]
+		)

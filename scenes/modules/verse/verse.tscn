@@ -1,19 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjjabscd5p82s"]
+[gd_scene load_steps=8 format=3 uid="uid://cjjabscd5p82s"]
 
 [ext_resource type="Script" path="res://scenes/modules/verse/verse.gd" id="1_v4g5i"]
 [ext_resource type="Texture2D" uid="uid://b7tufcdoeiawf" path="res://images/icons/TripleBar.svg" id="2_vbi5p"]
 [ext_resource type="Texture2D" uid="uid://jfe22xmju6ad" path="res://images/icons/MirrorX.svg" id="3_3f2fi"]
 [ext_resource type="Texture2D" uid="uid://bndiy8o2t03og" path="res://images/icons/ActionCopy.svg" id="4_wfaa5"]
+[ext_resource type="Texture2D" uid="uid://cm4bohpq708t5" path="res://images/icons/ScriptCreate.svg" id="5_odcsl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_su3bk"]
 size = Vector2(171, 90)
 
-[node name="Verse" type="MarginContainer" node_paths=PackedStringArray("scripture_reference", "scripture_text", "actions_buttons", "button_action_context", "button_action_cross_reference", "button_action_copy", "hover_sensor", "hover_sensor_collision", "meta_info_top", "meta_info_bottom", "meta_info_top_text", "meta_info_bottom_text")]
-anchors_preset = 15
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7rnvi"]
+bg_color = Color(0, 0, 0, 0.67451)
+
+[node name="Verse" type="MarginContainer" node_paths=PackedStringArray("scripture_reference", "scripture_text", "actions_buttons", "button_action_context", "button_action_cross_reference", "button_action_copy", "button_action_to_work_station", "hover_sensor", "hover_sensor_collision", "action_backdrop", "meta_info_top", "meta_info_bottom", "meta_info_top_text", "meta_info_bottom_text")]
+custom_minimum_size = Vector2(0, 74)
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -710.0
-offset_bottom = -390.0
+anchor_bottom = 0.5
+offset_top = -51.0
+offset_bottom = 51.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 0
@@ -27,8 +33,10 @@ actions_buttons = NodePath("ActionsButtons")
 button_action_context = NodePath("ActionsButtons/ActionsContainer/ButtonActionContext")
 button_action_cross_reference = NodePath("ActionsButtons/ActionsContainer/ButtonActionCrossReference")
 button_action_copy = NodePath("ActionsButtons/ActionsContainer/ButtonActionCopy")
+button_action_to_work_station = NodePath("ActionsButtons/ActionsContainer/ButtonActionToWorkStation")
 hover_sensor = NodePath("HoverSensor")
 hover_sensor_collision = NodePath("HoverSensor/HoverSensorCollision")
+action_backdrop = NodePath("ActionBackdrop")
 meta_info_top = NodePath("MainContainer/MetaInfoTop")
 meta_info_bottom = NodePath("MainContainer/MetaInfoBottom")
 meta_info_top_text = NodePath("MainContainer/MetaInfoTop/MetaInfo")
@@ -106,31 +114,47 @@ fit_content = true
 position = Vector2(85.5, 45)
 shape = SubResource("RectangleShape2D_su3bk")
 
+[node name="ActionBackdrop" type="Panel" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7rnvi")
+
 [node name="ActionsButtons" type="AspectRatioContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 2
 alignment_horizontal = 0
 
 [node name="ActionsContainer" type="HBoxContainer" parent="ActionsButtons"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
 mouse_filter = 2
+alignment = 1
 
 [node name="ButtonActionContext" type="Button" parent="ActionsButtons/ActionsContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Etc"
 icon = ExtResource("2_vbi5p")
 
 [node name="ButtonActionCrossReference" type="Button" parent="ActionsButtons/ActionsContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Cross References"
 icon = ExtResource("3_3f2fi")
 
 [node name="ButtonActionCopy" type="Button" parent="ActionsButtons/ActionsContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Copy Text"
 icon = ExtResource("4_wfaa5")
+
+[node name="ButtonActionToWorkStation" type="Button" parent="ActionsButtons/ActionsContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "To work station..."
+icon = ExtResource("5_odcsl")

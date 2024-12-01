@@ -18,6 +18,7 @@ enum VerseType{
 	BASIC,
 	CROSS_REFERENCE,
 	MINIMAL,
+	VX_LISTING, 
 }
 
 #region VXNode

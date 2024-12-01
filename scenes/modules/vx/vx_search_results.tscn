@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://bre0y3462iq32"]
+
+[ext_resource type="PackedScene" uid="uid://b5um2unhlx8ye" path="res://scenes/modules/explore/explore.tscn" id="1_mjhi1"]
+[ext_resource type="Script" path="res://scenes/modules/vx/vx_search_results.gd" id="1_o3a1a"]
+
+[node name="VXSearchResults" type="MarginContainer" node_paths=PackedStringArray("explore")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+script = ExtResource("1_o3a1a")
+explore = NodePath("Explore")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="Explore" parent="." instance=ExtResource("1_mjhi1")]
+layout_mode = 2
+is_vx_results = true
+close_on_click = true

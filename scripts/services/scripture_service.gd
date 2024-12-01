@@ -8,6 +8,7 @@ extends Node
 
 signal verses_searched(verses:Dictionary)
 signal verse_cross_references_searched(verses:Dictionary)
+signal vx_verses_searched(verses:Dictionary)
 signal books_installed
 
 var translations = {}
@@ -42,23 +43,32 @@ func load_books():
 				books[t["id"]] = {}
 			books[t["id"]][b["id"]] = b
 			
-
-func get_verse(translation: String, book: String, chapter: int, verse: int) -> Dictionary:
-	var verse_model:VerseModel = VerseModel.new(translation)
-	return {
-		"id": verse_model.id,
-		"book_id": verse_model.book_id,
-		"chapter": verse_model.chapter,
-		"verse": verse_model.verse,
-		"text": verse_model.text,
-		"translation": verse_model.translation
-	}
+## Gets a single verse, one entry in an array.
+func get_verse(translation: String, book: String, chapter: int, verse: int) -> Array:
+	var verse_model: VerseModel = VerseModel.new(translation)
+	var book_model: BookModel = BookModel.new(translation)
+	book_model.get_book_by_name(book)
+	var book_id: int = book_model.id
+	var verse_data: Dictionary = verse_model.get_verse(book_id, chapter, verse)
+	var translation_data: Dictionary = get_translation(translation)
+	return [{
+		"verse_id": verse_data["verse_id"],
+		"book_id": verse_data["book_id"],
+		"chapter": verse_data["chapter"],
+		"verse": verse_data["verse"],
+		"text": verse_data["text"],
+		"book_name": book_model.book_name,
+		"translation_id": verse_data["translation_id"],
+		"translation_abbr": translation_data["translation_abbr"],
+		"title": translation_data["title"],
+		"license": translation_data["license"],
+	}]
 
 ## Get verses by book, chapter, or specific verse
 func get_verses(translation: String, book: String, chapter: int = -1, verse: int = -1) -> Array:
-	var verse_model = VerseModel.new(translation)
-	var verses = verse_model.get_verses(book, chapter, verse)
-	var result = []
+	var verse_model: VerseModel = VerseModel.new(translation)
+	var verses: Array = verse_model.get_verses(book, chapter, verse)
+	var result: Array = []
 	for v in verses:
 		result.append({
 			"id": v["id"],
@@ -88,9 +98,15 @@ func get_cross_references_for_verse(translation: String, book: String, chapter: 
 		result.append(cr)
 	return result
 
+## Requests a cross reference list.
 func request_cross_references(translation: String, book: String, chapter: int, verse: int) -> void:
 	var cross_references = get_cross_references_for_verse(translation, book, chapter, verse)
 	propagate_cross_reference_search(translation, cross_references)
+
+## Request a verse for the vx system.
+func request_vx_verse(translation: String, book: String, chapter: int, verse: int) -> void:
+	var results = get_verse(translation, book, chapter, verse)
+	propogate_vx_search(translation, results)
 
 ## Get information about a book
 func get_book(translation: String, book_name: String) -> Dictionary:
@@ -219,6 +235,7 @@ func propogate_search(translation_abbr:String, verse_results:Array):
 		results.append(verse_result)
 	verses_searched.emit(results)
 
+## Derived from propagate_search, this tailors verse output to cross-reference data.
 func propagate_cross_reference_search(translation_abbr:String, verse_results:Array):
 	if verse_results.is_empty():
 		return
@@ -230,7 +247,18 @@ func propagate_cross_reference_search(translation_abbr:String, verse_results:Arr
 		results.append(verse_result)
 	verse_cross_references_searched.emit(results)
 
+## Derived from propagate_search, this tailors verse output to vx_verse system.
+func propogate_vx_search(translation_abbr:String, verse_results:Array):
 
+	if verse_results.is_empty():
+		return
+	var results:Array = []
+	for verse_result in verse_results:
+		verse_result["translation"] = get_translation_by_id(verse_result["translation_id"])
+		if books.has(verse_result["translation_id"]):
+			verse_result["book"] = get_book_by_id(verse_result["translation_id"], verse_result["book_id"])
+		results.append(verse_result)
+	vx_verses_searched.emit(results)
 
 func emit_books_installed():
 	books_installed.emit()
