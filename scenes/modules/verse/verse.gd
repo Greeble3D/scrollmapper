@@ -27,10 +27,13 @@ class_name Verse
 @export var button_action_context: Button 
 @export var button_action_cross_reference: Button 
 @export var button_action_copy: Button 
+@export var button_action_add_to_export_list: Button 
 @export var button_action_to_work_station: Button 
 @export var hover_sensor: Area2D
 @export var hover_sensor_collision: CollisionShape2D 
 @export var action_backdrop: Panel 
+@export var add_verse_to_set_texture:Texture2D
+@export var remove_verse_from_set_texture:Texture2D
 #endregion
 
 #region type adjustment
@@ -56,7 +59,10 @@ var verse_type: Types.VerseType = Types.VerseType.BASIC
 @export var votes: int
 #endregion
 
+#region signals
 signal button_pressed
+signal button_action_add_to_export_list_pressed(verse:Verse)
+#endregion 
 
 func _ready() -> void:
 	hover_sensor.mouse_entered.connect(show_actions_buttons)
@@ -67,6 +73,7 @@ func _ready() -> void:
 	button_action_copy.pressed.connect(copy_text_to_clipboard)
 	button_action_cross_reference.pressed.connect(request_cross_references)
 	button_action_context.pressed.connect(request_context)
+	button_action_add_to_export_list.pressed.connect(emit_button_action_add_to_export_list_pressed)
 	button_action_to_work_station.pressed.connect(send_to_workstation)
 
 	button_action_copy.pressed.connect(emit_button_pressed)
@@ -201,6 +208,27 @@ func is_extended_cross_reference() -> bool:
 #endregion
 
 #region signal propagation
+## This is emitted ONLY for the buttons that will cause search results to close. 
 func emit_button_pressed():
 	button_pressed.emit()
+
+## Emitted for when the Add Verse button is pressed, which is created for adding 
+## multiple verses to a set before exporting to a workstation.
+func emit_button_action_add_to_export_list_pressed():
+	button_action_add_to_export_list_pressed.emit(self)
 #endregion
+
+#region icons
+## This changes the icon on the "add" button of the verse.
+## True means to activate the "+" version of hte icon. False means 
+## to activate the "x" version of the icon.
+func set_add_remove_verse_icon(add:bool = true)->void:
+	if add:
+		button_action_add_to_export_list.icon = add_verse_to_set_texture
+	else:
+		button_action_add_to_export_list.icon = remove_verse_from_set_texture
+#endregion 
+
+#region misc
+
+#endregion 

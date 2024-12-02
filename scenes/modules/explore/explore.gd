@@ -13,6 +13,7 @@ const VERSE: PackedScene = preload("res://scenes/modules/verse/verse.tscn")
 
 signal search_results_received
 signal option_pressed
+signal button_action_add_to_export_list_pressed(verse:Verse)
 
 func _ready() -> void:
 	ScriptureService.verses_searched.connect(_on_verses_searched)
@@ -32,6 +33,7 @@ func setup_verse(verse_data: Dictionary) -> void:
 	verse_instance.set_scripture_reference()
 	verse_instance.set_scripture_text()
 	verse_instance.button_pressed.connect(emit_option_pressed)
+	verse_instance.button_action_add_to_export_list_pressed.connect(emit_button_action_add_to_export_list_pressed)
 	scripture_container.add_child(verse_instance)
 
 
@@ -41,3 +43,9 @@ func clear_verses() -> void:
 
 func emit_option_pressed()->void:
 	option_pressed.emit()
+	
+## This function acts as a relay to propagate the signal from any verse that 
+## has the add_to_export_list button pressed. It is listed to from VXSearchResults
+func emit_button_action_add_to_export_list_pressed(verse:Verse):
+	button_action_add_to_export_list_pressed.emit(verse)
+	

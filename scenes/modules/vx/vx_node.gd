@@ -93,7 +93,6 @@ func delete_node():
 			socket.delete_connection()
 	queue_free()
 
-
 func drag_node(pos: Vector2):
 	if not can_edit():
 		return
