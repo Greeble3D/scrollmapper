@@ -12,7 +12,7 @@ func _ready():
 		VXGraph.instance = self
 	else:
 		queue_free()
-	ScriptureService.vx_verses_searched.connect(_on_vx_verses_searched)
+	ScriptureService.verses_searched.connect(_on_verses_searched)
 
 func _exit_tree() -> void:
 	VXGraph.instance = null
@@ -33,8 +33,16 @@ func create_node() -> VXNode:
 
 ## When the scripture service pushes a result, it will be caught here
 ## and a new node will be created. 
-func _on_vx_verses_searched(results:Array):
+func _on_verses_searched(results:Array):
 	for result in results:
+		# Ensure the result has "work_space" and it is "vx".
+		if not result.has("meta"):
+			continue
+		if not result["meta"].has("work_space"):
+			continue
+		if result["meta"]["work_space"] != "vx":
+			continue
+		print(result)
 		var node = create_node()
 		node.initiate(
 			result["verse_id"],

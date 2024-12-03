@@ -95,6 +95,34 @@ func get_verses(book_name: String, chapter: int = -1, verse: int = -1) -> Array:
 
 	return get_results(query, params)
 
+# Function to get verses by ids
+func get_verses_by_ids(verse_ids: Array) -> Array:
+	if verse_ids.is_empty():
+		return []
+
+	var placeholder_list = []
+	for verse_id in verse_ids:
+		placeholder_list.append("?")
+	var placeholders = ",".join(placeholder_list)
+	
+	var order_cases = []
+	for idx in range(verse_ids.size()):
+		order_cases.append("WHEN %d THEN %d" % [verse_ids[idx], idx])
+	var order_clause = " ".join(order_cases)
+	
+	var query = """
+	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	b.id AS book_id, b.book_name, b.translation_id,
+	t.translation_abbr, t.title, t.license 
+	FROM %s_verses v
+	JOIN %s_books b ON v.book_id = b.id
+	JOIN translations t ON b.translation_id = t.id
+	WHERE v.id IN (%s)
+	ORDER BY CASE v.id %s END
+	""" % [translation, translation, placeholders, order_clause]
+
+	return get_results(query, verse_ids + verse_ids)
+
 # Get verses by range
 func get_verses_by_range(start_book: String, start_chapter: int, start_verse: int, end_book: String, end_chapter: int, end_verse: int) -> Array:
 	var start_book_model = BookModel.new(translation)

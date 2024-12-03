@@ -62,21 +62,31 @@ func request_verses_to_vx_graph():
 	var relationship: String
 	match option_button_direction.get_selected_id():
 		0:
-			relationship = "separate"
+			relationship = "SEPARATE"
 		1:
-			relationship = "linear"
+			relationship = "LINEAR"
 		2:
-			relationship = "parallel"
+			relationship = "PARALLEL"
 		_:
-			relationship = "separate"
-
+			relationship = "SEPARATE"
+	var meta:Dictionary = {	}
 	## The verses should be sorted before sending them to the vx_graph,
 	## in case the user selected them in a random order. 
 	var verses_sorted:Array[Verse] = get_selected_verses_sorted()
-
-	## From this point the verses should be used in a special 
-	## request to the vx_graph to populate the graph with the verses.
-	## TO-DO 12/2/2024
+	var verse_ids:Array[int] = []
+	var translation:String = ""
+	var last_verse_id:int = -1
+	for verse:Verse in verses_sorted:
+		verse_ids.append(verse.verse_id)
+		translation = verse.translation_abbr
+		var added_meta:Dictionary = {}
+		added_meta["work_space"] = "vx"
+		added_meta["socket_direction"] = relationship
+		added_meta["last_verse_id"] = last_verse_id # for tracking linearity in the node editor.
+		var verse_meta:Dictionary = ScriptureService.apply_verse_meta(verse, added_meta)
+		meta = ScriptureService.merge_verse_meta(meta, verse_meta)
+		last_verse_id = verse.verse_id
+	ScriptureService.initiate_id_search(translation, verse_ids, meta)
 
 func get_selected_verses_sorted() -> Array[Verse]:
 	var verse_ids:Array[int] = []

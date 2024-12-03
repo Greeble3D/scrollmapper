@@ -151,6 +151,7 @@ func request_context() -> void:
 
 ## This will send a verse request on behalf of the workstation it is associated with.
 func send_to_workstation() -> void:
+	var meta:Dictionary = {}
 	match verse_type:
 		Types.VerseType.BASIC:
 			pass
@@ -159,7 +160,8 @@ func send_to_workstation() -> void:
 		Types.VerseType.MINIMAL:
 			pass
 		Types.VerseType.VX_LISTING:
-			ScriptureService.request_vx_verse(translation_abbr, book_name, chapter, verse)
+			meta = ScriptureService.apply_verse_meta(self, {"work_space": "vx"})
+			ScriptureService.initiate_verse_search(translation_abbr, book_name, chapter, verse, meta)
 #endregion
 
 #region verse type conversions

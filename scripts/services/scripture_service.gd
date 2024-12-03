@@ -8,7 +8,6 @@ extends Node
 
 signal verses_searched(verses:Dictionary)
 signal verse_cross_references_searched(verses:Dictionary)
-signal vx_verses_searched(verses:Dictionary)
 signal books_installed
 
 var translations = {}
@@ -44,7 +43,7 @@ func load_books():
 			books[t["id"]][b["id"]] = b
 			
 ## Gets a single verse, one entry in an array.
-func get_verse(translation: String, book: String, chapter: int, verse: int) -> Array:
+func get_verse(translation: String, book: String, chapter: int, verse: int, meta:Dictionary = {}) -> Array:
 	var verse_model: VerseModel = VerseModel.new(translation)
 	var book_model: BookModel = BookModel.new(translation)
 	book_model.get_book_by_name(book)
@@ -62,6 +61,7 @@ func get_verse(translation: String, book: String, chapter: int, verse: int) -> A
 		"translation_abbr": translation_data["translation_abbr"],
 		"title": translation_data["title"],
 		"license": translation_data["license"],
+		"meta": meta,
 	}]
 
 ## Get verses by book, chapter, or specific verse
@@ -98,15 +98,10 @@ func get_cross_references_for_verse(translation: String, book: String, chapter: 
 		result.append(cr)
 	return result
 
-## Requests a cross reference list.
+## Requests a cross  list.
 func request_cross_references(translation: String, book: String, chapter: int, verse: int) -> void:
 	var cross_references = get_cross_references_for_verse(translation, book, chapter, verse)
 	propagate_cross_reference_search(translation, cross_references)
-
-## Request a verse for the vx system.
-func request_vx_verse(translation: String, book: String, chapter: int, verse: int) -> void:
-	var results = get_verse(translation, book, chapter, verse)
-	propogate_vx_search(translation, results)
 
 ## Get information about a book
 func get_book(translation: String, book_name: String) -> Dictionary:
@@ -195,9 +190,23 @@ func get_translation_by_id(translation_id: int) -> Dictionary:
 		return translations[translation_id]
 	return {}
 
-
-## Initiate a text search based on the provided criteria
-func initiate_text_search(scope: Types.SearchScope, translation: String, text: String, book: String = "", chapter: int = -1) -> void:
+## Initiate a text search based on the provided criteria.
+## This function searches for verses in the scripture based on the given parameters.
+## It supports different search scopes and translations.
+##
+## @param scope: The scope of the search, which determines the range of scriptures to search within.
+##               It can be one of the following:
+##               - Types.SearchScope.ALL_SCRIPTURE: Search in all scriptures.
+##               - Types.SearchScope.COMMON_CANNONICAL: Search in common canonical scriptures.
+##               - Types.SearchScope.EXTRA_CANNONICAL: Search in extra canonical scriptures.
+## @param translation: The translation of the scripture to search in.
+## @param text: The text to search for within the scriptures.
+## @param book: (Optional) The specific book to search within. Default is an empty string, which means all books.
+## @param chapter: (Optional) The specific chapter to search within. Default is -1, which means all chapters.
+## @param meta: (Optional) Additional metadata for the search. Default is an empty dictionary.
+##
+## @return: void
+func initiate_text_search(scope: Types.SearchScope, translation: String = "", text: String = "", book: String = "", chapter: int = -1, meta: Dictionary = {}) -> void:
 	var verse_model = VerseModel.new(translation)
 	var verse_model_scrollmapper = VerseModel.new("scrollmapper")
 	var verses = []
@@ -215,16 +224,38 @@ func initiate_text_search(scope: Types.SearchScope, translation: String, text: S
 			verses = verse_model_scrollmapper.search_text(text, book, chapter)
 		_:
 			verses = verse_model.search_text(text, book, chapter)
-	propogate_search(translation, verses)
+	propogate_search(translation, verses, meta)
 
-func initiate_range_search(translation: String, start_book: String, start_chapter: int, start_verse: int, end_book: String, end_chapter: int, end_verse: int):
+## Initiates a search for a single verse in a specified translation and propagates the search results.
+func initiate_verse_search(translation: String = "", book: String = "", chapter: int = -1, verse: int = -1, meta:Dictionary = {}):
+	var verses = get_verse(translation, book, chapter, verse)
+	propogate_search(translation, verses, meta)
+
+## Initiates a search for a list of verses in a specified translation and propagates the search results.
+func initiate_id_search(translation:String, verse_ids:Array[int], meta={}):
+	var verse_model:VerseModel = VerseModel.new(translation)
+	var verses = verse_model.get_verses_by_ids(verse_ids)
+	propogate_search(translation, verses, meta)
+
+
+## Initiates a search for a range of verses in a specified translation and propagates the search results.
+##
+## @param translation: The translation of the Bible to search in.
+## @param start_book: The name of the book where the search starts.
+## @param start_chapter: The chapter number where the search starts.
+## @param start_verse: The verse number where the search starts.
+## @param end_book: The name of the book where the search ends.
+## @param end_chapter: The chapter number where the search ends.
+## @param end_verse: The verse number where the search ends.
+## @param meta: Optional metadata dictionary to include with the search.
+func initiate_range_search(translation: String = "", start_book: String = "", start_chapter: int = -1, start_verse: int = -1, end_book: String = "", end_chapter: int = -1, end_verse: int = -1, meta:Dictionary = {}):
 	var verses = get_verses_by_range(translation, start_book, start_chapter, start_verse, end_book, end_chapter, end_verse)
-	propogate_search(translation, verses)
+	propogate_search(translation, verses, meta)
 
 ## This *important* function handles search propagation to subscribed objects. It converts the array of verse results 
 ## from the database into a JSON string formatted for the API. This JSON string is then emitted via a signal 
 ## to be received by the subscribed objects.
-func propogate_search(translation_abbr:String, verse_results:Array):
+func propogate_search(translation_abbr:String, verse_results:Array, meta:Dictionary={}):
 	if verse_results.is_empty():
 		return
 	var results:Array = []
@@ -233,10 +264,11 @@ func propogate_search(translation_abbr:String, verse_results:Array):
 		if books.has(verse_result["translation_id"]):
 			verse_result["book"] = get_book_by_id(verse_result["translation_id"], verse_result["book_id"])
 		results.append(verse_result)
-	verses_searched.emit(results)
+	print(results)
+	verses_searched.emit(apply_meta(results, meta))
 
 ## Derived from propagate_search, this tailors verse output to cross-reference data.
-func propagate_cross_reference_search(translation_abbr:String, verse_results:Array):
+func propagate_cross_reference_search(translation_abbr:String, verse_results:Array, meta:Dictionary={}):
 	if verse_results.is_empty():
 		return
 	var results:Array = []
@@ -244,21 +276,50 @@ func propagate_cross_reference_search(translation_abbr:String, verse_results:Arr
 		verse_result["translation"] = get_translation_by_id(verse_result["translation_id"])
 		if books.has(verse_result["translation_id"]):
 			verse_result["book"] = get_book_by_id(verse_result["translation_id"], verse_result["book_id"])
-		results.append(verse_result)
-	verse_cross_references_searched.emit(results)
+		verse_result['meta'] = meta
+	verse_cross_references_searched.emit(apply_meta(results, meta))
 
-## Derived from propagate_search, this tailors verse output to vx_verse system.
-func propogate_vx_search(translation_abbr:String, verse_results:Array):
-
-	if verse_results.is_empty():
-		return
-	var results:Array = []
-	for verse_result in verse_results:
-		verse_result["translation"] = get_translation_by_id(verse_result["translation_id"])
-		if books.has(verse_result["translation_id"]):
-			verse_result["book"] = get_book_by_id(verse_result["translation_id"], verse_result["book_id"])
-		results.append(verse_result)
-	vx_verses_searched.emit(results)
 
 func emit_books_installed():
 	books_installed.emit()
+
+#region helper functions
+func apply_meta(search_results:Array, meta:Dictionary) -> Array:
+	if meta.is_empty():
+		return search_results
+	var i:int = 0
+	for verse in search_results:
+		var verse_id:int = verse["verse_id"]
+		if meta.has(verse_id):
+			search_results[i]["meta"]= meta[verse_id]
+		i += 1
+	return search_results
+
+## This function takes a verse and a meta dictionary and creates a key based on the verse id,
+## then places the meta in that key.
+##
+## Meta will take on various forms depending on which workstation uses it.
+##
+## Example:
+##
+## { 1814: { "work_space": "vx" } }
+##
+## Parameters:
+## - verse: The verse object containing the verse_id.
+## - meta: The dictionary containing metadata to be applied to the verse.
+static func apply_verse_meta(verse:Verse, meta:Dictionary) -> Dictionary:
+	return {verse.verse_id: meta}
+
+## Will merge verse meta. Used in other functions directly after apply_verse_meta.
+##
+## When a process is creating a collection of verses to push to a workstation, they may have special directives attached to them (in the meta). 
+## As verses are looped through, the meta_dictionary must be updated. That is what this function is responsible for.
+##
+## Parameters:
+## - meta: The main meta dictionary.
+## - verse_meta: The verse being appended to the dictionary.
+static func merge_verse_meta(meta:Dictionary = {}, verse_meta:Dictionary = {}) -> Dictionary:
+	meta.merge(verse_meta)
+	return meta
+
+#endregion
