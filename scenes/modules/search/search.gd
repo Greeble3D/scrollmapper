@@ -122,7 +122,6 @@ func populate_book_chapters(index:int = 0):
 	var book = ScriptureService.get_book_by_id(selected_translation_id, selected_book_id)
 	if book.is_empty():
 		return
-	print(book)
 	var chapters = ScriptureService.get_all_chapter_numbers_in_book(book["translation"], book["book_name"])
 
 	for chapter in chapters["chapters"]:

@@ -264,7 +264,6 @@ func propogate_search(translation_abbr:String, verse_results:Array, meta:Diction
 		if books.has(verse_result["translation_id"]):
 			verse_result["book"] = get_book_by_id(verse_result["translation_id"], verse_result["book_id"])
 		results.append(verse_result)
-	print(results)
 	verses_searched.emit(apply_meta(results, meta))
 
 ## Derived from propagate_search, this tailors verse output to cross-reference data.

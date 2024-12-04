@@ -42,7 +42,6 @@ func _on_verses_searched(results:Array):
 			continue
 		if result["meta"]["work_space"] != "vx":
 			continue
-		print(result)
 		var node = create_node()
 		node.initiate(
 			result["verse_id"],
