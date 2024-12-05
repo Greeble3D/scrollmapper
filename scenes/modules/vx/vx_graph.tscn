@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_graph.gd" id="1_sckcm"]
 [ext_resource type="PackedScene" uid="uid://cfxi6tibdx3cp" path="res://scenes/modules/vx/vx_canvas.tscn" id="2_jc8ca"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_editor.gd" id="2_jscly"]
-[ext_resource type="PackedScene" uid="uid://bo4ahtqmwhvd5" path="res://scenes/modules/vx/vx_node.tscn" id="2_lfqbj"]
 [ext_resource type="PackedScene" uid="uid://bmalaegyokgpk" path="res://scenes/modules/vx/vx_camera_2d.tscn" id="2_vbhxy"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_camera_2d.gd" id="3_gnil0"]
 [ext_resource type="PackedScene" uid="uid://bre0y3462iq32" path="res://scenes/modules/vx/vx_search_results.tscn" id="4_gm67k"]
 [ext_resource type="PackedScene" uid="uid://bmg34cgf1y4wo" path="res://scenes/modules/vx/vx_search_and_execute.tscn" id="5_rl1km"]
+[ext_resource type="PackedScene" uid="uid://b6jvh448lsipo" path="res://scenes/modules/vx/vx_cursor.tscn" id="6_h1ilm"]
 
-[node name="VXGraph" type="Control"]
+[node name="VXGraph" type="Control" node_paths=PackedStringArray("vx_canvas", "vx_editor", "camera_2d")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,11 +20,16 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("1_sckcm")
+vx_canvas = NodePath("VXCanvas")
+vx_editor = NodePath("VXEditor")
+camera_2d = NodePath("VXCamera2D")
 
-[node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_camera_2d", "vx_search_and_execute")]
+[node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor")]
 script = ExtResource("2_jscly")
+vx_graph = NodePath("..")
 vx_camera_2d = NodePath("../VXCamera2D")
 vx_search_and_execute = NodePath("EditorUI/VBoxContainer/VXSearchAndExecute")
+cursor = NodePath("../VXCursor")
 
 [node name="EditorUI" type="Control" parent="VXEditor"]
 layout_mode = 3
@@ -56,19 +61,10 @@ layout_mode = 2
 layout_mode = 1
 mouse_filter = 0
 
-[node name="VXNode" parent="VXCanvas" instance=ExtResource("2_lfqbj")]
-layout_mode = 1
-offset_right = 300.0
-offset_bottom = 150.0
-
-[node name="VXNode2" parent="VXCanvas" instance=ExtResource("2_lfqbj")]
-layout_mode = 1
-offset_left = 500.0
-offset_right = 800.0
-offset_bottom = 150.0
-
 [node name="VXCamera2D" parent="." instance=ExtResource("2_vbhxy")]
 script = ExtResource("3_gnil0")
 
-[editable path="VXCanvas/VXNode"]
-[editable path="VXCanvas/VXNode2"]
+[node name="VXCursor" parent="." instance=ExtResource("6_h1ilm")]
+layout_mode = 1
+
+[connection signal="ready" from="." to="VXCanvas" method="_on_vx_graph_ready"]
