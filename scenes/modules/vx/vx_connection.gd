@@ -35,6 +35,8 @@ func initiate(start_socket: VXSocket, end_socket: VXSocket = null):
 	self.end_socket = end_socket
 	get_starting_socket().socket_edit_ended.connect(_on_editing_ended)
 	establish_starting_connection_points()
+	# Add the connection to the VXGraph vx_connections dictionary...
+	VXGraph.get_instance().add_vx_connection(self)
 
 ## Process function
 func _process(delta: float) -> void:
@@ -59,6 +61,9 @@ func do_socket_connections() -> void:
 
 ## Delete the connection
 func delete_connection():
+	# First, remove the connection from the VXGraph vx_connections dictionary...
+	VXGraph.get_instance().remove_vx_connection(self)
+	# Now delete the connection...
 	if start_socket != null:
 		start_socket.delete()
 	if end_socket != null:

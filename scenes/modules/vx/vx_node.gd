@@ -62,6 +62,7 @@ func _ready():
 	UserInput.mouse_dragged.connect(drag_node)
 	UserInput.mouse_drag_ended.connect(_mouse_drag_ended_any_node)
 
+
 # Initialization
 func initiate(id: int, book: String, chapter: int, verse: int, text: String, translation: String):
 	self.id = id
@@ -71,6 +72,8 @@ func initiate(id: int, book: String, chapter: int, verse: int, text: String, tra
 	self.text = text
 	self.translation = translation
 	set_preview_text()
+	# Now add the node to the VXGraph vx_nodes dictionary...
+	VXGraph.get_instance().add_vx_node(self)
 
 func set_preview_text():
 	preview_text.bbcode_text = "[b]%s %s:%s[/b] - %s" % [book, str(chapter), str(verse), text]
@@ -79,6 +82,10 @@ func set_preview_text():
 func delete_node():
 	if not can_edit():
 		return
+	##First, remove the node from the VXGraph vx_nodes dictionary.
+	VXGraph.get_instance().remove_vx_node(self)
+
+	# Now remove connections.
 	for socket in sockets_top:
 		if is_instance_valid(socket) and socket.connection != null:
 			socket.delete_connection()

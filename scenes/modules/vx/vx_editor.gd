@@ -48,6 +48,8 @@ func _process(delta: float):
 		if not is_mouse_over_any_element():
 			vx_camera_2d.position -= offset
 
+## Will return true of the mouse is over a VXNode or VXSocket
+## Note: This implementation uses a loop, which can be improved to avoid relying on loops.
 func is_mouse_over_any_element() -> bool:
 
 	for node:VXNode in get_tree().get_nodes_in_group("nodes"):
