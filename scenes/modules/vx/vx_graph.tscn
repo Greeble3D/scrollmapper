@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bmg34cgf1y4wo" path="res://scenes/modules/vx/vx_search_and_execute.tscn" id="5_rl1km"]
 [ext_resource type="PackedScene" uid="uid://b6jvh448lsipo" path="res://scenes/modules/vx/vx_cursor.tscn" id="6_h1ilm"]
 
-[node name="VXGraph" type="Control" node_paths=PackedStringArray("vx_canvas", "vx_editor", "camera_2d", "nodes_info", "connections_info", "feed_back_notes")]
+[node name="VXGraph" type="Control" node_paths=PackedStringArray("vx_canvas", "vx_editor", "vx_search_results", "camera_2d", "nodes_info", "connections_info", "feed_back_notes")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +22,7 @@ mouse_filter = 2
 script = ExtResource("1_sckcm")
 vx_canvas = NodePath("VXCanvas")
 vx_editor = NodePath("VXEditor")
+vx_search_results = NodePath("VXEditor/EditorUI/VBoxContainer/VXSearchResults")
 camera_2d = NodePath("VXCamera2D")
 nodes_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/NodesInfo")
 connections_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/ConnectionsInfo")

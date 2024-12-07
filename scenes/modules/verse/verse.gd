@@ -218,6 +218,8 @@ func emit_button_pressed():
 ## multiple verses to a set before exporting to a workstation.
 func emit_button_action_add_to_export_list_pressed():
 	button_action_add_to_export_list_pressed.emit(self)
+
+
 #endregion
 
 #region icons
@@ -229,6 +231,12 @@ func set_add_remove_verse_icon(add:bool = true)->void:
 		button_action_add_to_export_list.icon = add_verse_to_set_texture
 	else:
 		button_action_add_to_export_list.icon = remove_verse_from_set_texture
+
+## Automatically triggers the button_action_add_to_export_list button.
+## Programatically activates the button_action_add_to_export_list button.
+func activate_button_action_add_to_export_list(activate: bool) -> void:
+	button_action_add_to_export_list.pressed.emit()
+
 #endregion 
 
 #region misc

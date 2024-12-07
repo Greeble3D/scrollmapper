@@ -6,10 +6,13 @@ const VX_CONNECTION = preload("res://scenes/modules/vx/vx_connection.tscn")
 
 static var instance:VXGraph = null
 static var current_focused_socket:VXSocket = null
+static var is_graph_locked:bool = false
 
 #region connected nodes
+
 @export var vx_canvas:VXCanvas
 @export var vx_editor:VXEditor
+@export var vx_search_results: MarginContainer 
 @export var camera_2d:Camera2D
 
 @export var nodes_info: RichTextLabel
@@ -35,9 +38,14 @@ func _ready():
 		queue_free()
 	ScriptureService.verses_searched.connect(_on_verses_searched)
 	graph_changed.connect(_on_graph_changed)
+	vx_search_results.search_results_toggled.connect(lock_graph)
 
 func _exit_tree() -> void:
 	VXGraph.instance = null
+
+## Locks the graph if the search results are shown.
+func lock_graph(lock:bool) -> void:
+	is_graph_locked = lock
 
 ## Pushes a message to the feed_back_notes.
 func print_feedback_note(note:String) -> void:
@@ -51,7 +59,7 @@ func add_vx_node(node: VXNode) -> void:
 		push_error("Cannot add a null node.")
 		return
 	if node.get_node_id() in vx_nodes:
-		push_error("Node is already added.")
+		node.delete_node()
 		return
 	vx_nodes[node.get_node_id()] = node
 	graph_changed.emit()
@@ -81,10 +89,8 @@ func add_vx_connection(connection: VXConnection) -> void:
 ## Removes a connection from the vx_connections dictionary.
 func remove_vx_connection(connection: VXConnection) -> void:
 	if connection == null:
-		push_error("Cannot remove a null connection.")
 		return
 	if connection.get_connection_id() not in vx_connections:
-		push_error("Connection is not found.")
 		return
 	if connection.id == -1:
 		print("Connection ID is -1")
@@ -119,12 +125,19 @@ func create_connection(start_socket:VXSocket, end_socket:VXSocket = null) -> VXC
 func create_node() -> VXNode:
 	var vx_node:VXNode = VX_NODE.instantiate()
 	vx_canvas.add_child(vx_node)
+	vx_node.node_selected.connect(move_node_to_front)
 	return vx_node
+
+## Moves node to front of UI
+func move_node_to_front(node:VXNode) -> void:
+	node.move_to_front()
 
 ## When the scripture service pushes a result, it will be caught here
 ## and a new node will be created. 
 func _on_verses_searched(results:Array):
 	for result in results:
+		if vx_nodes.has(result["verse_id"]):
+			continue # Avoid duplicates
 		# Ensure the result has "work_space" and it is "vx".
 		if not result.has("meta"):
 			continue

@@ -1,6 +1,7 @@
 extends MarginContainer
 
 @export var explore: Explore 
+@export var check_button_select_all: CheckButton
 @export var option_button_direction: OptionButton 
 @export var button_add: Button 
 @export var spacer: MarginContainer
@@ -14,6 +15,7 @@ signal search_results_received
 ## Option pressed triggers the close of the search results ui, nothing else.
 signal option_pressed
 signal add_verse(verse:Verse)
+signal search_results_toggled(showing: bool)
 
 func _ready() -> void:
 	explore.search_results_received.connect(emit_search_results_received)
@@ -22,14 +24,18 @@ func _ready() -> void:
 	search_results_received.connect(reveal_search_results)
 	option_pressed.connect(hide_search_results)
 	button_add.pressed.connect(_on_button_add_pressed)
+	check_button_select_all.toggled.connect(_on_check_button_select_all_toggled)
 	hide()
 
 func reveal_search_results() -> void:
+	check_button_select_all.set_pressed(false)
+	check_button_select_all.text = "Select All"
 	selected_verses = []
 	verses_selected = 0
 	button_add.text = get_add_button_text() 
 	spacer.hide()
 	show()
+	search_results_toggled.emit(true)
 
 func hide_search_results() -> void:
 	selected_verses = []
@@ -37,6 +43,7 @@ func hide_search_results() -> void:
 	explore.clear_verses()
 	spacer.show()
 	hide()
+	search_results_toggled.emit(false)
 
 ## This specifically adds or removes verses from the selected_verses
 ## array. 
@@ -111,6 +118,21 @@ func get_selected_verses_sorted() -> Array[Verse]:
 		verses_sorted[idx] = verse
 	return verses_sorted
 
+
 func _on_button_add_pressed() -> void:
 	request_verses_to_vx_graph()
 	hide_search_results()
+
+func _on_check_button_select_all_toggled(on:bool) -> void:
+	if on:
+		check_button_select_all.text = "Select None"
+		select_all_verses(true)
+	else:
+		check_button_select_all.text = "Select All"
+		select_all_verses(false)
+
+
+func select_all_verses(select_all: bool) -> void:
+	var verses: Array[Verse] = explore.get_verses()
+	for verse in verses:
+		verse.activate_button_action_add_to_export_list(select_all)

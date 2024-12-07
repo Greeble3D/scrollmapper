@@ -64,6 +64,7 @@ func _ready():
 	connection_deleted.connect(update_sockets)
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
+	UserInput.clicked.connect(select_node)
 	UserInput.right_clicked.connect(delete_node)
 	UserInput.mouse_dragged.connect(drag_node)
 	UserInput.mouse_drag_ended.connect(_mouse_drag_ended_any_node)
@@ -146,6 +147,12 @@ func delete_node():
 		if is_instance_valid(socket) and socket.connection != null:
 			socket.delete_connection()
 	queue_free()
+
+func select_node():
+	if not can_edit():
+		return
+	node_selected.emit(self)
+	VXGraph.get_instance().print_feedback_note("Node selected: %s" % get_verse_string())
 
 func drag_node(pos: Vector2):
 	if not can_edit():

@@ -20,15 +20,21 @@ func _ready():
 	UserInput.mouse_wheel_decreased.connect(_on_mouse_wheel_decreased)
 
 func _on_mouse_wheel_increased():
+	if VXGraph.is_graph_locked:
+		return
 	vx_camera_2d.zoom *= 1.1
 
 func _on_mouse_wheel_decreased():
+	if VXGraph.is_graph_locked:
+		return
 	vx_camera_2d.zoom *= 0.9
 
 func _on_mouse_drag_started(position: Vector2):
 	set_process(true)
 	if is_mouse_over_any_element():
 		is_dragging_allowed = false
+		return
+	if VXGraph.is_graph_locked:
 		return
 	drag_start_position = position
 	is_dragging = true
@@ -72,6 +78,8 @@ func get_camera_center_point_to_global()->Vector2:
 	return center_screen
 
 func set_cursor_position(position:Vector2) -> void:
+	if VXGraph.is_graph_locked:
+		return
 	var final_position:Vector2 = position - cursor.size / 2
 	cursor.global_position = final_position
 
@@ -83,6 +91,8 @@ func _on_vx_graph_ready() -> void:
 
 func _on_mouse_double_clicked():
 	if is_mouse_over_any_element():
+		return
+	if VXGraph.is_graph_locked:
 		return
 	var mouse_position:Vector2 = vx_graph.get_global_mouse_position()
 	set_cursor_position(mouse_position)

@@ -36,6 +36,12 @@ func setup_verse(verse_data: Dictionary) -> void:
 	verse_instance.button_action_add_to_export_list_pressed.connect(emit_button_action_add_to_export_list_pressed)
 	scripture_container.add_child(verse_instance)
 
+## This function returns all the verses in the scripture_container
+func get_verses() -> Array:
+	var verses: Array[Verse] = []
+	for verse in scripture_container.get_children():
+		verses.append(verse)
+	return verses
 
 func clear_verses() -> void:
 	for verse in scripture_container.get_children():

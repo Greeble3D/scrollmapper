@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bsk5wclky6amu" path="res://images/icons/editor/ArrowDown.svg" id="4_b287g"]
 [ext_resource type="Texture2D" uid="uid://cn2b8usxom1ce" path="res://images/icons/editor/ArrowRight.svg" id="5_io7a2"]
 
-[node name="VXSearchResults" type="MarginContainer" node_paths=PackedStringArray("explore", "option_button_direction", "button_add")]
+[node name="VXSearchResults" type="MarginContainer" node_paths=PackedStringArray("explore", "check_button_select_all", "option_button_direction", "button_add")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -21,6 +21,7 @@ theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 script = ExtResource("1_o3a1a")
 explore = NodePath("VBoxContainer/Explore")
+check_button_select_all = NodePath("VBoxContainer/ExplorOptions/HBoxContainer/CheckButtonSelectAll")
 option_button_direction = NodePath("VBoxContainer/ExplorOptions/HBoxContainer/OptionButtonDirection")
 button_add = NodePath("VBoxContainer/ExplorOptions/HBoxContainer/ButtonAdd")
 
@@ -46,6 +47,11 @@ theme_override_constants/margin_bottom = 10
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ExplorOptions"]
 layout_mode = 2
 alignment = 1
+
+[node name="CheckButtonSelectAll" type="CheckButton" parent="VBoxContainer/ExplorOptions/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Select ALL"
 
 [node name="OptionButtonDirection" type="OptionButton" parent="VBoxContainer/ExplorOptions/HBoxContainer"]
 layout_mode = 2
