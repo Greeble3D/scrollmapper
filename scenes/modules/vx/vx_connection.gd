@@ -1,5 +1,14 @@
 extends Line2D
+
+## The VXConnection class is the connection between two VXNodes.
+## Connections connect to sockets, but the connecting nodes can also
+## be referenced here.
+## A great melody I was listening to while creating this project:
+## https://www.youtube.com/watch?v=3gL9kWD9XRo&t=1457s
+
 class_name VXConnection
+
+var id:int = -1
 
 ## The starting node of the connection.
 var start_node: VXNode = null
@@ -28,6 +37,8 @@ var is_connection_being_edited: bool = false:
 ## Increase this value to make the curve more extreme
 @export var control_point_offset: float = 50
 
+signal connection_finalized(start_node:VXNode, end_node:VXNode)
+
 ## Initialization function
 func initiate(start_socket: VXSocket, end_socket: VXSocket = null):	
 	is_connection_being_edited = true
@@ -35,12 +46,46 @@ func initiate(start_socket: VXSocket, end_socket: VXSocket = null):
 	self.end_socket = end_socket
 	get_starting_socket().socket_edit_ended.connect(_on_editing_ended)
 	establish_starting_connection_points()
-	# Add the connection to the VXGraph vx_connections dictionary...
-	VXGraph.get_instance().add_vx_connection(self)
+
+## Function to get the "other node". Used when nodes are discovering eachother's connections.
+## This function is used to get the node that is not the one supplied.
+## For example, if the start_node is supplied, the end_node is returned.
+func get_other_node(node: VXNode) -> VXNode:
+	if start_node == node:
+		return end_node
+	elif end_node == node:
+		return start_node
+	return null
+
+## A unique and important function to set the connection ID 
+## based on the incoming and outgoing scripture link "<scripture>:<scripture>". The 
+## ID is a numerical hash from the string of those two links.
+## It must not be run until the connection is made (i.e., the initiate
+## method should have been run first.)
+func set_connection_id():
+	if start_node == null or end_node == null:
+		return
+	id = get_connection_hash(start_node.get_verse_string(), end_node.get_verse_string())
+
+## Gets the connection hash based on the start and end strings.
+func get_connection_hash(start_string:String, end_string:String)->int:
+	var connection_string:String = "%s:%s"%[start_string, end_string]
+	return hash(connection_string)
+
+## Gets the connection id
+func get_connection_id() -> int:
+	return id
 
 ## Process function
 func _process(delta: float) -> void:
 	update_connection_points_mouse_drag()
+
+## Connection finalized, add the connection to the VXGraph vx_connections dictionary.
+func _on_connection_finalized(start_node:VXNode, end_node:VXNode) -> void:
+	if id == -1: # If the connection ID is not set, set it.
+		set_connection_id()
+		VXGraph.get_instance().add_vx_connection(self)
+		
 
 ## The main function to connect sockets.
 ## This function fires after mouse-up on editing.
@@ -53,7 +98,6 @@ func do_socket_connections() -> void:
 
 	start_socket.connection = self
 	end_socket.connection = self
-
 	connect_signals()
 	get_starting_socket().emit_new_connection_created(get_starting_socket(), get_ending_socket())
 	get_ending_socket().emit_new_connection_created(get_starting_socket(), get_ending_socket())
@@ -76,6 +120,7 @@ func delete_connection():
 
 ## Connect the signal handlers
 func connect_signals():
+	connection_finalized.connect(_on_connection_finalized)	
 	if not get_starting_socket().node_moved.is_connected(_on_socket_moved):
 		get_starting_socket().node_moved.connect(_on_socket_moved)
 	if not get_ending_socket().node_moved.is_connected(_on_socket_moved):
@@ -95,39 +140,43 @@ func _on_editing_ended() -> void:
 func is_connection_route_valid() -> bool:
 	# CASE: Node connected to self. Not going to work.
 	if get_starting_socket() == get_ending_socket():
-		print("Rejection: Node connected to self")
+		VXGraph.get_instance().print_feedback_note("Rejection: Node connected to self")
 		return false
 	# CASE: No target socket. Not going to work.
 	if get_ending_socket() == null:
-		print("Rejection: No target socket")
+		VXGraph.get_instance().print_feedback_note("Rejection: No target socket")
 		return false
 	# CASE: Socket combination is invalid; ie, input to input, output to output, etc.
 	if not is_connection_valid(get_starting_socket(), get_ending_socket()):
+		return false
+	# CASE: Connection already exists between these two scriptures.
+	if VXGraph.get_instance().has_connection_id(get_connection_hash(get_starting_socket().get_connected_node().get_verse_string(), get_ending_socket().get_connected_node().get_verse_string())): 
+		VXGraph.get_instance().print_feedback_note("Rejection: Connection between these verses already exists")
 		return false
 	# CASE: Valid connection. Connect the sockets.
 	if get_ending_socket() != null and get_starting_socket() != null:
 		return true
 	# CASE: Still unknown. Default false.
-	print("Rejection: Unknown case")
+	VXGraph.get_instance().print_feedback_note("Rejection: Unknown case")
 	return false
 
 ## Validate connection based on socket types and directions
 func is_connection_valid(start_sock: VXSocket, end_sock: VXSocket) -> bool:
 	# Inputs cannot connect to inputs
 	if start_sock.socket_type == Types.SocketType.INPUT and end_sock.socket_type == Types.SocketType.INPUT:
-		print("Rejection: Inputs cannot connect to inputs")
+		VXGraph.get_instance().print_feedback_note("Rejection: Inputs cannot connect to inputs")
 		return false
 	# Outputs cannot connect to outputs
 	if start_sock.socket_type == Types.SocketType.OUTPUT and end_sock.socket_type == Types.SocketType.OUTPUT:
-		print("Rejection: Outputs cannot connect to outputs")
+		VXGraph.get_instance().print_feedback_note("Rejection: Outputs cannot connect to outputs")
 		return false
 	# Parallels cannot connect to linears
 	if start_sock.socket_direction == Types.SocketDirectionType.PARALLEL and end_sock.socket_direction == Types.SocketDirectionType.LINEAR:
-		print("Rejection: Parallels cannot connect to linears")
+		VXGraph.get_instance().print_feedback_note("Rejection: Parallels cannot connect to linears")
 		return false
 	# Linears cannot connect to parallels
 	if start_sock.socket_direction == Types.SocketDirectionType.LINEAR and end_sock.socket_direction == Types.SocketDirectionType.PARALLEL:
-		print("Rejection: Linears cannot connect to parallels")
+		VXGraph.get_instance().print_feedback_note("Rejection: Linears cannot connect to parallels")
 		return false
 	# Linears can connect to linears
 	if start_sock.socket_direction == Types.SocketDirectionType.LINEAR and end_sock.socket_direction == Types.SocketDirectionType.LINEAR:
@@ -142,7 +191,7 @@ func is_connection_valid(start_sock: VXSocket, end_sock: VXSocket) -> bool:
 	if start_sock.socket_type == Types.SocketType.OUTPUT and end_sock.socket_type == Types.SocketType.INPUT:
 		return true
 	# Default case: invalid connection
-	print("Rejection: Default case - invalid connection")
+	VXGraph.get_instance().print_feedback_note("Rejection: Default case - invalid connection")
 	return false
 
 ## Retire connection
@@ -194,6 +243,7 @@ func finalize_connection_points():
 	start_node = get_starting_socket().get_connected_node()
 	end_node = get_ending_socket().get_connected_node()
 	create_node_curve_by_connection()
+	connection_finalized.emit(start_node, end_node)
 
 ## Update connection points during mouse drag
 func update_connection_points_mouse_drag():

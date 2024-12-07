@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bmg34cgf1y4wo" path="res://scenes/modules/vx/vx_search_and_execute.tscn" id="5_rl1km"]
 [ext_resource type="PackedScene" uid="uid://b6jvh448lsipo" path="res://scenes/modules/vx/vx_cursor.tscn" id="6_h1ilm"]
 
-[node name="VXGraph" type="Control" node_paths=PackedStringArray("vx_canvas", "vx_editor", "camera_2d")]
+[node name="VXGraph" type="Control" node_paths=PackedStringArray("vx_canvas", "vx_editor", "camera_2d", "nodes_info", "connections_info", "feed_back_notes")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,6 +23,9 @@ script = ExtResource("1_sckcm")
 vx_canvas = NodePath("VXCanvas")
 vx_editor = NodePath("VXEditor")
 camera_2d = NodePath("VXCamera2D")
+nodes_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/NodesInfo")
+connections_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/ConnectionsInfo")
+feed_back_notes = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/FeedBackNotes")
 
 [node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor")]
 script = ExtResource("2_jscly")
@@ -54,8 +57,44 @@ mouse_filter = 2
 [node name="VXSearchAndExecute" parent="VXEditor/EditorUI/VBoxContainer" instance=ExtResource("5_rl1km")]
 layout_mode = 2
 
-[node name="VXSearchResults" parent="VXEditor/EditorUI/VBoxContainer" instance=ExtResource("4_gm67k")]
+[node name="VXSearchResults" parent="VXEditor/EditorUI/VBoxContainer" node_paths=PackedStringArray("spacer") instance=ExtResource("4_gm67k")]
+visible = false
 layout_mode = 2
+spacer = NodePath("../Spacer")
+
+[node name="Spacer" type="MarginContainer" parent="VXEditor/EditorUI/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="VXGraphInfo" type="MarginContainer" parent="VXEditor/EditorUI/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="NodesInfo" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Nodes: 0"
+fit_content = true
+
+[node name="ConnectionsInfo" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Connections: 0"
+fit_content = true
+
+[node name="FeedBackNotes" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="VXCanvas" parent="." instance=ExtResource("2_jc8ca")]
 layout_mode = 1

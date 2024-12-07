@@ -3,11 +3,17 @@ class_name VXNode
 
 # Main Attributes
 @export_group("Main Attributes")
+## The ID is the same found in the database.
 @export var id: int
+## The book of the Bible or collection.
 @export var book: String
+## The chapter of the verse.
 @export var chapter: int
+## The verse number.
 @export var verse: int
+## The text of the verse.
 @export var text: String
+## The translation of the Bible or collection.
 @export var translation: String
 
 # UI Elements
@@ -75,8 +81,49 @@ func initiate(id: int, book: String, chapter: int, verse: int, text: String, tra
 	# Now add the node to the VXGraph vx_nodes dictionary...
 	VXGraph.get_instance().add_vx_node(self)
 
+## Function to get all neighboring nodes.
+## Used in mapping the graph.
+func get_connected_nodes() -> Dictionary:
+	var neighbors: Dictionary = {
+		"top": [], # linear, input
+		"bottom": [], # linear, output
+		"left": [], # parallel, input
+		"right": [], # parallel, output
+	}
+	for socket in sockets_top:
+		if is_instance_valid(socket) and socket.connection != null:
+			var neighbor: VXNode = socket.connection.get_other_node(self)
+			if neighbor != null:
+				neighbors["top"].append(neighbor)
+	for socket in sockets_bottom:
+		if is_instance_valid(socket) and socket.connection != null:
+			var neighbor: VXNode = socket.connection.get_other_node(self)
+			if neighbor != null:
+				neighbors["bottom"].append(neighbor)
+	for socket in sockets_left:
+		if is_instance_valid(socket) and socket.connection != null:
+			var neighbor: VXNode = socket.connection.get_other_node(self)
+			if neighbor != null:
+				neighbors["left"].append(neighbor)
+	for socket in sockets_right:
+		if is_instance_valid(socket) and socket.connection != null:
+			var neighbor: VXNode = socket.connection.get_other_node(self)
+			if neighbor != null:
+				neighbors["right"].append(neighbor)
+	return neighbors
+
+# Returns the verse string in the format "book-chapter-verse".
+# This is used for human-readable reference to the verse and also in the 
+# VXConnection class for generating a hash when creating the id.
+func get_verse_string() -> String:
+	return "%s-%s-%s" % [book.replace(" ", "_"), str(chapter), str(verse)]
+
 func set_preview_text():
 	preview_text.bbcode_text = "[b]%s %s:%s[/b] - %s" % [book, str(chapter), str(verse), text]
+
+## Returns the VXNode instance id.
+func get_node_id()->int:
+	return id
 
 ## Delete the node. 
 func delete_node():
@@ -142,6 +189,7 @@ func emit_connection_deleted(socket:VXSocket) -> void:
 ## This function maintenances all of the sockets. Distributing them and removing unused ones,
 ## but ensures that at least one free socket is available for new connections.
 func update_sockets(starting_socket: VXSocket = null, ending_socket: VXSocket = null):
+	await get_tree().process_frame # Prevent race condition. If this is not here, the sockets will not be updated correctly.
 	remove_invalid_sockets()
 	discover_socket_dimensions()
 	remove_extra_sockets_from_array(sockets_top)

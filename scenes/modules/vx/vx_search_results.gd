@@ -3,6 +3,7 @@ extends MarginContainer
 @export var explore: Explore 
 @export var option_button_direction: OptionButton 
 @export var button_add: Button 
+@export var spacer: MarginContainer
 
 ## The number of verses selected
 var verses_selected:int = 0
@@ -27,12 +28,14 @@ func reveal_search_results() -> void:
 	selected_verses = []
 	verses_selected = 0
 	button_add.text = get_add_button_text() 
+	spacer.hide()
 	show()
 
 func hide_search_results() -> void:
 	selected_verses = []
 	verses_selected = 0
 	explore.clear_verses()
+	spacer.show()
 	hide()
 
 ## This specifically adds or removes verses from the selected_verses

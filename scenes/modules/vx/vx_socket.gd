@@ -46,6 +46,7 @@ func _input_event(_viewport, event, _shape_idx):
 			if UserInput.is_dragging:
 				set_currently_editing(true)
 
+
 # Socket Type and Direction
 func set_socket_type(socket_type: Types.SocketType):
 	self.socket_type = socket_type
@@ -61,7 +62,7 @@ func set_connected_node(node: VXNode):
 	if not connected_node.sockets_updated.is_connected(_on_socket_updated):
 		connected_node.sockets_updated.connect(_on_socket_updated)
 
-## Deletes the attached connection.
+## Gets the attached connection.
 func get_connected_node() -> VXNode:
 	return connected_node
 
@@ -77,8 +78,7 @@ func delete_connection():
 func delete():
 	if is_instance_valid(self):
 		queue_free()
-		var connected_node_reference:VXNode = connected_node
-		connected_node_reference.emit_connection_deleted(self)
+		connected_node.emit_connection_deleted(self)
 
 # Mouse Events
 func _on_mouse_entered() -> void:
@@ -97,7 +97,7 @@ func _on_editing_started(_start_position: Vector2):
 	if not is_mouse_over_socket:
 		return
 	if connection != null:
-		connection.queue_free()
+		connection.delete_connection()
 		return
 	set_currently_editing(true)
 	create_new_connection()
