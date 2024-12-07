@@ -41,6 +41,7 @@ class_name VXNode
 # Booleans
 var is_mouse_over_node:bool = false
 var dragging_already_in_progress:bool = false
+var is_selected:bool = false
 
 # Signals
 signal new_connection_created(start_socket: VXSocket, end_socket: VXSocket)
@@ -148,11 +149,13 @@ func delete_node():
 			socket.delete_connection()
 	queue_free()
 
+## Registers the node as selected via the signal which is heard by VXGraph.
+## The node's selected state (true or false) is assigned by VXGraph.set_selected_node 
+## for the sake of continuity. 
 func select_node():
-	if not can_edit():
+	if not can_edit() || is_selected:
 		return
 	node_selected.emit(self)
-	VXGraph.get_instance().print_feedback_note("Node selected: %s" % get_verse_string())
 
 func drag_node(pos: Vector2):
 	if not can_edit():
@@ -345,3 +348,25 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	dragging_already_in_progress = UserInput.is_dragging
 	is_mouse_over_node = false
+
+#region automatic node connections
+
+func get_empty_socket(socket_type: Types.SocketType, direction_type: Types.SocketDirectionType) -> VXSocket:
+	var sockets: Array[VXSocket] = []
+	if socket_type == Types.SocketType.INPUT and direction_type == Types.SocketDirectionType.LINEAR:
+		sockets = sockets_top
+	elif socket_type == Types.SocketType.INPUT and direction_type == Types.SocketDirectionType.PARALLEL:
+		sockets = sockets_left
+	elif socket_type == Types.SocketType.OUTPUT and direction_type == Types.SocketDirectionType.LINEAR:
+		sockets = sockets_bottom
+	elif socket_type == Types.SocketType.OUTPUT and direction_type == Types.SocketDirectionType.PARALLEL:
+		sockets = sockets_right
+
+	for socket in sockets:
+		if is_instance_valid(socket) and socket.connection == null:
+			return socket
+
+	# If no empty socket is found, return null
+	return null
+
+#endregion

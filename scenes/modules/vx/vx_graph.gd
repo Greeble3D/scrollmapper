@@ -8,6 +8,8 @@ static var instance:VXGraph = null
 static var current_focused_socket:VXSocket = null
 static var is_graph_locked:bool = false
 
+var selected_node:VXNode = null
+
 #region connected nodes
 
 @export var vx_canvas:VXCanvas
@@ -39,6 +41,7 @@ func _ready():
 	ScriptureService.verses_searched.connect(_on_verses_searched)
 	graph_changed.connect(_on_graph_changed)
 	vx_search_results.search_results_toggled.connect(lock_graph)
+	
 
 func _exit_tree() -> void:
 	VXGraph.instance = null
@@ -49,6 +52,9 @@ func lock_graph(lock:bool) -> void:
 
 ## Pushes a message to the feed_back_notes.
 func print_feedback_note(note:String) -> void:
+	if note.is_empty():
+		return
+	print(note)
 	feed_back_notes.text = note
 	await get_tree().create_timer(5.0).timeout
 	feed_back_notes.text = ""
@@ -126,9 +132,17 @@ func create_node() -> VXNode:
 	var vx_node:VXNode = VX_NODE.instantiate()
 	vx_canvas.add_child(vx_node)
 	vx_node.node_selected.connect(move_node_to_front)
+	vx_node.node_selected.connect(set_selected_node)
 	return vx_node
 
-## Moves node to front of UI
+## Main function to select in this class and on the node. 
+func set_selected_node(node:VXNode) -> void:
+	if selected_node != null:
+		selected_node.is_selected = false
+	selected_node = node
+	selected_node.is_selected = true
+	print_feedback_note("Selected node: " + str(node.get_verse_string()))
+
 func move_node_to_front(node:VXNode) -> void:
 	node.move_to_front()
 
@@ -156,6 +170,55 @@ func _on_verses_searched(results:Array):
 		)
 		await get_tree().process_frame
 		node.move_node(vx_editor.get_cursor_position())
+		if not result["meta"].has("socket_direction"):
+			set_selected_node(node)
+			return
+		match result["meta"]["socket_direction"]:
+			"SEPARATE":
+				# Handle SEPARATE socket direction
+				pass
+			"LINEAR":
+				connect_node_linear(node)
+			"PARALLEL":
+				connect_node_parallel(node)
+				pass
+
+
+func connect_node_parallel(node:VXNode) -> void:
+	if selected_node == null:
+		set_selected_node(node)
+		return	
+	if node.get_node_id() > selected_node.get_node_id():
+		node.move_node(selected_node.position + Vector2(selected_node.size.x + 100, 0))
+		var output_socket_selected_node = selected_node.get_empty_socket(Types.SocketType.OUTPUT, Types.SocketDirectionType.PARALLEL)
+		var input_socket_target_node = node.get_empty_socket(Types.SocketType.INPUT, Types.SocketDirectionType.PARALLEL)
+		connect_node_sockets(output_socket_selected_node, input_socket_target_node)
+		set_selected_node(output_socket_selected_node.connected_node)
+	else:
+		node.move_node(selected_node.position - Vector2(node.size.x + 100, 0))
+		var output_socket_target_node = node.get_empty_socket(Types.SocketType.OUTPUT, Types.SocketDirectionType.PARALLEL)
+		var input_socket_selected_node = selected_node.get_empty_socket(Types.SocketType.INPUT, Types.SocketDirectionType.PARALLEL)
+		connect_node_sockets(output_socket_target_node, input_socket_selected_node)
+		set_selected_node(input_socket_selected_node.connected_node)
+
+## Connects two nodes in a linear fashion.
+func connect_node_linear(node:VXNode) -> void:
+	if selected_node == null:
+		set_selected_node(node)
+		return
+	node.move_node(selected_node.position+Vector2(0, node.size.y + 100))
+	var output_socket_selected_node = selected_node.get_empty_socket(Types.SocketType.OUTPUT, Types.SocketDirectionType.LINEAR)
+	var input_socket_target_node = node.get_empty_socket(Types.SocketType.INPUT, Types.SocketDirectionType.LINEAR)
+	connect_node_sockets(output_socket_selected_node, input_socket_target_node)
+	set_selected_node(input_socket_target_node.connected_node)
+
+## IMPORTANT FUNCTION -- Connects nodes by their sockets independent of mouse drag / drop operations
+## Basically it is the programatic way of connecting two nodes. 
+func connect_node_sockets(start_socket:VXSocket, end_socket:VXSocket) -> void:
+	var connection:VXConnection = create_connection(start_socket, end_socket)
+	current_focused_socket = end_socket 
+	connection.do_socket_connections()
+	
 
 ## When the graph changes, this function will be called.
 func _on_graph_changed()->void:

@@ -100,7 +100,9 @@ func request_verses_to_vx_graph():
 			"last_verse_id": last_verse_id  # for tracking linearity in the node editor
 		}
 		var verse_meta: Dictionary = ScriptureService.apply_verse_meta(verse, added_meta)
+
 		meta = ScriptureService.merge_verse_meta(meta, verse_meta)
+
 		last_verse_id = verse.verse_id
 
 	# Initiate the search with the prepared data

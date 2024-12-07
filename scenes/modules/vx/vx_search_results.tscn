@@ -60,13 +60,12 @@ selected = 0
 item_count = 3
 popup/item_0/text = "Unconnected"
 popup/item_0/icon = ExtResource("3_vt7t6")
-popup/item_0/id = 2
 popup/item_1/text = "Linear"
 popup/item_1/icon = ExtResource("4_b287g")
 popup/item_1/id = 1
 popup/item_2/text = "Parallel"
 popup/item_2/icon = ExtResource("5_io7a2")
-popup/item_2/id = 1
+popup/item_2/id = 2
 
 [node name="ButtonAdd" type="Button" parent="VBoxContainer/ExplorOptions/HBoxContainer"]
 layout_mode = 2

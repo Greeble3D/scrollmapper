@@ -85,7 +85,6 @@ func _on_connection_finalized(start_node:VXNode, end_node:VXNode) -> void:
 	if id == -1: # If the connection ID is not set, set it.
 		set_connection_id()
 		VXGraph.get_instance().add_vx_connection(self)
-		
 
 ## The main function to connect sockets.
 ## This function fires after mouse-up on editing.
