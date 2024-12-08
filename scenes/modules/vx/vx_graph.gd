@@ -181,9 +181,10 @@ func _on_verses_searched(results:Array):
 				connect_node_linear(node)
 			"PARALLEL":
 				connect_node_parallel(node)
+				arrange_node_positions()
 				pass
 
-
+## Connects two nodes in a parallel fashion.
 func connect_node_parallel(node:VXNode) -> void:
 	if selected_node == null:
 		set_selected_node(node)
@@ -233,3 +234,95 @@ func update_node_info_text() ->void:
 ## Updates the connection info text.
 func update_connection_info_text() ->void:
 	connections_info.text = "Connections: " + str(vx_connections.size())
+
+## Arranges node positions based on their connections.
+func arrange_node_positions():
+	await get_tree().process_frame # This stops issues with nodes getting skipped
+	var active_node:VXNode = selected_node
+	var connected_nodes:Dictionary = active_node.get_connected_nodes()
+
+	var top_nodes: Array = connected_nodes.get("top", [])
+	var bottom_nodes: Array = connected_nodes.get("bottom", [])
+	var left_nodes: Array = connected_nodes.get("left", [])
+	var right_nodes: Array = connected_nodes.get("right", [])
+
+	# Get the boundaries of the rectangles that will contain the nodes.
+	var top_rectangle = calculate_rectangle_boundaries(active_node, top_nodes, "top")
+	var bottom_rectangle = calculate_rectangle_boundaries(active_node, bottom_nodes, "bottom")
+	var left_rectangle = calculate_rectangle_boundaries(active_node, left_nodes, "left")
+	var right_rectangle = calculate_rectangle_boundaries(active_node, right_nodes, "right")
+	
+	# Will determine offsets for arrange_nodes_within_rectangle
+	var width_max:float = max(top_rectangle["size"].x, bottom_rectangle["size"].x)
+	var height_max:float = max(left_rectangle["size"].y, right_rectangle["size"].y)
+	
+	# Arrange nodes within the rectangles.
+	arrange_nodes_within_rectangle(top_nodes, top_rectangle, Vector2(0, -height_max/2))
+	arrange_nodes_within_rectangle(bottom_nodes, bottom_rectangle, Vector2(0, height_max/2))
+	arrange_nodes_within_rectangle(left_nodes, left_rectangle, Vector2(-width_max/2, 0))
+	arrange_nodes_within_rectangle(right_nodes, right_rectangle, Vector2(width_max/2, 0))
+
+## Calculates the boundaries of the rectangle that will contain the nodes.
+## Rectagle is positioned on the given side of the active node.
+## Active node is the node that is selected by the user.
+## Connected nodes are the nodes that are connected to the active node.
+## Side is the side of the active node that the rectangle will be positioned.
+func calculate_rectangle_boundaries(active_node:VXNode, connected_nodes:Array, side:String):
+	var active_node_center:Vector2 = active_node.position + active_node.size/2
+	var rectangle_size_parallel:Vector2 = Vector2(0, 0)
+	var rectangle_size_linear:Vector2 = Vector2(0, 0)
+	var padding:float = 50
+	for node:VXNode in connected_nodes:
+		var node_size:Vector2 = node.size
+		# Calculate the rectangle size for parallel connections if that is what it will become.
+		if node_size.x > rectangle_size_parallel.x:
+			rectangle_size_parallel.x = node_size.x
+		rectangle_size_parallel.y += node_size.y + padding
+		# Calculate the rectangle size for linear connections if that is what it will become.
+		if node_size.y > rectangle_size_linear.y:
+			rectangle_size_linear.y = node_size.y
+		rectangle_size_linear.x += node_size.x + padding
+	
+	var rectangle_size:Vector2 = Vector2(0, 0)
+	var rectangle_position:Vector2 = Vector2(0, 0)
+
+	match side:
+		"top", "bottom":
+			rectangle_size = rectangle_size_linear
+		"left", "right":
+			rectangle_size = rectangle_size_parallel
+
+	match side:
+		"top":
+			rectangle_position = active_node_center - Vector2(rectangle_size.x/2, rectangle_size.y + active_node.size.y/2 + 150)
+		"bottom":
+			rectangle_position = active_node_center + Vector2(-rectangle_size.x/2, active_node.size.y/2 + 150)
+		"left":
+			rectangle_position = active_node_center - Vector2(rectangle_size.x + active_node.size.x/2 + 150, rectangle_size.y/2)
+		"right":
+			rectangle_position = active_node_center + Vector2(active_node.size.x/2 + 150, -rectangle_size.y/2)
+
+	return {
+		"position": rectangle_position,
+		"size": rectangle_size
+	}
+
+## Arranges nodes within the given rectangle.
+## Nodes are arranged from left to right if the rectangle is wider than it is tall.
+## Nodes are arranged from top to bottom if the rectangle is taller than it is wide.
+## Padding is used to separate the nodes.
+func arrange_nodes_within_rectangle(nodes:Array, rectangle:Dictionary, offset:Vector2 = Vector2.ZERO) -> void:
+	var position:Vector2 = rectangle["position"] + offset
+	var size:Vector2 = rectangle["size"]
+	var padding:float = 50
+
+	if size.x > size.y:
+		# Arrange nodes from left to right
+		for node in nodes:
+			node.position = position
+			position.x += node.size.x + padding
+	else:
+		# Arrange nodes from top to bottom
+		for node in nodes:
+			node.position = position
+			position.y += node.size.y + padding
