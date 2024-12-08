@@ -47,6 +47,7 @@ var is_selected:bool = false
 signal new_connection_created(start_socket: VXSocket, end_socket: VXSocket)
 signal connection_deleted(socket:VXSocket)
 signal node_selected(node: VXNode)
+signal node_selected_plus(node:VXNode)
 signal node_moved(new_position: Vector2)
 signal sockets_updated
 
@@ -56,6 +57,7 @@ const VX_SOCKET = preload("res://scenes/modules/vx/vx_socket.tscn")
 
 # Variables
 var placement_offset: Vector2 = Vector2.ZERO
+var last_set_global_position:Vector2 = Vector2.ZERO
 
 # Lifecycle
 func _ready():
@@ -67,6 +69,9 @@ func _ready():
 	mouse_exited.connect(_on_mouse_exited)
 	UserInput.clicked.connect(select_node)
 	UserInput.double_clicked.connect(arrange_connected_nodes)
+	UserInput.click_released.connect(unselect_node_set)
+	UserInput.click_released.connect(log_last_set_global_position)
+	UserInput.shift_clicked.connect(select_node_multiple)
 	UserInput.right_clicked.connect(delete_node)
 	UserInput.mouse_dragged.connect(drag_node)
 	UserInput.mouse_drag_ended.connect(_mouse_drag_ended_any_node)
@@ -83,6 +88,7 @@ func initiate(id: int, book: String, chapter: int, verse: int, text: String, tra
 	set_preview_text()
 	# Now add the node to the VXGraph vx_nodes dictionary...
 	VXGraph.get_instance().add_vx_node(self)
+	last_set_global_position = global_position
 
 ## Function to get all neighboring nodes.
 ## Used in mapping the graph.
@@ -157,6 +163,22 @@ func select_node():
 	if not can_edit() || is_selected:
 		return
 	node_selected.emit(self)
+
+## Unselects the node set in VXGraph
+func unselect_node_set() ->void:
+	if not Input.is_key_pressed(KEY_SHIFT):
+		VXGraph.get_instance().clear_selection_set()
+
+## This function is called from the _mouse_drag_ended in UserInput
+## Used in drag operations in VXGraph
+func log_last_set_global_position() -> void:
+	last_set_global_position = global_position
+
+## Registers the node as selected via the signal which is heard by VXGraph.
+func select_node_multiple(pos:Vector2):
+	if not can_edit():
+		return
+	node_selected_plus.emit(self)	
 
 func drag_node(pos: Vector2):
 	if not can_edit():

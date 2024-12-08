@@ -8,7 +8,10 @@ static var instance:VXGraph = null
 static var current_focused_socket:VXSocket = null
 static var is_graph_locked:bool = false
 
+## The main "Active Node" selected.
 var selected_node:VXNode = null
+## Additional nodes added via shift-click.
+var selected_nodes:Array[VXNode] = []
 
 #region connected nodes
 
@@ -45,6 +48,7 @@ func _ready():
 
 func _exit_tree() -> void:
 	VXGraph.instance = null
+
 
 ## Locks the graph if the search results are shown.
 func lock_graph(lock:bool) -> void:
@@ -133,6 +137,8 @@ func create_node() -> VXNode:
 	vx_canvas.add_child(vx_node)
 	vx_node.node_selected.connect(move_node_to_front)
 	vx_node.node_selected.connect(set_selected_node)
+	vx_node.node_moved.connect(move_node_set)
+	vx_node.node_selected_plus.connect(add_node_to_selection_set)
 	return vx_node
 
 ## Main function to select in this class and on the node. 
@@ -142,6 +148,29 @@ func set_selected_node(node:VXNode) -> void:
 	selected_node = node
 	selected_node.is_selected = true
 	print_feedback_note("Selected node: " + str(node.get_verse_string()))
+
+## Adds a node to the selection set. 
+## If the node is already in the selection set, it will be removed.
+func add_node_to_selection_set(node:VXNode) -> void:
+	if node in selected_nodes:
+		selected_nodes.erase(node)
+	else:
+		selected_nodes.append(node)
+	print(selected_nodes)
+
+## Clears the selection set.
+func clear_selection_set() ->void:
+	selected_nodes = []
+
+## Moves the set of nodes relative to the selected node.
+func move_node_set(pos:Vector2) -> void:
+	var drag_start_position_global:Vector2 = vx_editor.starting_drag_position_global
+	var current_mouse_position:Vector2 = camera_2d.get_global_mouse_position()
+	for node in selected_nodes:
+		if node.id == selected_node.id:
+			continue
+		var mouse_offset:Vector2 = current_mouse_position - drag_start_position_global
+		node.global_position = node.last_set_global_position + mouse_offset
 
 func move_node_to_front(node:VXNode) -> void:
 	node.move_to_front()

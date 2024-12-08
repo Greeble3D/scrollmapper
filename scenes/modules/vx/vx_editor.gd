@@ -10,7 +10,8 @@ class_name VXEditor
 var drag_start_position: Vector2 = Vector2()
 var is_dragging: bool = false
 var is_dragging_allowed: bool = false
-
+var starting_drag_position: Vector2 = Vector2.ZERO
+var starting_drag_position_global: Vector2 = Vector2.ZERO
 func _ready():
 	UserInput.double_clicked.connect(_on_mouse_double_clicked)
 	UserInput.mouse_drag_started.connect(_on_mouse_drag_started)
@@ -18,6 +19,8 @@ func _ready():
 
 	UserInput.mouse_wheel_increased.connect(_on_mouse_wheel_increased)
 	UserInput.mouse_wheel_decreased.connect(_on_mouse_wheel_decreased)
+
+	UserInput.mouse_drag_started.connect(_on_drag_started)
 
 func _on_mouse_wheel_increased():
 	if VXGraph.is_graph_locked:
@@ -96,3 +99,7 @@ func _on_mouse_double_clicked():
 		return
 	var mouse_position:Vector2 = vx_graph.get_global_mouse_position()
 	set_cursor_position(mouse_position)
+
+func _on_drag_started(pos:Vector2) -> void:
+	starting_drag_position = pos
+	starting_drag_position_global = vx_camera_2d.get_global_mouse_position()

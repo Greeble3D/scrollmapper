@@ -9,11 +9,18 @@ extends Node
 ## signals that a click was just performed.
 signal clicked
 
+## signals that the mouse has been released.
+signal click_released
+
+## signals that a shift click is being performed.
+signal shift_clicked(position: Vector2)
+
 ## signals that a right click was just performed.
 signal right_clicked
 
 ## signals that a double click was just performed.
 signal double_clicked
+
 
 ## Signals that the dragging of the mouse has started.
 signal mouse_drag_started(position: Vector2)
@@ -52,6 +59,10 @@ func detect_mouse_events(event):
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.is_pressed():
 				right_clicked.emit()
+		if event.is_action_pressed("shift_click"):
+			shift_clicked.emit(event.position)
+		if event.is_released():
+			click_released.emit()
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.is_pressed():
 				if event.double_click:
