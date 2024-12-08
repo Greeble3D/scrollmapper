@@ -357,3 +357,7 @@ func create_node_curve():
 		var t = float(i) / float(points_per_meter)
 		var curve_point = cubic_bezier(start_point, start_control, end_control, end_point, t)
 		add_point(curve_point)
+
+## Recalculates the connection curve.
+func recalculate_connection_curve():
+	create_node_curve()

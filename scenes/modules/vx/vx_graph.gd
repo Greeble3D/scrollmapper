@@ -262,6 +262,9 @@ func arrange_node_positions():
 	arrange_nodes_within_rectangle(left_nodes, left_rectangle, Vector2(-width_max/2, 0))
 	arrange_nodes_within_rectangle(right_nodes, right_rectangle, Vector2(width_max/2, 0))
 
+	# Recalculate connection lines
+	recalculate_connection_lines()
+
 ## Calculates the boundaries of the rectangle that will contain the nodes.
 ## Rectagle is positioned on the given side of the active node.
 ## Active node is the node that is selected by the user.
@@ -326,3 +329,10 @@ func arrange_nodes_within_rectangle(nodes:Array, rectangle:Dictionary, offset:Ve
 		for node in nodes:
 			node.position = position
 			position.y += node.size.y + padding
+
+## Recalculates the connection lines.
+func recalculate_connection_lines():
+	for node:VXNode in vx_nodes.values():
+		# We used node_moved.emit(<same_position>) because moving a node
+		# will trigger the connection lines to recalculate.
+		node.node_moved.emit(node.position)

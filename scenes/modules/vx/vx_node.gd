@@ -66,6 +66,7 @@ func _ready():
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	UserInput.clicked.connect(select_node)
+	UserInput.double_clicked.connect(arrange_connected_nodes)
 	UserInput.right_clicked.connect(delete_node)
 	UserInput.mouse_dragged.connect(drag_node)
 	UserInput.mouse_drag_ended.connect(_mouse_drag_ended_any_node)
@@ -349,7 +350,7 @@ func _on_mouse_exited() -> void:
 	dragging_already_in_progress = UserInput.is_dragging
 	is_mouse_over_node = false
 
-#region automatic node connections
+# automatic node connections
 
 func get_empty_socket(socket_type: Types.SocketType, direction_type: Types.SocketDirectionType) -> VXSocket:
 	var sockets: Array[VXSocket] = []
@@ -368,5 +369,10 @@ func get_empty_socket(socket_type: Types.SocketType, direction_type: Types.Socke
 
 	# If no empty socket is found, return null
 	return null
+
+## This will arrange all connected nodes around its perimeter.
+func arrange_connected_nodes()->void:
+	select_node()
+	VXGraph.get_instance().arrange_node_positions()
 
 #endregion
