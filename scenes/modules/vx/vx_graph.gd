@@ -137,7 +137,7 @@ func create_node() -> VXNode:
 	vx_canvas.add_child(vx_node)
 	vx_node.node_selected.connect(move_node_to_front)
 	vx_node.node_selected.connect(set_selected_node)
-	vx_node.node_moved.connect(move_node_set)
+	vx_node.node_dragged.connect(move_node_set)
 	vx_node.node_selected_plus.connect(add_node_to_selection_set)
 	return vx_node
 
@@ -166,11 +166,12 @@ func clear_selection_set() ->void:
 func move_node_set(pos:Vector2) -> void:
 	var drag_start_position_global:Vector2 = vx_editor.starting_drag_position_global
 	var current_mouse_position:Vector2 = camera_2d.get_global_mouse_position()
-	for node in selected_nodes:
+	for node:VXNode in selected_nodes:
 		if node.id == selected_node.id:
 			continue
 		var mouse_offset:Vector2 = current_mouse_position - drag_start_position_global
-		node.global_position = node.last_set_global_position + mouse_offset
+		var final_position:Vector2 = node.last_set_global_position + mouse_offset
+		node.move_node(final_position)
 
 func move_node_to_front(node:VXNode) -> void:
 	node.move_to_front()

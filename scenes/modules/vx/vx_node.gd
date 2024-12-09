@@ -49,6 +49,7 @@ signal connection_deleted(socket:VXSocket)
 signal node_selected(node: VXNode)
 signal node_selected_plus(node:VXNode)
 signal node_moved(new_position: Vector2)
+signal node_dragged(new_position:Vector2)
 signal sockets_updated
 
 # Constants
@@ -185,6 +186,7 @@ func drag_node(pos: Vector2):
 		return
 	var new_position: Vector2 = get_global_mouse_position() - size / 2 + placement_offset
 	node_moved.emit(new_position)
+	node_dragged.emit(pos)
 
 ## This makes the draggable node a preview only 
 ## node, altering some characteristics. It will 
@@ -197,6 +199,7 @@ func move_node(pos: Vector2):
 	position = pos
 	show_node()
 	node_moved.emit(pos)
+	
 
 func move_to_preview_node(pos: Vector2):
 	position = pos + placement_offset
