@@ -22,6 +22,7 @@ var selected_nodes:Array[VXNode] = []
 
 @export var nodes_info: RichTextLabel
 @export var connections_info: RichTextLabel 
+@export var selection_info: RichTextLabel 
 @export var feed_back_notes: RichTextLabel
 
 #endregion 
@@ -148,19 +149,25 @@ func set_selected_node(node:VXNode) -> void:
 	selected_node = node
 	selected_node.is_selected = true
 	print_feedback_note("Selected node: " + str(node.get_verse_string()))
+	graph_changed.emit()
 
 ## Adds a node to the selection set. 
 ## If the node is already in the selection set, it will be removed.
 func add_node_to_selection_set(node:VXNode) -> void:
 	if node in selected_nodes:
 		selected_nodes.erase(node)
+		node.is_selected_plus = false
 	else:
 		selected_nodes.append(node)
-	print(selected_nodes)
+		node.is_selected_plus = true
+	graph_changed.emit()
 
 ## Clears the selection set.
 func clear_selection_set() ->void:
-	selected_nodes = []
+	for selected_node in selected_nodes:
+		selected_node.is_selected_plus = false
+	selected_nodes.clear()
+	graph_changed.emit()
 
 ## Moves the set of nodes relative to the selected node.
 func move_node_set(pos:Vector2) -> void:
@@ -256,6 +263,7 @@ func _on_graph_changed()->void:
 	await get_tree().process_frame # avoiding race conditions
 	update_node_info_text()
 	update_connection_info_text()
+	update_selection_info_text()
 
 ## Updates the node info text.
 func update_node_info_text() ->void:
@@ -264,6 +272,11 @@ func update_node_info_text() ->void:
 ## Updates the connection info text.
 func update_connection_info_text() ->void:
 	connections_info.text = "Connections: " + str(vx_connections.size())
+
+## Updates the selection info text.
+## The minimum is 1 because it is not possible to unselected all nodes.
+func update_selection_info_text():
+	selection_info.text = "Selected: " + str(clampf(selected_nodes.size(), 1, selected_nodes.size()))
 
 ## Arranges node positions based on their connections.
 func arrange_node_positions():

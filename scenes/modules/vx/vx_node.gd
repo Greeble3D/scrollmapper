@@ -21,6 +21,10 @@ class_name VXNode
 @export var verse_container: MarginContainer
 @export var preview_text: RichTextLabel
 
+# UI Elements / Icons
+@export var primary_selection_icon:Control
+@export var secondary_selection_icon:Control
+
 # Socket Management
 @export_group("Socket Management")
 @export var sockets_mount_top: HBoxContainer
@@ -38,10 +42,6 @@ class_name VXNode
 @export var socket_dimensions: Vector2 = Vector2(40, 40)
 @export var socket_padding: int = 40
 
-# Booleans
-var is_mouse_over_node:bool = false
-var dragging_already_in_progress:bool = false
-var is_selected:bool = false
 
 # Signals
 signal new_connection_created(start_socket: VXSocket, end_socket: VXSocket)
@@ -56,9 +56,42 @@ signal sockets_updated
 const VX_NODE = preload("res://scenes/modules/vx/vx_node.tscn")
 const VX_SOCKET = preload("res://scenes/modules/vx/vx_socket.tscn")
 
-# Variables
+# Booleans
+var is_mouse_over_node:bool = false
+var dragging_already_in_progress:bool = false
+
+var is_selected:bool = false:
+	set(val):
+		is_selected = val
+		set_selected_state()
+
+var is_selected_plus:bool = false:
+	set(val):
+		is_selected_plus = val
+		set_selected_plus_state()
+
+# Other Variables
 var placement_offset: Vector2 = Vector2.ZERO
 var last_set_global_position:Vector2 = Vector2.ZERO
+
+## Is called from the setter is_selected:bool
+## The purpose is to change whatever mechanisms are needed for the node's 
+## selected state. The first use is to change the icon of the node.
+func set_selected_state() ->void:
+	if is_selected:
+		primary_selection_icon.show()
+	else:
+		primary_selection_icon.hide()
+		
+
+## Is called from the setter is_selected_plus:bool
+## The purpose is to change whatever mechanisms are needed for the node's
+## selected state. The first use is to change the icon of the node.
+func set_selected_plus_state() ->void:
+	if is_selected_plus:
+		secondary_selection_icon.show()
+	else:
+		secondary_selection_icon.hide()
 
 # Lifecycle
 func _ready():
@@ -78,7 +111,8 @@ func _ready():
 	UserInput.mouse_drag_ended.connect(_mouse_drag_ended_any_node)
 
 
-# Initialization
+
+# Initialization 
 func initiate(id: int, book: String, chapter: int, verse: int, text: String, translation: String):
 	self.id = id
 	self.book = book
@@ -90,6 +124,8 @@ func initiate(id: int, book: String, chapter: int, verse: int, text: String, tra
 	# Now add the node to the VXGraph vx_nodes dictionary...
 	VXGraph.get_instance().add_vx_node(self)
 	last_set_global_position = global_position
+	set_selected_state()
+	set_selected_plus_state()
 
 ## Function to get all neighboring nodes.
 ## Used in mapping the graph.
@@ -187,12 +223,6 @@ func drag_node(pos: Vector2):
 	var new_position: Vector2 = get_global_mouse_position() - size / 2 + placement_offset
 	node_moved.emit(new_position)
 	node_dragged.emit(pos)
-
-## This makes the draggable node a preview only 
-## node, altering some characteristics. It will 
-## be deleted afterward. 
-func enter_preview_mode():
-	delete_all_sockets()
 
 # Node Movement
 func move_node(pos: Vector2):

@@ -3,13 +3,15 @@
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_node.gd" id="1_0d16a"]
 [ext_resource type="Texture2D" uid="uid://dpbdut6laipkr" path="res://tmp/panel.png" id="2_w0bnh"]
 
-[node name="VXNode" type="MarginContainer" node_paths=PackedStringArray("verse_container", "preview_text", "sockets_mount_top", "sockets_mount_bottom", "sockets_mount_left", "sockets_mount_right") groups=["nodes"]]
+[node name="VXNode" type="MarginContainer" node_paths=PackedStringArray("verse_container", "preview_text", "primary_selection_icon", "secondary_selection_icon", "sockets_mount_top", "sockets_mount_bottom", "sockets_mount_left", "sockets_mount_right") groups=["nodes"]]
 custom_minimum_size = Vector2(150, 100)
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_0d16a")
 verse_container = NodePath("VerseContainer")
 preview_text = NodePath("VerseContainer/PreviewText")
+primary_selection_icon = NodePath("Icons/PrimarySelect")
+secondary_selection_icon = NodePath("Icons/SecondarySelect")
 sockets_mount_top = NodePath("SocketMount/SocketsMountTop")
 sockets_mount_bottom = NodePath("SocketMount/SocketsMountBottom")
 sockets_mount_left = NodePath("SocketMount/SocketsMountLeft")
@@ -92,3 +94,23 @@ grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/separation = 10
 alignment = 1
+
+[node name="Icons" type="Control" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PrimarySelect" type="ColorRect" parent="Icons"]
+layout_mode = 0
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+color = Color(0.989875, 0.346829, 0, 1)
+
+[node name="SecondarySelect" type="ColorRect" parent="Icons"]
+layout_mode = 0
+offset_left = -15.0
+offset_top = 25.0
+offset_right = 15.0
+offset_bottom = 55.0
+color = Color(3.85046e-07, 0.637544, 0.88647, 1)

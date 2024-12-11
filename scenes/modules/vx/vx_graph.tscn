@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bmg34cgf1y4wo" path="res://scenes/modules/vx/vx_search_and_execute.tscn" id="5_rl1km"]
 [ext_resource type="PackedScene" uid="uid://b6jvh448lsipo" path="res://scenes/modules/vx/vx_cursor.tscn" id="6_h1ilm"]
 
-[node name="VXGraph" type="Control" node_paths=PackedStringArray("vx_canvas", "vx_editor", "vx_search_results", "camera_2d", "nodes_info", "connections_info", "feed_back_notes")]
+[node name="VXGraph" type="Control" node_paths=PackedStringArray("vx_canvas", "vx_editor", "vx_search_results", "camera_2d", "nodes_info", "connections_info", "selection_info", "feed_back_notes")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +26,7 @@ vx_search_results = NodePath("VXEditor/EditorUI/VBoxContainer/VXSearchResults")
 camera_2d = NodePath("VXCamera2D")
 nodes_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/NodesInfo")
 connections_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/ConnectionsInfo")
+selection_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/SelectedInfo")
 feed_back_notes = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/FeedBackNotes")
 
 [node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor")]
@@ -91,6 +92,13 @@ clip_contents = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Connections: 0"
+fit_content = true
+
+[node name="SelectedInfo" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Selected: 0"
 fit_content = true
 
 [node name="FeedBackNotes" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer"]

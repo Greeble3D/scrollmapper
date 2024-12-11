@@ -89,7 +89,7 @@ func request_verses_to_vx_graph():
 	var verse_ids: Array[int] = []
 	var translation: String = ""
 	var last_verse_id: int = -1
-
+	
 	# Process each verse and prepare the meta information
 	for verse: Verse in verses_sorted:
 		verse_ids.append(verse.verse_id)
