@@ -22,6 +22,8 @@ GlobalDB="*res://scripts/global/global_db.gd"
 Globals="*res://scripts/global/globals.gd"
 UserInput="*res://scripts/global/user_input.gd"
 ScriptureService="*res://scripts/services/scripture_service.gd"
+VXService="*res://scripts/services/vx_service.gd"
+MetaService="*res://scripts/services/meta_service.gd"
 
 [editor_plugins]
 

@@ -41,3 +41,11 @@ func create_table():
 
 func get_create_table_query() -> String:
 	return ""  # To be overridden by subclasses
+
+func get_last_inserted_id() -> int:
+	var query = "SELECT last_insert_rowid() as id;"
+	var result = get_results(query)
+	if result.size() > 0:
+		return result[0]["id"]
+	else:
+		return -1

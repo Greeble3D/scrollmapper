@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bh1iyds4cy28s"]
+[gd_scene load_steps=10 format=3 uid="uid://bh1iyds4cy28s"]
 
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_graph.gd" id="1_sckcm"]
 [ext_resource type="PackedScene" uid="uid://cfxi6tibdx3cp" path="res://scenes/modules/vx/vx_canvas.tscn" id="2_jc8ca"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bmalaegyokgpk" path="res://scenes/modules/vx/vx_camera_2d.tscn" id="2_vbhxy"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_camera_2d.gd" id="3_gnil0"]
 [ext_resource type="PackedScene" uid="uid://bre0y3462iq32" path="res://scenes/modules/vx/vx_search_results.tscn" id="4_gm67k"]
+[ext_resource type="PackedScene" uid="uid://bt4kol5jle5rl" path="res://scenes/modules/vx/dialogues/settings_dialogue.tscn" id="5_32rsg"]
 [ext_resource type="PackedScene" uid="uid://bmg34cgf1y4wo" path="res://scenes/modules/vx/vx_search_and_execute.tscn" id="5_rl1km"]
 [ext_resource type="PackedScene" uid="uid://b6jvh448lsipo" path="res://scenes/modules/vx/vx_cursor.tscn" id="6_h1ilm"]
 
@@ -29,12 +30,14 @@ connections_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxCon
 selection_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/SelectedInfo")
 feed_back_notes = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/FeedBackNotes")
 
-[node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor")]
+[node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor", "blocker_panel", "settings_dialog")]
 script = ExtResource("2_jscly")
 vx_graph = NodePath("..")
 vx_camera_2d = NodePath("../VXCamera2D")
 vx_search_and_execute = NodePath("EditorUI/VBoxContainer/VXSearchAndExecute")
 cursor = NodePath("../VXCursor")
+blocker_panel = NodePath("Dialogues/BlockerPanel")
+settings_dialog = NodePath("Dialogues/SettingsDialogue")
 
 [node name="EditorUI" type="Control" parent="VXEditor"]
 layout_mode = 3
@@ -104,6 +107,31 @@ fit_content = true
 [node name="FeedBackNotes" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Dialogues" type="MarginContainer" parent="VXEditor"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="BlockerPanel" type="Panel" parent="VXEditor/Dialogues"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SettingsDialogue" parent="VXEditor/Dialogues" node_paths=PackedStringArray("vx_editor") instance=ExtResource("5_32rsg")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+vx_editor = NodePath("../..")
 
 [node name="VXCanvas" parent="." instance=ExtResource("2_jc8ca")]
 layout_mode = 1

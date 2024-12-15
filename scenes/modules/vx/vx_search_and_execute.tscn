@@ -1,15 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://bmg34cgf1y4wo"]
+[gd_scene load_steps=7 format=3 uid="uid://bmg34cgf1y4wo"]
 
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="1_6rdk2"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_search_and_execute.gd" id="1_8olel"]
+[ext_resource type="Texture2D" uid="uid://cp7wi7w1bgpew" path="res://images/icons/editor/Save.svg" id="3_li55u"]
+[ext_resource type="Texture2D" uid="uid://7junss6685ni" path="res://images/icons/editor/FileBrowse.svg" id="3_nllwr"]
+[ext_resource type="Texture2D" uid="uid://2pao3tccym3q" path="res://images/icons/editor/FileTree.svg" id="4_7bkm2"]
+[ext_resource type="Texture2D" uid="uid://bxaq5leut85nj" path="res://images/icons/editor/FileAccess.svg" id="6_75kp4"]
 
-[node name="VXSearchAndExecute" type="MarginContainer"]
+[node name="VXSearchAndExecute" type="MarginContainer" node_paths=PackedStringArray("menu_button_graph", "menu_button_export")]
 custom_minimum_size = Vector2(0, 100)
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 script = ExtResource("1_8olel")
+menu_button_graph = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonGraph")
+menu_button_export = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonExport")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -28,6 +34,42 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/Ops"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Ops"]
 layout_mode = 2
-text = "Ops and Execute"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/Ops/VBoxContainer"]
+layout_mode = 2
+text = "Operations"
+fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Ops/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="MenuButtonGraph" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Graph"
+icon = ExtResource("3_nllwr")
+item_count = 3
+popup/item_0/text = "Settings"
+popup/item_0/icon = ExtResource("4_7bkm2")
+popup/item_1/text = "Save"
+popup/item_1/icon = ExtResource("3_li55u")
+popup/item_1/id = 1
+popup/item_2/text = "Load"
+popup/item_2/icon = ExtResource("3_li55u")
+popup/item_2/id = 2
+
+[node name="MenuButtonExport" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Export"
+icon = ExtResource("6_75kp4")
+item_count = 2
+popup/item_0/text = "Export <Type 1>"
+popup/item_1/text = "Export <Type 2>"
+popup/item_1/id = 1

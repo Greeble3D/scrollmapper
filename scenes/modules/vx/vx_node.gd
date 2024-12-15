@@ -127,6 +127,20 @@ func initiate(id: int, book: String, chapter: int, verse: int, text: String, tra
 	set_selected_state()
 	set_selected_plus_state()
 
+## Function to get the node as a dictionary.
+## Used in saving the node to the database.
+func get_as_dictionary() -> Dictionary:
+	return {
+		"id": id,
+		"book": book,
+		"chapter": chapter,
+		"verse": verse,
+		"text": text,
+		"translation": translation,
+		"position_x": position.x,
+		"position_y": position.y
+	}
+
 ## Function to get all neighboring nodes.
 ## Used in mapping the graph.
 func get_connected_nodes() -> Dictionary:

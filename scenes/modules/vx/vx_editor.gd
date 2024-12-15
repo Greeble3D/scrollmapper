@@ -1,18 +1,30 @@
 extends CanvasLayer
+
+## This is the main editor for the VX system. It will be responsible for handling
+## anything involved in editing. It is distinct from VXGraph in that it is responsible 
+## for the general editor itself, while VXGraph is responsible for the graphing UI and related data.
+
 class_name VXEditor
 
+@export_group("Main Connections")
 @export var vx_graph:VXGraph
 @export var vx_camera_2d: Camera2D
-@export var vx_search_and_execute: MarginContainer 
+@export var vx_search_and_execute: VXSearchAndExute 
 @export var cursor:TextureRect
 
+@export_group("Dialogues")
+## Settings dialog that is responsible for name and description of a given graph.
+@export var blocker_panel:Panel
+@export var settings_dialog: SettingsDialogue
 
 var drag_start_position: Vector2 = Vector2()
 var is_dragging: bool = false
 var is_dragging_allowed: bool = false
 var starting_drag_position: Vector2 = Vector2.ZERO
 var starting_drag_position_global: Vector2 = Vector2.ZERO
+
 func _ready():
+	settings_dialog.hide()
 	UserInput.double_clicked.connect(_on_mouse_double_clicked)
 	UserInput.mouse_drag_started.connect(_on_mouse_drag_started)
 	UserInput.mouse_drag_ended.connect(_on_mouse_drag_ended)
@@ -21,6 +33,33 @@ func _ready():
 	UserInput.mouse_wheel_decreased.connect(_on_mouse_wheel_decreased)
 
 	UserInput.mouse_drag_started.connect(_on_drag_started)
+	
+	UserInput.escape_key_pressed.connect(close_all_dialogues)
+	vx_search_and_execute.operation_selected.connect(_on_graph_action_selected)
+	settings_dialog.data_accepted.connect(save_graph)
+	activate_last_used_graph()
+
+func activate_last_used_graph()->void:
+	await vx_graph.ready # prevents the can't access from null issue
+
+	var last_used_graph_id:Dictionary = MetaService.get_meta_data("last_used_graph_id")
+	if last_used_graph_id.has("id"):
+		var full_graph_data:Dictionary = VXService.get_saved_graph(last_used_graph_id["id"])
+		if full_graph_data.size() > 0:
+			vx_graph.set_full_graph_from_dictionary(full_graph_data)
+		else:
+			print("Error: Could not load last used graph.")
+	else:
+		print("Error: No last used graph found.")
+
+func get_current_graph_name()->String:
+	return vx_graph.graph_name
+
+func get_current_graph_description()->String:
+	return vx_graph.graph_description
+
+func get_current_graph_id()->int:
+	return vx_graph.id
 
 func _on_mouse_wheel_increased():
 	if VXGraph.is_graph_locked:
@@ -103,3 +142,39 @@ func _on_mouse_double_clicked():
 func _on_drag_started(pos:Vector2) -> void:
 	starting_drag_position = pos
 	starting_drag_position_global = vx_camera_2d.get_global_mouse_position()
+
+## This function will be called when an action is selected from the VXSearchAndExecute.
+## It behaves as a relay to call the related functions selected.
+func _on_graph_action_selected(action_tag:String) -> void:
+	match action_tag:
+		"graph_settings":
+			run_settings_dialogue()
+		"graph_save":
+			save_graph(vx_graph.graph_name, vx_graph.graph_description)
+			vx_graph.print_feedback_note("Graph saved...")
+		"graph_load":
+			print("Graph load selected.")
+		"export_type_1":
+			print("Export type 1 selected.")
+		"export_type_2":
+			print("Export type 2 selected.")
+		_:
+			print("Unknown action selected.")
+
+func close_all_dialogues()->void:
+	var dialogues:Array = [settings_dialog,]
+	for dialogue in dialogues:
+		dialogue.hide()
+	blocker_panel.hide()
+
+func run_settings_dialogue() -> void:
+	blocker_panel.show()
+	settings_dialog.show()
+
+## Initiates the saving process in VXService
+func save_graph(graph_name:String, graph_description:String) -> void:
+	vx_graph.graph_name = graph_name
+	vx_graph.graph_description = graph_description
+	var full_graph:Dictionary = vx_graph.get_full_graph_as_dictionary()
+	VXService.save_graph(full_graph)
+	close_all_dialogues()

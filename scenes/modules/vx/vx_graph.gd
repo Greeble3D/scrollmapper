@@ -4,17 +4,25 @@ class_name VXGraph
 const VX_NODE = preload("res://scenes/modules/vx/vx_node.tscn")
 const VX_CONNECTION = preload("res://scenes/modules/vx/vx_connection.tscn")
 
+#region model data
+@export_group("Model Data")
+@export var id:int = 0
+@export var graph_name:String = ""
+@export var graph_description:String = ""
+#endregion
+
 static var instance:VXGraph = null
 static var current_focused_socket:VXSocket = null
 static var is_graph_locked:bool = false
 
 ## The main "Active Node" selected.
 var selected_node:VXNode = null
+
 ## Additional nodes added via shift-click.
 var selected_nodes:Array[VXNode] = []
 
-#region connected nodes
-
+#region connected godot nodes
+@export_group("Connected Godot Nodes")
 @export var vx_canvas:VXCanvas
 @export var vx_editor:VXEditor
 @export var vx_search_results: MarginContainer 
@@ -24,7 +32,6 @@ var selected_nodes:Array[VXNode] = []
 @export var connections_info: RichTextLabel 
 @export var selection_info: RichTextLabel 
 @export var feed_back_notes: RichTextLabel
-
 #endregion 
 
 ## An important dictionary for tracking vx_nodes.
@@ -50,6 +57,92 @@ func _ready():
 func _exit_tree() -> void:
 	VXGraph.instance = null
 
+## Gets the graph as a dictionary.
+## This is required in graph saving process.
+func get_as_dictionary() -> Dictionary:
+	return {
+		"id": id,
+		"graph_name": graph_name,
+		"graph_description": graph_description
+	}
+
+## Gets the full graph as a dictionary.
+## This is required in graph saving process.
+func get_full_graph_as_dictionary() -> Dictionary:
+	var graph:Dictionary = get_as_dictionary()
+	var nodes:Array = []
+	var connections:Array = []
+	for node in vx_nodes.values():
+		nodes.append(node.get_as_dictionary())
+	for connection in vx_connections.values():
+		connections.append(connection.get_as_dictionary())
+	graph["nodes"] = nodes
+	graph["connections"] = connections
+	return graph
+
+## Restores full graph from dictionary.
+func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
+	# Clear existing nodes and connections
+	for node in vx_nodes.values():
+		node.queue_free()
+	vx_nodes.clear()
+	for connection in vx_connections.values():
+		connection.queue_free()
+	vx_connections.clear()
+
+	# Set graph properties
+	id = graph_data.get("id", 0)
+	graph_name = graph_data.get("graph_name", "")
+	graph_description = graph_data.get("graph_description", "")
+
+	# Restore nodes
+	for node_data in graph_data.get("nodes", []):
+		var node:VXNode = create_node()
+		var verse:Array = ScriptureService.get_verse(node_data["translation"], node_data["book"], node_data["chapter"], node_data["verse"])
+		await get_tree().process_frame
+		if verse.size() == 0:
+			continue
+		node.initiate(
+			verse[0]["verse_id"],
+			verse[0]["book_name"],
+			verse[0]["chapter"],
+			verse[0]["verse"],
+			verse[0]["text"],
+			verse[0]["translation_abbr"]
+		)
+		await get_tree().process_frame
+		node.recalculate_socket_positions_and_node_dimensions()
+		node.position = Vector2(node_data["position_x"], node_data["position_y"])
+		node.last_set_global_position = node.position
+
+	await get_tree().process_frame
+
+	# Restore connections
+	for connection_data in graph_data.get("connections", []):
+		var is_parallel:bool = connection_data.get("is_parallel", true)
+		var start_node:VXNode = vx_nodes.get(connection_data["start_node_id"], null)
+		var end_node:VXNode = vx_nodes.get(connection_data["end_node_id"], null)
+		if start_node and end_node:
+			var direction_type:Types.SocketDirectionType  
+			if is_parallel:
+				direction_type = Types.SocketDirectionType.PARALLEL
+			else:
+				direction_type = Types.SocketDirectionType.LINEAR
+			connect_nodes(start_node, end_node, direction_type)
+			await get_tree().process_frame
+
+	# Correct positions
+	for node_data in graph_data.get("nodes", []):
+		var node:VXNode = vx_nodes.get(node_data["id"], null)
+		node.global_position = Vector2(node_data["position_x"], node_data["position_y"])
+	
+
+	graph_changed.emit()
+
+## This is typically used to restore a node in the load process. It takes
+## a dictionary and creates a node from it.
+func create_node_from_data(node_data:Dictionary) ->void:
+	pass
 
 ## Locks the graph if the search results are shown.
 func lock_graph(lock:bool) -> void:
@@ -219,9 +312,9 @@ func _on_verses_searched(results:Array):
 			"PARALLEL":
 				connect_node_parallel(node)
 				arrange_node_positions()
-				pass
 
 ## Connects two nodes in a parallel fashion.
+## This function chains connections based on selected nodes.
 func connect_node_parallel(node:VXNode) -> void:
 	if selected_node == null:
 		set_selected_node(node)
@@ -240,6 +333,7 @@ func connect_node_parallel(node:VXNode) -> void:
 		set_selected_node(input_socket_selected_node.connected_node)
 
 ## Connects two nodes in a linear fashion.
+## This function chains connections based on selected nodes.
 func connect_node_linear(node:VXNode) -> void:
 	if selected_node == null:
 		set_selected_node(node)
@@ -256,7 +350,18 @@ func connect_node_sockets(start_socket:VXSocket, end_socket:VXSocket) -> void:
 	var connection:VXConnection = create_connection(start_socket, end_socket)
 	current_focused_socket = end_socket 
 	connection.do_socket_connections()
-	
+
+## Initiates a node connection based on directionality only. 
+## This was first used for restoring the graph from saved data. It can be used
+## for similar needs. 
+func connect_nodes(node_a:VXNode, node_b:VXNode, direction:Types.SocketDirectionType) -> void:
+	if direction == Types.SocketDirectionType.LINEAR:
+		set_selected_node(node_a)
+		connect_node_linear(node_b)
+	elif direction == Types.SocketDirectionType.PARALLEL:
+		set_selected_node(node_a)
+		connect_node_parallel(node_b)
+
 
 ## When the graph changes, this function will be called.
 func _on_graph_changed()->void:

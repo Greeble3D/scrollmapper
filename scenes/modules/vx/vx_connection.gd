@@ -8,19 +8,31 @@ extends Line2D
 
 class_name VXConnection
 
-var id:int = -1
+#region model vars
+@export_group("Model Variables")
+
+## The ID of the connection.
+@export var id:int = -1
+
+## This is optional user text
+@export var text: String = ""
 
 ## The starting node of the connection.
-var start_node: VXNode = null
+@export var start_node: VXNode = null
 
 ## The ending node of the connection.
-var end_node: VXNode = null
+@export var end_node: VXNode = null
 
 ## The starting socket of the connection.
-var start_socket: VXSocket = null
+@export var start_socket: VXSocket = null
 
 ## The ending socket of the connection.
-var end_socket: VXSocket = null
+@export var end_socket: VXSocket = null
+
+## Indicates if the connection is parallel. Assumed linear if not.
+@export var is_parallel: bool = false
+
+#endregion
 
 ## Indicates if the connection is being edited.
 var is_connection_being_edited: bool = false:
@@ -46,6 +58,17 @@ func initiate(start_socket: VXSocket, end_socket: VXSocket = null):
 	self.end_socket = end_socket
 	get_starting_socket().socket_edit_ended.connect(_on_editing_ended)
 	establish_starting_connection_points()
+
+## Function to get the connection as a dictionary.
+## This is used to save the connection to the database.
+func get_as_dictionary() -> Dictionary:
+	var dict: Dictionary = {}
+	dict["id"] = id
+	dict["text"] = text
+	dict["start_node"] = start_node.get_node_id()
+	dict["end_node"] = end_node.get_node_id()
+	dict["is_parallel"] = is_parallel
+	return dict
 
 ## Function to get the "other node". Used when nodes are discovering eachother's connections.
 ## This function is used to get the node that is not the one supplied.
@@ -241,6 +264,13 @@ func finalize_connection_points():
 	set_start_and_end_points_connected()
 	start_node = get_starting_socket().get_connected_node()
 	end_node = get_ending_socket().get_connected_node()
+	
+	match get_starting_socket().socket_direction:
+		Types.SocketDirectionType.LINEAR:
+			is_parallel = false
+		Types.SocketDirectionType.PARALLEL:
+			is_parallel = true
+
 	create_node_curve_by_connection()
 	connection_finalized.emit(start_node, end_node)
 
