@@ -80,6 +80,8 @@ func get_verses(translation: String, book: String, chapter: int = -1, verse: int
 		})
 	return result
 
+
+
 ## Get verses by range
 func get_verses_by_range(translation: String, start_book: String, start_chapter: int, start_verse: int, end_book: String, end_chapter: int, end_verse: int) -> Array:
 	var verse_model = VerseModel.new(translation)

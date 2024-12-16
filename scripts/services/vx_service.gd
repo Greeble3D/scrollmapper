@@ -76,15 +76,13 @@ func save_graph(graph_data:Dictionary) -> void:
 
 ## Saves a node to the database.
 func save_node(node_data:Dictionary) -> void:
-	if node_data.has("id") and node_data.has("book") and node_data.has("chapter") and node_data.has("verse") and node_data.has("translation") and node_data.has("position_x") and node_data.has("position_y"):
+	if node_data.has("id") and node_data.has("book") and node_data.has("chapter") and node_data.has("verse") and node_data.has("translation"):
 		var vx_node_model:VXNodeModel = VXNodeModel.new()
 		vx_node_model.id = node_data["id"]
 		vx_node_model.book = node_data["book"]
 		vx_node_model.chapter = node_data["chapter"]
 		vx_node_model.verse = node_data["verse"]
 		vx_node_model.translation = node_data["translation"]
-		vx_node_model.position_x = node_data["position_x"]
-		vx_node_model.position_y = node_data["position_y"]
 		vx_node_model.save()
 	else:
 		print("Error: node_data dictionary is missing required keys.")
@@ -108,9 +106,12 @@ func save_connection(connection_data:Dictionary) -> void:
 func save_graph_nodes(graph_data:Dictionary) -> void:
 	if graph_data.has("id") and graph_data.has("nodes"):
 		for node_data in graph_data["nodes"]:
+			print("HERE")
 			var vx_graph_node_model:VXGraphNodeModel = VXGraphNodeModel.new()
 			vx_graph_node_model.graph_id = graph_data["id"]
 			vx_graph_node_model.node_id = node_data["id"]
+			vx_graph_node_model.position_x = node_data["position_x"]
+			vx_graph_node_model.position_y = node_data["position_y"]
 			vx_graph_node_model.save()
 	else:
 		print("Error: graph_data dictionary is missing required keys or nodes.")
@@ -154,6 +155,17 @@ func get_saved_graph(id: int) -> Dictionary:
 	for connection in connections:
 		full_graph_data["connections"].append(connection)
 
+	# Get graph-node relationships
+	var vx_graph_node_model: VXGraphNodeModel = VXGraphNodeModel.new()
+	var graph_nodes = vx_graph_node_model.get_nodes_by_graph(id)
+	for graph_node in graph_nodes:
+		full_graph_data["graph_nodes"].append(graph_node)
+
+	# Get graph-connection relationships
+	var vx_graph_connection_model: VXGraphConnectionModel = VXGraphConnectionModel.new()
+	var graph_connections = vx_graph_connection_model.get_connections_by_graph(id)
+	for graph_connection in graph_connections:
+		full_graph_data["graph_connections"].append(graph_connection)
 	print(full_graph_data)
 	return full_graph_data
 
@@ -164,5 +176,7 @@ func get_graph_data_template() -> Dictionary:
 		"graph_name": "Scripture Map",
 		"graph_description": "",
 		"nodes": [],
-		"connections": []
+		"connections": [], 
+		"graph_nodes": [],
+		"graph_connections": []
 	}

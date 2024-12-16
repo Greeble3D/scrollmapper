@@ -112,8 +112,8 @@ func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
 		)
 		await get_tree().process_frame
 		node.recalculate_socket_positions_and_node_dimensions()
-		node.position = Vector2(node_data["position_x"], node_data["position_y"])
-		node.last_set_global_position = node.position
+		#node.position = Vector2(node_data["position_x"], node_data["position_y"])
+		#node.last_set_global_position = node.position
 
 	await get_tree().process_frame
 
@@ -132,11 +132,11 @@ func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
 			await get_tree().process_frame
 
 	# Correct positions
-	for node_data in graph_data.get("nodes", []):
-		var node:VXNode = vx_nodes.get(node_data["id"], null)
+	for node_data in graph_data.get("graph_nodes", []):
+		var node:VXNode = vx_nodes.get(node_data["node_id"], null)
 		node.global_position = Vector2(node_data["position_x"], node_data["position_y"])
-	
 
+	recalculate_connection_lines()
 	graph_changed.emit()
 
 ## This is typically used to restore a node in the load process. It takes

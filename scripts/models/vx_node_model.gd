@@ -8,8 +8,6 @@ var book: String = ""
 var chapter: int = 0
 var verse: int = 0
 var translation: String = ""
-var position_x: float = 0.0
-var position_y: float = 0.0
 #endregion
 
 func _init():
@@ -23,9 +21,7 @@ func get_create_table_query() -> String:
 		book TEXT,
 		chapter INTEGER,
 		verse INTEGER,
-		translation TEXT,
-		position_x REAL,
-		position_y REAL
+		translation TEXT
 	);
 	"""
 
@@ -36,13 +32,13 @@ func save() -> int:
 	
 	if result.size() > 0:
 		# Update existing node
-		var update_query = "UPDATE vx_nodes SET book = ?, chapter = ?, verse = ?, translation = ?, position_x = ?, position_y = ? WHERE id = ?;"
-		execute_query(update_query, [book, chapter, verse, translation, position_x, position_y, id])
+		var update_query = "UPDATE vx_nodes SET book = ?, chapter = ?, verse = ?, translation = ? WHERE id = ?;"
+		execute_query(update_query, [book, chapter, verse, translation, id])
 		return result[0]["id"]
 	else:
 		# Insert new node
-		var insert_query = "INSERT INTO vx_nodes (id, book, chapter, verse, translation, position_x, position_y) VALUES (?, ?, ?, ?, ?, ?, ?);"
-		execute_query(insert_query, [id, book, chapter, verse, translation, position_x, position_y])
+		var insert_query = "INSERT INTO vx_nodes (id, book, chapter, verse, translation) VALUES (?, ?, ?, ?, ?);"
+		execute_query(insert_query, [id, book, chapter, verse, translation])
 		return id
 
 func get_all_nodes():
