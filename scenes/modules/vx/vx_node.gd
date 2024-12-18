@@ -42,7 +42,6 @@ class_name VXNode
 @export var socket_dimensions: Vector2 = Vector2(40, 40)
 @export var socket_padding: int = 40
 
-
 # Signals
 signal new_connection_created(start_socket: VXSocket, end_socket: VXSocket)
 signal connection_deleted(socket:VXSocket)
@@ -82,7 +81,6 @@ func set_selected_state() ->void:
 		primary_selection_icon.show()
 	else:
 		primary_selection_icon.hide()
-		
 
 ## Is called from the setter is_selected_plus:bool
 ## The purpose is to change whatever mechanisms are needed for the node's
@@ -93,7 +91,7 @@ func set_selected_plus_state() ->void:
 	else:
 		secondary_selection_icon.hide()
 
-# Lifecycle
+## Lifecycle
 func _ready():
 	node_moved.connect(move_to_preview_node)
 	update_sockets()
@@ -110,9 +108,7 @@ func _ready():
 	UserInput.mouse_dragged.connect(drag_node)
 	UserInput.mouse_drag_ended.connect(_mouse_drag_ended_any_node)
 
-
-
-# Initialization 
+## Initialization 
 func initiate(id: int, book: String, chapter: int, verse: int, text: String, translation: String):
 	self.id = id
 	self.book = book
@@ -138,7 +134,11 @@ func get_as_dictionary() -> Dictionary:
 		"text": text,
 		"translation": translation,
 		"position_x": position.x,
-		"position_y": position.y
+		"position_y": position.y,
+		"top_sockets_amount": get_top_sockets_amount(),
+		"bottom_sockets_amount": get_bottom_sockets_amount(),
+		"left_sockets_amount": get_left_sockets_amount(),
+		"right_sockets_amount": get_right_sockets_amount(),
 	}
 
 ## Function to get all neighboring nodes.
@@ -193,16 +193,16 @@ func delete_node():
 	VXGraph.get_instance().remove_vx_node(self)
 
 	# Now remove connections.
-	for socket in sockets_top:
+	for socket in get_top_sockets():
 		if is_instance_valid(socket) and socket.connection != null:
 			socket.delete_connection()
-	for socket in sockets_bottom:
+	for socket in get_bottom_sockets():
 		if is_instance_valid(socket) and socket.connection != null:
 			socket.delete_connection()
-	for socket in sockets_left:
+	for socket in get_left_sockets():
 		if is_instance_valid(socket) and socket.connection != null:
 			socket.delete_connection()
-	for socket in sockets_right:
+	for socket in get_right_sockets():
 		if is_instance_valid(socket) and socket.connection != null:
 			socket.delete_connection()
 	queue_free()
@@ -243,7 +243,6 @@ func move_node(pos: Vector2):
 	position = pos
 	show_node()
 	node_moved.emit(pos)
-	
 
 func move_to_preview_node(pos: Vector2):
 	position = pos + placement_offset
@@ -314,38 +313,77 @@ func remove_extra_sockets_from_array(sockets: Array[VXSocket]):
 		sockets.erase(socket_to_remove)
 
 func remove_invalid_sockets():
-	for i in range(sockets_top.size() - 1, -1, -1):
-		if not is_instance_valid(sockets_top[i]):
-			sockets_top.remove_at(i)
-	for i in range(sockets_bottom.size() - 1, -1, -1):
-		if not is_instance_valid(sockets_bottom[i]):
-			sockets_bottom.remove_at(i)
-	for i in range(sockets_left.size() - 1, -1, -1):
-		if not is_instance_valid(sockets_left[i]):
-			sockets_left.remove_at(i)
-	for i in range(sockets_right.size() - 1, -1, -1):
-		if not is_instance_valid(sockets_right[i]):
-			sockets_right.remove_at(i)
+	for i in range(get_top_sockets().size() - 1, -1, -1):
+		if not is_instance_valid(get_top_sockets()[i]):
+			get_top_sockets().remove_at(i)
+	for i in range(get_bottom_sockets().size() - 1, -1, -1):
+		if not is_instance_valid(get_bottom_sockets()[i]):
+			get_bottom_sockets().remove_at(i)
+	for i in range(get_left_sockets().size() - 1, -1, -1):
+		if not is_instance_valid(get_left_sockets()[i]):
+			get_left_sockets().remove_at(i)
+	for i in range(get_right_sockets().size() - 1, -1, -1):
+		if not is_instance_valid(get_right_sockets()[i]):
+			get_right_sockets().remove_at(i)
 
 func delete_all_sockets():
-	for socket in sockets_top:
+	for socket in get_top_sockets():
 		if is_instance_valid(socket):
 			socket.queue_free()
-	for socket in sockets_bottom:
+	for socket in get_bottom_sockets():
 		if is_instance_valid(socket):
 			socket.queue_free()
-	for socket in sockets_left:
+	for socket in get_left_sockets():
 		if is_instance_valid(socket):
 			socket.queue_free()
-	for socket in sockets_right:
+	for socket in get_right_sockets():
 		if is_instance_valid(socket):
 			socket.queue_free()
+
+func get_socket_by_index(side: int, idx: int) -> VXSocket:
+	match side:
+		0:
+			if idx >= 0 and idx < sockets_top.size():
+				return sockets_top[idx]
+		1:
+			if idx >= 0 and idx < sockets_bottom.size():
+				return sockets_bottom[idx]
+		2:
+			if idx >= 0 and idx < sockets_left.size():
+				return sockets_left[idx]
+		3:
+			if idx >= 0 and idx < sockets_right.size():
+				return sockets_right[idx]
+	return null
 
 func discover_socket_dimensions():
 	var socket = create_socket(Types.SocketType.INPUT, Types.SocketDirectionType.LINEAR)
 	socket_dimensions = socket.size
 	socket.queue_free()	
 
+## Creates a specified number of sockets on a given side of the node.
+## The side determines the type and direction of the sockets.
+## 
+## @param side: The side of the node where the sockets will be created.
+##              0 = Top (Input, Linear)
+##              1 = Bottom (Output, Linear)
+##              2 = Left (Input, Parallel)
+##              3 = Right (Output, Parallel)
+## @param amount: The number of sockets to create on the specified side.
+func create_sockets(side: int, amount: int):
+	for i in range(amount):
+		match side:
+			0:
+				set_socket(Types.SocketType.INPUT, Types.SocketDirectionType.LINEAR)
+			1:
+				set_socket(Types.SocketType.OUTPUT, Types.SocketDirectionType.LINEAR)
+			2:
+				set_socket(Types.SocketType.INPUT, Types.SocketDirectionType.PARALLEL)
+			3:
+				set_socket(Types.SocketType.OUTPUT, Types.SocketDirectionType.PARALLEL)
+
+## Creates a socket and adds it to the appropriate container.
+## Returns the socket for reference.
 func create_socket(socket_type: Types.SocketType, direction_type: Types.SocketDirectionType) -> VXSocket:
 	var socket: VXSocket = VX_SOCKET.instantiate()
 	socket.set_socket_type(socket_type)
@@ -374,6 +412,38 @@ func set_socket(socket_type: Types.SocketType, direction_type: Types.SocketDirec
 		sockets_bottom.append(socket)
 	elif socket_type == Types.SocketType.OUTPUT and direction_type == Types.SocketDirectionType.PARALLEL:
 		sockets_right.append(socket)
+
+## Returns the array of top sockets.
+func get_top_sockets() -> Array[VXSocket]:
+	return sockets_top
+
+## Returns the array of bottom sockets.
+func get_bottom_sockets() -> Array[VXSocket]:
+	return sockets_bottom
+
+## Returns the array of left sockets.
+func get_left_sockets() -> Array[VXSocket]:
+	return sockets_left
+
+## Returns the array of right sockets.
+func get_right_sockets() -> Array[VXSocket]:
+	return sockets_right
+
+## Returns the number of top sockets.
+func get_top_sockets_amount() -> int:
+	return sockets_top.size()
+
+## Returns the number of bottom sockets.
+func get_bottom_sockets_amount() -> int:
+	return sockets_bottom.size()
+
+## Returns the number of left sockets.
+func get_left_sockets_amount() -> int:
+	return sockets_left.size()
+
+## Returns the number of right sockets.
+func get_right_sockets_amount() -> int:
+	return sockets_right.size()
 
 func recalculate_socket_positions_and_node_dimensions():
 	var sockets_top_count: int = sockets_top.size()
@@ -420,7 +490,6 @@ func _on_mouse_exited() -> void:
 	is_mouse_over_node = false
 
 # automatic node connections
-
 func get_empty_socket(socket_type: Types.SocketType, direction_type: Types.SocketDirectionType) -> VXSocket:
 	var sockets: Array[VXSocket] = []
 	if socket_type == Types.SocketType.INPUT and direction_type == Types.SocketDirectionType.LINEAR:

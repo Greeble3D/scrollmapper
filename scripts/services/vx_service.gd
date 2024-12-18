@@ -106,12 +106,15 @@ func save_connection(connection_data:Dictionary) -> void:
 func save_graph_nodes(graph_data:Dictionary) -> void:
 	if graph_data.has("id") and graph_data.has("nodes"):
 		for node_data in graph_data["nodes"]:
-			print("HERE")
 			var vx_graph_node_model:VXGraphNodeModel = VXGraphNodeModel.new()
 			vx_graph_node_model.graph_id = graph_data["id"]
 			vx_graph_node_model.node_id = node_data["id"]
 			vx_graph_node_model.position_x = node_data["position_x"]
 			vx_graph_node_model.position_y = node_data["position_y"]
+			vx_graph_node_model.top_sockets_amount = node_data["top_sockets_amount"]
+			vx_graph_node_model.bottom_sockets_amount = node_data["bottom_sockets_amount"]
+			vx_graph_node_model.left_sockets_amount = node_data["left_sockets_amount"]
+			vx_graph_node_model.right_sockets_amount = node_data["right_sockets_amount"]
 			vx_graph_node_model.save()
 	else:
 		print("Error: graph_data dictionary is missing required keys or nodes.")
@@ -125,6 +128,10 @@ func save_graph_connections(graph_data:Dictionary) -> void:
 			var vx_graph_connection_model:VXGraphConnectionModel = VXGraphConnectionModel.new()
 			vx_graph_connection_model.graph_id = graph_data["id"]
 			vx_graph_connection_model.connection_id = connection_data["id"]
+			vx_graph_connection_model.start_node_side = connection_data["start_node_side"]
+			vx_graph_connection_model.end_node_side = connection_data["end_node_side"]
+			vx_graph_connection_model.start_node_socket_index = connection_data["start_socket_index"]
+			vx_graph_connection_model.end_node_socket_index = connection_data["end_socket_index"]
 			vx_graph_connection_model.save()
 	else:
 		print("Error: graph_data dictionary is missing required keys or connections.")

@@ -80,7 +80,9 @@ func get_full_graph_as_dictionary() -> Dictionary:
 	graph["connections"] = connections
 	return graph
 
-## Restores full graph from dictionary.
+## Restores the full graph from a dictionary.
+## This is a complex function that performs the entire process in one 
+## continuous operation. It may be broken up or simplified later.
 func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
 	# Clear existing nodes and connections
 	for node in vx_nodes.values():
@@ -110,33 +112,56 @@ func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
 			verse[0]["text"],
 			verse[0]["translation_abbr"]
 		)
+		
 		await get_tree().process_frame
-		node.recalculate_socket_positions_and_node_dimensions()
+		#node.recalculate_socket_positions_and_node_dimensions()
 		#node.position = Vector2(node_data["position_x"], node_data["position_y"])
 		#node.last_set_global_position = node.position
 
 	await get_tree().process_frame
 
-	# Restore connections
-	for connection_data in graph_data.get("connections", []):
-		var is_parallel:bool = connection_data.get("is_parallel", true)
-		var start_node:VXNode = vx_nodes.get(connection_data["start_node_id"], null)
-		var end_node:VXNode = vx_nodes.get(connection_data["end_node_id"], null)
-		if start_node and end_node:
-			var direction_type:Types.SocketDirectionType  
-			if is_parallel:
-				direction_type = Types.SocketDirectionType.PARALLEL
-			else:
-				direction_type = Types.SocketDirectionType.LINEAR
-			connect_nodes(start_node, end_node, direction_type)
-			await get_tree().process_frame
-
-	# Correct positions
+	# Process Graph Nodes
 	for node_data in graph_data.get("graph_nodes", []):
 		var node:VXNode = vx_nodes.get(node_data["node_id"], null)
-		node.global_position = Vector2(node_data["position_x"], node_data["position_y"])
+		if node:
+			node.position = Vector2(node_data["position_x"], node_data["position_y"])
+			node.last_set_global_position = node.position
+			node.create_sockets(0, node_data["top_sockets_amount"])
+			node.create_sockets(1, node_data["bottom_sockets_amount"])
+			node.create_sockets(2, node_data["left_sockets_amount"])
+			node.create_sockets(3, node_data["right_sockets_amount"])
+
+	# We need a temporary holder connections_tmp for the next operation, which 
+	# will dynamically regenerate all of the connections accurately. 
+	var connections_tmp:Dictionary = {}
+	for connection in graph_data.get("connections", []):
+		connections_tmp[connection["id"]] = connection
+
+	# Restore connections
+	for connection_data in graph_data.get("graph_connections", []):
+		var is_parallel:bool = connection_data.get("is_parallel", true)
+
+		var connection_id:int = connection_data.get("connection_id", -1)
+		var start_node_id:int = connections_tmp[connection_id].get("start_node_id", -1)
+		var end_node_id:int = connections_tmp[connection_id].get("end_node_id", -1)
+
+		var start_node:VXNode = vx_nodes.get(start_node_id, null)
+		var end_node:VXNode = vx_nodes.get(end_node_id, null)
+
+		var start_node_side:int = connection_data.get("start_node_side", -1)
+		var end_node_side:int = connection_data.get("end_node_side", -1)
+
+		var start_node_socket_index:int = connection_data.get("start_node_socket_index", -1)
+		var end_node_socket_index:int = connection_data.get("end_node_socket_index", -1)
+
+		if start_node and end_node:
+			var start_socket:VXSocket = start_node.get_socket_by_index(start_node_side, start_node_socket_index)
+			var end_socket:VXSocket = end_node.get_socket_by_index(end_node_side, end_node_socket_index)
+			if start_socket and end_socket:
+				connect_node_sockets(start_socket, end_socket)
 
 	recalculate_connection_lines()
+
 	graph_changed.emit()
 
 ## This is typically used to restore a node in the load process. It takes
@@ -351,16 +376,6 @@ func connect_node_sockets(start_socket:VXSocket, end_socket:VXSocket) -> void:
 	current_focused_socket = end_socket 
 	connection.do_socket_connections()
 
-## Initiates a node connection based on directionality only. 
-## This was first used for restoring the graph from saved data. It can be used
-## for similar needs. 
-func connect_nodes(node_a:VXNode, node_b:VXNode, direction:Types.SocketDirectionType) -> void:
-	if direction == Types.SocketDirectionType.LINEAR:
-		set_selected_node(node_a)
-		connect_node_linear(node_b)
-	elif direction == Types.SocketDirectionType.PARALLEL:
-		set_selected_node(node_a)
-		connect_node_parallel(node_b)
 
 
 ## When the graph changes, this function will be called.

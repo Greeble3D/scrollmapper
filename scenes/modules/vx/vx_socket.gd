@@ -20,6 +20,7 @@ var is_socket_being_edited: bool = false:
 			socket_edit_ended.emit()
 		is_socket_being_edited = new_value
 
+
 # Signals
 signal new_connection_created(start_socket: VXSocket, end_socket: VXSocket)
 signal node_moved(position: Vector2)
@@ -35,8 +36,6 @@ func _ready():
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	new_connection_created.connect(notify_node_of_new_connection)
-	
-
 
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
@@ -46,6 +45,40 @@ func _input_event(_viewport, event, _shape_idx):
 			if UserInput.is_dragging:
 				set_currently_editing(true)
 
+## Get the index of the socket in the connected node.
+## This is used to determine the position of the connection, which is used for 
+## reconstruction when fetched from database. (It can be used for other purposes as well.)
+func get_socket_index() -> int:
+	var socket_array:Array = []
+	if socket_type == Types.SocketType.INPUT && socket_direction == Types.SocketDirectionType.PARALLEL:
+		socket_array = connected_node.sockets_left
+	elif socket_type == Types.SocketType.INPUT && socket_direction == Types.SocketDirectionType.LINEAR:
+		socket_array = connected_node.sockets_top
+	elif socket_type == Types.SocketType.OUTPUT && socket_direction == Types.SocketDirectionType.PARALLEL:
+		socket_array = connected_node.sockets_right
+	elif socket_type == Types.SocketType.OUTPUT && socket_direction == Types.SocketDirectionType.LINEAR:
+		socket_array = connected_node.sockets_bottom
+
+	for socket in socket_array:
+		if socket == self:
+			return socket_array.find(socket)
+	return -1
+	
+## Gets the side of the node that the socket is connected to.
+## 0 = Top
+## 1 = Bottom
+## 2 = Left
+## 3 = Right
+func get_socket_side() -> int:
+	if socket_type == Types.SocketType.INPUT && socket_direction == Types.SocketDirectionType.PARALLEL:
+		return 2
+	elif socket_type == Types.SocketType.INPUT && socket_direction == Types.SocketDirectionType.LINEAR:
+		return 0
+	elif socket_type == Types.SocketType.OUTPUT && socket_direction == Types.SocketDirectionType.PARALLEL:
+		return 3
+	elif socket_type == Types.SocketType.OUTPUT && socket_direction == Types.SocketDirectionType.LINEAR:
+		return 1
+	return -1
 
 # Socket Type and Direction
 func set_socket_type(socket_type: Types.SocketType):
@@ -70,9 +103,7 @@ func get_connected_node() -> VXNode:
 func delete_connection():
 	if connection != null:
 		connection.delete_connection()
-
 	delete()
-
 
 ## Delete this node.
 func delete():

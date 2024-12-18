@@ -9,6 +9,10 @@ var graph_id: int = 0
 var node_id: int = 0
 var position_x: float = 0.0
 var position_y: float = 0.0
+var top_sockets_amount: int = 0
+var bottom_sockets_amount: int = 0
+var left_sockets_amount: int = 0
+var right_sockets_amount: int = 0
 #endregion
 
 func _init():
@@ -22,6 +26,10 @@ func get_create_table_query() -> String:
 		node_id INTEGER,
 		position_x REAL,
 		position_y REAL,
+		top_sockets_amount INTEGER,
+		bottom_sockets_amount INTEGER,
+		left_sockets_amount INTEGER,
+		right_sockets_amount INTEGER,
 		FOREIGN KEY(graph_id) REFERENCES graphs(id),
 		FOREIGN KEY(node_id) REFERENCES nodes(id),
 		PRIMARY KEY (graph_id, node_id)
@@ -35,15 +43,15 @@ func save():
 	
 	if result.size() == 0:
 		# Insert new graph-node relationship
-		var insert_query = "INSERT INTO vx_graph_nodes (graph_id, node_id, position_x, position_y) VALUES (?, ?, ?, ?);"
-		execute_query(insert_query, [graph_id, node_id, position_x, position_y])
+		var insert_query = "INSERT INTO vx_graph_nodes (graph_id, node_id, position_x, position_y, top_sockets_amount, bottom_sockets_amount, left_sockets_amount, right_sockets_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
+		execute_query(insert_query, [graph_id, node_id, position_x, position_y, top_sockets_amount, bottom_sockets_amount, left_sockets_amount, right_sockets_amount])
 	else:
 		# Update existing graph-node relationship
-		var update_query = "UPDATE vx_graph_nodes SET position_x = ?, position_y = ? WHERE graph_id = ? AND node_id = ?;"
-		execute_query(update_query, [position_x, position_y, graph_id, node_id])
+		var update_query = "UPDATE vx_graph_nodes SET position_x = ?, position_y = ?, top_sockets_amount = ?, bottom_sockets_amount = ?, left_sockets_amount = ?, right_sockets_amount = ? WHERE graph_id = ? AND node_id = ?;"
+		execute_query(update_query, [position_x, position_y, top_sockets_amount, bottom_sockets_amount, left_sockets_amount, right_sockets_amount, graph_id, node_id])
 
 func get_nodes_by_graph(graph_id: int) -> Array:
-	var query = "SELECT node_id, position_x, position_y FROM vx_graph_nodes WHERE graph_id = ?;"
+	var query = "SELECT node_id, position_x, position_y, top_sockets_amount, bottom_sockets_amount, left_sockets_amount, right_sockets_amount FROM vx_graph_nodes WHERE graph_id = ?;"
 	return get_results(query, [graph_id])
 
 func delete():

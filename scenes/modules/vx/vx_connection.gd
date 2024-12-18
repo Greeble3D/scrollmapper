@@ -68,6 +68,10 @@ func get_as_dictionary() -> Dictionary:
 	dict["start_node"] = start_node.get_node_id()
 	dict["end_node"] = end_node.get_node_id()
 	dict["is_parallel"] = is_parallel
+	dict["start_socket_index"] = start_socket.get_socket_index()
+	dict["end_socket_index"] = end_socket.get_socket_index()
+	dict["start_node_side"] = start_socket.get_socket_side()
+	dict["end_node_side"] = end_socket.get_socket_side()
 	return dict
 
 ## Function to get the "other node". Used when nodes are discovering eachother's connections.
@@ -117,7 +121,6 @@ func do_socket_connections() -> void:
 	if not is_connection_route_valid():
 		delete_connection()	
 		return
-
 	start_socket.connection = self
 	end_socket.connection = self
 	connect_signals()

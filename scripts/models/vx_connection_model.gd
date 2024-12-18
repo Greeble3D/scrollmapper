@@ -9,8 +9,6 @@ var id: int = 0
 var text: String = ""
 var start_node_id: int = 0
 var end_node_id: int = 0
-var position_x: float = 0.0
-var position_y: float = 0.0
 var is_parallel: bool = true
 #endregion
 
@@ -25,8 +23,6 @@ func get_create_table_query() -> String:
 		text TEXT,
 		start_node_id INTEGER,
 		end_node_id INTEGER,
-		position_x REAL,
-		position_y REAL,
 		is_parallel BOOLEAN DEFAULT TRUE,
 		FOREIGN KEY(start_node_id) REFERENCES nodes(id),
 		FOREIGN KEY(end_node_id) REFERENCES nodes(id)
@@ -44,13 +40,13 @@ func save() -> int:
 	
 	if result.size() > 0:
 		# Update existing connection
-		var update_query = "UPDATE vx_connections SET text = ?, position_x = ?, position_y = ?, is_parallel = ? WHERE id = ?;"
-		execute_query(update_query, [text, position_x, position_y, is_parallel, id])
+		var update_query = "UPDATE vx_connections SET text = ?, is_parallel = ? WHERE id = ?;"
+		execute_query(update_query, [text, is_parallel, id])
 		return result[0]["id"]
 	else:
 		# Insert new connection
-		var insert_query = "INSERT INTO vx_connections (id, text, start_node_id, end_node_id, position_x, position_y, is_parallel) VALUES (?, ?, ?, ?, ?, ?, ?);"
-		execute_query(insert_query, [id, text, start_node_id, end_node_id, position_x, position_y, is_parallel])
+		var insert_query = "INSERT INTO vx_connections (id, text, start_node_id, end_node_id, is_parallel) VALUES (?, ?, ?, ?, ?);"
+		execute_query(insert_query, [id, text, start_node_id, end_node_id, is_parallel])
 		return get_last_inserted_id()
 
 func get_all_connections():
