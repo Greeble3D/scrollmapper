@@ -176,6 +176,14 @@ func get_saved_graph(id: int) -> Dictionary:
 	print(full_graph_data)
 	return full_graph_data
 
+## Creates a new empty graph and returns its data.
+func create_new_empty_graph() -> Dictionary:
+	var vx_graph: VXGraph = VXGraph.new()
+	vx_graph.graph_name = "New Graph"
+	vx_graph.graph_description = "This is a new graph."
+	vx_graph.id = VXGraphModel.new().save() # Save the new graph to the database and get its ID
+	return vx_graph.get_full_graph_as_dictionary()
+
 ## Gets the full saved graph data including nodes, connections, and relationships.
 func get_graph_data_template() -> Dictionary:
 	return {

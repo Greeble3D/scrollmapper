@@ -50,7 +50,8 @@ func activate_last_used_graph()->void:
 		else:
 			print("Error: Could not load last used graph.")
 	else:
-		print("Error: No last used graph found.")
+		var new_graph:Dictionary = VXService.create_new_empty_graph()
+		vx_graph.set_full_graph_from_dictionary(new_graph)
 
 func get_current_graph_name()->String:
 	return vx_graph.graph_name

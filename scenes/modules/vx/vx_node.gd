@@ -445,6 +445,7 @@ func get_left_sockets_amount() -> int:
 func get_right_sockets_amount() -> int:
 	return sockets_right.size()
 
+## Recalculates the positions of the sockets and the dimensions of the node.
 func recalculate_socket_positions_and_node_dimensions():
 	var sockets_top_count: int = sockets_top.size()
 	var sockets_bottom_count: int = sockets_bottom.size()
