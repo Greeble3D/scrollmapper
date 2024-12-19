@@ -19,6 +19,7 @@ func _ready() -> void:
 	button_save.pressed.connect(_on_button_save_pressed)
 	visibility_changed.connect(initiate)
 
+## Initiates the dialogue with the current graph name and description.
 func initiate() -> void:
 	if visible:
 		line_edit_graph_name.text = vx_editor.get_current_graph_name()

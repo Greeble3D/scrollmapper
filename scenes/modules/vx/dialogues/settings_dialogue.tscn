@@ -2,9 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/modules/vx/dialogues/settings_dialogue.gd" id="1_q615n"]
 [ext_resource type="StyleBox" uid="uid://dnd12tvsyrwgb" path="res://scenes/modules/vx/dialogues/styles/dialogue_panel_style.tres" id="2_qeya4"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xf2dc"]
-bg_color = Color(1, 1, 1, 1)
+[ext_resource type="PackedScene" uid="uid://dqn8pxre4u575" path="res://scenes/modules/vx/dialogues/divider.tscn" id="3_73h5u"]
 
 [node name="SettingsDialogue" type="MarginContainer" node_paths=PackedStringArray("line_edit_graph_name", "text_edit_graph_description", "button_save")]
 custom_minimum_size = Vector2(300, 0)
@@ -45,10 +43,8 @@ text = "Settings
 "
 fit_content = true
 
-[node name="Divider" type="Panel" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 2)
+[node name="Divider" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_73h5u")]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_xf2dc")
 
 [node name="RichTextLabelGraphName" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

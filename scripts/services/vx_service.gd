@@ -4,7 +4,6 @@ extends Node
 ## vx system. See res://scenes/modules/vx/ 
 
 
-
 ## Will get a graph if the id is supplied. If id is not supplied, a new graph will
 ## be created and returned.
 func get_or_create_graph(id:int = -1) -> Dictionary:
@@ -183,6 +182,34 @@ func create_new_empty_graph() -> Dictionary:
 	vx_graph.graph_description = "This is a new graph."
 	vx_graph.id = VXGraphModel.new().save() # Save the new graph to the database and get its ID
 	return vx_graph.get_full_graph_as_dictionary()
+
+func delete_graph(id:int) -> void:
+	var vx_graph_model: VXGraphModel = VXGraphModel.new()
+	var vx_graph_node_model: VXGraphNodeModel = VXGraphNodeModel.new()
+	var vx_graph_connection_model: VXGraphConnectionModel = VXGraphConnectionModel.new()
+
+	# Delete graph-node relationships
+	var graph_nodes = vx_graph_node_model.get_nodes_by_graph(id)
+	for graph_node in graph_nodes:
+		vx_graph_node_model.graph_id = id
+		vx_graph_node_model.node_id = graph_node["node_id"]
+		vx_graph_node_model.delete()
+
+	# Delete graph-connection relationships
+	var graph_connections = vx_graph_connection_model.get_connections_by_graph(id)
+	for graph_connection in graph_connections:
+		vx_graph_connection_model.graph_id = id
+		vx_graph_connection_model.connection_id = graph_connection["connection_id"]
+		vx_graph_connection_model.delete()
+
+	# Delete the graph itself
+	vx_graph_model.id = id
+	vx_graph_model.delete()
+
+	# Update the last used graph
+	var last_used_graph_id:Dictionary = MetaService.get_meta_data("last_used_graph_id")
+	if last_used_graph_id.has("id") and last_used_graph_id["id"] == id:
+		MetaService.set_meta_data("last_used_graph_id", {"id": -1})
 
 ## Gets the full saved graph data including nodes, connections, and relationships.
 func get_graph_data_template() -> Dictionary:

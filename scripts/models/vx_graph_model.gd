@@ -57,8 +57,6 @@ func get_all_graphs():
 	var query = "SELECT * FROM vx_graphs;"
 	return get_results(query)
 
-
-
 func delete():
 	if id != null:
 		var query = "DELETE FROM vx_graphs WHERE id = ?;"

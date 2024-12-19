@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmg34cgf1y4wo"]
+[gd_scene load_steps=8 format=3 uid="uid://bmg34cgf1y4wo"]
 
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="1_6rdk2"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_search_and_execute.gd" id="1_8olel"]
 [ext_resource type="Texture2D" uid="uid://cp7wi7w1bgpew" path="res://images/icons/editor/Save.svg" id="3_li55u"]
 [ext_resource type="Texture2D" uid="uid://7junss6685ni" path="res://images/icons/editor/FileBrowse.svg" id="3_nllwr"]
 [ext_resource type="Texture2D" uid="uid://2pao3tccym3q" path="res://images/icons/editor/FileTree.svg" id="4_7bkm2"]
+[ext_resource type="Texture2D" uid="uid://bae24mbqtje8b" path="res://images/icons/editor/Close.svg" id="6_1oxhy"]
 [ext_resource type="Texture2D" uid="uid://bxaq5leut85nj" path="res://images/icons/editor/FileAccess.svg" id="6_75kp4"]
 
 [node name="VXSearchAndExecute" type="MarginContainer" node_paths=PackedStringArray("menu_button_graph", "menu_button_export")]
@@ -55,7 +56,7 @@ size_flags_vertical = 0
 layout_mode = 2
 text = "Graph"
 icon = ExtResource("3_nllwr")
-item_count = 3
+item_count = 4
 popup/item_0/text = "Settings"
 popup/item_0/icon = ExtResource("4_7bkm2")
 popup/item_1/text = "Save"
@@ -64,6 +65,9 @@ popup/item_1/id = 1
 popup/item_2/text = "Load"
 popup/item_2/icon = ExtResource("3_li55u")
 popup/item_2/id = 2
+popup/item_3/text = "Delete Graph"
+popup/item_3/icon = ExtResource("6_1oxhy")
+popup/item_3/id = 3
 
 [node name="MenuButtonExport" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2

@@ -57,6 +57,20 @@ func _ready():
 func _exit_tree() -> void:
 	VXGraph.instance = null
 
+## Deletes the graph
+func delete_graph():
+	clear_graph()
+	VXService.delete_graph(id)
+
+## Simply clears the graph. Used in deleting or reloading.
+func clear_graph():
+	for connection in vx_connections.values():
+		connection.queue_free()
+	vx_connections.clear()	
+	for node in vx_nodes.values():
+		node.queue_free()
+	vx_nodes.clear()
+
 ## Gets the graph as a dictionary.
 ## This is required in graph saving process.
 func get_as_dictionary() -> Dictionary:
@@ -163,11 +177,6 @@ func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
 	recalculate_connection_lines()
 
 	graph_changed.emit()
-
-## This is typically used to restore a node in the load process. It takes
-## a dictionary and creates a node from it.
-func create_node_from_data(node_data:Dictionary) ->void:
-	pass
 
 ## Locks the graph if the search results are shown.
 func lock_graph(lock:bool) -> void:
@@ -298,6 +307,7 @@ func move_node_set(pos:Vector2) -> void:
 		var final_position:Vector2 = node.last_set_global_position + mouse_offset
 		node.move_node(final_position)
 
+## Moves the node to the front of the canvas.
 func move_node_to_front(node:VXNode) -> void:
 	node.move_to_front()
 
@@ -375,8 +385,6 @@ func connect_node_sockets(start_socket:VXSocket, end_socket:VXSocket) -> void:
 	var connection:VXConnection = create_connection(start_socket, end_socket)
 	current_focused_socket = end_socket 
 	connection.do_socket_connections()
-
-
 
 ## When the graph changes, this function will be called.
 func _on_graph_changed()->void:

@@ -16,6 +16,7 @@ class_name VXEditor
 ## Settings dialog that is responsible for name and description of a given graph.
 @export var blocker_panel:Panel
 @export var settings_dialog: SettingsDialogue
+@export var delete_graph_dialogue: DeleteGraphDialogue
 
 var drag_start_position: Vector2 = Vector2()
 var is_dragging: bool = false
@@ -24,7 +25,7 @@ var starting_drag_position: Vector2 = Vector2.ZERO
 var starting_drag_position_global: Vector2 = Vector2.ZERO
 
 func _ready():
-	settings_dialog.hide()
+	
 	UserInput.double_clicked.connect(_on_mouse_double_clicked)
 	UserInput.mouse_drag_started.connect(_on_mouse_drag_started)
 	UserInput.mouse_drag_ended.connect(_on_mouse_drag_ended)
@@ -36,14 +37,22 @@ func _ready():
 	
 	UserInput.escape_key_pressed.connect(close_all_dialogues)
 	vx_search_and_execute.operation_selected.connect(_on_graph_action_selected)
+	
+	# Dialogues
+	settings_dialog.hide()
 	settings_dialog.data_accepted.connect(save_graph)
+	delete_graph_dialogue.hide()
+	delete_graph_dialogue.delete_graph.connect(delete_graph)
+	
+	# Other
 	activate_last_used_graph()
 
+## This function will be called when the editor is ready to load the last used graph.
 func activate_last_used_graph()->void:
 	await vx_graph.ready # prevents the can't access from null issue
 
 	var last_used_graph_id:Dictionary = MetaService.get_meta_data("last_used_graph_id")
-	if last_used_graph_id.has("id"):
+	if last_used_graph_id.has("id") && last_used_graph_id["id"] > 0:
 		var full_graph_data:Dictionary = VXService.get_saved_graph(last_used_graph_id["id"])
 		if full_graph_data.size() > 0:
 			vx_graph.set_full_graph_from_dictionary(full_graph_data)
@@ -53,25 +62,32 @@ func activate_last_used_graph()->void:
 		var new_graph:Dictionary = VXService.create_new_empty_graph()
 		vx_graph.set_full_graph_from_dictionary(new_graph)
 
+## Gets the current graph name
 func get_current_graph_name()->String:
 	return vx_graph.graph_name
 
+## Gets the current graph description
 func get_current_graph_description()->String:
 	return vx_graph.graph_description
 
+## Gets the current graph id
 func get_current_graph_id()->int:
 	return vx_graph.id
 
+## When the mouse wheel is "increased" the camera zoom is increased. 
 func _on_mouse_wheel_increased():
 	if VXGraph.is_graph_locked:
 		return
 	vx_camera_2d.zoom *= 1.1
 
+## When the mouse wheel is "decreased" the camera zoom is decreased.
 func _on_mouse_wheel_decreased():
 	if VXGraph.is_graph_locked:
 		return
 	vx_camera_2d.zoom *= 0.9
 
+## This function will be called when the mouse drag is started.
+## Will turn processing ON for the moment, for other actions to run.
 func _on_mouse_drag_started(position: Vector2):
 	set_process(true)
 	if is_mouse_over_any_element():
@@ -82,11 +98,14 @@ func _on_mouse_drag_started(position: Vector2):
 	drag_start_position = position
 	is_dragging = true
 
+## This function will be called when the mouse drag is ended.
+## Will turn processing OFF.
 func _on_mouse_drag_ended(position: Vector2):
 	set_process(false)
 	is_dragging = false
 	is_dragging_allowed = true
 
+## Will be turned off and on when the mouse drag is started and ended.
 func _process(_delta: float):
 	if is_dragging:
 		var mouse_position: Vector2 = get_viewport().get_mouse_position()
@@ -112,26 +131,34 @@ func is_mouse_over_any_element() -> bool:
 		return true
 	return false
 
+## Gets the camera 2D from the VXGraph
 func get_camera_2d() -> Camera2D:
 	return VXGraph.get_camera_2d()
 
+## Gets the center of the screen according to the camera.
 func get_camera_center_point_to_global()->Vector2:
 	var camera = get_camera_2d()
 	var center_screen = Vector2(get_viewport().size.x / 2, get_viewport().size.y / 2)
 	return center_screen
 
+## Sets the cursor position to the given position.
 func set_cursor_position(position:Vector2) -> void:
 	if VXGraph.is_graph_locked:
 		return
 	var final_position:Vector2 = position - cursor.size / 2
 	cursor.global_position = final_position
 
+## Gets the cursor position
 func get_cursor_position() -> Vector2:
 	return cursor.global_position
 
+## This function will be called when the VXGraph is ready.
+## Resets cursor position. 
 func _on_vx_graph_ready() -> void:
 	set_cursor_position(Vector2.ZERO)
 
+## This function will be called when the mouse is double clicked.
+## It is responsible for setting the cursor position.
 func _on_mouse_double_clicked():
 	if is_mouse_over_any_element():
 		return
@@ -140,6 +167,7 @@ func _on_mouse_double_clicked():
 	var mouse_position:Vector2 = vx_graph.get_global_mouse_position()
 	set_cursor_position(mouse_position)
 
+## This function will be called when the mouse drag is started.
 func _on_drag_started(pos:Vector2) -> void:
 	starting_drag_position = pos
 	starting_drag_position_global = vx_camera_2d.get_global_mouse_position()
@@ -155,6 +183,8 @@ func _on_graph_action_selected(action_tag:String) -> void:
 			vx_graph.print_feedback_note("Graph saved...")
 		"graph_load":
 			print("Graph load selected.")
+		"graph_delete":
+			run_delete_graph_dialogue()
 		"export_type_1":
 			print("Export type 1 selected.")
 		"export_type_2":
@@ -162,15 +192,21 @@ func _on_graph_action_selected(action_tag:String) -> void:
 		_:
 			print("Unknown action selected.")
 
+## Closes all dialogues. A generic function to clear the screan of windows. 
 func close_all_dialogues()->void:
-	var dialogues:Array = [settings_dialog,]
+	var dialogues:Array = [settings_dialog, delete_graph_dialogue]
 	for dialogue in dialogues:
 		dialogue.hide()
 	blocker_panel.hide()
 
+## Runs the settings dialogue. Opens it up, shows it. 
 func run_settings_dialogue() -> void:
 	blocker_panel.show()
 	settings_dialog.show()
+
+func run_delete_graph_dialogue() -> void:
+	blocker_panel.show()
+	delete_graph_dialogue.show()
 
 ## Initiates the saving process in VXService
 func save_graph(graph_name:String, graph_description:String) -> void:
@@ -179,3 +215,10 @@ func save_graph(graph_name:String, graph_description:String) -> void:
 	var full_graph:Dictionary = vx_graph.get_full_graph_as_dictionary()
 	VXService.save_graph(full_graph)
 	close_all_dialogues()
+
+## Initiates a graph deletion.
+func delete_graph() -> void:
+	vx_graph.delete_graph()
+	close_all_dialogues()
+	var new_graph:Dictionary = VXService.create_new_empty_graph()
+	vx_graph.set_full_graph_from_dictionary(new_graph)

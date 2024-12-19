@@ -178,6 +178,7 @@ func get_connected_nodes() -> Dictionary:
 func get_verse_string() -> String:
 	return "%s-%s-%s" % [book.replace(" ", "_"), str(chapter), str(verse)]
 
+## Sets the preview text of the node.
 func set_preview_text():
 	preview_text.bbcode_text = "[b]%s %s:%s[/b] - %s" % [book, str(chapter), str(verse), text]
 
@@ -231,6 +232,7 @@ func select_node_multiple(pos:Vector2):
 		return
 	node_selected_plus.emit(self)	
 
+## Drags the node. Emits moved and dragged signals. 
 func drag_node(pos: Vector2):
 	if not can_edit():
 		return
@@ -238,22 +240,27 @@ func drag_node(pos: Vector2):
 	node_moved.emit(new_position)
 	node_dragged.emit(pos)
 
-# Node Movement
+# Moves the node. Distinct from drag node in that it positions the node anywhere. 
 func move_node(pos: Vector2):
 	position = pos
 	show_node()
 	node_moved.emit(pos)
 
+
+## Deprecated. Use move_node instead.
 func move_to_preview_node(pos: Vector2):
 	position = pos + placement_offset
 
+## Emits the node moved signal.
+## This is sometimes used to initiate functions such as connection recalculation. 
 func emit_node_moved(pos: Vector2):
 	node_moved.emit(pos)
 
-# Visibility
+## Hides the node.
 func hide_node():
 	hide()
 	
+## Shows the node. 
 func show_node():
 	show()
 
@@ -261,6 +268,7 @@ func show_node():
 func emit_new_connection_created(start_socket: VXSocket, end_socket: VXSocket):
 	new_connection_created.emit(start_socket, end_socket)
 
+## Emits the connection deleted signal.
 func emit_connection_deleted(socket:VXSocket) -> void:
 	connection_deleted.emit(socket)
 
@@ -287,6 +295,7 @@ func update_sockets(starting_socket: VXSocket = null, ending_socket: VXSocket = 
 
 	recalculate_socket_positions_and_node_dimensions()
 
+## Checks if an empty socket is required.
 func empty_socket_required(sockets: Array[VXSocket]) -> bool:
 	var empty_connection_found: bool = false
 	if sockets.size() == 0:
@@ -299,6 +308,7 @@ func empty_socket_required(sockets: Array[VXSocket]) -> bool:
 			break
 	return !empty_connection_found
 
+## Removes extra sockets from the array.	
 func remove_extra_sockets_from_array(sockets: Array[VXSocket]):
 	var unconnected_sockets: Array[VXSocket] = []
 	for socket in sockets:
@@ -312,6 +322,7 @@ func remove_extra_sockets_from_array(sockets: Array[VXSocket]):
 		socket_to_remove.queue_free()
 		sockets.erase(socket_to_remove)
 
+## Removes invalid sockets.
 func remove_invalid_sockets():
 	for i in range(get_top_sockets().size() - 1, -1, -1):
 		if not is_instance_valid(get_top_sockets()[i]):
@@ -326,6 +337,7 @@ func remove_invalid_sockets():
 		if not is_instance_valid(get_right_sockets()[i]):
 			get_right_sockets().remove_at(i)
 
+## Deletes all sockets.
 func delete_all_sockets():
 	for socket in get_top_sockets():
 		if is_instance_valid(socket):
@@ -340,6 +352,7 @@ func delete_all_sockets():
 		if is_instance_valid(socket):
 			socket.queue_free()
 
+## Returns the socket by index.
 func get_socket_by_index(side: int, idx: int) -> VXSocket:
 	match side:
 		0:
@@ -356,6 +369,7 @@ func get_socket_by_index(side: int, idx: int) -> VXSocket:
 				return sockets_right[idx]
 	return null
 
+## Discovers the dimensions of the socket graphic. Used in calculation of node size mostly.
 func discover_socket_dimensions():
 	var socket = create_socket(Types.SocketType.INPUT, Types.SocketDirectionType.LINEAR)
 	socket_dimensions = socket.size
@@ -401,6 +415,8 @@ func create_socket(socket_type: Types.SocketType, direction_type: Types.SocketDi
 
 	return socket
 
+## Sets a socket on the node.
+## The socket type and direction type determine the side of the node where the socket will be placed.
 func set_socket(socket_type: Types.SocketType, direction_type: Types.SocketDirectionType) -> void:
 	var socket: VXSocket = create_socket(socket_type, direction_type)
 	socket.position = position
@@ -472,6 +488,7 @@ func recalculate_socket_positions_and_node_dimensions():
 
 	sockets_updated.emit()
 
+## Determines of the node can be edited. 
 func can_edit() -> bool:
 	return is_mouse_over_node && !dragging_already_in_progress
 
@@ -482,15 +499,17 @@ func can_edit() -> bool:
 func _mouse_drag_ended_any_node(pos:Vector2):
 	dragging_already_in_progress = false
 
+## On mouse entered, sets some edit-related values.
 func _on_mouse_entered() -> void:
 	dragging_already_in_progress = UserInput.is_dragging
 	is_mouse_over_node = true
 
+## On mouse exited, sets some edit-related values.
 func _on_mouse_exited() -> void:
 	dragging_already_in_progress = UserInput.is_dragging
 	is_mouse_over_node = false
 
-# automatic node connections
+## Gets an empty socket based on the socket type and direction type.
 func get_empty_socket(socket_type: Types.SocketType, direction_type: Types.SocketDirectionType) -> VXSocket:
 	var sockets: Array[VXSocket] = []
 	if socket_type == Types.SocketType.INPUT and direction_type == Types.SocketDirectionType.LINEAR:
