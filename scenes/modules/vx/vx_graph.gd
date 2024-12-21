@@ -43,6 +43,7 @@ var selected_nodes:Array[VXNode] = []
 @export var vx_connections:Dictionary = {}
 
 signal graph_changed
+signal node_control_opened(vx_node:VXNode)
 
 func _ready():
 	if VXGraph.instance == null:
@@ -272,6 +273,7 @@ func create_node() -> VXNode:
 	vx_node.node_selected.connect(set_selected_node)
 	vx_node.node_dragged.connect(move_node_set)
 	vx_node.node_selected_plus.connect(add_node_to_selection_set)
+	vx_node.node_control_opened.connect(open_node_control_dialogue)
 	return vx_node
 
 ## Main function to select in this class and on the node. 
@@ -512,3 +514,8 @@ func recalculate_connection_lines():
 		# We used node_moved.emit(<same_position>) because moving a node
 		# will trigger the connection lines to recalculate.
 		node.node_moved.emit(node.position)
+
+## Opens the node control dialogue. 
+## This is a relay function. 
+func open_node_control_dialogue(vx_node:VXNode) -> void:
+	node_control_opened.emit(vx_node)

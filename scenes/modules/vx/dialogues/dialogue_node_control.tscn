@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxvpvgnaquqyu"]
+
+[ext_resource type="Script" path="res://scenes/modules/vx/dialogues/dialogue_node_control.gd" id="1_5ka8k"]
+[ext_resource type="StyleBox" uid="uid://dnd12tvsyrwgb" path="res://scenes/modules/vx/dialogues/styles/dialogue_panel_style.tres" id="2_rsyv6"]
+[ext_resource type="PackedScene" uid="uid://bs0uifavbkart" path="res://scenes/modules/cross_reference/cross_reference.tscn" id="3_b6xad"]
+[ext_resource type="PackedScene" uid="uid://dqn8pxre4u575" path="res://scenes/modules/vx/dialogues/divider.tscn" id="3_c7v0v"]
+[ext_resource type="Texture2D" uid="uid://bae24mbqtje8b" path="res://images/icons/editor/Close.svg" id="4_2b5wp"]
+
+[node name="NodeControlDialogue" type="MarginContainer" node_paths=PackedStringArray("scripture_location_rich_text_label", "scripture_text_rich_text_label", "cross_reference", "close_button")]
+custom_minimum_size = Vector2(720, 360)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5ka8k")
+scripture_location_rich_text_label = NodePath("MarginContainer/VBoxContainer/ScriptureLocationRichTextLabel")
+scripture_text_rich_text_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/ScriptureMarginContainer/VBoxContainer/ScriptureTextRichTextLabel")
+cross_reference = NodePath("MarginContainer/VBoxContainer/HBoxContainer/CrossReferencesMarginContainer/CrossReference")
+close_button = NodePath("MarginContainer/VBoxContainer/FooterMarginContainer/CloseButton")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_rsyv6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ScriptureLocationRichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Genesis 1:1"
+fit_content = true
+
+[node name="Divider" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_c7v0v")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ScriptureMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ScriptureMarginContainer"]
+layout_mode = 2
+
+[node name="ScriptureTextRichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/ScriptureMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "In the beginning God created the heaven and the earth. "
+fit_content = true
+
+[node name="CrossReferencesMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CrossReference" parent="MarginContainer/VBoxContainer/HBoxContainer/CrossReferencesMarginContainer" instance=ExtResource("3_b6xad")]
+layout_mode = 2
+
+[node name="FooterMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer/FooterMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Close"
+icon = ExtResource("4_2b5wp")

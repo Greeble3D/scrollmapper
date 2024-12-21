@@ -8,6 +8,7 @@ func _ready() -> void:
 
 func _on_cross_references_searched(verses: Array) -> void:
 	clear_verses()
+	print("HERE")
 	for verse_data in verses:
 		setup_verse(verse_data)
 

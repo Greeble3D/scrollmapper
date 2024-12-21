@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bh1iyds4cy28s"]
+[gd_scene load_steps=14 format=3 uid="uid://bh1iyds4cy28s"]
 
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_graph.gd" id="1_sckcm"]
 [ext_resource type="PackedScene" uid="uid://cfxi6tibdx3cp" path="res://scenes/modules/vx/vx_canvas.tscn" id="2_jc8ca"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cslgs5p2xsfmf" path="res://scenes/modules/vx/dialogues/delete_graph_dialogue.tscn" id="6_xma0l"]
 [ext_resource type="PackedScene" uid="uid://juvfgmrln8tf" path="res://scenes/modules/vx/dialogues/dialogue_new_graph.tscn" id="7_4fwow"]
 [ext_resource type="PackedScene" uid="uid://bt43vy44qgas7" path="res://scenes/modules/vx/dialogues/dialogue_load_graphs.tscn" id="8_3crsv"]
+[ext_resource type="PackedScene" uid="uid://bxvpvgnaquqyu" path="res://scenes/modules/vx/dialogues/dialogue_node_control.tscn" id="9_uamg3"]
 
 [node name="VXGraph" type="Control" node_paths=PackedStringArray("vx_canvas", "vx_editor", "vx_search_results", "camera_2d", "nodes_info", "connections_info", "selection_info", "feed_back_notes")]
 layout_mode = 3
@@ -33,18 +34,19 @@ connections_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxCon
 selection_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/SelectedInfo")
 feed_back_notes = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/FeedBackNotes")
 
-[node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor", "dialogues", "blocker_panel", "settings_dialog", "delete_graph_dialogue", "new_graph_dialogue", "load_graphs_dialogue")]
+[node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor", "dialogues", "blocker_panel", "settings_dialog", "delete_graph_dialogue", "new_graph_dialogue", "load_graphs_dialogue", "node_control_dialogue")]
 script = ExtResource("2_jscly")
 vx_graph = NodePath("..")
 vx_camera_2d = NodePath("../VXCamera2D")
 vx_search_and_execute = NodePath("EditorUI/VBoxContainer/VXSearchAndExecute")
 cursor = NodePath("../VXCursor")
-dialogues = [NodePath("Dialogues/SettingsDialogue"), NodePath("Dialogues/DeleteGraphDialogue"), NodePath("Dialogues/NewGraphDialogue"), NodePath("Dialogues/LoadGraphsDialogue")]
+dialogues = [NodePath("Dialogues/SettingsDialogue"), NodePath("Dialogues/DeleteGraphDialogue"), NodePath("Dialogues/NewGraphDialogue"), NodePath("Dialogues/LoadGraphsDialogue"), NodePath("Dialogues/NodeControlDialogue")]
 blocker_panel = NodePath("Dialogues/BlockerPanel")
 settings_dialog = NodePath("Dialogues/SettingsDialogue")
 delete_graph_dialogue = NodePath("Dialogues/DeleteGraphDialogue")
 new_graph_dialogue = NodePath("Dialogues/NewGraphDialogue")
 load_graphs_dialogue = NodePath("Dialogues/LoadGraphsDialogue")
+node_control_dialogue = NodePath("Dialogues/NodeControlDialogue")
 
 [node name="EditorUI" type="Control" parent="VXEditor"]
 layout_mode = 3
@@ -154,6 +156,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="LoadGraphsDialogue" parent="VXEditor/Dialogues" node_paths=PackedStringArray("vx_editor") instance=ExtResource("8_3crsv")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+vx_editor = NodePath("../..")
+
+[node name="NodeControlDialogue" parent="VXEditor/Dialogues" node_paths=PackedStringArray("vx_editor") instance=ExtResource("9_uamg3")]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4

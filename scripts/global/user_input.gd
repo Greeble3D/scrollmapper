@@ -21,6 +21,11 @@ signal right_clicked
 ## signals that a double click was just performed.
 signal double_clicked
 
+## signals that a ctrl click was just performed.
+signal ctrl_clicked
+
+## signals that a ctrl-double click was just performed.
+signal ctrl_double_clicked
 
 ## Signals that the dragging of the mouse has started.
 signal mouse_drag_started(position: Vector2)
@@ -61,12 +66,17 @@ func detect_mouse_events(event):
 				right_clicked.emit()
 		if event.is_action_pressed("shift_click"):
 			shift_clicked.emit(event.position)
+		if event.is_action_pressed("ctrl_click"):
+			ctrl_clicked.emit()
 		if event.is_released():
 			click_released.emit()
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.is_pressed():
-				if event.double_click:
-					double_clicked.emit()
+				if event.double_click:	
+					if Input.is_key_pressed(KEY_CTRL):
+						ctrl_double_clicked.emit()
+					else:
+						double_clicked.emit()
 				else:
 					clicked.emit()
 					is_dragging = true
@@ -76,7 +86,6 @@ func detect_mouse_events(event):
 				if is_dragging:
 					is_dragging = false
 					mouse_drag_ended.emit(event.position)
-
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			mouse_wheel_increased.emit()
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:

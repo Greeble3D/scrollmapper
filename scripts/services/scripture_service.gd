@@ -93,6 +93,7 @@ func get_verses_by_range(translation: String, start_book: String, start_chapter:
 func get_cross_references_for_verse(translation: String, book: String, chapter: int, verse: int) -> Array:
 	var cross_reference_model = CrossReferenceModel.new(translation)
 	var cross_references = cross_reference_model.get_cross_references_for_verse(book, chapter, verse)
+
 	var result = []
 	for cr in cross_references:
 		result.append(cr)
@@ -268,14 +269,16 @@ func propogate_search(translation_abbr:String, verse_results:Array, meta:Diction
 
 ## Derived from propagate_search, this tailors verse output to cross-reference data.
 func propagate_cross_reference_search(translation_abbr:String, verse_results:Array, meta:Dictionary={}):
+	
 	if verse_results.is_empty():
 		return
 	var results:Array = []
-	for verse_result in verse_results:
+	for verse_result in verse_results:	
 		verse_result["translation"] = get_translation_by_id(verse_result["translation_id"])
 		if books.has(verse_result["translation_id"]):
 			verse_result["book"] = get_book_by_id(verse_result["translation_id"], verse_result["book_id"])
 		verse_result['meta'] = meta
+		results.append(verse_result)
 	verse_cross_references_searched.emit(apply_meta(results, meta))
 
 

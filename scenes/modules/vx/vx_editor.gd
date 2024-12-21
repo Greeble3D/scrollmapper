@@ -20,6 +20,7 @@ class_name VXEditor
 @export var delete_graph_dialogue: DeleteGraphDialogue
 @export var new_graph_dialogue: MarginContainer
 @export var load_graphs_dialogue: LoadGraphsDialogue 
+@export var node_control_dialogue: MarginContainer 
 
 var drag_start_position: Vector2 = Vector2()
 var is_dragging: bool = false
@@ -40,6 +41,7 @@ func _ready():
 	
 	UserInput.escape_key_pressed.connect(close_all_dialogues)
 	vx_search_and_execute.operation_selected.connect(_on_graph_action_selected)
+	vx_graph.node_control_opened.connect(open_node_control_dialogue)
 	
 	# Dialogues
 	settings_dialog.hide()
@@ -50,6 +52,9 @@ func _ready():
 	new_graph_dialogue.create_new_graph_pressed.connect(create_new_graph)
 	load_graphs_dialogue.hide()
 	load_graphs_dialogue.graph_selected.connect(load_graph)
+	node_control_dialogue.hide()
+
+
 	# Other
 	activate_last_used_graph()
 
@@ -250,3 +255,8 @@ func load_graph(graph_id:int) -> void:
 	var full_graph_data:Dictionary = VXService.get_saved_graph(graph_id)
 	vx_graph.set_full_graph_from_dictionary(full_graph_data)
 	close_all_dialogues()
+
+func open_node_control_dialogue(vx_node:VXNode) -> void:
+	blocker_panel.show()
+	node_control_dialogue.show()
+	node_control_dialogue.initiate(vx_node)

@@ -67,5 +67,3 @@ layout_mode = 2
 visible = false
 layout_mode = 1
 script = ExtResource("5_mn4tt")
-
-[connection signal="mouse_entered" from="UI/Modules/VXGraph" to="UI/Modules/VXGraph" method="_on_mouse_entered"]

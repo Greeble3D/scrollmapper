@@ -50,6 +50,7 @@ signal node_selected_plus(node:VXNode)
 signal node_moved(new_position: Vector2)
 signal node_dragged(new_position:Vector2)
 signal sockets_updated
+signal node_control_opened(node:VXNode)
 
 # Constants
 const VX_NODE = preload("res://scenes/modules/vx/vx_node.tscn")
@@ -100,7 +101,8 @@ func _ready():
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	UserInput.clicked.connect(select_node)
-	UserInput.double_clicked.connect(arrange_connected_nodes)
+	UserInput.ctrl_double_clicked.connect(arrange_connected_nodes)
+	UserInput.double_clicked.connect(open_node_options)
 	UserInput.click_released.connect(unselect_node_set)
 	UserInput.click_released.connect(log_last_set_global_position)
 	UserInput.shift_clicked.connect(select_node_multiple)
@@ -532,5 +534,12 @@ func get_empty_socket(socket_type: Types.SocketType, direction_type: Types.Socke
 func arrange_connected_nodes()->void:
 	select_node()
 	VXGraph.get_instance().arrange_node_positions()
+
+## Opens the node options window. 
+func open_node_options():
+	if not can_edit():
+		return
+	select_node()
+	node_control_opened.emit(self)
 
 #endregion
