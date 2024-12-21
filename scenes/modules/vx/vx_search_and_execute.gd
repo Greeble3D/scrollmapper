@@ -27,6 +27,8 @@ func _on_menu_button_graph_pressed(id:int) -> void:
 			operation_selected.emit("graph_load")
 		3:
 			operation_selected.emit("graph_delete")
+		4:
+			operation_selected.emit("graph_new")
 
 func _on_button_export_pressed(id:int) -> void:
 	match id:

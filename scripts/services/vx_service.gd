@@ -45,6 +45,7 @@ func get_last_used_graph() -> Dictionary:
 func save_graph(graph_data:Dictionary) -> void:
 	# First, create the graph...
 	if graph_data.has("id") and graph_data.has("graph_name") and graph_data.has("graph_description"):
+		clear_graph(graph_data["id"])
 		var vx_graph_model:VXGraphModel = VXGraphModel.new()
 		vx_graph_model.id = graph_data["id"]
 		vx_graph_model.graph_name = graph_data["graph_name"]
@@ -85,6 +86,25 @@ func save_node(node_data:Dictionary) -> void:
 		vx_node_model.save()
 	else:
 		print("Error: node_data dictionary is missing required keys.")
+
+## Clears all nodes and connections by graph id.
+func clear_graph(graph_id: int) -> void:
+	var vx_graph_node_model: VXGraphNodeModel = VXGraphNodeModel.new()
+	var vx_graph_connection_model: VXGraphConnectionModel = VXGraphConnectionModel.new()
+
+	# Delete graph-node relationships
+	var graph_nodes = vx_graph_node_model.get_nodes_by_graph(graph_id)
+	for graph_node in graph_nodes:
+		vx_graph_node_model.graph_id = graph_id
+		vx_graph_node_model.node_id = graph_node["node_id"]
+		vx_graph_node_model.delete()
+
+	# Delete graph-connection relationships
+	var graph_connections = vx_graph_connection_model.get_connections_by_graph(graph_id)
+	for graph_connection in graph_connections:
+		vx_graph_connection_model.graph_id = graph_id
+		vx_graph_connection_model.connection_id = graph_connection["connection_id"]
+		vx_graph_connection_model.delete()
 
 ## Saves a connection to the database.
 func save_connection(connection_data:Dictionary) -> void:
@@ -210,6 +230,17 @@ func delete_graph(id:int) -> void:
 	var last_used_graph_id:Dictionary = MetaService.get_meta_data("last_used_graph_id")
 	if last_used_graph_id.has("id") and last_used_graph_id["id"] == id:
 		MetaService.set_meta_data("last_used_graph_id", {"id": -1})
+
+## Gets a list of all graphs.
+func get_graph_list() -> Array:
+	var vx_graph_model: VXGraphModel = VXGraphModel.new()
+	var graphs = vx_graph_model.get_all_graphs()
+	return graphs
+
+func get_graph_node_amount(id:int) -> int:
+	var vx_graph: VXGraphModel = VXGraphModel.new()
+	vx_graph.id = id
+	return vx_graph.get_node_amount()
 
 ## Gets the full saved graph data including nodes, connections, and relationships.
 func get_graph_data_template() -> Dictionary:

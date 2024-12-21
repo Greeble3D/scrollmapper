@@ -57,9 +57,12 @@ func get_all_graphs():
 	var query = "SELECT * FROM vx_graphs;"
 	return get_results(query)
 
+func get_node_amount() -> int:
+	var query = "SELECT COUNT(*) FROM vx_graph_nodes WHERE graph_id = ?;"
+	var result = get_results(query, [id])
+	return result[0]["COUNT(*)"]
+
 func delete():
-	if id != null:
-		var query = "DELETE FROM vx_graphs WHERE id = ?;"
-		execute_query(query, [id])
-	else:
-		print("Graph ID is not set, cannot delete the graph.")
+	var query = "DELETE FROM vx_graphs WHERE id = ?;"
+	print("Deleting graph with id: ", id)
+	execute_query(query, [id])

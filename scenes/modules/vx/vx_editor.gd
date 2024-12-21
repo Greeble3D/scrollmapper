@@ -14,9 +14,12 @@ class_name VXEditor
 
 @export_group("Dialogues")
 ## Settings dialog that is responsible for name and description of a given graph.
+@export var dialogues:Array[MarginContainer] = []
 @export var blocker_panel:Panel
 @export var settings_dialog: SettingsDialogue
 @export var delete_graph_dialogue: DeleteGraphDialogue
+@export var new_graph_dialogue: MarginContainer
+@export var load_graphs_dialogue: LoadGraphsDialogue 
 
 var drag_start_position: Vector2 = Vector2()
 var is_dragging: bool = false
@@ -43,7 +46,10 @@ func _ready():
 	settings_dialog.data_accepted.connect(save_graph)
 	delete_graph_dialogue.hide()
 	delete_graph_dialogue.delete_graph.connect(delete_graph)
-	
+	new_graph_dialogue.hide()
+	new_graph_dialogue.create_new_graph_pressed.connect(create_new_graph)
+	load_graphs_dialogue.hide()
+	load_graphs_dialogue.graph_selected.connect(load_graph)
 	# Other
 	activate_last_used_graph()
 
@@ -182,7 +188,9 @@ func _on_graph_action_selected(action_tag:String) -> void:
 			save_graph(vx_graph.graph_name, vx_graph.graph_description)
 			vx_graph.print_feedback_note("Graph saved...")
 		"graph_load":
-			print("Graph load selected.")
+			run_load_graph_dialogue()
+		"graph_new":
+			run_new_graph_dialogue()
 		"graph_delete":
 			run_delete_graph_dialogue()
 		"export_type_1":
@@ -194,7 +202,6 @@ func _on_graph_action_selected(action_tag:String) -> void:
 
 ## Closes all dialogues. A generic function to clear the screan of windows. 
 func close_all_dialogues()->void:
-	var dialogues:Array = [settings_dialog, delete_graph_dialogue]
 	for dialogue in dialogues:
 		dialogue.hide()
 	blocker_panel.hide()
@@ -208,6 +215,14 @@ func run_delete_graph_dialogue() -> void:
 	blocker_panel.show()
 	delete_graph_dialogue.show()
 
+func run_new_graph_dialogue() -> void:
+	blocker_panel.show()
+	new_graph_dialogue.show()
+
+func run_load_graph_dialogue() -> void:
+	blocker_panel.show()
+	load_graphs_dialogue.show()
+
 ## Initiates the saving process in VXService
 func save_graph(graph_name:String, graph_description:String) -> void:
 	vx_graph.graph_name = graph_name
@@ -220,5 +235,18 @@ func save_graph(graph_name:String, graph_description:String) -> void:
 func delete_graph() -> void:
 	vx_graph.delete_graph()
 	close_all_dialogues()
-	var new_graph:Dictionary = VXService.create_new_empty_graph()
-	vx_graph.set_full_graph_from_dictionary(new_graph)
+	vx_graph.clear_graph()
+
+## Initiates a new graph creation.
+func create_new_graph(save:bool) -> void: 
+	if save:
+		save_graph(vx_graph.graph_name, vx_graph.graph_description)
+	print(save)
+	close_all_dialogues()
+	vx_graph.create_new_graph()
+
+## Initiates a graph loading.
+func load_graph(graph_id:int) -> void:
+	var full_graph_data:Dictionary = VXService.get_saved_graph(graph_id)
+	vx_graph.set_full_graph_from_dictionary(full_graph_data)
+	close_all_dialogues()

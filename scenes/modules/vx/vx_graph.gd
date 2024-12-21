@@ -57,6 +57,11 @@ func _ready():
 func _exit_tree() -> void:
 	VXGraph.instance = null
 
+func create_new_graph():
+	clear_graph()
+	var new_graph:Dictionary = VXService.create_new_empty_graph()
+	set_full_graph_from_dictionary(new_graph)
+
 ## Deletes the graph
 func delete_graph():
 	clear_graph()
@@ -210,7 +215,7 @@ func remove_vx_node(node: VXNode) -> void:
 	if node.get_node_id() not in vx_nodes:
 		push_error("Node is not found.")
 		return
-	vx_nodes.erase(node.get_node_id())
+	vx_nodes.erase(node.id)
 	graph_changed.emit()
 
 ## Adds a connection to the vx_connections dictionary.
