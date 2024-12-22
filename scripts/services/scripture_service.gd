@@ -93,11 +93,28 @@ func get_verses_by_range(translation: String, start_book: String, start_chapter:
 func get_cross_references_for_verse(translation: String, book: String, chapter: int, verse: int) -> Array:
 	var cross_reference_model = CrossReferenceModel.new(translation)
 	var cross_references = cross_reference_model.get_cross_references_for_verse(book, chapter, verse)
-
+	
 	var result = []
 	for cr in cross_references:
 		result.append(cr)
 	return result
+
+## Saves a cross reference to database. 
+func save_cross_reference(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter_start: int, to_chapter_end: int, to_verse_start: int, to_verse_end: int, votes: int, user_added: bool) -> void:
+	var cross_reference_model = CrossReferenceModel.new("scrollmapper")
+	if cross_reference_model.cross_reference_exists(from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes):
+		return
+	cross_reference_model.from_book = from_book
+	cross_reference_model.from_chapter = from_chapter
+	cross_reference_model.from_verse = from_verse
+	cross_reference_model.to_book = to_book
+	cross_reference_model.to_chapter_start = to_chapter_start
+	cross_reference_model.to_chapter_end = to_chapter_end
+	cross_reference_model.to_verse_start = to_verse_start
+	cross_reference_model.to_verse_end = to_verse_end
+	cross_reference_model.votes = votes
+	cross_reference_model.user_added = user_added
+	cross_reference_model.save()
 
 ## Requests a cross  list.
 func request_cross_references(translation: String, book: String, chapter: int, verse: int) -> void:
@@ -280,7 +297,6 @@ func propagate_cross_reference_search(translation_abbr:String, verse_results:Arr
 		verse_result['meta'] = meta
 		results.append(verse_result)
 	verse_cross_references_searched.emit(apply_meta(results, meta))
-
 
 func emit_books_installed():
 	books_installed.emit()

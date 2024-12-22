@@ -1,14 +1,16 @@
 extends MarginContainer
 
+
 const VERSE = preload("res://scenes/modules/verse/verse.tscn")
 @onready var scripture_container: VBoxContainer = $ScrollContainer/ScriptureContainer
+
+signal option_pressed
 
 func _ready() -> void:	
 	ScriptureService.verse_cross_references_searched.connect(_on_cross_references_searched)
 
 func _on_cross_references_searched(verses: Array) -> void:
 	clear_verses()
-	print("HERE")
 	for verse_data in verses:
 		setup_verse(verse_data)
 
@@ -17,10 +19,12 @@ func setup_verse(verse_data:Dictionary):
 	verse_instance.initiate_from_json(verse_data, Types.VerseType.CROSS_REFERENCE)
 	verse_instance.set_scripture_reference()
 	verse_instance.set_scripture_text()
+	verse_instance.button_pressed.connect(_emit_option_pressed)
 	scripture_container.add_child(verse_instance)
-
 
 func clear_verses():
 	for verse in scripture_container.get_children():
 		verse.queue_free()
 	
+func _emit_option_pressed() -> void:
+	option_pressed.emit()

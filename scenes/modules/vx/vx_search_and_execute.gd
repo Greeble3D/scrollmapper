@@ -33,6 +33,6 @@ func _on_menu_button_graph_pressed(id:int) -> void:
 func _on_button_export_pressed(id:int) -> void:
 	match id:
 		0:
-			operation_selected.emit("export_type_1")
+			operation_selected.emit("export_vx_to_cross_references")
 		1:
 			operation_selected.emit("export_type_2")

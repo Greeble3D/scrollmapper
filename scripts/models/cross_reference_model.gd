@@ -13,6 +13,7 @@ var to_verse_start: int
 var to_verse_end: int
 var votes: int
 var translation: String
+var user_added: bool = false  # Changed useradded to user_added
 
 func _init(translation: String):
 	super._init()
@@ -31,23 +32,28 @@ func get_create_table_query() -> String:
 		to_chapter_end INTEGER,
 		to_verse_start INTEGER,
 		to_verse_end INTEGER,
-		votes INTEGER
+		votes INTEGER,
+		user_added BOOLEAN DEFAULT FALSE
 	);
 	"""
 
 func save():
-	var query = "INSERT INTO cross_reference (from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
-	execute_query(query, [from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes])
+	var query = "INSERT INTO cross_reference (from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes, user_added) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+	execute_query(query, [from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes, user_added])
 
 func get_all_cross_references():
 	var query = "SELECT * FROM cross_reference;"
 	return get_results(query)
-
+	
+## A fairly complex function to get the cross-references for a verse.
+## If the source verse is in the Scrollmapper translation, it will also get the cross-references from the KJV translation
+## by default, because normally cross-references are not cross-translation -- and Scrollmapper is considered a "translation"
+## for technical reasons.
 func get_cross_references_for_verse(from_book: String, from_chapter: int, from_verse: int) -> Array:
 	var query = """
 	SELECT 
 		cr.id AS cross_reference_id, cr.from_book, cr.from_chapter, cr.from_verse, 
-		cr.to_book, cr.to_chapter_start, cr.to_chapter_end, cr.to_verse_start, cr.to_verse_end, cr.votes,
+		cr.to_book, cr.to_chapter_start, cr.to_chapter_end, cr.to_verse_start, cr.to_verse_end, cr.votes, cr.user_added,
 		v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text,
 		b.id AS book_id, b.book_name, b.translation_id,
 		t.translation_abbr, t.title, t.license
@@ -65,10 +71,35 @@ func get_cross_references_for_verse(from_book: String, from_chapter: int, from_v
 		LOWER(cr.from_book) = LOWER(?)
 		AND cr.from_chapter = ?
 		AND cr.from_verse = ?
-	ORDER BY 
-		cr.votes DESC;
 	""" % [translation, translation]
-	return get_results(query, [from_book, from_chapter, from_verse])
+
+	if translation.to_lower() == "scrollmapper":
+		query += """
+		UNION
+		SELECT 
+			cr.id AS cross_reference_id, cr.from_book, cr.from_chapter, cr.from_verse, 
+			cr.to_book, cr.to_chapter_start, cr.to_chapter_end, cr.to_verse_start, cr.to_verse_end, cr.votes, cr.user_added,
+			v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text,
+			b.id AS book_id, b.book_name, b.translation_id,
+			t.translation_abbr, t.title, t.license
+		FROM 
+			cross_reference cr
+		JOIN 
+			KJV_books b ON cr.to_book = b.book_name
+		JOIN 
+			KJV_verses v ON b.id = v.book_id
+						AND v.chapter BETWEEN cr.to_chapter_start AND cr.to_chapter_end
+						AND v.verse BETWEEN cr.to_verse_start AND cr.to_verse_end
+		JOIN 
+			translations t ON b.translation_id = t.id
+		WHERE 
+			LOWER(cr.from_book) = LOWER(?)
+			AND cr.from_chapter = ?
+			AND cr.from_verse = ?
+		"""
+
+	query += "ORDER BY cr.votes DESC;"
+	return get_results(query, [from_book, from_chapter, from_verse, from_book, from_chapter, from_verse])
 
 # New method to get a specific cross-reference
 func get_cross_reference(id: int) -> Dictionary:
@@ -77,6 +108,29 @@ func get_cross_reference(id: int) -> Dictionary:
 	if result.size() > 0:
 		return result[0]
 	return {}
+
+func get_cross_reference_exact(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter_start: int, to_chapter_end: int, to_verse_start: int, to_verse_end: int, votes: int) -> Dictionary:
+	var query = """
+	SELECT * FROM cross_reference 
+	WHERE 
+		LOWER(from_book) = LOWER(?) AND 
+		from_chapter = ? AND 
+		from_verse = ? AND 
+		LOWER(to_book) = LOWER(?) AND 
+		to_chapter_start = ? AND 
+		to_chapter_end = ? AND 
+		to_verse_start = ? AND 
+		to_verse_end = ? AND 
+		votes = ?;
+	"""
+	var result = get_results(query, [from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes])
+	if result.size() > 0:
+		return result[0]
+	return {}
+
+func cross_reference_exists(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter_start: int, to_chapter_end: int, to_verse_start: int, to_verse_end: int, votes: int) -> bool:
+	var result = get_cross_reference_exact(from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes)
+	return result.size() > 0
 
 func delete():
 	if id != null:

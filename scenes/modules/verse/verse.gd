@@ -156,7 +156,8 @@ func send_to_workstation() -> void:
 		Types.VerseType.BASIC:
 			pass
 		Types.VerseType.CROSS_REFERENCE:
-			pass
+			meta = ScriptureService.apply_verse_meta(self, {"work_space": "vx"})
+			ScriptureService.initiate_verse_search(translation_abbr, book_name, chapter, verse, meta)
 		Types.VerseType.MINIMAL:
 			pass
 		Types.VerseType.VX_LISTING:
@@ -200,6 +201,7 @@ func convert_to_cross_reference(verse_data: Dictionary) -> void:
 		var meta_info: String = "%s %s:%s -> %s %s:%s   [Votes: %s]" % meta_values
 		meta_info_top_text.bbcode_text = meta_info
 	meta_info_bottom.hide() # hide the bottom meta info
+	button_action_add_to_export_list.queue_free()
 
 func conver_to_vx_listing():
 	button_action_cross_reference.queue_free()

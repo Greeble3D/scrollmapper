@@ -28,6 +28,10 @@ func _ready() -> void:
 	hide()
 
 func reveal_search_results() -> void:
+	if DialogueNodeControl.is_open():
+		# This is to prevent the search results from showing when the
+		# node control dialogue is open, as a different operation is in progress.
+		return
 	check_button_select_all.set_pressed(false)
 	check_button_select_all.text = "Select All"
 	selected_verses = []

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bmg34cgf1y4wo"]
+[gd_scene load_steps=10 format=3 uid="uid://bmg34cgf1y4wo"]
 
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="1_6rdk2"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_search_and_execute.gd" id="1_8olel"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bae24mbqtje8b" path="res://images/icons/editor/Close.svg" id="6_1oxhy"]
 [ext_resource type="Texture2D" uid="uid://bxaq5leut85nj" path="res://images/icons/editor/FileAccess.svg" id="6_75kp4"]
 [ext_resource type="Texture2D" uid="uid://bpijxo4oc85r3" path="res://images/icons/editor/Add.svg" id="7_73b1v"]
+[ext_resource type="Texture2D" uid="uid://b865l5fuyubbq" path="res://images/icons/editor/PlaceholderTexture3D.svg" id="9_lfpp7"]
 
 [node name="VXSearchAndExecute" type="MarginContainer" node_paths=PackedStringArray("menu_button_graph", "menu_button_export")]
 custom_minimum_size = Vector2(0, 100)
@@ -78,6 +79,7 @@ layout_mode = 2
 text = "Export"
 icon = ExtResource("6_75kp4")
 item_count = 2
-popup/item_0/text = "Export <Type 1>"
+popup/item_0/text = "Export to Cross References"
+popup/item_0/icon = ExtResource("9_lfpp7")
 popup/item_1/text = "Export <Type 2>"
 popup/item_1/id = 1

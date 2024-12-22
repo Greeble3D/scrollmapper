@@ -15,6 +15,7 @@ class_name VXEditor
 @export_group("Dialogues")
 ## Settings dialog that is responsible for name and description of a given graph.
 @export var dialogues:Array[MarginContainer] = []
+@export var dialogues_anchor: MarginContainer
 @export var blocker_panel:Panel
 @export var settings_dialog: SettingsDialogue
 @export var delete_graph_dialogue: DeleteGraphDialogue
@@ -43,7 +44,9 @@ func _ready():
 	vx_search_and_execute.operation_selected.connect(_on_graph_action_selected)
 	vx_graph.node_control_opened.connect(open_node_control_dialogue)
 	
-	# Dialogues
+	#region Dialogues 
+
+	blocker_panel.visibility_changed.connect(_on_blocker_panel_visibility_changed)
 	settings_dialog.hide()
 	settings_dialog.data_accepted.connect(save_graph)
 	delete_graph_dialogue.hide()
@@ -53,7 +56,7 @@ func _ready():
 	load_graphs_dialogue.hide()
 	load_graphs_dialogue.graph_selected.connect(load_graph)
 	node_control_dialogue.hide()
-
+	#endregion 
 
 	# Other
 	activate_last_used_graph()
@@ -198,12 +201,18 @@ func _on_graph_action_selected(action_tag:String) -> void:
 			run_new_graph_dialogue()
 		"graph_delete":
 			run_delete_graph_dialogue()
-		"export_type_1":
-			print("Export type 1 selected.")
+		"export_vx_to_cross_references":
+			export_vx_to_cross_references()
 		"export_type_2":
 			print("Export type 2 selected.")
 		_:
 			print("Unknown action selected.")
+
+func _on_blocker_panel_visibility_changed() -> void:
+	if blocker_panel.is_visible():
+		vx_graph.lock_graph(true)
+	else:
+		vx_graph.lock_graph(false)
 
 ## Closes all dialogues. A generic function to clear the screan of windows. 
 func close_all_dialogues()->void:
@@ -260,3 +269,9 @@ func open_node_control_dialogue(vx_node:VXNode) -> void:
 	blocker_panel.show()
 	node_control_dialogue.show()
 	node_control_dialogue.initiate(vx_node)
+
+func export_vx_to_cross_references() -> void:
+	const EXPORT_CROSS_REFERENCES_FROM_VX = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/export_cross_references_from_vx.tscn")
+	var export_window:Node = EXPORT_CROSS_REFERENCES_FROM_VX.instantiate()
+	export_window.inititate(vx_graph)
+	DialogueManager.create_dialogue(export_window, dialogues_anchor)

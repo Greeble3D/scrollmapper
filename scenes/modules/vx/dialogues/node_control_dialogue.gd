@@ -5,4 +5,4 @@ extends MarginContainer
 @export var cross_reference: MarginContainer
 
 func initiate(vx_node:VXNode)->void:
-    pass
+	pass

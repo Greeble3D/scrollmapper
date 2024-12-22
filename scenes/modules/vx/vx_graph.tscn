@@ -34,13 +34,14 @@ connections_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxCon
 selection_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/SelectedInfo")
 feed_back_notes = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/FeedBackNotes")
 
-[node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor", "dialogues", "blocker_panel", "settings_dialog", "delete_graph_dialogue", "new_graph_dialogue", "load_graphs_dialogue", "node_control_dialogue")]
+[node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor", "dialogues", "dialogues_anchor", "blocker_panel", "settings_dialog", "delete_graph_dialogue", "new_graph_dialogue", "load_graphs_dialogue", "node_control_dialogue")]
 script = ExtResource("2_jscly")
 vx_graph = NodePath("..")
 vx_camera_2d = NodePath("../VXCamera2D")
 vx_search_and_execute = NodePath("EditorUI/VBoxContainer/VXSearchAndExecute")
 cursor = NodePath("../VXCursor")
 dialogues = [NodePath("Dialogues/SettingsDialogue"), NodePath("Dialogues/DeleteGraphDialogue"), NodePath("Dialogues/NewGraphDialogue"), NodePath("Dialogues/LoadGraphsDialogue"), NodePath("Dialogues/NodeControlDialogue")]
+dialogues_anchor = NodePath("Dialogues")
 blocker_panel = NodePath("Dialogues/BlockerPanel")
 settings_dialog = NodePath("Dialogues/SettingsDialogue")
 delete_graph_dialogue = NodePath("Dialogues/DeleteGraphDialogue")
@@ -165,8 +166,6 @@ vx_editor = NodePath("../..")
 [node name="NodeControlDialogue" parent="VXEditor/Dialogues" node_paths=PackedStringArray("vx_editor") instance=ExtResource("9_uamg3")]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 vx_editor = NodePath("../..")
 
 [node name="VXCanvas" parent="." instance=ExtResource("2_jc8ca")]
