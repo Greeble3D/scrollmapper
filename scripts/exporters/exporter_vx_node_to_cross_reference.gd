@@ -20,7 +20,7 @@ func export() -> void:
 	
 	for connection in vx_connections:
 		if not connection["is_parallel"]:
-			## We only want cross-references. Not linear narrative.
+			# We only want cross-references. Not linear narrative.
 			continue
 
 		var from_node_id = connection["start_node"]
@@ -40,6 +40,14 @@ func export() -> void:
 		var to_verse_end = to_node_data["verse"]
 		var votes = 0
 		var user_added = true
+
+		var last_linear_node_id = to_node_data["last_linear_node_id"]
+
+		if last_linear_node_id != null:
+			# Get last linear node data
+			var last_linear_node_data = vx_nodes[last_linear_node_id]
+			to_chapter_end = last_linear_node_data["chapter"]
+			to_verse_end = last_linear_node_data["verse"]
 
 		# Save cross reference
 		ScriptureService.save_cross_reference(

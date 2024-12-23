@@ -58,7 +58,13 @@ const VX_SOCKET = preload("res://scenes/modules/vx/vx_socket.tscn")
 
 # Booleans
 var is_mouse_over_node:bool = false
-var dragging_already_in_progress:bool = false
+var dragging_already_in_progress:bool = false:
+	set(value):
+		dragging_already_in_progress = value
+		if value == true:
+			current_node_dragging = id
+		else:
+			current_node_dragging = -1
 
 var is_selected:bool = false:
 	set(val):
@@ -73,6 +79,7 @@ var is_selected_plus:bool = false:
 # Other Variables
 var placement_offset: Vector2 = Vector2.ZERO
 var last_set_global_position:Vector2 = Vector2.ZERO
+static var current_node_dragging:int = -1
 
 ## Is called from the setter is_selected:bool
 ## The purpose is to change whatever mechanisms are needed for the node's 
@@ -141,6 +148,7 @@ func get_as_dictionary() -> Dictionary:
 		"bottom_sockets_amount": get_bottom_sockets_amount(),
 		"left_sockets_amount": get_left_sockets_amount(),
 		"right_sockets_amount": get_right_sockets_amount(),
+		"last_linear_node_id": get_last_linear_node_for_export().id
 	}
 
 ## Function to get all neighboring nodes.
@@ -173,6 +181,34 @@ func get_connected_nodes() -> Dictionary:
 			if neighbor != null:
 				neighbors["right"].append(neighbor)
 	return neighbors
+
+## This gets the next linear node in the downward direction.
+## If there is more than one node connected at the bottom output,
+## it will return null. This is because it is used (at this time)
+## only for getting end verses for cross-reference exports.
+func get_next_linear_node_for_export():
+	var connected_nodes:Dictionary = get_connected_nodes()
+	var bottom_nodes:Array = connected_nodes["bottom"]
+	if bottom_nodes.size() != 1:
+		return null
+	return bottom_nodes[0]
+
+## Gets the last node in this series of linearly connected nodes.
+## This is used for getting the end verse for cross-reference exports, if one exists.
+## It will keep getting the next linear node until it reaches a null point. At that time,
+## it will return the last valid node, which is called the last linear node.
+func get_last_linear_node_for_export():
+	var max_iterations:int = 100000
+	var last_node_found:bool = false
+	var current_node:VXNode = self
+	while !last_node_found and max_iterations > 0:
+		max_iterations -= 1
+		var next_node:VXNode = current_node.get_next_linear_node_for_export()
+		if next_node == null:
+			last_node_found = true
+		else:
+			current_node = next_node
+	return current_node
 
 # Returns the verse string in the format "book-chapter-verse".
 # This is used for human-readable reference to the verse and also in the 
@@ -492,7 +528,9 @@ func recalculate_socket_positions_and_node_dimensions():
 
 ## Determines of the node can be edited. 
 func can_edit() -> bool:
-	return is_mouse_over_node && !dragging_already_in_progress
+	if current_node_dragging == id && dragging_already_in_progress:
+		return true
+	return is_mouse_over_node && !dragging_already_in_progress 
 
 ## This function is called from the _mouse_drag_ended in UserInput
 ## so that if we stop dragging over some other node, that node will
@@ -503,6 +541,8 @@ func _mouse_drag_ended_any_node(pos:Vector2):
 
 ## On mouse entered, sets some edit-related values.
 func _on_mouse_entered() -> void:
+	if current_node_dragging > -1:
+		return
 	dragging_already_in_progress = UserInput.is_dragging
 	is_mouse_over_node = true
 
