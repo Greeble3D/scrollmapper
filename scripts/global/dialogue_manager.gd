@@ -2,6 +2,33 @@ extends Node
 
 const BASE_DIALOGUE = preload("res://scenes/modules/dialogues/base_dialogue.tscn")
 
+const FILE_SAVE_DIALOG = preload("res://scenes/modules/dialogues/file_save_dialog.tscn")
+
+var file_save_dialog:FileDialog = null
+
+## Signal: file_selected is the file that was selected during last file select dialogue.
+signal file_selected(file_path:String)
+
+func _ready() -> void:
+	# Set up the file save dialogue.
+	file_save_dialog = FILE_SAVE_DIALOG.instantiate()
+	file_save_dialog.file_selected.connect(_on_file_selected)
+	add_child(file_save_dialog)
+	hide_file_save_dialog()
+
+## Will show the file save dialogue.
+func show_file_save_dialog() -> FileDialog:
+	file_save_dialog.show()
+	return file_save_dialog
+
+## Will hide the file save dialogue.
+func hide_file_save_dialog() -> void:
+	file_save_dialog.hide()
+
+func _on_file_selected(selected_file:String) -> void:
+	file_selected.emit(selected_file)
+	hide_file_save_dialog()
+
 
 ## Function: create_dialogue
 ## Description: Creates a dialogue and adds it to the specified anchor node.

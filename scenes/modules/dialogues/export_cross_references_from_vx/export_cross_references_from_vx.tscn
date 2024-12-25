@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://qt1poc8cmanj"]
-
-[ext_resource type="Script" path="res://scenes/modules/dialogues/export_cross_references_from_vx/export_cross_references_from_vx.gd" id="1_w5c5u"]
+[gd_scene format=3 uid="uid://qt1poc8cmanj"]
 
 [node name="ExportCrossReferencesFromVX" type="Control"]
 layout_mode = 3
@@ -9,8 +7,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_w5c5u")
-title = "Export Cross References from VX Editor"
 
 [node name="PromptRichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 1

@@ -148,7 +148,8 @@ func get_as_dictionary() -> Dictionary:
 		"bottom_sockets_amount": get_bottom_sockets_amount(),
 		"left_sockets_amount": get_left_sockets_amount(),
 		"right_sockets_amount": get_right_sockets_amount(),
-		"last_linear_node_id": get_last_linear_node_for_export().id
+		"last_linear_node_id": get_last_linear_node_for_export().id,
+		"verse_string": get_verse_string(),
 	}
 
 ## Function to get all neighboring nodes.
@@ -275,6 +276,7 @@ func drag_node(pos: Vector2):
 	if not can_edit():
 		return
 	var new_position: Vector2 = get_global_mouse_position() - size / 2 + placement_offset
+	new_position = snapped(new_position, Vector2(100, 100))
 	node_moved.emit(new_position)
 	node_dragged.emit(pos)
 
@@ -283,7 +285,6 @@ func move_node(pos: Vector2):
 	position = pos
 	show_node()
 	node_moved.emit(pos)
-
 
 ## Deprecated. Use move_node instead.
 func move_to_preview_node(pos: Vector2):

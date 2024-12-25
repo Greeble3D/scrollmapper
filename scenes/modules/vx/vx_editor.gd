@@ -186,6 +186,7 @@ func _on_drag_started(pos:Vector2) -> void:
 	starting_drag_position = pos
 	starting_drag_position_global = vx_camera_2d.get_global_mouse_position()
 
+## Called from 
 ## This function will be called when an action is selected from the VXSearchAndExecute.
 ## It behaves as a relay to call the related functions selected.
 func _on_graph_action_selected(action_tag:String) -> void:
@@ -203,8 +204,10 @@ func _on_graph_action_selected(action_tag:String) -> void:
 			run_delete_graph_dialogue()
 		"export_vx_to_cross_references":
 			export_vx_to_cross_references()
-		"export_type_2":
-			print("Export type 2 selected.")
+		"export_vx_to_gephi":
+			export_graph_to_gephi()
+		"export_cross_references_to_gephi":
+			export_cross_references_to_gephi()
 		_:
 			print("Unknown action selected.")
 
@@ -270,8 +273,24 @@ func open_node_control_dialogue(vx_node:VXNode) -> void:
 	node_control_dialogue.show()
 	node_control_dialogue.initiate(vx_node)
 
+## Initiates the process of exporting the current graph to the cross reference database.
 func export_vx_to_cross_references() -> void:
 	const EXPORT_CROSS_REFERENCES_FROM_VX = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/export_cross_references_from_vx.tscn")
 	var export_window:Node = EXPORT_CROSS_REFERENCES_FROM_VX.instantiate()
 	export_window.inititate(vx_graph)
 	DialogueManager.create_dialogue(export_window, dialogues_anchor)
+
+## Initiates the process of exporting the current graph to Gephi.
+func export_graph_to_gephi() -> void:
+	const EXPORT_VX_GRAPH_TO_GEPHI = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/export_vx_graph_to_gephi.tscn")
+	var export_window:Node = EXPORT_VX_GRAPH_TO_GEPHI.instantiate()
+	export_window.inititate(vx_graph)
+	DialogueManager.create_dialogue(export_window, dialogues_anchor)
+
+## Initiates the process of exporting the cross references in database to Gephi.
+func export_cross_references_to_gephi() -> void:
+	const EXPORT_CROSS_REFERENCES_TO_GEPHI = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/export_cross_references_to_gephi.tscn")
+	var export_window:Node = EXPORT_CROSS_REFERENCES_TO_GEPHI.instantiate()
+	DialogueManager.create_dialogue(export_window, dialogues_anchor)
+ 
+ 

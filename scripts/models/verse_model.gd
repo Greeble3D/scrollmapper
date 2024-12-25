@@ -42,8 +42,16 @@ func save():
 		var insert_query = "INSERT INTO %s_verses (book_id, chapter, verse, text) VALUES (?, ?, ?, ?);" % translation
 		execute_query(insert_query, [book_id, chapter, verse, text])
 
-func get_all_verses():
-	var query = "SELECT * FROM %s_verses;" % translation
+func get_all_verses() -> Array:
+	var query = """
+	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	b.id AS book_id, b.book_name, b.translation_id,
+	t.translation_abbr, t.title, t.license 
+	FROM %s_verses v
+	JOIN %s_books b ON v.book_id = b.id
+	JOIN translations t ON b.translation_id = t.id
+	ORDER BY v.book_id, v.chapter, v.verse
+	""" % [translation, translation]
 	return get_results(query)
 
 func get_verse(book_id: int, chapter: int, verse: int) -> Dictionary:

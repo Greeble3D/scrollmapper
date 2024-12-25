@@ -44,12 +44,17 @@ func load_books():
 			
 ## Gets a single verse, one entry in an array.
 func get_verse(translation: String, book: String, chapter: int, verse: int, meta:Dictionary = {}) -> Array:
+	book = amend_book_name(book, translation)
+
 	var verse_model: VerseModel = VerseModel.new(translation)
 	var book_model: BookModel = BookModel.new(translation)
 	book_model.get_book_by_name(book)
 	var book_id: int = book_model.id
+	
 	var verse_data: Dictionary = verse_model.get_verse(book_id, chapter, verse)
 	var translation_data: Dictionary = get_translation(translation)
+	if verse_data.is_empty():
+		return []
 	return [{
 		"verse_id": verse_data["verse_id"],
 		"book_id": verse_data["book_id"],
@@ -63,6 +68,45 @@ func get_verse(translation: String, book: String, chapter: int, verse: int, meta
 		"license": translation_data["license"],
 		"meta": meta,
 	}]
+
+## Amends the book number according to roman numeral convention or integer. 
+## This is necessary because sometimes the book name is called from cross references
+## which uses an integer system alone. 
+## This is a temporary function which should be replaced with a better solution.
+func amend_book_name(book_name: String, translation: String) -> String:
+	
+	if translation == "KJV" && book_name == "Revelation":
+		return "Revelation of John"
+
+	var book_model = BookModel.new(translation)
+	var all_books = book_model.get_all_books()
+	var book_names = []
+	for b in all_books:
+		book_names.append(b["book_name"])
+
+	# Check if the book name is in the list of books for the translation
+	if book_name in book_names:
+		return book_name
+
+	# Check if the book name is in roman numeral format
+	var roman_to_int = {
+		"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10
+	}
+	var int_to_roman = {}
+	for key in roman_to_int.keys():
+		int_to_roman[roman_to_int[key]] = key
+
+	# Check if the book name starts with an integer or roman numeral
+	var first_word = book_name.split(" ")[0]
+	if first_word in roman_to_int:
+		book_name = str(roman_to_int[first_word]) + book_name.substr(first_word.length())
+	elif first_word.is_valid_int():
+		var int_value = int(first_word)
+		if int_value in int_to_roman:
+			book_name = int_to_roman[int_value] + book_name.substr(first_word.length())
+
+	# If no match found, return the original book name
+	return book_name
 
 ## Get verses by book, chapter, or specific verse
 func get_verses(translation: String, book: String, chapter: int = -1, verse: int = -1) -> Array:
@@ -98,6 +142,28 @@ func get_cross_references_for_verse(translation: String, book: String, chapter: 
 	for cr in cross_references:
 		result.append(cr)
 	return result
+
+## Get all cross references for all verses
+func get_all_cross_references(translation: String) -> Array:
+	var verse_model: VerseModel = VerseModel.new(translation)
+	var all_verses: Array = verse_model.get_all_verses()
+	var result: Array = []
+	
+	for verse in all_verses:
+		var cross_references = get_cross_references_for_verse(
+			translation, 
+			verse["book_name"], 
+			verse["chapter"], 
+			verse["verse"]
+		)
+		for cr in cross_references:
+			result.append(cr)
+	
+	return result
+
+func get_all_cross_references_simple() -> Array:
+	var cross_reference_model = CrossReferenceModel.new("scrollmapper")
+	return cross_reference_model.get_all_cross_references()
 
 ## Saves a cross reference to database. 
 func save_cross_reference(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter_start: int, to_chapter_end: int, to_verse_start: int, to_verse_end: int, votes: int, user_added: bool) -> void:

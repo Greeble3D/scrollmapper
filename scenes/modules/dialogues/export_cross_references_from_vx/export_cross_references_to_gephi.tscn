@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3d83wyh7qkm1"]
+
+[ext_resource type="Script" path="res://scenes/modules/dialogues/export_cross_references_from_vx/export_cross_references_to_gephi.gd" id="1_duc6n"]
+[ext_resource type="Texture2D" uid="uid://x4tw0i4unywe" path="res://images/icons/editor/FolderBrowse.svg" id="2_wiubo"]
+
+[node name="ExportVXGraphToGephi" type="Control" node_paths=PackedStringArray("file_destination_line_edit", "file_select_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_duc6n")
+file_destination_line_edit = NodePath("VBoxContainer/MarginContainer/FileDestinationLineEdit")
+file_select_button = NodePath("VBoxContainer/MarginContainer/FileSelectButton")
+title = "Export Cross References to Gephi"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PromptRichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+text = "This will export tall of the cross references in the database to Gephi via .gexf format. 
+
+This may take a while."
+fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="FileDestinationLineEdit" type="LineEdit" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "..."
+
+[node name="FileSelectButton" type="Button" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+icon = ExtResource("2_wiubo")

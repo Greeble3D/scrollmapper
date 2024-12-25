@@ -35,4 +35,6 @@ func _on_button_export_pressed(id:int) -> void:
 		0:
 			operation_selected.emit("export_vx_to_cross_references")
 		1:
-			operation_selected.emit("export_type_2")
+			operation_selected.emit("export_vx_to_gephi")
+		2:
+			operation_selected.emit("export_cross_references_to_gephi")

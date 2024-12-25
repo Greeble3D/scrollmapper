@@ -58,8 +58,10 @@ func get_all_books():
 
 # New method to get a book by name
 func get_book_by_name(_book_name: String):
+	
 	var query = "SELECT * FROM %s_books WHERE book_name = ?;" % translation
 	var book_result = get_results(query, [_book_name])
+	
 	if book_result.size() > 0:
 		id = book_result[0]["id"]
 		book_name = book_result[0]["book_name"]
