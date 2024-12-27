@@ -64,6 +64,5 @@ size_flags_horizontal = 3
 layout_mode = 2
 
 [node name="Cmd" parent="UI" instance=ExtResource("4_ymvhv")]
-visible = false
 layout_mode = 1
 script = ExtResource("5_mn4tt")

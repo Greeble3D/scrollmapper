@@ -41,10 +41,80 @@ func load_books():
 			if t["id"] not in books:
 				books[t["id"]] = {}
 			books[t["id"]][b["id"]] = b
-			
+
+## Gets all books from a translation
+func get_all_book_names_from_translation(translation: String) -> Array:
+	var book_model = BookModel.new(translation)
+	var all_books = book_model.get_all_books()
+	var result = []
+	for b in all_books:
+		result.append(b["book_name"])
+	return result
+
+## Gets a dictionary of translations with books and chapters and verses.
+## Example of how the function returns the dictionary:
+## {
+##   "KJV": {
+##     "Genesis": {
+##       1: {
+##         1: {
+##           "verse_id": 1,
+##           "book_id": 1,
+##           "chapter": 1,
+##           "verse": 1,
+##           "text": "In the beginning God created the heaven and the earth.",
+##           "book_name": "Genesis",
+##           "translation_id": 1,
+##           "translation_abbr": "KJV",
+##           "title": "Kjv",
+##           "license": "Public Domain"
+##         },
+##         2: {
+##			  ...
+##         },
+##         }
+##       }
+##     }
+##   }
+## }
+##
+## To access a specific verse, you can use the following code:
+## var dictionary = get_translations_as_book_chapter_verse_dictionary(["KJV"])
+## var verse = dictionary["KJV"]["Genesis"][1][1]
+## print(verse["text"])  # Output: In the beginning God created the heaven and the earth.
+func get_versions_as_book_chapter_verse_dictionary(translations:Array) -> Dictionary:
+	var result:Dictionary = {}
+	for translation in translations:
+		var book_model = BookModel.new(translation)
+		var all_books = book_model.get_all_books()
+		result[translation] = {}
+		for b in all_books:
+			result[translation][b["book_name"]] = {}
+			var verse_model = VerseModel.new(translation)
+			var verses = verse_model.get_verses(b["book_name"])
+			for v in verses:
+				var chapter = v["chapter"]
+				var verse = v["verse"]
+				if chapter not in result[translation][b["book_name"]]:
+					result[translation][b["book_name"]][chapter] = {}
+				result[translation][b["book_name"]][chapter][verse] = v
+	return result
+
+## This works specifically with get_versions_as_book_chapter_verse_dictionary.
+## Initialize the dictionary variable with get_versions_as_book_chapter_verse_dictionary(translations:Array)
+## and then pass the dictionary to this function to get a specific verse.
+## This function was made primarily for large-scale exporters to avoid repeated 
+## queries to the database.
+func get_verse_from_version_dictionary(dictionary:Dictionary, translation:String, book:String, chapter:int, verse:int) -> Dictionary:
+	if dictionary.has(translation):
+		if dictionary[translation].has(book):
+			if dictionary[translation][book].has(chapter):
+				if dictionary[translation][book][chapter].has(verse):
+					return dictionary[translation][book][chapter][verse]
+	return {}
+
 ## Gets a single verse, one entry in an array.
 func get_verse(translation: String, book: String, chapter: int, verse: int, meta:Dictionary = {}) -> Array:
-	book = amend_book_name(book, translation)
 
 	var verse_model: VerseModel = VerseModel.new(translation)
 	var book_model: BookModel = BookModel.new(translation)
@@ -69,44 +139,6 @@ func get_verse(translation: String, book: String, chapter: int, verse: int, meta
 		"meta": meta,
 	}]
 
-## Amends the book number according to roman numeral convention or integer. 
-## This is necessary because sometimes the book name is called from cross references
-## which uses an integer system alone. 
-## This is a temporary function which should be replaced with a better solution.
-func amend_book_name(book_name: String, translation: String) -> String:
-	
-	if translation == "KJV" && book_name == "Revelation":
-		return "Revelation of John"
-
-	var book_model = BookModel.new(translation)
-	var all_books = book_model.get_all_books()
-	var book_names = []
-	for b in all_books:
-		book_names.append(b["book_name"])
-
-	# Check if the book name is in the list of books for the translation
-	if book_name in book_names:
-		return book_name
-
-	# Check if the book name is in roman numeral format
-	var roman_to_int = {
-		"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10
-	}
-	var int_to_roman = {}
-	for key in roman_to_int.keys():
-		int_to_roman[roman_to_int[key]] = key
-
-	# Check if the book name starts with an integer or roman numeral
-	var first_word = book_name.split(" ")[0]
-	if first_word in roman_to_int:
-		book_name = str(roman_to_int[first_word]) + book_name.substr(first_word.length())
-	elif first_word.is_valid_int():
-		var int_value = int(first_word)
-		if int_value in int_to_roman:
-			book_name = int_to_roman[int_value] + book_name.substr(first_word.length())
-
-	# If no match found, return the original book name
-	return book_name
 
 ## Get verses by book, chapter, or specific verse
 func get_verses(translation: String, book: String, chapter: int = -1, verse: int = -1) -> Array:
