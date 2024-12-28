@@ -106,17 +106,16 @@ func get_versions_as_book_chapter_verse_dictionary(translations:Array) -> Dictio
 ## This function was made primarily for large-scale exporters to avoid repeated 
 ## queries to the database.
 func get_verse_from_version_dictionary(dictionary:Dictionary, translation:String, book:String, chapter:int, verse:int) -> Dictionary:
-	if dictionary.has(translation):
-		if dictionary[translation].has(book):
-			if dictionary[translation][book].has(chapter):
-				if dictionary[translation][book][chapter].has(verse):
-					return dictionary[translation][book][chapter][verse]
+
+	if dictionary.has(translation) and dictionary[translation].has(book) and dictionary[translation][book].has(chapter) and dictionary[translation][book][chapter].has(verse):
+		return dictionary[translation][book][chapter][verse]
 	return {}
 
 ## Gets a single verse, one entry in an array.
 func get_verse(translation: String, book: String, chapter: int, verse: int, meta:Dictionary = {}) -> Array:
-
+	
 	var verse_model: VerseModel = VerseModel.new(translation)
+	
 	var book_model: BookModel = BookModel.new(translation)
 	book_model.get_book_by_name(book)
 	var book_id: int = book_model.id
@@ -439,3 +438,15 @@ static func merge_verse_meta(meta:Dictionary = {}, verse_meta:Dictionary = {}) -
 	return meta
 
 #endregion
+
+## Gets a scripture id based on Book, Chapter, Verse. 
+## This is done using a hash algorithm to create a unique identifier for the verse.
+func get_scripture_id(book: String, chapter: int, verse: int) -> int:
+	var id_string = "%s-%s-%s" % [book, str(chapter), str(verse)]
+	return hash(id_string)
+
+## Gets a connection id based on from_scripture and to_scripture.
+## This is done using a hash algorithm to create a unique identifier for the connection.
+func get_connection_id(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter: int, to_verse: int) -> int:
+	var id_string = "%s-%s-%s-%s-%s-%s" % [from_book, str(from_chapter), str(from_verse), to_book, str(to_chapter), str(to_verse)]
+	return hash(id_string)

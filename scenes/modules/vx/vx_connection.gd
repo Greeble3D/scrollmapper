@@ -84,20 +84,21 @@ func get_other_node(node: VXNode) -> VXNode:
 		return start_node
 	return null
 
-## A unique and important function to set the connection ID 
-## based on the incoming and outgoing scripture link "<scripture>:<scripture>". The 
-## ID is a numerical hash from the string of those two links.
-## It must not be run until the connection is made (i.e., the initiate
-## method should have been run first.)
+## Sets the connection ID based on the scripture references of the start and end nodes.
+## This function generates a unique numerical hash from the string representation of the 
+## scripture references in the format "<start_scripture> <end_scripture>".
+## It should be called after the connection is established (i.e., after the initiate method).
 func set_connection_id():
 	if start_node == null or end_node == null:
 		return
-	id = get_connection_hash(start_node.get_verse_string(), end_node.get_verse_string())
-
-## Gets the connection hash based on the start and end strings.
-func get_connection_hash(start_string:String, end_string:String)->int:
-	var connection_string:String = "%s:%s"%[start_string, end_string]
-	return hash(connection_string)
+	id = ScriptureService.get_connection_id(
+		start_node.book, 
+		start_node.chapter, 
+		start_node.verse, 
+		end_node.book, 
+		end_node.chapter, 
+		end_node.verse
+	)
 
 ## Gets the connection id
 func get_connection_id() -> int:
@@ -175,7 +176,16 @@ func is_connection_route_valid() -> bool:
 	if not is_connection_valid(get_starting_socket(), get_ending_socket()):
 		return false
 	# CASE: Connection already exists between these two scriptures.
-	if VXGraph.get_instance().has_connection_id(get_connection_hash(get_starting_socket().get_connected_node().get_verse_string(), get_ending_socket().get_connected_node().get_verse_string())): 
+	if VXGraph.get_instance().has_connection_id(
+		ScriptureService.get_connection_id(
+			get_starting_socket().get_connected_node().book, 
+			get_starting_socket().get_connected_node().chapter, 
+			get_starting_socket().get_connected_node().verse, 
+			get_ending_socket().get_connected_node().book, 
+			get_ending_socket().get_connected_node().chapter, 
+			get_ending_socket().get_connected_node().verse
+		)
+	): 
 		VXGraph.get_instance().print_feedback_note("Rejection: Connection between these verses already exists")
 		return false
 	# CASE: Valid connection. Connect the sockets.

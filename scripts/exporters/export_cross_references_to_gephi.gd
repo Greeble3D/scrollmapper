@@ -2,60 +2,56 @@ extends BaseExporter
 ## This class takes a VXGraph and exports it to Gephi format.
 class_name ExporterCrossReferencesToGephi
 
-var gephi_generator: GephiGenerator
+var gephi_network: GephiNetwork
 var save_path:String = ""
+var version_dict:Dictionary = {}
 
 func _init(_save_path:String) -> void:
 	save_path = _save_path
+	version_dict = ScriptureService.get_versions_as_book_chapter_verse_dictionary(["KJV", "scrollmapper"])
 	populate_export_data()
-	gephi_generator = GephiGenerator.new(export_data["nodes"], export_data["connections"])
+	gephi_network = GephiNetwork.new("2025-1-01", "Scrollmapper", "Cross References Export", export_data["nodes"], export_data["connections"])
 
 func populate_export_data():
 	var cross_references:Array = ScriptureService.get_all_cross_references_simple()
 	export_data["nodes"] = []
 	export_data["connections"] = []
 
-	var nodes = []
-	var edges = []
-	var node_ids = {}
-	var edge_id = 0
+	var nodes: Array = []
+	var edges: Array = []
+	var node_ids: Dictionary = {}
+	var edge_id: int = 0
 
 	for cross_reference in cross_references:
-		var from_node_id = "%s-%d-%d" % [cross_reference["from_book"], cross_reference["from_chapter"], cross_reference["from_verse"]]
-		var to_node_id = "%s-%d-%d" % [cross_reference["to_book"], cross_reference["to_chapter_start"], cross_reference["to_verse_start"]]
+		var from_node_id:int = ScriptureService.get_scripture_id(cross_reference["from_book"], cross_reference["from_chapter"], cross_reference["from_verse"])
+		var to_node_id:int = ScriptureService.get_scripture_id(cross_reference["to_book"], cross_reference["to_chapter_start"], cross_reference["to_verse_start"])
 
+		var from_verse_data: Dictionary = get_verse_data("KJV", cross_reference["from_book"], cross_reference["from_chapter"], cross_reference["from_verse"])
+		if from_verse_data.is_empty():
+			from_verse_data = get_verse_data("scrollmapper", cross_reference["from_book"], cross_reference["from_chapter"], cross_reference["from_verse"])
 
-		var connection_id:int = cross_reference["id"]
-		var from_book:String = cross_reference["from_book"]
-		var from_chapter:int = cross_reference["from_chapter"]
-		var from_verse:int = cross_reference["from_verse"]
-		var to_book:String = cross_reference["to_book"]
-		var to_chapter_start:int = cross_reference["to_chapter_start"]
-		var to_chapter_end:int = cross_reference["to_chapter_end"]
-		var to_verse_start:int = cross_reference["to_verse_start"]
-		var to_verse_end:int = cross_reference["to_verse_end"]
+		var to_verse_data: Dictionary = get_verse_data("KJV", cross_reference["to_book"], cross_reference["to_chapter_start"], cross_reference["to_verse_start"])
+		if to_verse_data.is_empty():
+			to_verse_data = get_verse_data("scrollmapper", cross_reference["to_book"], cross_reference["to_chapter_start"], cross_reference["to_verse_start"])
 
 		if not node_ids.has(from_node_id):
 			nodes.append({
 				"id": from_node_id,
-				"label": from_node_id,
-				"scripture_text": "",
-				"scripture_location": from_node_id,
-				"translation": "",
+				"scripture_text": from_verse_data.get("text", ""),
+				"scripture_location": "%s %s:%s" % [cross_reference["from_book"], str(cross_reference["from_chapter"]), str(cross_reference["from_verse"])],
+				"translation": from_verse_data.get("translation_abbr", ""),
 				"book": cross_reference["from_book"],
 				"chapter": cross_reference["from_chapter"],
 				"verse": cross_reference["from_verse"]
 			})
 			node_ids[from_node_id] = true
-			
 
 		if not node_ids.has(to_node_id):
 			nodes.append({
 				"id": to_node_id,
-				"label": to_node_id,
-				"scripture_text": "",
-				"scripture_location": to_node_id,
-				"translation": "",
+				"scripture_text": to_verse_data.get("text", ""),
+				"scripture_location": "%s %s:%s" % [cross_reference["to_book"], str(cross_reference["to_chapter_start"]), str(cross_reference["to_verse_start"])],
+				"translation": to_verse_data.get("translation_abbr", ""),
 				"book": cross_reference["to_book"],
 				"chapter": cross_reference["to_chapter_start"],
 				"verse": cross_reference["to_verse_start"]
@@ -64,19 +60,20 @@ func populate_export_data():
 
 		edges.append({
 			"id": edge_id,
-			"start_node": from_node_id,
-			"end_node": to_node_id
+			"source": from_node_id,
+			"target": to_node_id,
+			"weight": cross_reference["votes"]
 		})
 		edge_id += 1
 	export_data["nodes"] = nodes	
 	export_data["connections"] = edges
 
-func export() -> void:
-	var vx_nodes = export_data["nodes"]
-	var vx_connections = export_data["connections"]
+func get_verse_data(translation:String, book:String, chapter:int, verse:int) -> Dictionary:
+	return ScriptureService.get_verse_from_version_dictionary(version_dict, translation, book, chapter, verse)
 
-	# Generate GEXF data using GephiGenerator
-	var gexf_data:String = gephi_generator.generate(vx_nodes, vx_connections).strip_edges()
+func export() -> void:
+	# Generate GEXF data using GephiNetwork
+	var gexf_data:String = gephi_network.generate_gexf().strip_edges()
 
 	# Save to File 
 	save_to_file(gexf_data)
