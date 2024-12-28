@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw8ca7sea6rtq"]
+
+[ext_resource type="PackedScene" uid="uid://ddksje4fnxp1a" path="res://scenes/home/models/Shelf.gltf" id="1_pla1y"]
+[ext_resource type="Material" uid="uid://dw7u8bt15f6s7" path="res://scenes/home/materials/Shelf.tres" id="2_qwesp"]
+
+[node name="Shelf" instance=ExtResource("1_pla1y")]
+
+[node name="Shelf" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_qwesp")

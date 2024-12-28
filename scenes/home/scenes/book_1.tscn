@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://6huu6lllkrkr"]
+
+[ext_resource type="PackedScene" uid="uid://ccovq5bdpxhct" path="res://scenes/home/models/Book.gltf" id="1_sqwip"]
+[ext_resource type="Material" uid="uid://b366opap2kq4e" path="res://scenes/home/materials/Book.tres" id="2_sysuk"]
+
+[node name="Book1" instance=ExtResource("1_sqwip")]
+
+[node name="Book" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_sysuk")

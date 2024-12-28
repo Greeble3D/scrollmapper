@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dcgasfv4et3l3"]
+
+[ext_resource type="Texture2D" uid="uid://c16tybw2k5xs6" path="res://scenes/home/models/Desk.png" id="1_6ydfy"]
+[ext_resource type="Texture2D" uid="uid://b78iyxhnyu6et" path="res://scenes/home/models/DeskMetallic.png" id="2_w7frq"]
+
+[resource]
+albedo_texture = ExtResource("1_6ydfy")
+metallic_texture = ExtResource("2_w7frq")
+roughness = 0.8
+roughness_texture = ExtResource("2_w7frq")
+roughness_texture_channel = 4

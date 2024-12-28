@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgkuglcvnr0dx"]
+
+[ext_resource type="PackedScene" uid="uid://bn3b6rbicoc17" path="res://scenes/home/models/Scroll.gltf" id="1_8onq5"]
+[ext_resource type="Material" uid="uid://bdu0217tq8mut" path="res://scenes/home/materials/Scroll.tres" id="2_vhqks"]
+
+[node name="Scroll" instance=ExtResource("1_8onq5")]
+
+[node name="OpenScroll" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_vhqks")

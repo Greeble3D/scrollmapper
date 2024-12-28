@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://olr8yjl3ofsh"]
+
+[ext_resource type="PackedScene" uid="uid://3e3tnf85obg8" path="res://scenes/home/models/ClosedScroll.gltf" id="1_hnmbo"]
+[ext_resource type="Material" uid="uid://b0vff672i7g0a" path="res://scenes/home/materials/Scroll_Closed.tres" id="2_8m8yc"]
+
+[node name="ClosedScroll" instance=ExtResource("1_hnmbo")]
+
+[node name="ClosedScroll" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_8m8yc")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhm7pe4gws2t2"]
+
+[ext_resource type="PackedScene" uid="uid://dmnhotb1e8kef" path="res://scenes/home/models/Desk.gltf" id="1_1lj4t"]
+[ext_resource type="Material" uid="uid://dcgasfv4et3l3" path="res://scenes/home/materials/Desk.tres" id="2_fq25t"]
+
+[node name="Desk" instance=ExtResource("1_1lj4t")]
+
+[node name="ScribeDesk" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_fq25t")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cp2jern1dfenn"]
+
+[ext_resource type="PackedScene" uid="uid://bnd2s2myn7hhj" path="res://scenes/home/models/Files.gltf" id="1_nwa4v"]
+[ext_resource type="Material" uid="uid://cleasaracoqq4" path="res://scenes/home/materials/files.tres" id="2_5r3k4"]
+
+[node name="Files" instance=ExtResource("1_nwa4v")]
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_5r3k4")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1gguslydcfd6"]
+
+[ext_resource type="PackedScene" uid="uid://7bnwnsbreoe5" path="res://scenes/home/models/Flashcard.gltf" id="1_0lkw2"]
+[ext_resource type="Material" uid="uid://cxbirp7ekmnns" path="res://scenes/home/materials/Flashcards.tres" id="2_fad05"]
+
+[node name="Flashcard2" instance=ExtResource("1_0lkw2")]
+
+[node name="Flashcard" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_fad05")

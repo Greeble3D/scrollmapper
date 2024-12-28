@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://ds2v2hn2byq7l"]
+
+[ext_resource type="Texture2D" uid="uid://cvna11do5gpqj" path="res://scenes/home/models/BookRed.png" id="1_mepfv"]
+[ext_resource type="Texture2D" uid="uid://c7qgtqa82iyep" path="res://scenes/home/models/Book_Roughness.png" id="2_r4pn7"]
+
+[resource]
+albedo_texture = ExtResource("1_mepfv")
+roughness_texture = ExtResource("2_r4pn7")

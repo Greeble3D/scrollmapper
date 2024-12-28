@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cleasaracoqq4"]
+
+[ext_resource type="Texture2D" uid="uid://blmtw3jl7430i" path="res://scenes/home/models/Files.png" id="1_7joo7"]
+
+[resource]
+albedo_color = Color(0.74, 0.58312, 0.5624, 1)
+albedo_texture = ExtResource("1_7joo7")
+roughness = 0.35

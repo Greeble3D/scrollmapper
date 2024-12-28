@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://boms3r15cqd1o"]
+
+[ext_resource type="PackedScene" uid="uid://2epybt732sm4" path="res://scenes/home/models/Deck.gltf" id="1_xwvoo"]
+[ext_resource type="Material" uid="uid://cxbirp7ekmnns" path="res://scenes/home/materials/Flashcards.tres" id="2_t7ml6"]
+
+[node name="Deck2" instance=ExtResource("1_xwvoo")]
+
+[node name="Deck" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_t7ml6")

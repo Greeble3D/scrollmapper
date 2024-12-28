@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cxbirp7ekmnns"]
+
+[ext_resource type="Texture2D" uid="uid://he51ng2syg5h" path="res://scenes/home/models/Flashcard.png" id="1_rf54v"]
+[ext_resource type="Texture2D" uid="uid://37jnd1uuko0b" path="res://scenes/home/models/FC_Normal.png" id="2_soduo"]
+
+[resource]
+albedo_texture = ExtResource("1_rf54v")
+roughness = 0.5
+normal_enabled = true
+normal_scale = 0.25
+normal_texture = ExtResource("2_soduo")
+heightmap_texture = ExtResource("2_soduo")

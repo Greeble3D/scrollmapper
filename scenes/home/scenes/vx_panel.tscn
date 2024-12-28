@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqffsh43a6f3v"]
+
+[ext_resource type="PackedScene" uid="uid://bpaahk5r6fkna" path="res://scenes/home/models/VX_Panel.gltf" id="1_iq5wt"]
+[ext_resource type="Material" uid="uid://bewfg2ovxttiu" path="res://scenes/home/materials/VX_Panel.tres" id="2_d0dsm"]
+
+[node name="VX_Panel" instance=ExtResource("1_iq5wt")]
+
+[node name="VX_Panel" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_d0dsm")

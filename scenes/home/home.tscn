@@ -1,0 +1,507 @@
+[gd_scene load_steps=32 format=4 uid="uid://blt4yrs8a7sa5"]
+
+[ext_resource type="PackedScene" uid="uid://bhm7pe4gws2t2" path="res://scenes/home/scenes/desk.tscn" id="1_gt8ee"]
+[ext_resource type="PackedScene" uid="uid://7eef4rb1feqj" path="res://scenes/home/scenes/ink_well.tscn" id="2_8ucqc"]
+[ext_resource type="PackedScene" uid="uid://b0xvcidac754y" path="res://scenes/home/scenes/candle_1.tscn" id="3_ebg1j"]
+[ext_resource type="PackedScene" uid="uid://cgkuglcvnr0dx" path="res://scenes/home/scenes/scroll.tscn" id="4_naqju"]
+[ext_resource type="PackedScene" uid="uid://6huu6lllkrkr" path="res://scenes/home/scenes/book_1.tscn" id="5_kwgms"]
+[ext_resource type="Material" uid="uid://by7e8kai4d36v" path="res://scenes/home/materials/BookGreen.tres" id="6_l5jro"]
+[ext_resource type="Material" uid="uid://dxp4takvbrdgn" path="res://scenes/home/materials/BookBlue.tres" id="7_4otjn"]
+[ext_resource type="Material" uid="uid://ds2v2hn2byq7l" path="res://scenes/home/materials/BookRed.tres" id="8_5nsn2"]
+[ext_resource type="PackedScene" uid="uid://ckukokcdixwxo" path="res://scenes/home/models/Box.gltf" id="9_ol6ld"]
+[ext_resource type="PackedScene" uid="uid://olr8yjl3ofsh" path="res://scenes/home/scenes/closed_scroll.tscn" id="10_45g35"]
+[ext_resource type="PackedScene" uid="uid://bnd2s2myn7hhj" path="res://scenes/home/models/Files.gltf" id="11_cgw3s"]
+[ext_resource type="Material" uid="uid://cleasaracoqq4" path="res://scenes/home/materials/files.tres" id="12_5jn8t"]
+[ext_resource type="PackedScene" uid="uid://d1gguslydcfd6" path="res://scenes/home/scenes/flashcard.tscn" id="13_ocy5t"]
+[ext_resource type="PackedScene" uid="uid://boms3r15cqd1o" path="res://scenes/home/scenes/deck.tscn" id="14_cm4iq"]
+[ext_resource type="PackedScene" uid="uid://cw8ca7sea6rtq" path="res://scenes/home/scenes/shelf.tscn" id="15_cl2k8"]
+[ext_resource type="Material" uid="uid://b366opap2kq4e" path="res://scenes/home/materials/Book.tres" id="16_wegjn"]
+[ext_resource type="Texture2D" uid="uid://c3u2euamh0b8q" path="res://scenes/home/models/Book.png" id="17_662hx"]
+[ext_resource type="Texture2D" uid="uid://c7qgtqa82iyep" path="res://scenes/home/models/Book_Roughness.png" id="18_iuhf1"]
+[ext_resource type="PackedScene" uid="uid://budgcsh11hc0h" path="res://scenes/home/models/Room.gltf" id="19_fbneq"]
+[ext_resource type="PackedScene" uid="uid://diute7r3klke2" path="res://scenes/home/scenes/chair.tscn" id="20_psp5o"]
+[ext_resource type="PackedScene" uid="uid://bqffsh43a6f3v" path="res://scenes/home/scenes/vx_panel.tscn" id="21_nkgc7"]
+
+[sub_resource type="Environment" id="Environment_7nxak"]
+background_color = Color(0.484969, 0.608558, 0.61749, 1)
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.0
+glow_bloom = 0.2
+volumetric_fog_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_qm6to"]
+
+[sub_resource type="Compositor" id="Compositor_tu8ku"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e5jn3"]
+albedo_color = Color(0.86, 0.614183, 0.4386, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frl6m"]
+albedo_color = Color(0.243891, 0.529154, 0.387491, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kwpic"]
+albedo_color = Color(0.764551, 0.276385, 0.242848, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dpxia"]
+resource_name = "Book"
+cull_mode = 2
+albedo_texture = ExtResource("17_662hx")
+metallic_texture = ExtResource("18_iuhf1")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("18_iuhf1")
+roughness_texture_channel = 1
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ti7fu"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 2, 2),
+"format": 34896613377,
+"index_count": 276,
+"index_data": PackedByteArray("BQAcAB4ABQAHABwAAwAKAAEAAwAIAAoADwAHAAEADwAcAAcADAAbABAADAAZABsAGQAfABsAGQAhAB8AKAAmACQAKAApACYAAQAnAA8AAQAKACcAAgAtABMAAgAJAC0AFgAhABIAFgAfACEAIgAGAAQAIgAYAAYAAgAGAAAAAgAEAAYAAQAFAAMAAQAHAAUAEAAkAAwAEAAoACQAEgAqABYAEgAuACoACQAKAAgACQALAAoALAAuAC8ALAAqAC4AAwAeABUAAwAFAB4AEwAEAAIAEwAiAAQAAAAYAA0AAAAGABgAAAAJAAIAAAALAAkAFQAIAAMAFQArAAgAIgAaABgAIgAjABoAIwAZABoAIwAhABkAHAAgAB4AHAAdACAAHQAfACAAHQAbAB8AJwARAA8AJwApABEAKQAQABEAKQAoABAADQAmACUADQAOACYADgAkACYADgAMACQAGAAOAA0AGAAaAA4AGgAMAA4AGgAZAAwADwAdABwADwARAB0AEQAbAB0AEQAQABsAHgAXABUAHgAgABcAIAAWABcAIAAfABYAEwAjACIAEwAUACMAFAAhACMAFAASACEAKgAXABYAKgAsABcALAAVABcALAArABUALQAUABMALQAvABQALwASABQALwAuABIADQALAAAADQAlAAsAKQAlACYAKQAnACUACwAnAAoACwAlACcAKwAvAC0AKwAsAC8ACQArAC0ACQAIACsA"),
+"lods": [0.151879, PackedByteArray("BQAcAB4ABQAHABwAHAAbAB4AGAAeABsAGAAhAB4AIgAhABgAIgAYAAYAIgAGAAQAAwAKAAEAAQAKACcAAQAnABAAAwAIAAoAFQAIAAMADQAQACQAEgAqABUADQALAAAAAAALAAkAAAAJAAIAAgAtABIAAgAJAC0AEAAHAAEAEAAcAAcAEAAbABwAEAAYABsAGAAQAA0AAAAYAA0AAAAGABgAFQAhABIAEgAhACIAEgAiAAQAEgAEAAIAFQAeACEAAwAeABUAAwAFAB4AAgAGAAAAAgAEAAYAAQAFAAMAAQAHAAUAEAAnACQADQAkAAsAEgAtACoAFQAqAAgACQAKAAgACQALAAoACwAnAAoACwAkACcACQAqAC0ACQAIACoA")],
+"name": "Book",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 48,
+"vertex_data": PackedByteArray("//+rLP//AAD//1PT//8AAP//qywAAAAA//9T0wAAAAD//wAAAAAAAP////8AAAAA//8AAP//AAD///////8AAHj7U9OGBAAAePurLIYEAAB4+1PTePsAAHj7qyx4+wAA9QiqSP//AADCIqss//8AAIQQ3zT//wAAwiJT0///AAD1CFS3//8AAIQQH8v//wAA9QiqSAAAAADCIqssAAAAAIQQ3zQAAAAAwiJT0wAAAAD1CFS3AAAAAIQQH8sAAAAAzRkAAP//AAAAAMUc//8AAI4HbQj//wAAAAA54///AADNGf////8AAI4Hkff//wAAzRn//wAAAAAAADnjAAAAAI4HkfcAAAAAAADFHAAAAADNGQAAAAAAAI4HbQgAAAAA9QiTSJj5AADAIqssy/kAAIMQ2DSn+QAAwCJT08v5AAD1CGu3mPkAAIMQJsun+QAA9Qhrt2YGAADAIlPTMwYAAIMQJstXBgAAwCKrLDMGAAD1CJNIZgYAAIMQ2DRXBgAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ewmtc"]
+resource_name = "Book_Book"
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 2, 2),
+"attribute_data": PackedByteArray("66149uutePbrrXj2b6igL2+ooC9vqKAvw9wS88PcEvPD3BLzQ9dQLEPXUCxD11AsyuOE/goA9P/K44T+gd3YIgoATRaB3dgisKf0/5tQ9P+wp/T/bqEsJJtQTRZuoSwkldZ9LSKFobMihaGzHdw18rBQobOwUKGzFal+MCKF6mUiheplmq5K9bBQ6mWwUOpljYlqrI2Jaqz/kHC+/5BwvsKM97bCjPe2ypAyZMqQMmTZifh12Yn4dcuMk2vLjJNrUvuorFL7qKxj9Gm+Y/RpvmD4FLdg+BS3JPRjZCT0Y2SW+2F2lvthdl/4zGtf+MxrD4hryJtQgrc3hWK/m1BbqoOF4cSbUC+xN4WFY5tQ5murh9Jam1C+XlyFSV6bUBJlE/1qWgoAvl7o/2djCgDma53/8l0KABJl9P8cvwoAW6qD/cfHCgCCt9D/UcQKAC+xsIz+q3hZlxm1kpG9sFC1IYyP27VCU/gbapLzZCKFtSHbjF12WnyXGYqPmWyQgvgbdfjPdlp89P9w8kNlIoXW95f15WyQgpP9w/KmvbBQ1vdR+EOseFn0/6P1ErZCU5P9ldZ9LZquSvX/kHC+2Yn4dVL7qKwk9GNkm1CCt5tQ5msKAL5eCgBbqrCM/qtqkvNkdfjPdsPypr0="),
+"format": 34896613399,
+"index_count": 276,
+"index_data": PackedByteArray("EABFAEkAEAAWAEUACgAeAAQACgAYAB4AKgAVAAMAKgBEABUAJABCACwAJAA+AEIAPwBLAEMAPwBPAEsAXQBZAFUAXQBfAFkABABaACsABAAeAFoABwBmADMABwAbAGYAOABOADAAOABKAE4AUQATAA0AUQA9ABMACAAUAAIACAAOABQABQARAAsABQAXABEALQBUACUALQBcAFQAMQBgADkAMQBoAGAAHAAfABkAHAAiAB8AZQBpAGsAZQBhAGkACQBIADYACQAPAEgAMgAMAAYAMgBQAAwAAAA8ACYAAAASADwAAQAbAAcAAQAhABsANwAYAAoANwBiABgAUQBBAD0AUQBTAEEAUwA/AEEAUwBPAD8ARQBNAEkARQBHAE0ARwBLAE0ARwBDAEsAWgAvACsAWgBeAC8AXgAtAC8AXgBcAC0AJwBYAFYAJwApAFgAKQBUAFgAKQAlAFQAPAAoACYAPABAACgAQAAkACgAQAA+ACQAKgBGAEQAKgAuAEYALgBCAEYALgAsAEIASAA6ADYASABMADoATAA4ADoATABKADgAMgBSAFAAMgA0AFIANABOAFIANAAwAE4AYAA7ADkAYABkADsAZAA3ADsAZABiADcAZgA1ADMAZgBqADUAagAxADUAagBoADEAJwAhAAEAJwBWACEAXwBXAFkAXwBbAFcAIwBbACAAIwBXAFsAYwBrAGcAYwBlAGsAHQBjAGcAHQAaAGMA"),
+"lods": [0.151879, PackedByteArray("EABFAEkAEAAWAEUARQBzAEkAcgB0AHMAcgB1AHQAUQB1AD0AUQA9ABMAUQATAA0ACgAeAAQABAAeAFoABABaAC0ACgAYAB4ANwAYAAoAJwAtAFQAMQBgADcAJwAhAAEAAQAhABsAAQAbAAcABwBmADEABwAbAGYALAAVAAMALABEABUALABCAEQALAA8AEIAPAAsACYAAAA8ACYAAAASADwANgBOADAAMABOAFAAMABQAAwAMAAMAAYANgBIAE4ACQBIADYACQAPAEgACAAUAAIACAAOABQABQARAAsABQAXABEAbwB3AHYAbgB2AG0AcAB5AHgAcQB4AGwAHAAfABkAHAAiAB8AIwBbACAAIwBVAFsAHQBhAGcAHQAaAGEA")],
+"material": SubResource("StandardMaterial3D_dpxia"),
+"name": "Book",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 122,
+"vertex_data": PackedByteArray("//+rLP//FKL//6ss//9n1P//qyz//wnA//9T0///dJ7//1PT//9M2P//U9P//wDA//+rLAAA/////6ssAABy0v//qywAAAHA//9T0wAA/////1PTAAA51v//U9MAAAjA//8AAAAA/////wAAAABU1f//AAAAAADA/////wAA////////AABU1f////8AAAfA//8AAP//l6L//wAA//9U1f//AAD//wjA////////cJ7///////9U1f///////wDAePtT04YESdZ4+1PThgRU1Xj7U9OGBMb/ePurLIYEL9J4+6sshgRU1Xj7qyyGBMb/ePtT03j7lNh4+1PTePtU1Xj7U9N4+/+/ePurLHj7WNR4+6ssePtU1Xj7qyx4+/+/9QiqSP//iIz1CKpI//8VwMIiqyz//1KfwiKrLP//aMiEEN80//9BnYQQ3zT//8HBwiJT0///b5rCIlPT//8CyfUIVLf//6WX9QhUt///FMCEEB/L//8skIQQH8v///bB9QiqSAAA///1CKpIAAAKwcIiqywAAP//wiKrLAAAodmEEN80AAD//4QQ3zQAANXKwiJT0wAA///CIlPTAACC2vUIVLcAAP//9QhUtwAAAsGEEB/LAAD//4QQH8sAAE3LzRkAAP//QJbNGQAA//9v0AAAxRz//8WXAADFHP//UcCOB20I//+wgo4HbQj//2/FAAA54///B4UAADnj//9RwM0Z/////5WWzRn/////b9COB5H3///sio4Hkff//2/FzRn//wAA///NGf//AABv0AAAOeMAAP//AAA54wAAUcCOB5H3AAD//44HkfcAAG/FAADFHAAA//8AAMUcAABRwM0ZAAAAAP//zRkAAAAAb9COB20IAAD//44HbQgAAG/F9QiTSJj5E8D1CJNImPn/v8AiqyzL+X3IwCKrLMv5/7+DENg0p/mqwYMQ2DSn+f+/wCJT08v57cjAIlPTy/n/v/UIa7eY+RbA9Qhrt5j5/7+DECbLp/kJwoMQJsun+f+/9Qhrt2YGH8H1CGu3ZgbG/8AiU9MzBlbawCJT0zMGxv+DECbLVwaFy4MQJstXBsb/wCKrLDMGrNnAIqssMwbG//UIk0hmBv7A9QiTSGYGxv+DENg0VwatyoMQ2DRXBsb/ePtT04YEetZ4+6ssePuqqcIiqyz//wuh9QhUt///D731CKpIAADH28IiU9MAAIvgzRkAAP//BcAAADnj///jwc0Z//8AAADAAADFHAAApMH1CJNImPnkvMAiU9PL+duh9Qhrt2YGne3AIqssMwaA3//////l1cwrwoOFB/9//3/IWJtTi4EXA+Rb5Nsn108upIFKA2ynkthmVsxUrYNbB+hb6NuqKlTVXoG+AuOnG9iqqqqqa4PYBv////+qKlTVgYMDB/9//3+qqqqqRYGLAnlWwlSqKqoqHsAewFPXqC6qKqoqHsAewBlZclOqKqoqgf+B/+/V3yuqKqoqgf+B///////Bk8UR/////7HUmjX/////+brBKv9//3+rSy9U/3//f9htwxP/f/9/WFbLOtti2+KQk5QBy1/L35LKKhyAaoDqwLYIEMukMtvSZC1K15Am7yJ+kRMVo+nc5HCbNv////8TMYnY/3//f6BsT/b/////wkfg4/////+uiaDs/3//f3WnE7H/f/9/HZzCxwSc+uN1pxOxJGIk4q6JoOwkhNr7HZzCx5CHbvigbE/2oWOg4xMxidjUcNTwwkfg4xCUtxKB/4H/jtRdNYH/gf8Ou0Ergf+B/5BLMFSB/4H/Um4MFIH/gf+zVr06gf+B/7p+2BMewB7AsWQzSh7AHsBPcYo2HsAewIDKDhwewB7A25NPAh7AHsDOtlgQHsAewBeAnA7/fwAA0n8yIA7FdQD2eZ8rT35nIyB6D/2Wk9DYm4HH/MJaYO2Kf0lFkp8tAAG6sAAUgB0Q")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ti7fu")
+
+[sub_resource type="FogMaterial" id="FogMaterial_84u50"]
+density = 2.0
+albedo = Color(0.0323759, 0.109294, 0.12347, 1)
+height_falloff = 2.25
+edge_fade = 1e-05
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7nxak")
+camera_attributes = SubResource("CameraAttributesPractical_qm6to")
+compositor = SubResource("Compositor_tu8ku")
+
+[node name="Desk_" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, -2)
+
+[node name="Desk" parent="Desk_" instance=ExtResource("1_gt8ee")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, -0.1)
+
+[node name="InkWell" parent="Desk_" instance=ExtResource("2_8ucqc")]
+transform = Transform3D(1.41421, 0, -1.41421, 0, 2, 0, 1.41421, 0, 1.41421, -0.399, 0.795, 0.134)
+
+[node name="Candle1" parent="Desk_" instance=ExtResource("3_ebg1j")]
+transform = Transform3D(-0.176357, 0, -0.728971, 0, 0.75, 0, 0.728971, 0, -0.176357, -1.719, 0.733, 0.323)
+
+[node name="Scroll" parent="Desk_" instance=ExtResource("4_naqju")]
+transform = Transform3D(0.79, 0, 0, 0, 0.46991, -0.635047, 0, 0.635047, 0.46991, -0.896896, 1.00507, -0.381837)
+
+[node name="Books" type="Node3D" parent="Desk_"]
+transform = Transform3D(-5.96046e-08, 0, 1, 0, 1, 0, -1, 0, -5.96046e-08, -0.112834, 0, 0.249628)
+
+[node name="Book1" parent="Desk_/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0.712616, 0.731374, 0.0218673)
+
+[node name="Book" parent="Desk_/Books/Book1" index="0"]
+material_override = ExtResource("6_l5jro")
+
+[node name="Book4" parent="Desk_/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(-0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, -0.258819, -0.0243158, 0.731374, -1.99802)
+
+[node name="Book" parent="Desk_/Books/Book4" index="0"]
+material_override = ExtResource("7_4otjn")
+
+[node name="Book2" parent="Desk_/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(0.976762, 0, 0.214326, 0, 1, 0, -0.214326, 0, 0.976762, 0.71532, 0.795075, 0.0234669)
+
+[node name="Book" parent="Desk_/Books/Book2" index="0"]
+transform = Transform3D(0.144, 0, 0, 0, 0.039, 0, -1.86265e-09, 0, 0.2, 0, 0.0156574, 0)
+material_override = ExtResource("7_4otjn")
+
+[node name="Book3" parent="Desk_/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(0.999157, 0, -0.0410561, 0, 1, 0, 0.0410561, 0, 0.999157, 0.71532, 0.874021, 0.0234669)
+
+[node name="Book" parent="Desk_/Books/Book3" index="0"]
+transform = Transform3D(0.144, 0, 9.31323e-10, 0, 0.039, 0, 0, 0, 0.2, 0, 0.0156574, 0)
+material_override = ExtResource("8_5nsn2")
+
+[node name="Scroll2" parent="Desk_" instance=ExtResource("4_naqju")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -0.90283, 0.734914, 0.281087)
+
+[node name="Box" parent="Desk_" instance=ExtResource("9_ol6ld")]
+transform = Transform3D(-4.65661e-08, 0, -0.75, 0, 0.75, 0, 0.75, 0, -4.65661e-08, 1.3279, 0, -0.0897582)
+
+[node name="Box2" parent="Desk_" instance=ExtResource("9_ol6ld")]
+transform = Transform3D(-0.649519, 0, 0.375, 0, 0.75, 0, -0.375, 0, -0.649519, 1.58554, 0, 1.37461)
+
+[node name="Scrolls" type="Node3D" parent="Desk_"]
+transform = Transform3D(-0.0627908, 0, -0.998026, 0, 1, 0, 0.998026, 0, -0.0627908, 0.366808, 0.035, -0.412681)
+
+[node name="ClosedScroll" parent="Desk_/Scrolls" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.836516, 0.224144, 0.5, -0.258819, 0.965926, 7.45058e-09, -0.482963, -0.12941, 0.866025, 0.270223, 0.705815, 0.291539)
+
+[node name="ClosedScroll2" parent="Desk_/Scrolls" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.493119, 0.493118, -0.374713, 0.559795, -0.559795, 2.98023e-08, -0.264962, -0.264962, -0.697375, 0.533618, 0.954376, 0.152203)
+
+[node name="ClosedScroll3" parent="Desk_/Scrolls" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.880891, 0, 0.47332, 0, 1, 0, -0.47332, 0, 0.880891, 0.547048, 0.698125, 0.149885)
+
+[node name="Files" parent="Desk_" instance=ExtResource("11_cgw3s")]
+transform = Transform3D(0.649519, 0, -0.375, 0, 0.75, 0, 0.375, 0, 0.649519, -2.06498, 0.737857, -0.372126)
+
+[node name="Plane" parent="Desk_/Files" index="0"]
+surface_material_override/0 = ExtResource("12_5jn8t")
+
+[node name="Flashcard2" parent="Desk_" instance=ExtResource("13_ocy5t")]
+transform = Transform3D(0.769896, 0.594665, 0.231589, -0.00411285, 0.367512, -0.93001, -0.638156, 0.715058, 0.285392, -1.97835, 1.35111, -0.314895)
+
+[node name="Decks" type="Node3D" parent="Desk_"]
+transform = Transform3D(0.34138, 0, -0.939925, 0, 1, 0, 0.939925, 0, 0.34138, -1.44987, 0.740353, 0.270995)
+
+[node name="Deck2" parent="Desk_/Decks" instance=ExtResource("14_cm4iq")]
+
+[node name="Deck3" parent="Desk_/Decks" instance=ExtResource("14_cm4iq")]
+transform = Transform3D(0.981744, 0, -0.190209, 0, 1, 0, 0.190209, 0, 0.981744, 0, 0.0251918, 0)
+
+[node name="Shelves" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13961, 0)
+
+[node name="Shelf" parent="Shelves" instance=ExtResource("15_cl2k8")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, -1.49012e-08, -0.22046)
+
+[node name="Books" type="Node3D" parent="Shelves/Shelf"]
+
+[node name="Book4" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(-0.999157, 0.039657, -0.0106261, 3.72529e-09, -0.258819, -0.965926, -0.041056, -0.965111, 0.258601, -2.11689, 0.723692, 5.54278)
+
+[node name="Book" parent="Shelves/Shelf/Books/Book4" index="0"]
+material_override = ExtResource("8_5nsn2")
+surface_material_override/0 = SubResource("StandardMaterial3D_e5jn3")
+
+[node name="Book5" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(-0.999157, 0.039657, -0.0106261, -0.014042, -0.573298, -0.819227, -0.03858, -0.818387, 0.573371, -2.11689, 0.723692, 5.64278)
+
+[node name="Book" parent="Shelves/Shelf/Books/Book5" index="0"]
+material_override = ExtResource("7_4otjn")
+surface_material_override/0 = SubResource("StandardMaterial3D_frl6m")
+
+[node name="Book6" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(-0.999157, 0.041056, 1.60653e-08, -0.014042, -0.341732, -0.939693, -0.03858, -0.9389, 0.34202, -2.11689, 0.723692, 5.74278)
+
+[node name="Book" parent="Shelves/Shelf/Books/Book6" index="0"]
+material_override = ExtResource("6_l5jro")
+surface_material_override/0 = SubResource("StandardMaterial3D_kwpic")
+
+[node name="Book7" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(-0.999157, 0.039657, -0.0106261, 3.72529e-09, -0.258819, -0.965926, -0.041056, -0.965111, 0.258601, -2.11689, 0.723692, 5.81537)
+
+[node name="Book" parent="Shelves/Shelf/Books/Book7" index="0"]
+material_override = ExtResource("8_5nsn2")
+surface_material_override/0 = SubResource("StandardMaterial3D_e5jn3")
+
+[node name="Book8" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(-0.999157, 0.039657, -0.0106261, -0.014042, -0.573298, -0.819227, -0.03858, -0.818387, 0.573371, -2.11689, 0.723692, 5.91537)
+
+[node name="Book" parent="Shelves/Shelf/Books/Book8" index="0"]
+material_override = ExtResource("7_4otjn")
+surface_material_override/0 = SubResource("StandardMaterial3D_frl6m")
+
+[node name="Book9" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(-0.999157, 0.041056, 1.60653e-08, -0.014042, -0.341732, -0.939693, -0.03858, -0.9389, 0.34202, -2.11689, 0.723692, 6.01537)
+
+[node name="Book" parent="Shelves/Shelf/Books/Book9" index="0"]
+material_override = ExtResource("16_wegjn")
+surface_material_override/0 = SubResource("StandardMaterial3D_kwpic")
+
+[node name="ClosedScroll4" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-1.67896e-08, 0, 0.725, 0, 0.725, 0, -0.725, 0, -1.67896e-08, -1.96745, 0.526982, 0.304004)
+
+[node name="ClosedScroll5" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(5.03172e-08, 1.86264e-09, 0.725, 0, -0.725, 0, 0.725, -1.19209e-07, -4.65919e-08, -1.99025, 0.771759, 0.176597)
+
+[node name="ClosedScroll6" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-1.67896e-08, 0, 0.725, 0, 0.725, 0, -0.725, 0, -1.67896e-08, -2.26751, 0.989479, 0.304004)
+
+[node name="ClosedScroll7" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(5.03172e-08, 1.86264e-09, 0.725, 0, -0.725, 0, 0.725, -1.19209e-07, -4.65919e-08, -2.29031, 1.23426, 0.176597)
+
+[node name="ClosedScroll8" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-2.2006e-08, 0.0272834, 0.499255, -2.74952e-09, 0.499255, -0.0272834, -0.5, -3.94622e-09, -2.18231e-08, -2.27815, 1.20713, 0.304004)
+
+[node name="ClosedScroll9" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(2.42409e-08, -0.0272834, 0.499255, 4.36463e-08, -0.499255, -0.0272834, 0.5, 4.4904e-08, -2.18231e-08, -2.27169, 1.37729, 0.176597)
+
+[node name="ClosedScroll10" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-1.67896e-08, 0, 0.725, 0, 0.725, 0, -0.725, 0, -1.67896e-08, -1.58882, 1.52008, 0.304004)
+
+[node name="ClosedScroll11" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(5.03172e-08, 1.86264e-09, 0.725, 0, -0.725, 0, 0.725, -1.19209e-07, -4.65919e-08, -1.61162, 1.76486, 0.176597)
+
+[node name="ClosedScroll12" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-2.2006e-08, 0.0272834, 0.499255, -2.74952e-09, 0.499255, -0.0272834, -0.5, -3.94622e-09, -2.18231e-08, -1.59945, 1.73773, 0.304004)
+
+[node name="ClosedScroll13" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(2.42409e-08, -0.0272834, 0.499255, 4.36463e-08, -0.499255, -0.0272834, 0.5, 4.4904e-08, -2.18231e-08, -1.59299, 1.90789, 0.176597)
+
+[node name="Shelf2" parent="Shelves" instance=ExtResource("15_cl2k8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -2.5)
+
+[node name="Books" type="Node3D" parent="Shelves/Shelf2"]
+
+[node name="Book10" parent="Shelves/Shelf2/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(0.999157, -0.0396571, 0.0106261, 3.72529e-09, -0.258819, -0.965926, 0.0410561, 0.965111, -0.258601, 7.816, 0.724, 1.19415)
+
+[node name="Book" parent="Shelves/Shelf2/Books/Book10" index="0"]
+material_override = ExtResource("8_5nsn2")
+
+[node name="Book2" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book10"]
+transform = Transform3D(0.144, -1.16415e-10, 0, 0, 0.039, -3.72529e-09, 0, -9.31323e-10, 0.2, 0, -0.127572, -0.476104)
+material_override = ExtResource("8_5nsn2")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book3" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book10"]
+transform = Transform3D(0.144, -6.98492e-10, -2.32831e-10, -4.65661e-10, 0.039, -1.11759e-08, 1.16415e-10, -5.58794e-09, 0.2, -0.0234547, -0.678915, -0.328372)
+material_override = ExtResource("8_5nsn2")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book4" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book10"]
+transform = Transform3D(0.144, -3.49246e-10, -2.32831e-10, 0, 0.039, -1.11759e-08, 1.16415e-10, -2.79397e-09, 0.2, -0.00183749, -0.303524, -0.960006)
+material_override = ExtResource("8_5nsn2")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book6" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book10"]
+transform = Transform3D(0.144, -5.82077e-10, -2.32831e-10, -4.65661e-10, 0.039, -1.11759e-08, 1.16415e-10, -4.65661e-09, 0.2, -0.0430765, -1.27293, -0.700254)
+material_override = ExtResource("8_5nsn2")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book11" parent="Shelves/Shelf2/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(0.999157, -0.0396571, 0.0106262, -0.014042, -0.573298, -0.819227, 0.0385801, 0.818387, -0.573371, 7.816, 0.724, 1.09415)
+
+[node name="Book" parent="Shelves/Shelf2/Books/Book11" index="0"]
+material_override = ExtResource("6_l5jro")
+
+[node name="Book2" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book11"]
+transform = Transform3D(0.144, 0, 4.65661e-10, 0, 0.039, 7.45058e-09, 2.32831e-10, 1.86265e-09, 0.2, -0.00692129, -0.282578, -0.403796)
+material_override = ExtResource("6_l5jro")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book3" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book11"]
+transform = Transform3D(0.143992, 5.46045e-05, 0.00212516, -0.000590457, 0.0376732, 0.0517174, -0.00142593, -0.010086, 0.193186, -0.0289612, -0.750102, -0.0762441)
+material_override = ExtResource("6_l5jro")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book4" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book11"]
+transform = Transform3D(0.144, 0, 4.65661e-10, 9.31323e-10, 0.039, 7.45058e-09, -2.32831e-10, -1.86265e-09, 0.2, -0.0158508, -0.613276, -0.798363)
+material_override = ExtResource("6_l5jro")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book6" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book11"]
+transform = Transform3D(0.144, -2.32831e-10, 9.31323e-10, 9.31323e-10, 0.039, 2.23517e-08, -1.16415e-09, -1.86265e-09, 0.2, -0.0546029, -1.43531, -0.222439)
+material_override = ExtResource("6_l5jro")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book5" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book11"]
+transform = Transform3D(0.143992, 5.46047e-05, 0.00212516, -0.000590456, 0.0376733, 0.0517174, -0.00142593, -0.010086, 0.193186, -0.0430171, -1.18955, -0.394622)
+material_override = ExtResource("6_l5jro")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book12" parent="Shelves/Shelf2/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(0.999157, -0.0410561, 1.23062e-08, -0.014042, -0.341732, -0.939693, 0.0385801, 0.9389, -0.34202, 7.816, 0.724, 0.994149)
+
+[node name="Book" parent="Shelves/Shelf2/Books/Book12" index="0"]
+transform = Transform3D(0.144, -1.16415e-10, 0, 0, 0.039, 0, 0, 1.86265e-09, 0.2, 0, 0, 0)
+
+[node name="Book2" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book12"]
+transform = Transform3D(0.144, 0, 0, 0, 0.039, 0, 0, 1.86265e-09, 0.2, -0.00692129, -0.168439, -0.463174)
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book3" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book12"]
+transform = Transform3D(0.144, 5.82077e-10, -6.98492e-10, 0, 0.039, -2.23517e-08, 0, 1.86265e-09, 0.2, -0.0289612, -0.70481, -0.267787)
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book4" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book12"]
+transform = Transform3D(0.144, 2.32831e-10, 0, 0, 0.039, 0, 0, 1.86265e-09, 0.2, -0.0158505, -0.385748, -0.929886)
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book6" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book12"]
+transform = Transform3D(0.144, 4.65661e-10, -4.65661e-10, 0, 0.039, -1.49012e-08, 0, 1.86265e-09, 0.2, -0.0546024, -1.32883, -0.586343)
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book5" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book12"]
+transform = Transform3D(0.144, 9.31323e-10, -1.39698e-09, 0, 0.039, -4.47035e-08, 0, 1.86265e-09, 0.2, -0.0430169, -1.04688, -0.689052)
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book13" parent="Shelves/Shelf2/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(0.999157, -0.0396571, 0.0106261, 3.72529e-09, -0.258819, -0.965926, 0.0410561, 0.965111, -0.258601, 7.816, 0.724, 0.921562)
+
+[node name="Book" parent="Shelves/Shelf2/Books/Book13" index="0"]
+transform = Transform3D(0.144, -2.32831e-10, 2.32831e-10, 4.65661e-10, 0.039, 0, -1.16415e-10, -9.31323e-10, 0.2, 0, 0, 0)
+material_override = ExtResource("7_4otjn")
+
+[node name="Book2" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book13"]
+transform = Transform3D(0.144, -2.32831e-10, 2.32831e-10, 4.65661e-10, 0.039, -3.72529e-09, -1.16415e-10, -1.86265e-09, 0.2, 0, -0.127572, -0.476104)
+material_override = ExtResource("7_4otjn")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book4" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book13"]
+transform = Transform3D(0.144, -2.32831e-10, 2.32831e-10, 0, 0.039, -7.45058e-09, 1.16415e-10, -5.58794e-09, 0.2, -0.0430758, -1.27293, -0.700254)
+material_override = ExtResource("7_4otjn")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("16_wegjn")
+
+[node name="Book14" parent="Shelves/Shelf2/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(0.999157, -0.0396571, 0.0106262, -0.014042, -0.573298, -0.819227, 0.0385801, 0.818387, -0.573371, 7.816, 0.724, 0.821562)
+
+[node name="Book" parent="Shelves/Shelf2/Books/Book14" index="0"]
+transform = Transform3D(0.144, 0, 4.65661e-10, 0, 0.039, 1.49012e-08, 2.32831e-10, 1.86265e-09, 0.2, 0, 0, 0)
+material_override = ExtResource("6_l5jro")
+surface_material_override/0 = SubResource("StandardMaterial3D_frl6m")
+
+[node name="Book2" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book14"]
+transform = Transform3D(0.143994, 5.33874e-05, 0.00180667, -0.000479693, 0.0380358, 0.0441921, -0.00122509, -0.00861827, 0.195048, -0.00666809, -0.283386, -0.430646)
+material_override = ExtResource("6_l5jro")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_frl6m")
+
+[node name="Book15" parent="Shelves/Shelf2/Books" instance=ExtResource("5_kwgms")]
+transform = Transform3D(0.999157, -0.0410561, 1.23062e-08, -0.014042, -0.341732, -0.939693, 0.0385801, 0.9389, -0.34202, 7.816, 0.724, 0.721561)
+
+[node name="Book" parent="Shelves/Shelf2/Books/Book15" index="0"]
+transform = Transform3D(0.144, -1.16415e-10, 0, 0, 0.039, 0, 0, 1.86265e-09, 0.2, 0, 0, 0)
+material_override = ExtResource("16_wegjn")
+surface_material_override/0 = SubResource("StandardMaterial3D_kwpic")
+
+[node name="Book2" type="MeshInstance3D" parent="Shelves/Shelf2/Books/Book15"]
+transform = Transform3D(0.144, 0, 0, 0, 0.039, 0, 0, 1.86265e-09, 0.2, -0.00692129, -0.168439, -0.463174)
+material_override = ExtResource("16_wegjn")
+mesh = SubResource("ArrayMesh_ewmtc")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_kwpic")
+
+[node name="Room2" parent="." instance=ExtResource("19_fbneq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25137, 0, 2.8064)
+
+[node name="Cameras" type="Node3D" parent="."]
+
+[node name="Main" type="Camera3D" parent="Cameras"]
+transform = Transform3D(0.819152, 0.114353, -0.562061, 0, 0.979925, 0.199368, 0.573576, -0.163313, 0.802707, -2.725, 1.75, 0.4)
+current = true
+fov = 45.0
+
+[node name="Book_List" type="Camera3D" parent="Cameras"]
+transform = Transform3D(0.965926, 0.25, -0.0669873, 0, 0.258819, 0.965926, 0.258819, -0.933013, 0.25, -1.98, 1.2, -1.595)
+fov = 56.4
+
+[node name="Scroll_1" type="Camera3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, -0.8, 1.24, -1.98)
+fov = 78.4
+
+[node name="VX_Panel" type="Camera3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 2, -1.5)
+fov = 78.4
+size = 1.5
+
+[node name="Scroll_2" type="Camera3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, -0.8, 1.2, -1.6)
+fov = 78.4
+
+[node name="ScrollAndScreen" type="Camera3D" parent="Cameras"]
+transform = Transform3D(0.965926, -0.146597, 0.2133, 0, 0.824126, 0.566406, -0.258819, -0.547106, 0.796045, -0.75, 1.546, -1.85)
+h_offset = -0.355
+fov = 78.4
+
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 3)
+shape = 4
+material = SubResource("FogMaterial_84u50")
+
+[node name="Chair" parent="." instance=ExtResource("20_psp5o")]
+transform = Transform3D(0.730162, 0, 0.683274, 0, 1, 0, -0.683274, 0, 0.730162, -0.730527, 0.135, -1.29768)
+
+[node name="VX_Panel" parent="." instance=ExtResource("21_nkgc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1, -2.761)
+
+[node name="FCs" type="Node3D" parent="."]
+transform = Transform3D(1.075, 0, 0, 0, -4.69897e-08, -1.075, 0, 1.075, -4.69897e-08, -1.36715, 2.39207, -2.758)
+
+[node name="Flashcard3" parent="FCs" instance=ExtResource("13_ocy5t")]
+
+[node name="Flashcard4" parent="FCs" instance=ExtResource("13_ocy5t")]
+transform = Transform3D(1.64024, 0, 0, 0, 1.64024, 0, 0, 0, 1.64024, 0.734407, 2.38419e-07, 0.381947)
+
+[node name="Flashcard5" parent="FCs" instance=ExtResource("13_ocy5t")]
+transform = Transform3D(1.42683, 0, 0, 0, 1.42683, 0, 0, 0, 1.42683, 0.0135828, 2.38419e-07, 0.945395)
+
+[node name="Flashcard6" parent="FCs" instance=ExtResource("13_ocy5t")]
+transform = Transform3D(1.21951, 0, 0, 0, 1.21951, 0, 0, 0, 1.21951, 1.07329, 2.38419e-07, 0.945395)
+
+[node name="Flashcard7" parent="FCs" instance=ExtResource("13_ocy5t")]
+transform = Transform3D(0.932927, 0, 0, 0, 0.932927, 0, 0, 0, 0.932927, 1.51674, 2.38419e-07, 0.470563)
+
+[editable path="Desk_/Books/Book1"]
+[editable path="Desk_/Books/Book4"]
+[editable path="Desk_/Books/Book2"]
+[editable path="Desk_/Books/Book3"]
+[editable path="Desk_/Files"]
+[editable path="Shelves/Shelf/Books/Book4"]
+[editable path="Shelves/Shelf/Books/Book5"]
+[editable path="Shelves/Shelf/Books/Book6"]
+[editable path="Shelves/Shelf/Books/Book7"]
+[editable path="Shelves/Shelf/Books/Book8"]
+[editable path="Shelves/Shelf/Books/Book9"]
+[editable path="Shelves/Shelf2/Books/Book10"]
+[editable path="Shelves/Shelf2/Books/Book11"]
+[editable path="Shelves/Shelf2/Books/Book12"]
+[editable path="Shelves/Shelf2/Books/Book13"]
+[editable path="Shelves/Shelf2/Books/Book14"]
+[editable path="Shelves/Shelf2/Books/Book15"]

@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b0vff672i7g0a"]
+
+[ext_resource type="Texture2D" uid="uid://cdvb32fk62fjy" path="res://scenes/home/models/ClosedScroll.png" id="1_tblah"]
+
+[resource]
+albedo_texture = ExtResource("1_tblah")

@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bewfg2ovxttiu"]
+
+[ext_resource type="Texture2D" uid="uid://uo83uo816wv" path="res://scenes/home/models/VX_Panel.png" id="1_4jqqo"]
+
+[resource]
+albedo_texture = ExtResource("1_4jqqo")

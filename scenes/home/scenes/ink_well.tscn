@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://7eef4rb1feqj"]
+
+[ext_resource type="PackedScene" uid="uid://bg42ppsw8ge8b" path="res://scenes/home/models/InkWell.gltf" id="1_i5d07"]
+[ext_resource type="Material" uid="uid://y2u61a3ylnor" path="res://scenes/home/materials/Quill.tres" id="2_4bmbd"]
+
+[node name="InkWell" instance=ExtResource("1_i5d07")]
+
+[node name="Feather Quill_low" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_4bmbd")
