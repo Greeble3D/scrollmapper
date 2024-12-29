@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://pku1xa1knrt3"]
+
+[ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="1_ffcbf"]
+[ext_resource type="PackedScene" uid="uid://b5um2unhlx8ye" path="res://scenes/modules/explore/explore.tscn" id="2_w35ag"]
+[ext_resource type="PackedScene" uid="uid://bs0uifavbkart" path="res://scenes/modules/cross_reference/cross_reference.tscn" id="3_8oc6i"]
+
+[node name="Explorer" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="SearchAndExplore" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Search" parent="SearchAndExplore" instance=ExtResource("1_ffcbf")]
+layout_mode = 2
+
+[node name="Explore" parent="SearchAndExplore" instance=ExtResource("2_w35ag")]
+layout_mode = 2
+
+[node name="StudyAndCompare" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CrossReference" parent="StudyAndCompare" instance=ExtResource("3_8oc6i")]
+layout_mode = 2

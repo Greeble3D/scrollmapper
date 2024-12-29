@@ -33,7 +33,6 @@ func save():
 		print("Book already exists with ID: %d" % id)
 	else:
 		update_translation_id()
-		print(translation_id)
 		# Insert the new book
 		var insert_query = "INSERT INTO %s_books (book_name, translation_id) VALUES (?, ?);" % translation
 		execute_query(insert_query, [book_name, translation_id])

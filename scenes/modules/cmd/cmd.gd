@@ -1,7 +1,11 @@
+@icon("res://images/icons/editor/Terminal.svg")
 extends Control
 
+class_name CMDContainer
+@export var canvas_layer: CanvasLayer 
+
 func _ready():
-	hide()
+	hide_cmd()
 
 func _input(event):
 	if event is InputEventKey:
@@ -10,6 +14,15 @@ func _input(event):
 
 func toggle_cmd():
 	if visible:
-		hide()
+		show_cmd()
 	else:
-		show()
+		hide_cmd()
+
+func show_cmd():
+	canvas_layer.visible = true
+	hide()
+	
+	
+func hide_cmd():
+	show()
+	canvas_layer.visible = false

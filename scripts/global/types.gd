@@ -2,6 +2,12 @@ extends Node
 
 class_name Types
 
+enum LevelType{
+	HOME,
+	VX_GRAPH,
+	EXPLORER,
+}
+
 enum DataDir{
 	DATA,
 	SOURCES,

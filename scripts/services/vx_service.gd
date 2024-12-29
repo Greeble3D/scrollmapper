@@ -192,7 +192,6 @@ func get_saved_graph(id: int) -> Dictionary:
 	var graph_connections = vx_graph_connection_model.get_connections_by_graph(id)
 	for graph_connection in graph_connections:
 		full_graph_data["graph_connections"].append(graph_connection)
-	print(full_graph_data)
 	return full_graph_data
 
 ## Creates a new empty graph and returns its data.

@@ -1,3 +1,4 @@
+@icon("res://images/icons/editor/GraphEdit.svg")
 extends Node
 class_name VXGraph
 

@@ -22,8 +22,9 @@ func execute(command_string: String) -> void:
 	if book.id > 0:
 		var verse: VerseModel = VerseModel.new(t)
 		var verse_data: Dictionary = verse.get_verse(book.id, c, v)
+		print(verse_data)
 		if verse_data.size() > 0:
-			verse.id = verse_data["id"]
+			verse.id = verse_data["verse_id"]
 			verse.chapter = verse_data["chapter"]
 			verse.verse = verse_data["verse"]
 			verse.text = verse_data["text"]

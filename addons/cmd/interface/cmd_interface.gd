@@ -35,7 +35,7 @@ func _ready() -> void:
 	# it seems that it is only being static instanced once. 
 	if Command.cmd_instance_reference == null:
 		Command.cmd_instance_reference = self
-	
+		
 	controls_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
 	text_area.size_flags_vertical = Control.SIZE_EXPAND_FILL  # Expand to take all available vertical space
@@ -68,7 +68,6 @@ func submit(command_text: String) -> void:
 	if Command.instance == null:
 		print("Command.instance is null.")
 		return	
-	print_text(command_text)
 	cmd_input.clear()
 	Command.execute(command_text)
 	

@@ -258,7 +258,6 @@ func delete_graph() -> void:
 func create_new_graph(save:bool) -> void: 
 	if save:
 		save_graph(vx_graph.graph_name, vx_graph.graph_description)
-	print(save)
 	close_all_dialogues()
 	vx_graph.create_new_graph()
 
