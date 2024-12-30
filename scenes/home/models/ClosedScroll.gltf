@@ -23,9 +23,6 @@
 			"doubleSided":true,
 			"name":"Scroll_Closed",
 			"pbrMetallicRoughness":{
-				"baseColorTexture":{
-					"index":0
-				},
 				"metallicFactor":0,
 				"roughnessFactor":0.5
 			}
@@ -45,19 +42,6 @@
 					"material":0
 				}
 			]
-		}
-	],
-	"textures":[
-		{
-			"sampler":0,
-			"source":0
-		}
-	],
-	"images":[
-		{
-			"mimeType":"image/png",
-			"name":"ClosedScroll",
-			"uri":"ClosedScroll.png"
 		}
 	],
 	"accessors":[
@@ -120,12 +104,6 @@
 			"byteLength":3648,
 			"byteOffset":19072,
 			"target":34963
-		}
-	],
-	"samplers":[
-		{
-			"magFilter":9729,
-			"minFilter":9987
 		}
 	],
 	"buffers":[
