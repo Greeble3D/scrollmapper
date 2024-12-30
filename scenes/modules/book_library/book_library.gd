@@ -25,10 +25,10 @@ func _ready() -> void:
 	done_button.pressed.connect(_on_done_button_pressed)
 
 func _on_update_list_button_pressed():
-	"UPDATE LIST"
+	print("UPDATE LIST")
 
 func _on_syncronize_button_pressed():
-	"SYRNCONIZE"
-
+	print("SYRNCONIZE")
+	
 func _on_done_button_pressed():
 	GameManager.load_level("HOME")
