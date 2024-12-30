@@ -26,6 +26,7 @@ ScriptureService="*res://scripts/services/scripture_service.gd"
 VXService="*res://scripts/services/vx_service.gd"
 MetaService="*res://scripts/services/meta_service.gd"
 DialogueManager="*res://scripts/global/dialogue_manager.gd"
+LibraryManager="*res://scripts/global/library_manager.gd"
 
 [editor_plugins]
 

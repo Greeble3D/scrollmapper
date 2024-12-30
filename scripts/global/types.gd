@@ -6,6 +6,7 @@ enum LevelType{
 	HOME,
 	VX_GRAPH,
 	EXPLORER,
+	BOOK_LIBRARY,
 }
 
 enum DataDir{
