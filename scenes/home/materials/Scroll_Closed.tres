@@ -3,4 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cdvb32fk62fjy" path="res://scenes/home/models/ClosedScroll.png" id="1_tblah"]
 
 [resource]
+resource_name = "Scroll_Closed"
+cull_mode = 2
 albedo_texture = ExtResource("1_tblah")
+roughness = 0.5

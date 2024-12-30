@@ -55,9 +55,9 @@
 	],
 	"images":[
 		{
-			"mimeType":"image/png",
+			"mimeType":"image/jpeg",
 			"name":"Scroll_open",
-			"uri":"Scroll_open.png"
+			"uri":"Scroll_open.jpg"
 		}
 	],
 	"accessors":[
