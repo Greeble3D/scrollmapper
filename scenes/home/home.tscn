@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://blt4yrs8a7sa5"]
+[gd_scene load_steps=25 format=3 uid="uid://blt4yrs8a7sa5"]
 
 [ext_resource type="PackedScene" uid="uid://bhm7pe4gws2t2" path="res://scenes/home/scenes/desk.tscn" id="1_gt8ee"]
 [ext_resource type="Script" path="res://scripts/misc/home.gd" id="1_hy5ct"]
@@ -6,9 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b0xvcidac754y" path="res://scenes/home/scenes/candle.tscn" id="3_ebg1j"]
 [ext_resource type="PackedScene" uid="uid://cgkuglcvnr0dx" path="res://scenes/home/scenes/scroll.tscn" id="4_naqju"]
 [ext_resource type="PackedScene" uid="uid://6huu6lllkrkr" path="res://scenes/home/scenes/book_1.tscn" id="5_kwgms"]
-[ext_resource type="Material" uid="uid://by7e8kai4d36v" path="res://scenes/home/materials/BookGreen.tres" id="6_l5jro"]
 [ext_resource type="Material" uid="uid://dxp4takvbrdgn" path="res://scenes/home/materials/BookBlue.tres" id="7_4otjn"]
-[ext_resource type="Material" uid="uid://ds2v2hn2byq7l" path="res://scenes/home/materials/BookRed.tres" id="8_5nsn2"]
 [ext_resource type="PackedScene" uid="uid://ckukokcdixwxo" path="res://scenes/home/models/Box.gltf" id="9_ol6ld"]
 [ext_resource type="PackedScene" uid="uid://olr8yjl3ofsh" path="res://scenes/home/scenes/closed_scroll.tscn" id="10_45g35"]
 [ext_resource type="PackedScene" uid="uid://bnd2s2myn7hhj" path="res://scenes/home/models/Files.gltf" id="11_cgw3s"]
@@ -16,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://d1gguslydcfd6" path="res://scenes/home/scenes/flashcard.tscn" id="13_ocy5t"]
 [ext_resource type="PackedScene" uid="uid://boms3r15cqd1o" path="res://scenes/home/scenes/deck.tscn" id="14_cm4iq"]
 [ext_resource type="PackedScene" uid="uid://cw8ca7sea6rtq" path="res://scenes/home/scenes/shelf.tscn" id="15_cl2k8"]
-[ext_resource type="Material" uid="uid://b366opap2kq4e" path="res://scenes/home/materials/Book.tres" id="16_wegjn"]
 [ext_resource type="PackedScene" uid="uid://budgcsh11hc0h" path="res://scenes/home/models/Room.gltf" id="19_fbneq"]
 [ext_resource type="PackedScene" uid="uid://diute7r3klke2" path="res://scenes/home/scenes/chair.tscn" id="20_psp5o"]
 [ext_resource type="PackedScene" uid="uid://bqffsh43a6f3v" path="res://scenes/home/scenes/vx_panel.tscn" id="21_nkgc7"]
@@ -34,15 +31,6 @@ volumetric_fog_enabled = true
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_qm6to"]
 
 [sub_resource type="Compositor" id="Compositor_tu8ku"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e5jn3"]
-albedo_color = Color(0.86, 0.614183, 0.4386, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frl6m"]
-albedo_color = Color(0.243891, 0.529154, 0.387491, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kwpic"]
-albedo_color = Color(0.764551, 0.276385, 0.242848, 1)
 
 [sub_resource type="FogMaterial" id="FogMaterial_84u50"]
 density = 2.0
@@ -124,139 +112,113 @@ transform = Transform3D(0.34138, 0, -0.939925, 0, 1, 0, 0.939925, 0, 0.34138, -1
 [node name="Deck3" parent="Desk_/Decks" instance=ExtResource("14_cm4iq")]
 transform = Transform3D(0.981744, 0, -0.190209, 0, 1, 0, 0.190209, 0, 0.981744, 0, 0.0251918, 0)
 
+[node name="Box3" parent="Desk_" instance=ExtResource("9_ol6ld")]
+transform = Transform3D(0.173471, 0, -0.156337, 0, 0.233524, 0, 0.156337, 0, 0.173471, 0.146221, 0.743252, -0.539072)
+
 [node name="Shelves" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13961, 0)
 
 [node name="Shelf" parent="Shelves" instance=ExtResource("15_cl2k8")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.3, 0, -0.22)
 
-[node name="Books" type="Node3D" parent="Shelves/Shelf"]
-
-[node name="Book4" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
-transform = Transform3D(-0.999157, 0.039657, -0.0106261, 3.72529e-09, -0.258819, -0.965926, -0.041056, -0.965111, 0.258601, -2.11689, 0.723692, 5.54278)
-
-[node name="Book" parent="Shelves/Shelf/Books/Book4" index="0"]
-material_override = ExtResource("8_5nsn2")
-surface_material_override/0 = SubResource("StandardMaterial3D_e5jn3")
-
-[node name="Book5" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
-transform = Transform3D(-0.999157, 0.039657, -0.0106261, -0.014042, -0.573298, -0.819227, -0.03858, -0.818387, 0.573371, -2.11689, 0.723692, 5.64278)
-
-[node name="Book" parent="Shelves/Shelf/Books/Book5" index="0"]
-material_override = ExtResource("7_4otjn")
-surface_material_override/0 = SubResource("StandardMaterial3D_frl6m")
-
-[node name="Book6" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
-transform = Transform3D(-0.999157, 0.041056, 1.60653e-08, -0.014042, -0.341732, -0.939693, -0.03858, -0.9389, 0.34202, -2.11689, 0.723692, 5.74278)
-
-[node name="Book" parent="Shelves/Shelf/Books/Book6" index="0"]
-material_override = ExtResource("6_l5jro")
-surface_material_override/0 = SubResource("StandardMaterial3D_kwpic")
-
-[node name="Book7" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
-transform = Transform3D(-0.999157, 0.039657, -0.0106261, 3.72529e-09, -0.258819, -0.965926, -0.041056, -0.965111, 0.258601, -2.11689, 0.723692, 5.81537)
-
-[node name="Book" parent="Shelves/Shelf/Books/Book7" index="0"]
-material_override = ExtResource("8_5nsn2")
-surface_material_override/0 = SubResource("StandardMaterial3D_e5jn3")
-
-[node name="Book8" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
-transform = Transform3D(-0.999157, 0.039657, -0.0106261, -0.014042, -0.573298, -0.819227, -0.03858, -0.818387, 0.573371, -2.11689, 0.723692, 5.91537)
-
-[node name="Book" parent="Shelves/Shelf/Books/Book8" index="0"]
-material_override = ExtResource("7_4otjn")
-surface_material_override/0 = SubResource("StandardMaterial3D_frl6m")
-
-[node name="Book9" parent="Shelves/Shelf/Books" instance=ExtResource("5_kwgms")]
-transform = Transform3D(-0.999157, 0.041056, 1.60653e-08, -0.014042, -0.341732, -0.939693, -0.03858, -0.9389, 0.34202, -2.11689, 0.723692, 6.01537)
-
-[node name="Book" parent="Shelves/Shelf/Books/Book9" index="0"]
-material_override = ExtResource("16_wegjn")
-surface_material_override/0 = SubResource("StandardMaterial3D_kwpic")
-
 [node name="ClosedScroll4" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-1.67896e-08, 0, 0.725, 0, 0.725, 0, -0.725, 0, -1.67896e-08, -1.96745, 0.526982, 0.304004)
+transform = Transform3D(0.604183, -0.400734, -7.13687e-09, 0.400734, 0.604183, -2.57531e-08, 2.01822e-08, 1.75167e-08, 0.725, -1.89689, 0.699009, 0.15162)
 
 [node name="ClosedScroll5" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(5.03172e-08, 1.86264e-09, 0.725, 0, -0.725, 0, 0.725, -1.19209e-07, -4.65919e-08, -1.99025, 0.771759, 0.176597)
+transform = Transform3D(-0.604183, 0.400735, 1.7699e-08, -0.400734, -0.604183, -9.28024e-09, 1.33454e-08, -1.5654e-08, 0.725, -1.92602, 0.973418, 0.12882)
 
 [node name="ClosedScroll6" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-1.67896e-08, 0, 0.725, 0, 0.725, 0, -0.725, 0, -1.67896e-08, -2.26751, 0.989479, 0.304004)
+transform = Transform3D(0.512652, -0.512652, -1.2547e-09, 0.512652, 0.512652, -3.29455e-08, 2.41832e-08, 2.24088e-08, 0.725, -2.1915, 1.00252, 0.0401392)
 
 [node name="ClosedScroll7" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(5.03172e-08, 1.86264e-09, 0.725, 0, -0.725, 0, 0.725, -1.19209e-07, -4.65919e-08, -2.29031, 1.23426, 0.176597)
+transform = Transform3D(-0.512652, 0.512652, 1.98187e-08, -0.512652, -0.512652, -1.18721e-08, 9.34443e-09, -2.05461e-08, 0.725, -2.27449, 1.2657, 0.0173392)
 
 [node name="ClosedScroll8" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-2.2006e-08, 0.0272834, 0.499255, -2.74952e-09, 0.499255, -0.0272834, -0.5, -3.94622e-09, -2.18231e-08, -2.27815, 1.20713, 0.304004)
+transform = Transform3D(0.353553, -0.353027, 0.0192923, 0.353553, 0.353027, -0.0192923, 6.25108e-09, 0.0272834, 0.499255, -2.36318, 1.14658, 0.0294991)
 
 [node name="ClosedScroll9" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(2.42409e-08, -0.0272834, 0.499255, 4.36463e-08, -0.499255, -0.0272834, 0.5, 4.4904e-08, -2.18231e-08, -2.27169, 1.37729, 0.176597)
+transform = Transform3D(-0.353553, 0.353027, 0.0192923, -0.353553, -0.353027, -0.0192923, -4.01618e-09, -0.0272834, 0.499255, -2.42286, 1.33568, 0.0359592)
+
+[node name="ClosedScroll30" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.433013, -0.249628, 0.0136417, 0.25, 0.432368, -0.0236281, 3.12856e-09, 0.0272834, 0.499255, -2.06324, 1.16329, -0.0394635)
+
+[node name="ClosedScroll31" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.433013, 0.249628, 0.0136417, -0.25, -0.432368, -0.0236281, 4.23434e-10, -0.0272834, 0.499255, -2.09514, 1.35668, -0.0330033)
 
 [node name="ClosedScroll10" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-1.67896e-08, 0, 0.725, 0, 0.725, 0, -0.725, 0, -1.67896e-08, -1.58882, 1.52008, 0.304004)
+transform = Transform3D(0.3625, 0.627868, 8.3948e-09, -0.627868, 0.3625, 4.03498e-08, 3.07465e-08, -2.7445e-08, 0.725, -1.75133, 1.72279, 0.131394)
 
 [node name="ClosedScroll11" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(5.03172e-08, 1.86264e-09, 0.725, 0, -0.725, 0, 0.725, -1.19209e-07, -4.65919e-08, -1.61162, 1.76486, 0.176597)
-
-[node name="ClosedScroll26" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-1.67896e-08, 0, 0.725, 0, 0.725, 0, -0.725, 0, -1.67896e-08, -2.12952, 1.52008, 0.304004)
-
-[node name="ClosedScroll27" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(5.03172e-08, 1.86264e-09, 0.725, 0, -0.725, 0, 0.725, -1.19209e-07, -4.65919e-08, -2.15232, 1.76486, 0.176597)
+transform = Transform3D(-0.3625, -0.627868, 2.3296e-08, 0.627868, -0.3625, 1.45402e-08, 2.78106e-09, 2.93076e-08, 0.725, -1.47564, 1.73484, 0.108594)
 
 [node name="ClosedScroll12" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-2.20156e-08, 0.0290347, 0.499156, -2.74898e-09, 0.499156, -0.0290347, -0.5, -4.02277e-09, -2.18188e-08, -1.60765, 1.73774, 0.304004)
+transform = Transform3D(0.25, 0.432282, -0.0251448, -0.433013, 0.249578, -0.0145173, 1.07679e-08, 0.0290347, 0.499156, -1.57651, 1.82732, 0.164999)
 
 [node name="ClosedScroll13" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(2.4394e-08, -0.0290347, 0.499156, 4.36377e-08, -0.499156, -0.0290347, 0.5, 4.49806e-08, -2.18188e-08, -1.6006, 1.90788, 0.176597)
+transform = Transform3D(-0.463373, -0.187528, -0.0109081, 0.187845, -0.46259, -0.0269078, -1.60298e-09, -0.0290347, 0.499156, -1.489, 1.94739, 0.119973)
+
+[node name="ClosedScroll32" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.461746, -0.191485, 0.0111382, 0.191809, 0.460966, -0.0268133, 2.28485e-09, 0.0290347, 0.499156, -1.7211, 1.79571, 0.164999)
+
+[node name="ClosedScroll33" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.364084, 0.342121, 0.0199004, -0.3427, -0.363469, -0.0211421, -3.78192e-09, -0.0290347, 0.499156, -1.78922, 1.92578, 0.172049)
+
+[node name="ClosedScroll26" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.3625, 0.627868, 8.3948e-09, -0.627868, 0.3625, 4.03498e-08, 3.07465e-08, -2.7445e-08, 0.725, -1.13887, 1.1371, 0.131394)
+
+[node name="ClosedScroll27" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.3625, -0.627868, 2.3296e-08, 0.627868, -0.3625, 1.45402e-08, 2.78106e-09, 2.93076e-08, 0.725, -0.863177, 1.14916, 0.108594)
 
 [node name="ClosedScroll28" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-2.21526e-08, 0.0539043, 0.497086, -2.73757e-09, 0.497086, -0.0539043, -0.5, -5.10985e-09, -2.17283e-08, -2.06061, 1.73394, 0.304004)
+transform = Transform3D(0.25, 0.432282, -0.0251448, -0.433013, 0.249578, -0.0145173, 1.07679e-08, 0.0290347, 0.499156, -0.964051, 1.24164, 0.164999)
 
 [node name="ClosedScroll29" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(2.65682e-08, -0.0539043, 0.497086, 4.34567e-08, -0.497086, -0.0539043, 0.5, 4.60676e-08, -2.17283e-08, -2.04507, 1.90352, 0.176597)
+transform = Transform3D(-0.463373, -0.187528, -0.0109081, 0.187845, -0.46259, -0.0269078, -1.60298e-09, -0.0290347, 0.499156, -0.876537, 1.36171, 0.119973)
+
+[node name="ClosedScroll34" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.461746, -0.191485, 0.0111382, 0.191809, 0.460966, -0.0268133, 2.28485e-09, 0.0290347, 0.499156, -1.10864, 1.21003, 0.164999)
+
+[node name="ClosedScroll35" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.364084, 0.342121, 0.0199004, -0.3427, -0.363469, -0.0211421, -3.78192e-09, -0.0290347, 0.499156, -1.17676, 1.34009, 0.172049)
 
 [node name="ClosedScroll14" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-1.67896e-08, 0, 0.725, 0, 0.725, 0, -0.725, 0, -1.67896e-08, -1.30605, 1.02385, 0.304004)
+transform = Transform3D(0.512652, -0.512652, -1.2547e-09, 0.512652, 0.512652, -3.29455e-08, 2.41832e-08, 2.24088e-08, 0.725, -1.27215, 1.30844, 0.0943259)
 
 [node name="ClosedScroll15" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(5.03172e-08, 1.86264e-09, 0.725, 0, -0.725, 0, 0.725, -1.19209e-07, -4.65919e-08, -1.32885, 1.26863, 0.176597)
+transform = Transform3D(-0.512652, 0.512652, 1.98187e-08, -0.512652, -0.512652, -1.18721e-08, 9.34443e-09, -2.05461e-08, 0.725, -1.35515, 1.57161, 0.0715257)
 
 [node name="ClosedScroll16" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-2.2006e-08, 0.0272834, 0.499255, -2.74952e-09, 0.499255, -0.0272834, -0.5, -3.94622e-09, -2.18231e-08, -1.31668, 1.2415, 0.304004)
+transform = Transform3D(0.353553, -0.353027, 0.0192923, 0.353553, 0.353027, -0.0192923, 6.25108e-09, 0.0272834, 0.499255, -1.42605, 1.46234, 0.0836958)
 
 [node name="ClosedScroll17" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(2.42409e-08, -0.0272834, 0.499255, 4.36463e-08, -0.499255, -0.0272834, 0.5, 4.4904e-08, -2.18231e-08, -1.31022, 1.41166, 0.176597)
+transform = Transform3D(-0.353553, 0.353027, 0.0192923, -0.353553, -0.353027, -0.0192923, -4.01618e-09, -0.0272834, 0.499255, -1.45628, 1.67275, 0.0901557)
 
 [node name="ClosedScroll18" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-0.725, 0, -4.84804e-08, 0, 0.725, 0, 4.84804e-08, 0, -0.725, -1.98007, 1.02385, 4.08113)
+transform = Transform3D(-1.25439e-08, 1.58454e-08, 0.725, 0.3625, 0.627868, -7.45056e-09, -0.627868, 0.3625, -1.8786e-08, -2.17965, 1.00807, 4.03438)
 
 [node name="ClosedScroll19" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(0.725, -1.19209e-07, -7.82827e-08, 0, -0.725, 0, -8.2008e-08, -1.86264e-09, -0.725, -2.10748, 1.26863, 4.10393)
+transform = Transform3D(0.0372424, -0.0372423, 0.723084, -0.512652, -0.512652, 1.05367e-08, 0.511298, -0.511298, -0.0526686, -2.20245, 1.27658, 4.11049)
 
 [node name="ClosedScroll20" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-0.5, -5.13882e-09, -4.36462e-08, -2.74952e-09, 0.499255, -0.0272834, 4.38617e-08, -0.0272834, -0.499255, -1.98007, 1.2415, 4.09176)
+transform = Transform3D(-1.56046e-08, 0.0272834, 0.499255, 0.353553, 0.353027, -0.0192923, -0.353553, 0.353027, -0.0192923, -2.19028, 1.1673, 4.1814)
 
 [node name="ClosedScroll21" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(0.5, 4.60966e-08, -4.36462e-08, 4.36463e-08, -0.499255, -0.0272834, -4.60966e-08, 0.0272834, -0.499255, -2.10748, 1.41166, 4.0853)
+transform = Transform3D(1.78395e-08, -0.0272834, 0.499255, -0.353553, -0.353027, -0.0192923, 0.353553, -0.353027, -0.0192923, -2.18382, 1.37772, 4.21163)
 
 [node name="ClosedScroll22" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-0.631261, 0, -4.22121e-08, 0, 0.631261, 0, 4.22121e-08, 0, -0.631261, -1.97819, 0.539503, 4.0061)
+transform = Transform3D(-9.58053e-08, 1.97162e-08, 0.883765, 0.451054, 0.759994, 3.19419e-08, -0.759994, 0.451054, -9.24505e-08, -2.25498, 0.38651, 4.03796)
 
 [node name="ClosedScroll23" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(0.631261, -1.03796e-07, -6.8161e-08, 0, -0.631261, 0, -7.14047e-08, -1.62181e-09, -0.631261, -2.08912, 0.752634, 4.02595)
+transform = Transform3D(1.5839e-07, -1.74457e-08, 0.883765, -0.451054, -0.759994, 5.32366e-08, 0.759994, -0.451054, -1.2833e-07, -2.27721, 0.735863, 4.04554)
 
 [node name="ClosedScroll24" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-0.435352, -4.47439e-09, -3.8003e-08, -2.39402e-09, 0.434703, -0.0237558, 3.81906e-08, -0.0237558, -0.434703, -1.97819, 0.729012, 4.01535)
+transform = Transform3D(-9.64584e-09, 0.0237558, 0.434703, -0.377026, 0.217351, -0.0118779, -0.217676, -0.376464, 0.0205731, -2.18515, 0.909889, 3.96021)
 
 [node name="ClosedScroll25" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(0.435352, 4.01365e-08, -3.8003e-08, 3.8003e-08, -0.434703, -0.0237558, -4.01365e-08, 0.0237558, -0.434703, -2.08912, 0.877171, 4.00973)
+transform = Transform3D(1.15917e-08, -0.0237558, 0.434703, 0.377026, -0.217351, -0.0118779, 0.217676, 0.376464, 0.0205731, -2.17953, 0.8879, 3.77644)
 
 [node name="Shelf2" parent="Shelves" instance=ExtResource("15_cl2k8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -2.5)
-
-[node name="Box2" parent="Shelves" instance=ExtResource("9_ol6ld")]
-transform = Transform3D(1.40451e-08, 0, 0.233524, 0, 0.233524, 0, -0.233524, 0, 1.40451e-08, 1.07935, 0.521419, -1.3973)
 
 [node name="Room2" parent="." instance=ExtResource("19_fbneq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25137, 0, 2.8064)
@@ -358,9 +320,3 @@ launcher = NodePath("../../ClickSensors/Explorer")
 
 [editable path="Desk_/Books/Book4"]
 [editable path="Desk_/Files"]
-[editable path="Shelves/Shelf/Books/Book4"]
-[editable path="Shelves/Shelf/Books/Book5"]
-[editable path="Shelves/Shelf/Books/Book6"]
-[editable path="Shelves/Shelf/Books/Book7"]
-[editable path="Shelves/Shelf/Books/Book8"]
-[editable path="Shelves/Shelf/Books/Book9"]

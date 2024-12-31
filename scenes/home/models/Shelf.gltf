@@ -23,9 +23,12 @@
 			"doubleSided":true,
 			"name":"Shelf",
 			"pbrMetallicRoughness":{
-				"baseColorTexture":{
-					"index":0
-				},
+				"baseColorFactor":[
+					0.800000011920929,
+					0.800000011920929,
+					0.800000011920929,
+					1
+				],
 				"metallicFactor":0,
 				"roughnessFactor":0.5
 			}
@@ -47,24 +50,11 @@
 			]
 		}
 	],
-	"textures":[
-		{
-			"sampler":0,
-			"source":0
-		}
-	],
-	"images":[
-		{
-			"mimeType":"image/png",
-			"name":"Shelf",
-			"uri":"Shelf.png"
-		}
-	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":532,
+			"count":1660,
 			"max":[
 				2.6000001430511475,
 				2.499999761581421,
@@ -80,57 +70,51 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":532,
+			"count":1660,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":532,
+			"count":1660,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":1404,
+			"count":3168,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":6384,
+			"byteLength":19920,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":6384,
-			"byteOffset":6384,
+			"byteLength":19920,
+			"byteOffset":19920,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4256,
-			"byteOffset":12768,
+			"byteLength":13280,
+			"byteOffset":39840,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2808,
-			"byteOffset":17024,
+			"byteLength":6336,
+			"byteOffset":53120,
 			"target":34963
-		}
-	],
-	"samplers":[
-		{
-			"magFilter":9729,
-			"minFilter":9987
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":19832,
+			"byteLength":59456,
 			"uri":"Shelf.bin"
 		}
 	]
