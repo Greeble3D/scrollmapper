@@ -18,5 +18,5 @@ func execute(command_string: String):
 		Command.print_to_console("Book name not provided.")
 		print("Book name not provided.")
 		return
-
+	
 	ResourceDownloader.instance.retrieve_book(book_name)

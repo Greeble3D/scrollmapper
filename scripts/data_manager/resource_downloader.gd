@@ -12,6 +12,9 @@ var http_request:HTTPRequest = null
 var file_path:Types.DataDir = Types.DataDir.DATA
 var file_name:String = "null"
 
+signal download_process_started
+signal download_process_complete
+
 func _ready() -> void:
 	if instance == null:
 		instance = self		
@@ -23,7 +26,7 @@ func retrieve_source_list() -> void:
 	file_name = "book_list.json"
 	download_file(data_manager.source_list, Types.DataDir.SOURCES)
 	Command.print_to_console("Retrieving book_list.json from %s"%data_manager.source_list)
-
+	
 func retrieve_book(book_name:String) -> void:
 	var source_reference_list:SourceReferenceList = SourceReferenceList.new()
 	file_name = book_name + ".json"
@@ -35,6 +38,7 @@ func retrieve_book(book_name:String) -> void:
 	Command.print_to_console("Getting book '%s' from %s"%[book_name, book_source])
 	
 func download_file(file_url:String, file_path:Types.DataDir) -> void:
+	download_process_started.emit()
 	self.file_path = file_path
 	var error = http_request.request(file_url)
 	if error != OK:
@@ -53,3 +57,4 @@ func _http_request_completed(result, response_code, headers, body):
 	file.close()
 	download_complete.emit(sources_file_path)
 	Command.print_to_console("Download complete at %s"%sources_file_path)
+	download_process_complete.emit()

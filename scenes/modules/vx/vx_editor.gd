@@ -23,6 +23,7 @@ class_name VXEditor
 @export var load_graphs_dialogue: LoadGraphsDialogue 
 @export var node_control_dialogue: MarginContainer 
 
+
 var drag_start_position: Vector2 = Vector2()
 var is_dragging: bool = false
 var is_dragging_allowed: bool = false
@@ -208,6 +209,8 @@ func _on_graph_action_selected(action_tag:String) -> void:
 			export_graph_to_gephi()
 		"export_cross_references_to_gephi":
 			export_cross_references_to_gephi()
+		"exit":
+			exit_to_home()
 		_:
 			print("Unknown action selected.")
 
@@ -292,4 +295,7 @@ func export_cross_references_to_gephi() -> void:
 	var export_window:Node = EXPORT_CROSS_REFERENCES_TO_GEPHI.instantiate()
 	DialogueManager.create_dialogue(export_window, dialogues_anchor)
  
- 
+func exit_to_home() -> void:
+	const EXIT_TO_HOME = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/exit_to_home.tscn")
+	var exit_to_home_window:Node = EXIT_TO_HOME.instantiate()
+	DialogueManager.create_dialogue(exit_to_home_window, dialogues_anchor)

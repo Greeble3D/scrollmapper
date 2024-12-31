@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bmg34cgf1y4wo"]
+[gd_scene load_steps=12 format=3 uid="uid://bmg34cgf1y4wo"]
 
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="1_6rdk2"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_search_and_execute.gd" id="1_8olel"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bae24mbqtje8b" path="res://images/icons/editor/Close.svg" id="6_1oxhy"]
 [ext_resource type="Texture2D" uid="uid://bxaq5leut85nj" path="res://images/icons/editor/FileAccess.svg" id="6_75kp4"]
 [ext_resource type="Texture2D" uid="uid://bpijxo4oc85r3" path="res://images/icons/editor/Add.svg" id="7_73b1v"]
+[ext_resource type="Texture2D" uid="uid://cbbgdcaygy14e" path="res://images/icons/editor/PageFirst.svg" id="8_gggap"]
 [ext_resource type="Texture2D" uid="uid://b865l5fuyubbq" path="res://images/icons/editor/PlaceholderTexture3D.svg" id="9_lfpp7"]
 [ext_resource type="Texture2D" uid="uid://ca03ylmq6fv3o" path="res://images/icons/Gephi-16.svg" id="10_1k00h"]
 
@@ -59,7 +60,7 @@ size_flags_vertical = 0
 layout_mode = 2
 text = "Graph"
 icon = ExtResource("3_nllwr")
-item_count = 5
+item_count = 6
 popup/item_0/text = "Settings"
 popup/item_0/icon = ExtResource("4_7bkm2")
 popup/item_1/text = "Save"
@@ -74,6 +75,9 @@ popup/item_3/id = 3
 popup/item_4/text = "New Graph"
 popup/item_4/icon = ExtResource("7_73b1v")
 popup/item_4/id = 4
+popup/item_5/text = "Exit"
+popup/item_5/icon = ExtResource("8_gggap")
+popup/item_5/id = 5
 
 [node name="MenuButtonExport" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2

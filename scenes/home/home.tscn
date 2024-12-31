@@ -39,7 +39,7 @@ height_falloff = 2.25
 edge_fade = 1e-05
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ano20"]
-size = Vector3(0.68, 0.16, 0.605)
+size = Vector3(1.495, 0.275, 2.37)
 
 [node name="Home" type="Node3D" node_paths=PackedStringArray("camera_3d")]
 script = ExtResource("1_hy5ct")
@@ -144,6 +144,7 @@ transform = Transform3D(0.433013, -0.249628, 0.0136417, 0.25, 0.432368, -0.02362
 
 [node name="ClosedScroll31" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(-0.433013, 0.249628, 0.0136417, -0.25, -0.432368, -0.0236281, 4.23434e-10, -0.0272834, 0.499255, -2.09514, 1.35668, -0.0330033)
+
 
 [node name="ClosedScroll10" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(0.3625, 0.627868, 8.3948e-09, -0.627868, 0.3625, 4.03498e-08, 3.07465e-08, -2.7445e-08, 0.725, -1.75133, 1.72279, 0.131394)
@@ -298,6 +299,14 @@ metadata/launcher = "explorer"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClickSensors/Explorer"]
 shape = SubResource("BoxShape3D_ano20")
 
+[node name="BookLibrary" type="Area3D" parent="ClickSensors" groups=["launchers"]]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 3.82137e-15, 4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0.91833, 1.40882, -1.91769)
+script = ExtResource("23_6fcio")
+metadata/launcher = "book_library"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClickSensors/BookLibrary"]
+shape = SubResource("BoxShape3D_ano20")
+
 [node name="InteractionLights" type="Node3D" parent="."]
 
 [node name="InteractionLightVXGraph" type="SpotLight3D" parent="InteractionLights" node_paths=PackedStringArray("launcher")]
@@ -317,6 +326,15 @@ shadow_enabled = true
 spot_angle_attenuation = 4.92457
 script = ExtResource("24_vro7x")
 launcher = NodePath("../../ClickSensors/Explorer")
+
+[node name="InteractionLightBookLibrary" type="SpotLight3D" parent="InteractionLights" node_paths=PackedStringArray("launcher")]
+transform = Transform3D(0.100989, -0.0305397, -0.994419, -0.00599474, 0.999492, -0.0313043, 0.99487, 0.00912269, 0.100755, -0.397561, 1.35309, -1.77373)
+light_color = Color(1, 0.7825, 0.55, 1)
+light_energy = 13.088
+shadow_enabled = true
+spot_angle_attenuation = 4.92457
+script = ExtResource("24_vro7x")
+launcher = NodePath("../../ClickSensors/BookLibrary")
 
 [editable path="Desk_/Books/Book4"]
 [editable path="Desk_/Files"]
