@@ -1,6 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dw7u8bt15f6s7"]
-
-[ext_resource type="Texture2D" uid="uid://s10xru04p65" path="res://scenes/home/models/Shelf.png" id="1_5kbx1"]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dw7u8bt15f6s7"]
 
 [resource]
-albedo_texture = ExtResource("1_5kbx1")
+albedo_color = Color(0.49, 0.358353, 0.2352, 1)
