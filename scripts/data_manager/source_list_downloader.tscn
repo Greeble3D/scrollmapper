@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctiaabrjv4ppg"]
+[gd_scene load_steps=2 format=3 uid="uid://cqymee7me5heo"]
 
-[ext_resource type="Script" path="res://scripts/data_manager/source_list_downloader.gd" id="1_xlwd8"]
+[sub_resource type="GDScript" id="GDScript_khxmj"]
+script/source = "@icon(\"res://images/icons/editor/ArrowDown.svg\")
+extends ResourceDownloader
+
+class_name SourceListDownloader
+
+func _ready() -> void:
+	http_request = HTTPRequest.new()
+	add_child(http_request)	
+	http_request.request_completed.connect(_http_request_completed)
+"
 
 [node name="Node" type="Node"]
-script = ExtResource("1_xlwd8")
+script = SubResource("GDScript_khxmj")

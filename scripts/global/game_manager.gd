@@ -17,6 +17,7 @@ var current_level:Node = null
 @onready var main: Node3D = $"../Main"
 @onready var ui: Control = $"../Main/UI"
 @onready var modules: Control = $"../Main/UI/Modules"
+@onready var systems: Node3D = $"../Main/Systems"
 
 #endregion 
 

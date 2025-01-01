@@ -23,9 +23,26 @@ func _ready() -> void:
 	update_list_button.pressed.connect(_on_update_list_button_pressed)
 	syncronize_button.pressed.connect(_on_syncronize_button_pressed)
 	done_button.pressed.connect(_on_done_button_pressed)
+	update_lists()
+
+
+func update_lists():
+	for child in book_list.get_children():
+		child.queue_free()	
+	var source_list:SourceReferenceList = LibraryManager.source_reference_list
+	for biblical_source:SourceReference in source_list.get_biblical_sources():
+		add_listing(biblical_source)
+
+func add_listing(source_reference:SourceReference) -> void:
+	var new_book_listing:BookListing = BOOK_LISTING.instantiate()
+	new_book_listing.book = source_reference.book
+	new_book_listing.title = source_reference.title
+	new_book_listing.language = source_reference.language
+	new_book_listing.content_type = source_reference.content_type
+	book_list.add_child(new_book_listing)
 
 func _on_update_list_button_pressed():
-	print("UPDATE LIST")
+	LibraryManager.update_source_list()
 
 func _on_syncronize_button_pressed():
 	print("SYRNCONIZE")

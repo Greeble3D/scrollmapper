@@ -20,7 +20,7 @@ content_type_rich_text_label = NodePath("ContentTypeRichTextLabel")
 
 [node name="IncludeCheckbox" type="CheckBox" parent="."]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 8
 
 [node name="BookRichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 2

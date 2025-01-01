@@ -145,7 +145,6 @@ transform = Transform3D(0.433013, -0.249628, 0.0136417, 0.25, 0.432368, -0.02362
 [node name="ClosedScroll31" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(-0.433013, 0.249628, 0.0136417, -0.25, -0.432368, -0.0236281, 4.23434e-10, -0.0272834, 0.499255, -2.09514, 1.35668, -0.0330033)
 
-
 [node name="ClosedScroll10" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(0.3625, 0.627868, 8.3948e-09, -0.627868, 0.3625, 4.03498e-08, 3.07465e-08, -2.7445e-08, 0.725, -1.75133, 1.72279, 0.131394)
 

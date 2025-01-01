@@ -13,7 +13,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_y5h8a")
-book_list = NodePath("MarginContainer/VBoxContainer/BookListContainer/BookList")
+book_list = NodePath("MarginContainer/VBoxContainer/ScrollContainer/BookListContainer/BookList")
 update_list_button = NodePath("MarginContainer/VBoxContainer/ControlsContainer/Controls/UpdateListButton")
 syncronize_button = NodePath("MarginContainer/VBoxContainer/ControlsContainer/Controls/SyncronizeButton")
 done_button = NodePath("MarginContainer/VBoxContainer/ControlsContainer/Controls/DoneButton")
@@ -39,20 +39,26 @@ size_flags_horizontal = 3
 text = "Scrollmapper Book Library"
 fit_content = true
 
-[node name="BookListContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
-[node name="BookList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BookListContainer"]
+[node name="BookListContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BookList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/BookListContainer"]
 layout_mode = 2
 
-[node name="BookListing" parent="MarginContainer/VBoxContainer/BookListContainer/BookList" instance=ExtResource("2_q4j6q")]
+[node name="BookListing" parent="MarginContainer/VBoxContainer/ScrollContainer/BookListContainer/BookList" instance=ExtResource("2_q4j6q")]
 layout_mode = 2
 
-[node name="BookListing2" parent="MarginContainer/VBoxContainer/BookListContainer/BookList" instance=ExtResource("2_q4j6q")]
+[node name="BookListing2" parent="MarginContainer/VBoxContainer/ScrollContainer/BookListContainer/BookList" instance=ExtResource("2_q4j6q")]
 layout_mode = 2
 
-[node name="BookListing3" parent="MarginContainer/VBoxContainer/BookListContainer/BookList" instance=ExtResource("2_q4j6q")]
+[node name="BookListing3" parent="MarginContainer/VBoxContainer/ScrollContainer/BookListContainer/BookList" instance=ExtResource("2_q4j6q")]
 layout_mode = 2
 
 [node name="ControlsContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
