@@ -42,6 +42,7 @@ func is_book_file_available() -> bool:
 	return true
 
 func install():
+	
 	check_and_delete_existing_book()
 	var data_manager:DataManager = DataManager.new()
 	var book_path = data_manager.get_book_path(book)
@@ -61,13 +62,18 @@ func install():
 	translation_model.title = translation.capitalize()
 	translation_model.license = "Public Domain"
 	translation_model.save()
-
-	for book_data in data["books"]:
+	DialogueManager.show_progress_dialog()
+	for book_data in data["books"]:		
 		var book_model = BookModel.new(translation)
 		book_model.book_name = book_data["name"]
 		book_model.translation_id = translation_model.id
 		book_model.save()
-
+		
+		var verse_count:int = 0
+		for chapter_data in book_data["chapters"]:
+			for verse_data in chapter_data["verses"]:
+				verse_count += 1
+		var current_verse_count: int = 0
 		for chapter_data in book_data["chapters"]:
 			for verse_data in chapter_data["verses"]:
 				var verse_model = VerseModel.new(translation)
@@ -76,7 +82,12 @@ func install():
 				verse_model.verse = verse_data["verse"]
 				verse_model.text = verse_data["text"]
 				verse_model.save()
+				current_verse_count += 1
+				DialogueManager.set_progress_dialogue_values(current_verse_count, verse_count)
+				
+		DialogueManager.hide_progress_dialog()
 	
 	Command.instance.print_to_console("Book %s installed."%book)
 	ScriptureService.emit_books_installed()
 	book_install_completed.emit()
+	
