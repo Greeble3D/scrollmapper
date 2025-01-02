@@ -48,6 +48,10 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="BookList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/BookListContainer"]
 layout_mode = 2

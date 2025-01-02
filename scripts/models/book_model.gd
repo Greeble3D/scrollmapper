@@ -98,7 +98,7 @@ func delete():
 		var verse_model = VerseModel.new(translation)
 		var verses = verse_model.get_verses(book_name)
 		for verse in verses:
-			verse_model.id = verse["id"]
+			verse_model.id = verse["verse_id"]
 			verse_model.delete()
 		
 		# Delete the book
@@ -112,3 +112,8 @@ func _str() -> String:
 
 func print_str():
 	print(_str())
+
+func is_book_installed(_book_name: String) -> bool:
+	var query = "SELECT id FROM %s_books WHERE book_name = ?;" % translation
+	var result = get_results(query, [_book_name])
+	return result.size() > 0

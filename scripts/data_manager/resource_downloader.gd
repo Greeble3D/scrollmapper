@@ -11,6 +11,7 @@ static var instance:ResourceDownloader = null
 var http_request:HTTPRequest = null
 var file_path:Types.DataDir = Types.DataDir.DATA
 var file_name:String = "null"
+var is_processing_request:bool = false
 
 signal download_process_started
 signal download_process_complete
@@ -38,6 +39,7 @@ func retrieve_book(book_name:String) -> void:
 	Command.print_to_console("Getting book '%s' from %s"%[book_name, book_source])
 	
 func download_file(file_url:String, file_path:Types.DataDir) -> void:
+	is_processing_request = true
 	download_process_started.emit()
 	self.file_path = file_path
 	var error = http_request.request(file_url)
@@ -58,3 +60,4 @@ func _http_request_completed(result, response_code, headers, body):
 	download_complete.emit(sources_file_path)
 	Command.print_to_console("Download complete at %s"%sources_file_path)
 	download_process_complete.emit()
+	is_processing_request = false

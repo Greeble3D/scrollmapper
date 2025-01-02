@@ -34,9 +34,9 @@ func install_book(book_name: String):
 ## Downloads a book using the command from download_book.gd
 func download_book(book_name: String):
 	ResourceDownloader.instance.retrieve_book(book_name)
-	print("DOWNLOADING ")
+	print("Downloading book: %s" % book_name)
 	await ResourceDownloader.instance.download_process_complete
-	print("DOWNLOADED")
+	print("Download of %s complete." % book_name)
 
 ## Installs cross references using the command from install_cross_references.gd
 func install_cross_references():

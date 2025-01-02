@@ -65,3 +65,35 @@ func delete():
 		execute_query(query, [id])
 	else:
 		print("Translation ID is not set, cannot delete the entry.")
+
+func is_translation_installed(_translation_name: String) -> bool:
+	var query = "SELECT COUNT(*) as count FROM translations WHERE translation_abbr = ?;"
+	var result = get_results(query, [_translation_name])
+	
+	if result.size() > 0 and result[0]["count"] > 0:
+		return true
+	return false
+
+func uninstall_book(book_name: String):
+	var book_model = BookModel.new(translation_abbr)
+	book_model.get_book_by_name(book_name)
+	if book_model.id != 0:
+		book_model.delete()
+		print("Book '%s' and its verses have been uninstalled." % book_name)
+	else:
+		print("Book '%s' not found." % book_name)
+
+func uninstall_translation():
+	if id != null:
+		# Delete all books and verses associated with this translation
+		var book_model = BookModel.new(translation_abbr)
+		var books = book_model.get_all_books()
+		for book in books:
+			book_model.id = book["id"]
+			book_model.delete()
+
+		# Delete the translation itself
+		delete()
+		print("Translation '%s' and all associated books and verses have been uninstalled." % translation_abbr)
+	else:
+		print("Translation ID is not set, cannot uninstall the translation.")

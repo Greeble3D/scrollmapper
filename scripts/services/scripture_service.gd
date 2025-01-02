@@ -448,5 +448,28 @@ func get_scripture_id(book: String, chapter: int, verse: int) -> int:
 ## Gets a connection id based on from_scripture and to_scripture.
 ## This is done using a hash algorithm to create a unique identifier for the connection.
 func get_connection_id(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter: int, to_verse: int) -> int:
-	var id_string = "%s-%s-%s-%s-%s-%s" % [from_book, str(from_chapter), str(from_verse), to_book, str(to_chapter), str(to_verse)]
+	var id_string:String = "%s-%s-%s-%s-%s-%s" % [from_book, str(from_chapter), str(from_verse), to_book, str(to_chapter), str(to_verse)]
 	return hash(id_string)
+
+## Checks if a translation is installed
+func is_translation_installed(translation_abbr: String) -> bool:
+	var translation_model:BibleTranslationModel = BibleTranslationModel.new()
+	return translation_model.is_translation_installed(translation_abbr)
+
+## Checks if a book is installed
+func is_book_installed(translation: String, book_name: String) -> bool:
+	var book_model:BookModel = BookModel.new(translation)
+	return book_model.is_book_installed(book_name)
+
+## Uninstall a book from a specific translation
+func uninstall_book(translation: String, book: String):
+	var translation_model = BibleTranslationModel.new()
+	translation_model.translation_abbr = translation
+	translation_model.uninstall_book(book)
+
+## Uninstall a translation and all its associated books and verses
+func uninstall_translation(translation: String):
+	var translation_model = BibleTranslationModel.new()
+	translation_model.translation_abbr = translation
+	translation_model.get_translation(translation)
+	translation_model.uninstall_translation()
