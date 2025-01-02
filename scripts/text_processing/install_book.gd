@@ -68,7 +68,7 @@ func install():
 		book_model.book_name = book_data["name"]
 		book_model.translation_id = translation_model.id
 		book_model.save()
-		
+		DialogueManager.set_progress_dialogue_text("Installing %s"%book_data["name"])
 		var verse_count:int = 0
 		for chapter_data in book_data["chapters"]:
 			for verse_data in chapter_data["verses"]:
@@ -84,7 +84,7 @@ func install():
 				verse_model.save()
 				current_verse_count += 1
 				DialogueManager.set_progress_dialogue_values(current_verse_count, verse_count)
-				
+				await GameManager.main.get_tree().process_frame
 		DialogueManager.hide_progress_dialog()
 	
 	Command.instance.print_to_console("Book %s installed."%book)
