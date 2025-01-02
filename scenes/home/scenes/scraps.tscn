@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgxphauewix0t"]
+
+[ext_resource type="PackedScene" uid="uid://6udy1sepbfjy" path="res://scenes/home/models/Scraps.gltf" id="1_sdlk4"]
+[ext_resource type="Texture2D" uid="uid://bg2mmyksfuxuf" path="res://scenes/home/models/Scraps.png" id="2_mhbjk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3nyna"]
+transparency = 1
+albedo_texture = ExtResource("2_mhbjk")
+
+[node name="Scraps" instance=ExtResource("1_sdlk4")]
+
+[node name="Scraps" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_3nyna")

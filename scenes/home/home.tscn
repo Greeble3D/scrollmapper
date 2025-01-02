@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://blt4yrs8a7sa5"]
+[gd_scene load_steps=27 format=3 uid="uid://blt4yrs8a7sa5"]
 
 [ext_resource type="PackedScene" uid="uid://bhm7pe4gws2t2" path="res://scenes/home/scenes/desk.tscn" id="1_gt8ee"]
 [ext_resource type="Script" path="res://scripts/misc/home.gd" id="1_hy5ct"]
@@ -15,7 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://boms3r15cqd1o" path="res://scenes/home/scenes/deck.tscn" id="14_cm4iq"]
 [ext_resource type="PackedScene" uid="uid://cw8ca7sea6rtq" path="res://scenes/home/scenes/shelf.tscn" id="15_cl2k8"]
 [ext_resource type="PackedScene" uid="uid://budgcsh11hc0h" path="res://scenes/home/models/Room.gltf" id="19_fbneq"]
+[ext_resource type="PackedScene" uid="uid://bgxphauewix0t" path="res://scenes/home/scenes/scraps.tscn" id="20_5amgx"]
 [ext_resource type="PackedScene" uid="uid://diute7r3klke2" path="res://scenes/home/scenes/chair.tscn" id="20_psp5o"]
+[ext_resource type="PackedScene" uid="uid://8grkmtxyb5dn" path="res://scenes/home/scenes/scraps_lines.tscn" id="21_byj4f"]
 [ext_resource type="PackedScene" uid="uid://bqffsh43a6f3v" path="res://scenes/home/scenes/vx_panel.tscn" id="21_nkgc7"]
 [ext_resource type="Script" path="res://scripts/misc/launcher.gd" id="23_6fcio"]
 [ext_resource type="Script" path="res://scripts/misc/interaction_light.gd" id="24_vro7x"]
@@ -266,20 +268,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1, -2.761)
 [node name="FCs" type="Node3D" parent="."]
 transform = Transform3D(1.075, 0, 0, 0, -4.69897e-08, -1.075, 0, 1.075, -4.69897e-08, -1.36715, 2.39207, -2.758)
 
-[node name="Flashcard3" parent="FCs" instance=ExtResource("13_ocy5t")]
-
-[node name="Flashcard4" parent="FCs" instance=ExtResource("13_ocy5t")]
-transform = Transform3D(1.64024, 0, 0, 0, 1.64024, 0, 0, 0, 1.64024, 0.734407, 2.38419e-07, 0.381947)
-
-[node name="Flashcard5" parent="FCs" instance=ExtResource("13_ocy5t")]
-transform = Transform3D(1.42683, 0, 0, 0, 1.42683, 0, 0, 0, 1.42683, 0.0135828, 2.38419e-07, 0.945395)
-
-[node name="Flashcard6" parent="FCs" instance=ExtResource("13_ocy5t")]
-transform = Transform3D(1.21951, 0, 0, 0, 1.21951, 0, 0, 0, 1.21951, 1.07329, 2.38419e-07, 0.945395)
-
-[node name="Flashcard7" parent="FCs" instance=ExtResource("13_ocy5t")]
-transform = Transform3D(0.932927, 0, 0, 0, 0.932927, 0, 0, 0, 0.932927, 1.51674, 2.38419e-07, 0.470563)
-
 [node name="ClickSensors" type="Node3D" parent="."]
 
 [node name="VXGraph" type="Area3D" parent="ClickSensors" groups=["launchers"]]
@@ -334,6 +322,12 @@ shadow_enabled = true
 spot_angle_attenuation = 4.92457
 script = ExtResource("24_vro7x")
 launcher = NodePath("../../ClickSensors/BookLibrary")
+
+[node name="Scraps" parent="." instance=ExtResource("20_5amgx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 1.1, -2.75)
+
+[node name="Scraps_Lines" parent="." instance=ExtResource("21_byj4f")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -1.08126, 0.923457, -2.7)
 
 [editable path="Desk_/Books/Book4"]
 [editable path="Desk_/Files"]
