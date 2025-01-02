@@ -40,8 +40,6 @@ signal accepted
 func _ready() -> void:
 	close_button.pressed.connect(_on_close_button_pressed)
 	accept_button.pressed.connect(_on_accept_button_pressed)
-	closed.connect(_on_closed)
-	opened.connect(_on_opened)
 
 func set_title(title: String) -> void:
 	title_rich_text_label.text = title
@@ -60,10 +58,10 @@ func _on_close_button_pressed() -> void:
 	closed.emit()
 	hide()
 
-func _on_opened() -> void:
+func open():
 	show()
 	
-func _on_closed() -> void: 
+func close():
 	hide()
 
 ## This is called from the child dialogues to close the dialogue

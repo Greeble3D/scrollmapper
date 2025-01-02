@@ -8,6 +8,7 @@ const PROGRESS_DIALOGUE = preload("res://scenes/modules/dialogues/export_cross_r
 
 var file_save_dialog:FileDialog = null
 var progress_viewing_dialogue:ProgressDialogue = null
+var main_progress_dialogue_container:BaseDialogue = null
 
 ## Signal: file_selected is the file that was selected during last file select dialogue.
 signal file_selected(file_path:String)
@@ -22,7 +23,7 @@ func _ready() -> void:
 
 func create_progress_dialogue():
 	progress_viewing_dialogue = PROGRESS_DIALOGUE.instantiate()
-	create_dialogue(progress_viewing_dialogue, self)
+	main_progress_dialogue_container = create_dialogue(progress_viewing_dialogue, self)
 	hide_progress_dialog()
 
 func set_progress_dialogue_text(text:String) -> void:
@@ -42,10 +43,10 @@ func hide_file_save_dialog() -> void:
 	file_save_dialog.hide()
 	
 func show_progress_dialog() -> void:
-	progress_viewing_dialogue.open()
+	main_progress_dialogue_container.open()
 	
 func hide_progress_dialog() -> void:
-	progress_viewing_dialogue.close()
+	main_progress_dialogue_container.close()
 
 func _on_file_selected(selected_file:String) -> void:
 	file_selected.emit(selected_file)
