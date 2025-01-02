@@ -23,7 +23,7 @@ func _ready() -> void:
 func create_progress_dialogue():
 	progress_viewing_dialogue = PROGRESS_DIALOGUE.instantiate()
 	create_dialogue(progress_viewing_dialogue, self)
-	#hide_progress_dialog()
+	hide_progress_dialog()
 
 func set_progress_dialogue_text(text:String) -> void:
 	progress_viewing_dialogue.set_status_text(text)
