@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://8grkmtxyb5dn"]
+
+[ext_resource type="PackedScene" uid="uid://dqge6cf6v17f4" path="res://scenes/home/models/Scraps_Lines.gltf" id="1_3yirw"]
+[ext_resource type="Texture2D" uid="uid://bc4nhvq4ieaiq" path="res://scenes/home/models/Scraps_Lines.png" id="2_37dwj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lif3u"]
+render_priority = 1
+transparency = 1
+albedo_texture = ExtResource("2_37dwj")
+
+[node name="Scraps_Lines" instance=ExtResource("1_3yirw")]
+
+[node name="Lines" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_lif3u")
