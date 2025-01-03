@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://blt4yrs8a7sa5"]
+[gd_scene load_steps=28 format=3 uid="uid://blt4yrs8a7sa5"]
 
 [ext_resource type="PackedScene" uid="uid://bhm7pe4gws2t2" path="res://scenes/home/scenes/desk.tscn" id="1_gt8ee"]
 [ext_resource type="Script" path="res://scripts/misc/home.gd" id="1_hy5ct"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://diute7r3klke2" path="res://scenes/home/scenes/chair.tscn" id="20_psp5o"]
 [ext_resource type="PackedScene" uid="uid://8grkmtxyb5dn" path="res://scenes/home/scenes/scraps_lines.tscn" id="21_byj4f"]
 [ext_resource type="PackedScene" uid="uid://bqffsh43a6f3v" path="res://scenes/home/scenes/vx_panel.tscn" id="21_nkgc7"]
+[ext_resource type="PackedScene" uid="uid://dqkxs3yn03b6a" path="res://scenes/home/scenes/closed_scroll_1.tscn" id="22_7ny2k"]
 [ext_resource type="Script" path="res://scripts/misc/launcher.gd" id="23_6fcio"]
 [ext_resource type="Script" path="res://scripts/misc/interaction_light.gd" id="24_vro7x"]
 
@@ -129,6 +130,12 @@ transform = Transform3D(0.604183, -0.400734, -7.13687e-09, 0.400734, 0.604183, -
 [node name="ClosedScroll5" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(-0.604183, 0.400735, 1.7699e-08, -0.400734, -0.604183, -9.28024e-09, 1.33454e-08, -1.5654e-08, 0.725, -1.92602, 0.973418, 0.12882)
 
+[node name="ClosedScroll17" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.604183, 0.400734, 7.05184e-08, -0.400734, -0.604183, 2.57531e-08, 7.30016e-08, -1.75166e-08, 0.725, -1.92192, 1.56668, 0.15162)
+
+[node name="ClosedScroll24" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.604183, -0.400735, 4.56825e-08, 0.400734, 0.604183, 9.28024e-09, -3.9474e-08, 1.93794e-08, 0.725, -1.89279, 1.29227, 0.12882)
+
 [node name="ClosedScroll6" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(0.512652, -0.512652, -1.2547e-09, 0.512652, 0.512652, -3.29455e-08, 2.41832e-08, 2.24088e-08, 0.725, -2.1915, 1.00252, 0.0401392)
 
@@ -146,6 +153,30 @@ transform = Transform3D(0.433013, -0.249628, 0.0136417, 0.25, 0.432368, -0.02362
 
 [node name="ClosedScroll31" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(-0.433013, 0.249628, 0.0136417, -0.25, -0.432368, -0.0236281, 4.23434e-10, -0.0272834, 0.499255, -2.09514, 1.35668, -0.0330033)
+
+[node name="ClosedScroll25" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.512652, -0.512652, -1.2547e-09, 0.512652, 0.512652, -3.29455e-08, 2.41832e-08, 2.24088e-08, 0.725, -0.968536, 1.61208, 0.0401391)
+
+[node name="ClosedScroll49" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.512652, 0.512652, 1.98187e-08, -0.512652, -0.512652, -1.18721e-08, 9.34443e-09, -2.05461e-08, 0.725, -1.05153, 1.87526, 0.0173391)
+
+[node name="ClosedScroll50" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.353553, -0.353027, 0.0192923, 0.353553, 0.353027, -0.0192923, 6.25108e-09, 0.0272834, 0.499255, -1.14022, 1.75614, -0.0301703)
+
+[node name="ClosedScroll51" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.353553, 0.353027, 0.0192923, -0.353553, -0.353027, -0.0192923, -4.01618e-09, -0.0272834, 0.499255, -1.1999, 1.94524, -0.02371)
+
+[node name="ClosedScroll52" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.433013, -0.249628, 0.0136417, 0.25, 0.432368, -0.0236281, 3.12856e-09, 0.0272834, 0.499255, -0.840276, 1.77285, -0.0394636)
+
+[node name="ClosedScroll53" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.433013, 0.249628, 0.0136417, -0.25, -0.432368, -0.0236281, 4.23434e-10, -0.0272834, 0.499255, -0.872176, 1.96624, -0.0330034)
+
+[node name="ClosedScroll38" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.496035, 0.0627552, -0.00342941, -0.0628483, -0.495296, 0.027067, 4.4468e-08, 0.0272834, 0.499255, -1.52398, 1.37306, -0.0394635)
+
+[node name="ClosedScroll39" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.195285, -0.459601, -0.0251163, 0.460287, -0.194995, -0.0106561, -9.62036e-09, -0.0272834, 0.499255, -1.38544, 1.23364, -0.0330032)
 
 [node name="ClosedScroll10" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(0.3625, 0.627868, 8.3948e-09, -0.627868, 0.3625, 4.03498e-08, 3.07465e-08, -2.7445e-08, 0.725, -1.75133, 1.72279, 0.131394)
@@ -183,8 +214,38 @@ transform = Transform3D(0.461746, -0.191485, 0.0111382, 0.191809, 0.460966, -0.0
 [node name="ClosedScroll35" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(-0.364084, 0.342121, 0.0199004, -0.3427, -0.363469, -0.0211421, -3.78192e-09, -0.0290347, 0.499156, -1.17676, 1.34009, 0.172049)
 
+[node name="ClosedScroll40" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.3625, 0.627868, 8.3948e-09, -0.627868, 0.3625, 4.03498e-08, 3.07465e-08, -2.7445e-08, 0.725, -1.13887, 0.523944, 0.131394)
+
+[node name="ClosedScroll41" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.3625, -0.627868, 2.3296e-08, 0.627868, -0.3625, 1.45402e-08, 2.78106e-09, 2.93076e-08, 0.725, -0.863177, 0.536004, 0.108594)
+
+[node name="ClosedScroll42" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.25, 0.432282, -0.0251448, -0.433013, 0.249578, -0.0145173, 1.07679e-08, 0.0290347, 0.499156, -0.964051, 0.628484, 0.164999)
+
+[node name="ClosedScroll43" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.463373, -0.187528, -0.0109081, 0.187845, -0.46259, -0.0269078, -1.60298e-09, -0.0290347, 0.499156, -0.876537, 0.748554, 0.119973)
+
+[node name="ClosedScroll44" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.461746, -0.191485, 0.0111382, 0.191809, 0.460966, -0.0268133, 2.28485e-09, 0.0290347, 0.499156, -1.10864, 0.596874, 0.164999)
+
+[node name="ClosedScroll45" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.364084, 0.342121, 0.0199004, -0.3427, -0.363469, -0.0211421, -3.78192e-09, -0.0290347, 0.499156, -1.17676, 0.726934, 0.172049)
+
+[node name="ClosedScroll46" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.398966, -0.300865, -0.0175007, 0.301374, -0.398292, -0.0231677, -4.0149e-09, -0.0290347, 0.499156, -1.12322, 0.913185, 0.0495777)
+
+[node name="ClosedScroll47" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.461746, -0.191485, 0.0111382, 0.191809, 0.460966, -0.0268133, 2.28485e-09, 0.0290347, 0.499156, -1.35775, 0.8821, 0.019636)
+
+[node name="ClosedScroll48" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.423153, 0.2659, 0.0154667, -0.266349, 0.422438, 0.0245722, -4.19875e-08, -0.0290347, 0.499156, -1.21977, 0.939802, 0.0759724)
+
 [node name="ClosedScroll14" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(0.512652, -0.512652, -1.2547e-09, 0.512652, 0.512652, -3.29455e-08, 2.41832e-08, 2.24088e-08, 0.725, -1.27215, 1.30844, 0.0943259)
+
+[node name="ClosedScroll36" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.720261, 0.0827512, 7.79782e-08, -0.0827512, -0.720261, 5.31801e-09, 7.80755e-08, -3.61711e-09, 0.725, -1.67017, 1.30014, 0.0458332)
 
 [node name="ClosedScroll15" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(-0.512652, 0.512652, 1.98187e-08, -0.512652, -0.512652, -1.18721e-08, 9.34443e-09, -2.05461e-08, 0.725, -1.35515, 1.57161, 0.0715257)
@@ -192,32 +253,32 @@ transform = Transform3D(-0.512652, 0.512652, 1.98187e-08, -0.512652, -0.512652, 
 [node name="ClosedScroll16" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
 transform = Transform3D(0.353553, -0.353027, 0.0192923, 0.353553, 0.353027, -0.0192923, 6.25108e-09, 0.0272834, 0.499255, -1.42605, 1.46234, 0.0836958)
 
-[node name="ClosedScroll17" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-0.353553, 0.353027, 0.0192923, -0.353553, -0.353027, -0.0192923, -4.01618e-09, -0.0272834, 0.499255, -1.45628, 1.67275, 0.0901557)
+[node name="ClosedScroll37" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(-0.274576, -0.417307, -0.0215168, 0.417849, -0.274019, -0.0177553, 0.00302677, -0.0277319, 0.499221, -1.45101, 1.19792, 0.0643252)
 
 [node name="ClosedScroll18" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-1.25439e-08, 1.58454e-08, 0.725, 0.3625, 0.627868, -7.45056e-09, -0.627868, 0.3625, -1.8786e-08, -2.17965, 1.00807, 4.03438)
+transform = Transform3D(-1.25439e-08, 1.58454e-08, 0.725, 0.3625, 0.627868, -7.45056e-09, -0.627868, 0.3625, -1.8786e-08, -2.26657, 1.00807, 4.03438)
 
 [node name="ClosedScroll19" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(0.0372424, -0.0372423, 0.723084, -0.512652, -0.512652, 1.05367e-08, 0.511298, -0.511298, -0.0526686, -2.20245, 1.27658, 4.11049)
+transform = Transform3D(0.0372424, -0.0372423, 0.723084, -0.512652, -0.512652, 1.05367e-08, 0.511298, -0.511298, -0.0526686, -2.28937, 1.27658, 4.11049)
+
+[node name="ClosedScroll56" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(0.0297939, -0.0297938, 0.578467, 0.501248, -0.288954, -0.0406991, 0.29028, 0.502014, 0.0109053, -2.28938, 0.878437, 3.79592)
 
 [node name="ClosedScroll20" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-1.56046e-08, 0.0272834, 0.499255, 0.353553, 0.353027, -0.0192923, -0.353553, 0.353027, -0.0192923, -2.19028, 1.1673, 4.1814)
+transform = Transform3D(-1.56046e-08, 0.0272834, 0.499255, 0.353553, 0.353027, -0.0192923, -0.353553, 0.353027, -0.0192923, -2.2772, 1.1673, 4.1814)
 
 [node name="ClosedScroll21" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(1.78395e-08, -0.0272834, 0.499255, -0.353553, -0.353027, -0.0192923, 0.353553, -0.353027, -0.0192923, -2.18382, 1.37772, 4.21163)
+transform = Transform3D(1.78395e-08, -0.0272834, 0.499255, -0.353553, -0.353027, -0.0192923, 0.353553, -0.353027, -0.0192923, -2.27074, 1.33378, 4.25404)
+
+[node name="ClosedScroll54" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
+transform = Transform3D(1.11283e-08, 0.0272834, 0.499255, 0.433012, -0.249628, 0.0136417, 0.25, 0.432368, -0.0236282, -2.27721, 0.965555, 3.79415)
 
 [node name="ClosedScroll22" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-9.58053e-08, 1.97162e-08, 0.883765, 0.451054, 0.759994, 3.19419e-08, -0.759994, 0.451054, -9.24505e-08, -2.25498, 0.38651, 4.03796)
+transform = Transform3D(-9.58053e-08, 1.97162e-08, 0.883765, 0.451054, 0.759994, 3.19419e-08, -0.759994, 0.451054, -9.24505e-08, -2.33428, 0.38651, 4.03796)
 
 [node name="ClosedScroll23" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(1.5839e-07, -1.74457e-08, 0.883765, -0.451054, -0.759994, 5.32366e-08, 0.759994, -0.451054, -1.2833e-07, -2.27721, 0.735863, 4.04554)
-
-[node name="ClosedScroll24" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(-9.64584e-09, 0.0237558, 0.434703, -0.377026, 0.217351, -0.0118779, -0.217676, -0.376464, 0.0205731, -2.18515, 0.909889, 3.96021)
-
-[node name="ClosedScroll25" parent="Shelves/Shelf" instance=ExtResource("10_45g35")]
-transform = Transform3D(1.15917e-08, -0.0237558, 0.434703, 0.377026, -0.217351, -0.0118779, 0.217676, 0.376464, 0.0205731, -2.17953, 0.8879, 3.77644)
+transform = Transform3D(1.5839e-07, -1.74457e-08, 0.883765, -0.451054, -0.759994, 5.32366e-08, 0.759994, -0.451054, -1.2833e-07, -2.35651, 0.712894, 4.09249)
 
 [node name="Shelf2" parent="Shelves" instance=ExtResource("15_cl2k8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -2.5)
@@ -328,6 +389,45 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 1.1, -2.75)
 
 [node name="Scraps_Lines" parent="." instance=ExtResource("21_byj4f")]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -1.08126, 0.923457, -2.7)
+
+[node name="ClosedScroll_12" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0510281, 0, -0.637421, 0.355186, 0.530984, -0.0284341, 0.52929, -0.356322, -0.0423718, 1.1475, 1.14117, -1.81466)
+
+[node name="ClosedScroll_16" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.355186, -0.530983, 0.0284341, 0.52929, -0.356322, -0.0423718, 0.0510281, 1.55779e-08, 0.637421, -2.53934, 0.781429, -2.49948)
+
+[node name="ClosedScroll_17" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.355186, -0.530984, 0.0284341, 0.52929, -0.356322, -0.0423718, 0.0510281, 1.4274e-08, 0.637421, -2.53934, 1.36494, -2.49647)
+
+[node name="ClosedScroll_15" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0510281, 1.97807e-09, -0.637421, 0.52929, -0.356322, -0.0423718, -0.355186, -0.530984, 0.0284341, 1.25608, 1.65634, -1.33201)
+
+[node name="ClosedScroll_13" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0510281, 1.97807e-09, -0.637421, -0.297403, -0.565592, 0.0238083, -0.563788, 0.298354, 0.0451335, 1.19669, 1.3581, -1.86791)
+
+[node name="ClosedScroll_22" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0510281, 0, -0.637421, 0.355186, 0.530984, -0.0284341, 0.52929, -0.356322, -0.0423718, 1.24728, 0.839532, -1.50109)
+
+[node name="ClosedScroll_23" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0510281, 1.97807e-09, -0.637421, -0.297403, -0.565592, 0.0238083, -0.563788, 0.298354, 0.0451335, 1.29648, 1.05646, -1.55434)
+
+[node name="ClosedScroll_18" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0510281, 0, -0.637421, 0.355186, 0.530984, -0.0284341, 0.52929, -0.356322, -0.0423718, 1.1475, 1.58395, -2.2589)
+
+[node name="ClosedScroll_19" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0510281, 1.97807e-09, -0.637421, -0.297403, -0.565592, 0.0238083, -0.563788, 0.298354, 0.0451335, 1.19669, 1.80089, -2.31215)
+
+[node name="ClosedScroll_20" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0408225, -1.08278e-09, -0.509937, -0.482547, 0.165402, 0.0386299, 0.164874, 0.484091, -0.0131989, 1.15242, 1.6785, -2.06741)
+
+[node name="ClosedScroll_21" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0408225, 4.76818e-09, -0.509937, 0.497241, -0.113442, -0.0398061, -0.11308, -0.498831, 0.00905249, 1.19177, 1.67473, -1.88875)
+
+[node name="ClosedScroll_14" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0510281, 6.19205e-09, -0.637421, 0.339553, -0.541178, -0.0271826, -0.539452, -0.34064, 0.0431853, 1.23974, 1.48117, -2.37997)
+
+[node name="ClosedScroll_24" parent="." instance=ExtResource("22_7ny2k")]
+transform = Transform3D(-0.0510281, 6.19205e-09, -0.637421, 0.339553, -0.541178, -0.0271826, -0.539452, -0.34064, 0.0431853, 1.31941, 2.09074, -1.15701)
 
 [editable path="Desk_/Books/Book4"]
 [editable path="Desk_/Files"]
