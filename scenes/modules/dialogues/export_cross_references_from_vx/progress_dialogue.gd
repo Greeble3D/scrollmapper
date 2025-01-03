@@ -76,5 +76,4 @@ func set_current_amount(new_current: float) -> void:
 ## Update the progress bar based on the current and total amounts
 func update_progress_bar() -> void:
 	progress_bar.max_value = total_amount
-	print(current_amount)
 	progress_bar.value = current_amount

@@ -21,13 +21,18 @@ var listings:Dictionary = {}
 
 var book_list_items:Array[BookListing] = []
 
+var install_queue:Array[BookListing] = []
+var install_queue_next_index = 0
+
 var is_processing_book:bool = false
 signal book_process_complete
+signal install_queue_processed
 
 func _ready() -> void:
 	update_list_button.pressed.connect(_on_update_list_button_pressed)
 	syncronize_button.pressed.connect(_on_syncronize_button_pressed)
 	done_button.pressed.connect(_on_done_button_pressed)
+	install_queue_processed.connect(do_install_queue)
 	update_lists()
 
 func update_lists():
@@ -59,22 +64,36 @@ func _on_syncronize_button_pressed():
 func _on_done_button_pressed():
 	GameManager.load_level("HOME")
 
-func syncronize_book_selections():
-	await get_tree().process_frame
-	for book_listing in listings.keys():
 
+func syncronize_book_selections():
+	install_queue.clear()
+	install_queue_next_index = 0
+	for book_listing in listings.keys():
 		if is_processing_book:
 			await book_process_complete		
-			
 		book_listing = listings[book_listing]
 		if not book_listing.is_installed and book_listing.is_selected:
 			print("Installing " + book_listing.book)
-			do_install_book_process(book_listing)
+			install_queue.append(book_listing)
 		elif book_listing.is_installed and !book_listing.is_selected:
 			print("Uninstalling " + book_listing.book)
 			do_uninstall_book_process(book_listing)
-	update_lists()
+			
 	
+	do_install_queue()
+
+	
+func do_install_queue() -> void:
+	if install_queue == []:
+		return
+	var next_install:BookListing
+	if install_queue_next_index < install_queue.size():
+		next_install = install_queue[install_queue_next_index]
+	else:
+		return
+	install_queue_next_index += 1
+	do_install_book_process(next_install)
+
 func do_install_book_process(book_listing:BookListing):
 	is_processing_book = true
 	var install_book:InstallBook = InstallBook.new(book_listing.book)
@@ -82,11 +101,13 @@ func do_install_book_process(book_listing:BookListing):
 		ResourceDownloader.instance.retrieve_book(book_listing.book)
 		await ResourceDownloader.instance.download_process_complete
 		
-	install_book.install()
-	
+	await install_book.install()	
 
 	is_processing_book = false
 	book_process_complete.emit()
+	install_queue_processed.emit()
+	book_listing.is_installed = true
+	book_listing.set_current_status()
 
 func do_uninstall_book_process(book_listing:BookListing):
 	is_processing_book = true
@@ -97,3 +118,5 @@ func do_uninstall_book_process(book_listing:BookListing):
 
 	is_processing_book = false
 	book_process_complete.emit()
+	book_listing.is_installed = false
+	book_listing.set_current_status()

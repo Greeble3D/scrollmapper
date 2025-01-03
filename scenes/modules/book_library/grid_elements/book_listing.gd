@@ -66,7 +66,9 @@ func set_current_status():
 		theme = installed_theme
 		include_checkbox.set_pressed_no_signal(true)
 		is_selected = true
-		
+	else:
+		theme = null
+	
 ## Emit the include_changed signal
 func emit_include_changed() -> void:
 	include_changed.emit(include_checkbox.toggled)

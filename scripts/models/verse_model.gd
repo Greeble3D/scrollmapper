@@ -28,6 +28,24 @@ func get_create_table_query() -> String:
 	);
 	""" % [translation, translation]
 
+func bulk_save(verses: Array):
+	if verses.size() == 0:
+		return
+	
+	var insert_query = "INSERT INTO %s_verses (book_id, chapter, verse, text) VALUES " % translation
+	var values = []
+	var params = []
+	
+	for verse in verses:
+		values.append("(?, ?, ?, ?)")
+		params.append(verse.book_id)
+		params.append(verse.chapter)
+		params.append(verse.verse)
+		params.append(verse.text)
+	
+	insert_query += ",".join(values) + ";"
+	execute_query(insert_query, params)
+
 func save():
 	# Check if verse already exists
 	var query = "SELECT id FROM %s_verses WHERE book_id = ? AND chapter = ? AND verse = ?;" % translation
@@ -218,3 +236,7 @@ func delete():
 		execute_query(query, [id])
 	else:
 		print("Verse ID is not set, cannot delete the verse.")
+
+func delete_by_book_id(book_id: int):
+	var query = "DELETE FROM %s_verses WHERE book_id = ?;" % translation
+	execute_query(query, [book_id])

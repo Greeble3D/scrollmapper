@@ -96,11 +96,8 @@ func delete():
 	if id != null:
 		# Delete all verses connected with this book
 		var verse_model = VerseModel.new(translation)
-		var verses = verse_model.get_verses(book_name)
-		for verse in verses:
-			verse_model.id = verse["verse_id"]
-			verse_model.delete()
-		
+		verse_model.delete_by_book_id(id)
+				
 		# Delete the book
 		var query = "DELETE FROM %s_books WHERE id = ?;" % translation
 		execute_query(query, [id])

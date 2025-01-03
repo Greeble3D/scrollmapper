@@ -85,15 +85,15 @@ func uninstall_book(book_name: String):
 
 func uninstall_translation():
 	if id != null:
-		# Delete all books and verses associated with this translation
-		var book_model = BookModel.new(translation_abbr)
-		var books = book_model.get_all_books()
-		for book in books:
-			book_model.id = book["id"]
-			book_model.delete()
+		# Drop the books and verses tables associated with this translation
+		var drop_books_table_query = "DROP TABLE IF EXISTS %s_books;" % translation_abbr
+		execute_query(drop_books_table_query)
+		
+		var drop_verses_table_query = "DROP TABLE IF EXISTS %s_verses;" % translation_abbr
+		execute_query(drop_verses_table_query)
 
 		# Delete the translation itself
 		delete()
-		print("Translation '%s' and all associated books and verses have been uninstalled." % translation_abbr)
+		print("Translation '%s' and all associated books and verses tables have been dropped." % translation_abbr)
 	else:
 		print("Translation ID is not set, cannot uninstall the translation.")

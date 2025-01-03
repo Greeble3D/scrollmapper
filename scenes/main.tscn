@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://bcxpkinhle2o6"]
 
-[ext_resource type="PackedScene" uid="uid://rwt0fcwdhujd" path="res://scripts/data_manager/resource_downloader.tscn" id="1_bealw"]
+[ext_resource type="PackedScene" uid="uid://d3qvylpwpsnm1" path="res://scripts/data_manager/resource_downloader.tscn" id="1_bealw"]
 [ext_resource type="PackedScene" uid="uid://dget04dncj64c" path="res://scenes/modules/cmd/cmd.tscn" id="4_ymvhv"]
 [ext_resource type="Script" path="res://scenes/modules/cmd/cmd.gd" id="5_mn4tt"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v8kbo"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_edd0w"]
 bg_color = Color(0.117, 0.117, 0.117, 1)
 
 [node name="Main" type="Node3D"]
@@ -37,7 +37,7 @@ script = ExtResource("5_mn4tt")
 canvas_layer = NodePath("CanvasLayer")
 
 [node name="CmdInterface" parent="UI/Cmd/CanvasLayer" index="0"]
-theme_override_styles/panel = SubResource("StyleBoxFlat_v8kbo")
+theme_override_styles/panel = SubResource("StyleBoxFlat_edd0w")
 
 [editable path="UI/Cmd"]
 [editable path="UI/Cmd/CanvasLayer/CmdInterface"]
