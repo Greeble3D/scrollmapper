@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d07p8o60c5tmj"
-path.s3tc="res://.godot/imported/Scroll_open.png-6852af0b00038ce2de26b29c17474d7a.s3tc.ctex"
+uid="uid://d0pkt7wqfkx4d"
+path.s3tc="res://.godot/imported/ClosedScroll_1.png-5c37a4d576290e544aeffb05f73f0d50.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://scenes/home/models/Scroll_open.png"
-dest_files=["res://.godot/imported/Scroll_open.png-6852af0b00038ce2de26b29c17474d7a.s3tc.ctex"]
+source_file="res://scenes/home/models/ClosedScroll_1.png"
+dest_files=["res://.godot/imported/ClosedScroll_1.png-5c37a4d576290e544aeffb05f73f0d50.s3tc.ctex"]
 
 [params]
 
