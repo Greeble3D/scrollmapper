@@ -61,12 +61,6 @@ func _on_accepted() -> void:
 func _on_closed() -> void:
 	pass
 
-func open() -> void:
-	base_dialogue.emit_opened()
-	
-func close() -> void:
-	base_dialogue.emit_closed()
-
 ## Setter for status text
 func set_status_text(new_text: String) -> void:
 	status_text.text = new_text

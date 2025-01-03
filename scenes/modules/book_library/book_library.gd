@@ -60,6 +60,7 @@ func _on_done_button_pressed():
 	GameManager.load_level("HOME")
 
 func syncronize_book_selections():
+	await get_tree().process_frame
 	for book_listing in listings.keys():
 
 		if is_processing_book:
