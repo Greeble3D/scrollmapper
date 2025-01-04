@@ -1,0 +1,129 @@
+[gd_scene load_steps=7 format=3 uid="uid://b5aq6u6sn6q1x"]
+
+[ext_resource type="Script" path="res://scenes/modules/reader/reader.gd" id="1_qr023"]
+[ext_resource type="Texture2D" uid="uid://b1ql3scu2dyyt" path="res://images/icons/editor/ArrowLeft.svg" id="2_n0qoh"]
+[ext_resource type="Texture2D" uid="uid://4v5n7ntpejl7" path="res://images/icons/editor/Script.svg" id="3_6tww0"]
+[ext_resource type="Texture2D" uid="uid://cn2b8usxom1ce" path="res://images/icons/editor/ArrowRight.svg" id="3_omuql"]
+[ext_resource type="PackedScene" uid="uid://ngk4ft07vtvp" path="res://scenes/modules/reader/reader_books_selector/reader_book_selector.tscn" id="5_ueijh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f53hr"]
+bg_color = Color(0.233925, 0.233925, 0.233925, 1)
+
+[node name="Reader" type="Control" node_paths=PackedStringArray("books_button", "previous_chapter_button", "next_chapter_button", "chapters_v_box_container", "reading_v_box_container", "cross_referencing_margin_container", "cross_referencing_v_box_container", "reader_book_selector")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_qr023")
+books_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/BooksButton")
+previous_chapter_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/PreviousChapterButton")
+next_chapter_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/NextChapterButton")
+chapters_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/VBoxContainer/ChaptersVBoxContainer")
+reading_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ScrollContainer/MarginContainer/ReadingVBoxContainer")
+cross_referencing_margin_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer")
+cross_referencing_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/ScrollContainer/MarginContainer/CrossReferencingVBoxContainer")
+reader_book_selector = NodePath("ReaderBookSelector")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_f53hr")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="NavigatorMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/NavigatorMarginContainer"]
+layout_mode = 2
+
+[node name="PreviousChapterButton" type="Button" parent="MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Previous Chapter
+"
+icon = ExtResource("2_n0qoh")
+
+[node name="BooksButton" type="Button" parent="MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Books"
+icon = ExtResource("3_6tww0")
+
+[node name="NextChapterButton" type="Button" parent="MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Next Chapter"
+icon = ExtResource("3_omuql")
+icon_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BrowserMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer"]
+layout_mode = 2
+
+[node name="ChaptersRichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Chapters"
+fit_content = true
+
+[node name="ChaptersVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ReadingMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ReadingVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CrossReferencingMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CrossReferencingVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ReaderBookSelector" parent="." instance=ExtResource("5_ueijh")]
+layout_mode = 1

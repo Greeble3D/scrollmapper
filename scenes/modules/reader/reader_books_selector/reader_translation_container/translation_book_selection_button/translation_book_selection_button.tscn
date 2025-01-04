@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://codd2rti05lb6"]
+
+[ext_resource type="Script" path="res://scenes/modules/reader/reader_books_selector/reader_translation_container/translation_book_selection_button/translation_book_selection_button.gd" id="1_1olyb"]
+
+[node name="TranslationBookSelectionButton" type="Button"]
+size_flags_horizontal = 3
+text = "Book"
+script = ExtResource("1_1olyb")

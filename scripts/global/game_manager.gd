@@ -7,6 +7,8 @@ const EXPLORE = preload("res://scenes/modules/explore/explorer.tscn")
 const VX_GRAPH = preload("res://scenes/modules/vx/vx_graph.tscn")
 const HOME = preload("res://scenes/home/home.tscn")
 const BOOK_LIBRARY = preload("res://scenes/modules/book_library/book_library.tscn")
+const READER = preload("res://scenes/modules/reader/reader.tscn")
+const META_EDITOR = preload("res://scenes/modules/meta_editor/meta_editor.tscn")
 
 var current_level:Node = null
 
@@ -57,6 +59,14 @@ func load_level(level:String, custom:String = "") -> void:
 			var book_library_level:BookLibrary = BOOK_LIBRARY.instantiate()
 			modules.add_child(book_library_level)
 			register_level(book_library_level)
+		Types.LevelType.READER:
+			var reader_level:Reader = READER.instantiate()
+			modules.add_child(reader_level)
+			register_level(reader_level)
+		Types.LevelType.META_EDITOR:
+			var meta_editor_level:MetaEditor = META_EDITOR.instantiate()
+			modules.add_child(meta_editor_level)
+			register_level(meta_editor_level)
 		_:
 			var home_level:Node3D = HOME.instantiate()
 			main.add_child(home_level)

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://doykeu7yg7i7c"]
+
+[ext_resource type="Script" path="res://scenes/modules/reader/reading_scripture/reading_scripture.gd" id="1_1wdtk"]
+
+[node name="ReadingScripture" type="MarginContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_1wdtk")

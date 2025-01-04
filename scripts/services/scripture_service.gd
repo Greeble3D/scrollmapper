@@ -42,6 +42,7 @@ func load_books():
 				books[t["id"]] = {}
 			books[t["id"]][b["id"]] = b
 
+
 ## Gets all books from a translation
 func get_all_book_names_from_translation(translation: String) -> Array:
 	var book_model = BookModel.new(translation)
@@ -327,7 +328,7 @@ func initiate_text_search(scope: Types.SearchScope, translation: String = "", te
 	var verses = []
 	match scope:
 		Types.SearchScope.ALL_SCRIPTURE:
-			if translation != "scrollmapper":
+			if translation != "scrollmapper": # Or you will get two results from scrollmapper translation.
 				var verse_set_1 = verse_model.search_text(text, book, chapter)
 				for v in verse_set_1:
 					verses.append(v)

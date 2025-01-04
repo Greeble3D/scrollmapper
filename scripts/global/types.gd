@@ -7,6 +7,8 @@ enum LevelType{
 	VX_GRAPH,
 	EXPLORER,
 	BOOK_LIBRARY,
+	READER,
+	META_EDITOR,
 }
 
 enum DataDir{

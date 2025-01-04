@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dy80kxtj6bk34"]
+
+[ext_resource type="Script" path="res://scenes/modules/reader/reader_chapter_button/reader_chapter_button.gd" id="1_2esxu"]
+
+[node name="ReaderChapterButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_2esxu")
