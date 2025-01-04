@@ -3,6 +3,7 @@ extends BaseModel
 class_name BookModel
 
 var id: int = 0
+var book_hash: int = 0
 var book_name: String = ""
 var translation: String = ""
 var translation_id: int = 0
@@ -16,6 +17,7 @@ func get_create_table_query() -> String:
 	return """
 	CREATE TABLE IF NOT EXISTS %s_books (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		book_hash INTEGER UNIQUE,
 		book_name TEXT UNIQUE,
 		translation_id INTEGER,
 		FOREIGN KEY(translation_id) REFERENCES translations(id)
@@ -34,8 +36,9 @@ func save():
 	else:
 		update_translation_id()
 		# Insert the new book
-		var insert_query = "INSERT INTO %s_books (book_name, translation_id) VALUES (?, ?);" % translation
-		execute_query(insert_query, [book_name, translation_id])
+		book_hash = get_book_hash()
+		var insert_query = "INSERT INTO %s_books (book_name, translation_id, book_hash) VALUES (?, ?, ?);" % translation
+		execute_query(insert_query, [book_name, translation_id, book_hash])
 		
 		# Retrieve the last inserted ID
 		var last_id_result = get_results("SELECT last_insert_rowid() as id;")
@@ -57,7 +60,6 @@ func get_all_books():
 
 # New method to get a book by name
 func get_book_by_name(_book_name: String):
-	
 	var query = "SELECT * FROM %s_books WHERE book_name = ?;" % translation
 	var book_result = get_results(query, [_book_name])
 	
@@ -105,7 +107,7 @@ func delete():
 		print("Book ID is not set, cannot delete the book.")
 
 func _str() -> String:
-	return "BookModel(id=%d, book_name='%s', translation='%s')" % [id, book_name, translation]
+	return "BookModel(id=%d, book_name='%s', translation='%s', book_hash=%d)" % [id, book_name, translation, book_hash]
 
 func print_str():
 	print(_str())
@@ -114,3 +116,6 @@ func is_book_installed(_book_name: String) -> bool:
 	var query = "SELECT id FROM %s_books WHERE book_name = ?;" % translation
 	var result = get_results(query, [_book_name])
 	return result.size() > 0
+
+func get_book_hash() -> int:
+	return ScriptureService.get_book_hash(book_name)

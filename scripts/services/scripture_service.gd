@@ -327,9 +327,10 @@ func initiate_text_search(scope: Types.SearchScope, translation: String = "", te
 	var verses = []
 	match scope:
 		Types.SearchScope.ALL_SCRIPTURE:
-			var verse_set_1 = verse_model.search_text(text, book, chapter)
-			for v in verse_set_1:
-				verses.append(v)
+			if translation != "scrollmapper":
+				var verse_set_1 = verse_model.search_text(text, book, chapter)
+				for v in verse_set_1:
+					verses.append(v)
 			var verse_set_2 = verse_model_scrollmapper.search_text(text, book, chapter)
 			for v in verse_set_2:
 				verses.append(v)
@@ -439,7 +440,23 @@ static func merge_verse_meta(meta:Dictionary = {}, verse_meta:Dictionary = {}) -
 
 #endregion
 
+## Gets the hash for a book name
+func get_book_hash(book_name: String) -> int:
+	return hash(book_name)
+
+## Gets the hash for a translation abbreviation
+func get_translation_hash(translation_abbr: String) -> int:
+	return hash(translation_abbr)
+
+## Gets the hash for a scripture 
+## This is just another version of get_scripture_id
+func get_verse_hash(book: String, chapter: int, verse: int) -> int:
+	return get_scripture_id(book, chapter, verse)
+
 ## Gets a scripture id based on Book, Chapter, Verse. 
+## This is a very important function, used by many scripts. 
+## The line var id_string = "%s-%s-%s" % [book, str(chapter), str(verse)] should not be changed
+## because it is responsible for creating the consistent hash (id) of the verses. 
 ## This is done using a hash algorithm to create a unique identifier for the verse.
 func get_scripture_id(book: String, chapter: int, verse: int) -> int:
 	var id_string = "%s-%s-%s" % [book, str(chapter), str(verse)]
@@ -473,3 +490,67 @@ func uninstall_translation(translation: String):
 	translation_model.translation_abbr = translation
 	translation_model.get_translation(translation)
 	translation_model.uninstall_translation()
+
+#region Meta getters and setters
+
+## Gets a verse meta entry
+func get_verse_meta(verse_hash: int, key: String) -> Dictionary:
+	var verse_meta_model = VerseMetaModel.new()
+	return verse_meta_model.get_verse_meta(verse_hash, key)
+
+## Sets a verse meta entry
+func set_verse_meta(verse_hash: int, key: String, value: String):
+	var verse_meta_model = VerseMetaModel.new()
+	verse_meta_model.verse_hash = verse_hash
+	verse_meta_model.key = key
+	verse_meta_model.value = value
+	verse_meta_model.save()
+
+## Gets all verse meta entries for a verse
+func delete_verse_meta(verse_hash: int, key: String):
+	var verse_meta_model = VerseMetaModel.new()
+	verse_meta_model.verse_hash = verse_hash
+	verse_meta_model.key = key
+	verse_meta_model.delete()
+
+## Gets a book meta entry
+func get_book_meta(book_hash: int, key: String) -> Dictionary:
+	var book_meta_model = BookMetaModel.new()
+	return book_meta_model.get_book_meta(book_hash, key)
+
+## Sets a book meta entry
+func set_book_meta(book_hash: int, key: String, value: String):
+	var book_meta_model = BookMetaModel.new()
+	book_meta_model.book_hash = book_hash
+	book_meta_model.key = key
+	book_meta_model.value = value
+	book_meta_model.save()
+
+## Deletes a book meta entry
+func delete_book_meta(book_hash: int, key: String):
+	var book_meta_model = BookMetaModel.new()
+	book_meta_model.book_hash = book_hash
+	book_meta_model.key = key
+	book_meta_model.delete()
+
+## Gets a translation meta entry
+func get_translation_meta(translation_hash: int, key: String) -> Dictionary:
+	var translation_meta_model = TranslationMetaModel.new()
+	return translation_meta_model.get_translation_meta(translation_hash, key)
+
+## Sets a translation meta entry
+func set_translation_meta(translation_hash: int, key: String, value: String):
+	var translation_meta_model = TranslationMetaModel.new()
+	translation_meta_model.translation_hash = translation_hash
+	translation_meta_model.key = key
+	translation_meta_model.value = value
+	translation_meta_model.save()
+
+## Deletes a translation meta entry
+func delete_translation_meta(translation_hash: int, key: String):
+	var translation_meta_model = TranslationMetaModel.new()
+	translation_meta_model.translation_hash = translation_hash
+	translation_meta_model.key = key
+	translation_meta_model.delete()
+
+#endregion 

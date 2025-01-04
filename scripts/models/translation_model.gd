@@ -3,6 +3,7 @@ extends BaseModel
 class_name BibleTranslationModel
 
 var id: int  # Added id variable
+var translation_hash: int  # Added translation_hash variable
 var translation_abbr: String
 var title: String
 var license: String
@@ -15,6 +16,7 @@ func get_create_table_query() -> String:
 	return """
 	CREATE TABLE IF NOT EXISTS translations (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		translation_hash INTEGER UNIQUE,
 		translation_abbr TEXT UNIQUE,
 		title TEXT,
 		license TEXT
@@ -22,6 +24,9 @@ func get_create_table_query() -> String:
 	"""
 
 func save():
+	# Set the translation_hash
+	translation_hash = get_translation_hash()
+
 	# Check if translation already exists
 	var query = "SELECT id FROM translations WHERE translation_abbr = ?;"
 	var result = get_results(query, [translation_abbr])
@@ -29,12 +34,12 @@ func save():
 	if result.size() > 0:
 		# Update existing translation
 		id = result[0]["id"]
-		var update_query = "UPDATE translations SET title = ?, license = ? WHERE id = ?;"
-		execute_query(update_query, [title, license, id])
+		var update_query = "UPDATE translations SET translation_hash = ?, title = ?, license = ? WHERE id = ?;"
+		execute_query(update_query, [translation_hash, title, license, id])
 	else:
 		# Insert new translation
-		var insert_query = "INSERT INTO translations (translation_abbr, title, license) VALUES (?, ?, ?);"
-		execute_query(insert_query, [translation_abbr, title, license])
+		var insert_query = "INSERT INTO translations (translation_hash, translation_abbr, title, license) VALUES (?, ?, ?, ?);"
+		execute_query(insert_query, [translation_hash, translation_abbr, title, license])
 		
 		# Retrieve the last inserted ID
 		result = get_results("SELECT last_insert_rowid() as id;")
@@ -52,6 +57,7 @@ func get_translation(translation_abbr: String) -> Dictionary:
 
 	if result.size() > 0:
 		self.id = result[0]["id"]
+		self.translation_hash = result[0]["translation_hash"]
 		self.translation_abbr = result[0]["translation_abbr"]
 		self.title = result[0]["title"]
 		self.license = result[0]["license"]
@@ -97,3 +103,6 @@ func uninstall_translation():
 		print("Translation '%s' and all associated books and verses tables have been dropped." % translation_abbr)
 	else:
 		print("Translation ID is not set, cannot uninstall the translation.")
+
+func get_translation_hash() -> int:
+	return ScriptureService.get_book_hash(translation_abbr)

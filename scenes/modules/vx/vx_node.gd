@@ -275,6 +275,7 @@ func select_node_multiple(pos:Vector2):
 func drag_node(pos: Vector2):
 	if not can_edit():
 		return
+	dragging_already_in_progress = true
 	var new_position: Vector2 = get_global_mouse_position() - size / 2 + placement_offset
 	new_position = snapped(new_position, Vector2(100, 100))
 	node_moved.emit(new_position)
@@ -529,6 +530,8 @@ func recalculate_socket_positions_and_node_dimensions():
 
 ## Determines of the node can be edited. 
 func can_edit() -> bool:
+	if VXConnection.connection_drag_active:
+		return false
 	if current_node_dragging == id && dragging_already_in_progress:
 		return true
 	return is_mouse_over_node && !dragging_already_in_progress 
@@ -549,6 +552,8 @@ func _on_mouse_entered() -> void:
 
 ## On mouse exited, sets some edit-related values.
 func _on_mouse_exited() -> void:
+	if current_node_dragging > 0:
+		return
 	dragging_already_in_progress = UserInput.is_dragging
 	is_mouse_over_node = false
 

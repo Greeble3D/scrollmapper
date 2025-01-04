@@ -4,6 +4,7 @@ class_name VerseModel
 
 #region Main variables...
 var id: int = 0
+var verse_hash: int = 0
 var book_id: int = 0
 var chapter: int = 0
 var verse: int = 0
@@ -20,6 +21,7 @@ func get_create_table_query() -> String:
 	return """
 	CREATE TABLE IF NOT EXISTS %s_verses (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		verse_hash INTEGER UNIQUE,
 		book_id INTEGER,
 		chapter INTEGER,
 		verse INTEGER,
@@ -32,12 +34,14 @@ func bulk_save(verses: Array):
 	if verses.size() == 0:
 		return
 	
-	var insert_query = "INSERT INTO %s_verses (book_id, chapter, verse, text) VALUES " % translation
+	var insert_query = "INSERT INTO %s_verses (verse_hash, book_id, chapter, verse, text) VALUES " % translation
 	var values = []
 	var params = []
 	
 	for verse in verses:
-		values.append("(?, ?, ?, ?)")
+		verse_hash = verse.get_verse_hash()
+		values.append("(?, ?, ?, ?, ?)")
+		params.append(verse_hash)
 		params.append(verse.book_id)
 		params.append(verse.chapter)
 		params.append(verse.verse)
@@ -53,16 +57,16 @@ func save():
 	
 	if result.size() > 0:
 		# Update existing verse
-		var update_query = "UPDATE %s_verses SET text = ? WHERE book_id = ? AND chapter = ? AND verse = ?;" % translation
-		execute_query(update_query, [text, book_id, chapter, verse])
+		var update_query = "UPDATE %s_verses SET text = ?, verse_hash = ? WHERE book_id = ? AND chapter = ? AND verse = ?;" % translation
+		execute_query(update_query, [text, get_verse_hash(), book_id, chapter, verse])
 	else:
 		# Insert new verse
-		var insert_query = "INSERT INTO %s_verses (book_id, chapter, verse, text) VALUES (?, ?, ?, ?);" % translation
-		execute_query(insert_query, [book_id, chapter, verse, text])
+		var insert_query = "INSERT INTO %s_verses (verse_hash, book_id, chapter, verse, text) VALUES (?, ?, ?, ?, ?);" % translation
+		execute_query(insert_query, [get_verse_hash(), book_id, chapter, verse, text])
 
 func get_all_verses() -> Array:
 	var query = """
-	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	SELECT v.id AS verse_id, v.verse_hash, v.book_id, v.chapter, v.verse, v.text, 
 	b.id AS book_id, b.book_name, b.translation_id,
 	t.translation_abbr, t.title, t.license 
 	FROM %s_verses v
@@ -74,7 +78,7 @@ func get_all_verses() -> Array:
 
 func get_verse(book_id: int, chapter: int, verse: int) -> Dictionary:
 	var query = """
-	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	SELECT v.id AS verse_id, v.verse_hash, v.book_id, v.chapter, v.verse, v.text, 
 	b.id AS book_id, b.book_name, b.translation_id,
 	t.translation_abbr, t.title, t.license 
 	FROM %s_verses v
@@ -85,6 +89,7 @@ func get_verse(book_id: int, chapter: int, verse: int) -> Dictionary:
 	var result = get_results(query, [book_id, chapter, verse])
 	if result.size() > 0:
 		self.id = result[0]["verse_id"]
+		self.verse_hash = result[0]["verse_hash"]
 		self.book_id = result[0]["book_id"]
 		self.chapter = result[0]["chapter"]
 		self.verse = result[0]["verse"]
@@ -100,7 +105,7 @@ func get_verses(book_name: String, chapter: int = -1, verse: int = -1) -> Array:
 	var book_id = book_model.id
 
 	var query = """
-	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	SELECT v.id AS verse_id, v.verse_hash, v.book_id, v.chapter, v.verse, v.text, 
 	b.id AS book_id, b.book_name, b.translation_id,
 	t.translation_abbr, t.title, t.license 
 	FROM %s_verses v
@@ -137,7 +142,7 @@ func get_verses_by_ids(verse_ids: Array) -> Array:
 	var order_clause = " ".join(order_cases)
 	
 	var query = """
-	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	SELECT v.id AS verse_id, v.verse_hash, v.book_id, v.chapter, v.verse, v.text, 
 	b.id AS book_id, b.book_name, b.translation_id,
 	t.translation_abbr, t.title, t.license 
 	FROM %s_verses v
@@ -160,7 +165,7 @@ func get_verses_by_range(start_book: String, start_chapter: int, start_verse: in
 	var end_book_id = end_book_model.id
 
 	var query = """
-	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	SELECT v.id AS verse_id, v.verse_hash, v.book_id, v.chapter, v.verse, v.text, 
 	b.id AS book_id, b.book_name, b.translation_id,
 	t.translation_abbr, t.title, t.license 
 	FROM %s_verses v
@@ -203,7 +208,7 @@ func get_all_verse_numbers(book_name: String, chapter: int) -> Array:
 # Function to search text in translation
 func search_text(phrase: String, book_name: String = "", chapter: int = -1) -> Array:
 	var query = """
-	SELECT v.id AS verse_id, v.book_id, v.chapter, v.verse, v.text, 
+	SELECT v.id AS verse_id, v.verse_hash, v.book_id, v.chapter, v.verse, v.text, 
 	b.id AS book_id, b.book_name, b.translation_id,
 	t.translation_abbr, t.title, t.license 
 	FROM %s_verses v
@@ -240,3 +245,11 @@ func delete():
 func delete_by_book_id(book_id: int):
 	var query = "DELETE FROM %s_verses WHERE book_id = ?;" % translation
 	execute_query(query, [book_id])
+
+## Gets the unique hash for the verse. 
+func get_verse_hash() -> int:
+	var book_model = BookModel.new(translation)
+	book_model.get_book_by_id(self.book_id)
+	var book_name = book_model.book_name
+	self.verse_hash = ScriptureService.get_scripture_id(book_name, self.chapter, self.verse)
+	return self.verse_hash

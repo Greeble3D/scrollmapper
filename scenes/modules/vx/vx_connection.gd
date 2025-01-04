@@ -39,9 +39,14 @@ var is_connection_being_edited: bool = false:
 	set(new_value):
 		if new_value == true:
 			set_process(true)
+			connection_drag_active = true
 		else:
 			set_process(false)
+			connection_drag_active = false
 		is_connection_being_edited = new_value
+
+
+static var connection_drag_active:bool = false
 
 ## Points per meter for the connection.
 @export var points_per_meter: int = 59
