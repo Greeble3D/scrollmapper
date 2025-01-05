@@ -2,12 +2,14 @@
 
 [ext_resource type="Script" path="res://scenes/modules/reader/reading_scripture/reading_scripture.gd" id="1_1wdtk"]
 
-[node name="ReadingScripture" type="MarginContainer" node_paths=PackedStringArray("verse_number_text_rich_text_label", "text_rich_text_label")]
+[node name="ReadingScripture" type="MarginContainer" node_paths=PackedStringArray("interaction_button", "verse_number_text_rich_text_label", "text_rich_text_label")]
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 size_flags_horizontal = 3
+theme_override_constants/margin_bottom = 10
 script = ExtResource("1_1wdtk")
+interaction_button = NodePath("InteractionButton")
 verse_number_text_rich_text_label = NodePath("HBoxContainer/VerseNumberTextRichTextLabel")
 text_rich_text_label = NodePath("HBoxContainer/TextRichTextLabel")
 
@@ -26,3 +28,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "In the beginning God created the heaven and the earth."
 fit_content = true
+
+[node name="InteractionButton" type="Button" parent="."]
+layout_mode = 2
+flat = true

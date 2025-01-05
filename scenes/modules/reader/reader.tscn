@@ -1,15 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5aq6u6sn6q1x"]
+[gd_scene load_steps=9 format=3 uid="uid://b5aq6u6sn6q1x"]
 
 [ext_resource type="Script" path="res://scenes/modules/reader/reader.gd" id="1_qr023"]
 [ext_resource type="Texture2D" uid="uid://b1ql3scu2dyyt" path="res://images/icons/editor/ArrowLeft.svg" id="2_n0qoh"]
 [ext_resource type="Texture2D" uid="uid://4v5n7ntpejl7" path="res://images/icons/editor/Script.svg" id="3_6tww0"]
 [ext_resource type="Texture2D" uid="uid://cn2b8usxom1ce" path="res://images/icons/editor/ArrowRight.svg" id="3_omuql"]
+[ext_resource type="Texture2D" uid="uid://bruahuvo5ngj5" path="res://images/icons/editor/MirrorX.svg" id="4_6rmyb"]
 [ext_resource type="PackedScene" uid="uid://ngk4ft07vtvp" path="res://scenes/modules/reader/reader_books_selector/reader_book_selector.tscn" id="5_ueijh"]
+[ext_resource type="Texture2D" uid="uid://bae24mbqtje8b" path="res://images/icons/editor/Close.svg" id="6_u5g1j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f53hr"]
 bg_color = Color(0.233925, 0.233925, 0.233925, 1)
 
-[node name="Reader" type="Control" node_paths=PackedStringArray("books_button", "previous_chapter_button", "next_chapter_button", "chapters_v_box_container", "reading_v_box_container", "cross_referencing_margin_container", "cross_referencing_v_box_container", "reader_book_selector")]
+[node name="Reader" type="Control" node_paths=PackedStringArray("books_button", "previous_chapter_button", "cross_refs_button", "next_chapter_button", "exit_button", "chapters_v_box_container", "reading_v_box_container", "cross_referencing_margin_container", "cross_referencing_v_box_container", "reader_book_selector", "chapers_scroll_container", "reading_scroll_container", "cross_referencing_scroll_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,12 +23,17 @@ size_flags_vertical = 3
 script = ExtResource("1_qr023")
 books_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/BooksButton")
 previous_chapter_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/PreviousChapterButton")
+cross_refs_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/CrossRefsButton")
 next_chapter_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/NextChapterButton")
-chapters_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/ScrollContainer/MarginContainer/ChaptersVBoxContainer")
-reading_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ScrollContainer/MarginContainer/ReadingVBoxContainer")
+exit_button = NodePath("MarginContainer/VBoxContainer/FooterMarginContainer/HBoxContainer/ExitButton")
+chapters_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/ChapersScrollContainer/MarginContainer/ChaptersVBoxContainer")
+reading_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ReadingScrollContainer/MarginContainer/ReadingVBoxContainer")
 cross_referencing_margin_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer")
-cross_referencing_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/ScrollContainer/MarginContainer/CrossReferencingVBoxContainer")
+cross_referencing_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/CrossReferencingScrollContainer/MarginContainer/CrossReferencingVBoxContainer")
 reader_book_selector = NodePath("ReaderBookSelector")
+chapers_scroll_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/ChapersScrollContainer")
+reading_scroll_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ReadingScrollContainer")
+cross_referencing_scroll_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/CrossReferencingScrollContainer")
 
 [node name="BackgroundPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -70,6 +77,11 @@ layout_mode = 2
 text = "Books"
 icon = ExtResource("3_6tww0")
 
+[node name="CrossRefsButton" type="Button" parent="MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cross-References"
+icon = ExtResource("4_6rmyb")
+
 [node name="NextChapterButton" type="Button" parent="MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer"]
 layout_mode = 2
 text = "Next Chapter"
@@ -84,12 +96,12 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer"]
+[node name="ChapersScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/ChapersScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -98,7 +110,7 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 0
 
-[node name="ChaptersVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/ScrollContainer/MarginContainer"]
+[node name="ChaptersVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/ChapersScrollContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -107,10 +119,10 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer"]
+[node name="ReadingScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ReadingScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -119,17 +131,17 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="ReadingVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ScrollContainer/MarginContainer"]
+[node name="ReadingVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ReadingScrollContainer/MarginContainer"]
 layout_mode = 2
 
 [node name="CrossReferencingMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer"]
+[node name="CrossReferencingScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/CrossReferencingScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -138,8 +150,20 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="CrossReferencingVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/ScrollContainer/MarginContainer"]
+[node name="CrossReferencingVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/CrossReferencingScrollContainer/MarginContainer"]
 layout_mode = 2
+
+[node name="FooterMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/FooterMarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer/FooterMarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Exit"
+icon = ExtResource("6_u5g1j")
 
 [node name="ReaderBookSelector" parent="." instance=ExtResource("5_ueijh")]
 visible = false
