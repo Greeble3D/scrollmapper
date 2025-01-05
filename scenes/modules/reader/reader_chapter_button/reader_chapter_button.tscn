@@ -5,4 +5,7 @@
 [node name="ReaderChapterButton" type="Button"]
 offset_right = 8.0
 offset_bottom = 8.0
+text = "Chapter <num>"
+flat = true
+alignment = 0
 script = ExtResource("1_2esxu")

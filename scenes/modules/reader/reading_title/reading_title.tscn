@@ -2,7 +2,15 @@
 
 [ext_resource type="Script" path="res://scenes/modules/reader/reading_title/reading_title.gd" id="1_66sgs"]
 
-[node name="ReadingTitle" type="MarginContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ReadingTitle" type="MarginContainer" node_paths=PackedStringArray("title_rich_text_label")]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
 script = ExtResource("1_66sgs")
+title_rich_text_label = NodePath("TitleRichTextLabel")
+
+[node name="TitleRichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+text = "Genesis Chapter 1 [KJV]"
+fit_content = true

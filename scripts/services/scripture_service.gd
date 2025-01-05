@@ -147,12 +147,17 @@ func get_verses(translation: String, book: String, chapter: int = -1, verse: int
 	var result: Array = []
 	for v in verses:
 		result.append({
-			"id": v["id"],
+			"verse_id": v["verse_id"],
+			"verse_hash": v["verse_hash"],
 			"book_id": v["book_id"],
 			"chapter": v["chapter"],
 			"verse": v["verse"],
 			"text": v["text"],
-			"translation": translation
+			"book_name": v["book_name"],
+			"translation_id": v["translation_id"],
+			"translation_abbr": v["translation_abbr"],
+			"title": v["title"],
+			"license": v["license"]
 		})
 	return result
 
