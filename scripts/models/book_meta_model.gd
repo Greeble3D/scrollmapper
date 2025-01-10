@@ -18,7 +18,7 @@ func get_create_table_query() -> String:
 	CREATE TABLE IF NOT EXISTS book_meta (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		book_hash INTEGER,
-		key TEXT UNIQUE,
+		key TEXT,
 		value TEXT
 	);
 	"""

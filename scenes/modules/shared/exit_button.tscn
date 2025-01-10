@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cboro7vr8pa53"]
+
+[ext_resource type="Texture2D" uid="uid://bae24mbqtje8b" path="res://images/icons/editor/Close.svg" id="1_mvnte"]
+[ext_resource type="Script" path="res://scenes/modules/shared/exit_button.gd" id="2_21ntv"]
+
+[node name="ExitButton" type="Button"]
+text = "Exit"
+icon = ExtResource("1_mvnte")
+script = ExtResource("2_21ntv")

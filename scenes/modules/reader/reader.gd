@@ -10,7 +10,6 @@ const READER_CHAPTER_BUTTON = preload("res://scenes/modules/reader/reader_chapte
 @export var previous_chapter_button: Button 
 @export var cross_refs_button: Button 
 @export var next_chapter_button: Button 
-@export var exit_button: Button 
 
 @export var chapters_v_box_container: VBoxContainer 
 @export var reading_v_box_container: VBoxContainer 
@@ -37,7 +36,6 @@ func _ready() -> void:
 	cross_refs_button.pressed.connect(toggle_cross_references)
 	previous_chapter_button.pressed.connect(previous_chapter)
 	next_chapter_button.pressed.connect(next_chapter)
-	exit_button.pressed.connect(back_to_home)
 	
 	hide_reader_book_selector()
 	show_chapter("KJV", "Genesis", 1)
@@ -179,6 +177,3 @@ func create_reader_chapter_button(translation:String, book:String, chapter:int) 
 	
 func _on_book_chosen(translation_abbr:String, book:String) -> void:
 	show_chapter(translation_abbr, book, 1)
-
-func back_to_home() -> void:
-	GameManager.load_level("HOME")

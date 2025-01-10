@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://c88o0hnxbt2a5"]
+
+[node name="MetaFliter" type="HBoxContainer"]
+size_flags_horizontal = 8
+
+[node name="ApplyToRichTextLabel" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Meta Group:"
+fit_content = true
+
+[node name="TranslationCheckBox" type="CheckBox" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Translation"
+
+[node name="BookCheckBox" type="CheckBox" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Book"
+
+[node name="VerseCheckBox" type="CheckBox" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Verse"

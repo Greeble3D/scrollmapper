@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://wsudt3gy208e"]
+[gd_scene load_steps=5 format=3 uid="uid://wsudt3gy208e"]
 
 [ext_resource type="Script" path="res://scenes/modules/meta_editor/meta_editor.gd" id="1_apfka"]
+[ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="2_hvipb"]
+[ext_resource type="PackedScene" uid="uid://c88o0hnxbt2a5" path="res://scenes/modules/meta_editor/meta_elements/meta_fliter.tscn" id="2_w24kb"]
+[ext_resource type="PackedScene" uid="uid://cboro7vr8pa53" path="res://scenes/modules/shared/exit_button.tscn" id="4_tcnqq"]
 
 [node name="MetaEditor" type="Control"]
 layout_mode = 3
@@ -10,3 +13,133 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_apfka")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="SearchMarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Search Scripture/Meta"
+
+[node name="ScriptureSearchVBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer/ScriptureSearchVBoxContainer"]
+layout_mode = 2
+
+[node name="ScriptureSearchRichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer/ScriptureSearchVBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Scripture Search"
+fit_content = true
+
+[node name="Search" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer/ScriptureSearchVBoxContainer/VBoxContainer" instance=ExtResource("2_hvipb")]
+layout_mode = 2
+
+[node name="MetaSearchVBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MetaSearchRichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer/MetaSearchVBoxContainer"]
+layout_mode = 2
+text = "Meta Search"
+fit_content = true
+
+[node name="MetaSearchMarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer/MetaSearchVBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer/MetaSearchVBoxContainer/MetaSearchMarginContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer/MetaSearchVBoxContainer/MetaSearchMarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MetaFliter" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/VBoxContainer/MetaSearchVBoxContainer/MetaSearchMarginContainer/VBoxContainer" instance=ExtResource("2_w24kb")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MetaEditorRichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 24
+text = "Meta Editor"
+fit_content = true
+
+[node name="MetaKeyRichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Meta Key"
+fit_content = true
+
+[node name="MetaKeyLineEdit" type="LineEdit" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MetaValueRichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Meta Value"
+fit_content = true
+
+[node name="MetaValueTextEdit" type="TextEdit" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="MetaFliter" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_w24kb")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add Meta"
+
+[node name="Button2" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete Meta"
+
+[node name="FooterMarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/FooterMarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="ExitButton" parent="VBoxContainer/FooterMarginContainer/HBoxContainer" instance=ExtResource("4_tcnqq")]
+layout_mode = 2
+size_flags_horizontal = 8

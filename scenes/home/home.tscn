@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://blt4yrs8a7sa5"]
+[gd_scene load_steps=32 format=3 uid="uid://blt4yrs8a7sa5"]
 
 [ext_resource type="PackedScene" uid="uid://bhm7pe4gws2t2" path="res://scenes/home/scenes/desk.tscn" id="1_gt8ee"]
 [ext_resource type="Script" path="res://scripts/misc/home.gd" id="1_hy5ct"]
@@ -52,6 +52,9 @@ size = Vector3(2.17191, 0.478516, 1.62744)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k5xv0"]
 size = Vector3(0.64, 0.255, 0.56)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ejhs"]
+size = Vector3(0.45, 0.45, 0.45)
 
 [node name="Home" type="Node3D" node_paths=PackedStringArray("camera_3d")]
 script = ExtResource("1_hy5ct")
@@ -374,6 +377,14 @@ metadata/launcher = "reader"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClickSensors/Reader"]
 shape = SubResource("BoxShape3D_k5xv0")
 
+[node name="MetaEditor" type="Area3D" parent="ClickSensors"]
+script = ExtResource("23_6fcio")
+metadata/launcher = "meta_editor"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClickSensors/MetaEditor"]
+transform = Transform3D(0.765045, 0, -0.643977, 0, 1, 0, 0.643977, 0, 0.765045, 0.0115313, 0.313006, -0.778517)
+shape = SubResource("BoxShape3D_4ejhs")
+
 [node name="InteractionLights" type="Node3D" parent="."]
 
 [node name="InteractionLightVXGraph" type="SpotLight3D" parent="InteractionLights" node_paths=PackedStringArray("launcher")]
@@ -403,6 +414,16 @@ shadow_enabled = true
 spot_angle_attenuation = 4.92457
 script = ExtResource("24_vro7x")
 launcher = NodePath("../../ClickSensors/Reader")
+
+[node name="InteractionLightMetaEditor" type="SpotLight3D" parent="InteractionLights" node_paths=PackedStringArray("launcher")]
+transform = Transform3D(0.620482, 0.283463, -0.731198, 0.685306, 0.2573, 0.681287, 0.381257, -0.923821, -0.0346085, -0.653183, 0.93233, -0.691227)
+light_color = Color(1, 0.7825, 0.55, 1)
+light_energy = 5.962
+shadow_enabled = true
+spot_range = 3.354
+spot_angle_attenuation = 4.92457
+script = ExtResource("24_vro7x")
+launcher = NodePath("../../ClickSensors/MetaEditor")
 
 [node name="InteractionLightBookLibrary" type="SpotLight3D" parent="InteractionLights" node_paths=PackedStringArray("launcher")]
 transform = Transform3D(0.100989, -0.154967, -0.982745, -0.00599474, 0.987682, -0.156362, 0.99487, 0.0216821, 0.0988164, -1.55592, 1.14857, -1.65738)
