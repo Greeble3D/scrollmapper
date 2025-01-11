@@ -1,7 +1,13 @@
-[gd_scene format=3 uid="uid://c88o0hnxbt2a5"]
+[gd_scene load_steps=2 format=3 uid="uid://c88o0hnxbt2a5"]
 
-[node name="MetaFliter" type="HBoxContainer"]
+[ext_resource type="Script" path="res://scenes/modules/meta_editor/meta_elements/meta_fliter.gd" id="1_hyp0o"]
+
+[node name="MetaFliter" type="HBoxContainer" node_paths=PackedStringArray("translation_check_box", "book_check_box", "verse_check_box")]
 size_flags_horizontal = 8
+script = ExtResource("1_hyp0o")
+translation_check_box = NodePath("TranslationCheckBox")
+book_check_box = NodePath("BookCheckBox")
+verse_check_box = NodePath("VerseCheckBox")
 
 [node name="ApplyToRichTextLabel" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(100, 0)

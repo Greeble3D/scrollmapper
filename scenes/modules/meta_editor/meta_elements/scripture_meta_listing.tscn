@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp6wpif7dba1a"]
+
+[ext_resource type="Script" path="res://scenes/modules/meta_editor/meta_elements/scripture_meta_listing.gd" id="1_qecjy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fcio2"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0.490196, 0.662745, 0.313726)
+
+[node name="ScriptureMetaListing" type="MarginContainer" node_paths=PackedStringArray("scripture_button", "scripture_meta_rich_text_label", "selected_panel")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_qecjy")
+scripture_button = NodePath("ScriptureButton")
+scripture_meta_rich_text_label = NodePath("MarginContainer/ScriptureMetaRichTextLabel")
+selected_panel = NodePath("SelectedPanel")
+
+[node name="SelectedPanel" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fcio2")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScriptureMetaRichTextLabel" type="RichTextLabel" parent="MarginContainer"]
+layout_mode = 2
+text = "Proverbs 1:23 -Turn you at my reproof: behold, I will pour out my spirit unto you, I will make known my words unto you."
+fit_content = true
+
+[node name="ScriptureButton" type="Button" parent="."]
+layout_mode = 2
+flat = true
