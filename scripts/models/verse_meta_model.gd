@@ -54,6 +54,19 @@ func get_all_verse_meta(verse_hash: int) -> Array:
 	var result = get_results(query, [verse_hash])
 	return result
 
+func get_unique_verse_meta() -> Array:
+	var query = """
+	SELECT * 
+	FROM verse_meta 
+	WHERE rowid IN (
+		SELECT MIN(rowid) 
+		FROM verse_meta 
+		GROUP BY key
+	);
+	"""
+	var result = get_results(query)
+	return result
+
 func delete():
 	if id != 0:
 		var query = "DELETE FROM verse_meta WHERE id = ?;"

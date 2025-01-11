@@ -54,6 +54,19 @@ func get_all_book_meta(book_hash: int) -> Array:
 	var result = get_results(query, [book_hash])
 	return result
 
+func get_unique_book_meta() -> Array:
+	var query = """
+	SELECT * 
+	FROM book_meta 
+	WHERE rowid IN (
+		SELECT MIN(rowid) 
+		FROM book_meta 
+		GROUP BY key
+	);
+	"""
+	var result = get_results(query)
+	return result
+
 func delete():
 	if id != 0:
 		var query = "DELETE FROM book_meta WHERE id = ?;"

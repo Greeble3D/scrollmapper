@@ -559,4 +559,19 @@ func delete_translation_meta(translation_hash: int, key: String):
 	translation_meta_model.key = key
 	translation_meta_model.delete()
 
+## Gets unique verse meta entries for a verse
+func get_unique_verse_meta() -> Array:
+	var verse_meta_model = VerseMetaModel.new()
+	return verse_meta_model.get_unique_verse_meta()
+
+## Gets unique book meta entries for a book
+func get_unique_book_meta() -> Array:
+	var book_meta_model = BookMetaModel.new()
+	return book_meta_model.get_unique_book_meta()
+
+## Gets unique translation meta entries for a translation
+func get_unique_translation_meta() -> Array:
+	var translation_meta_model = TranslationMetaModel.new()
+	return translation_meta_model.get_unique_translation_meta()
+
 #endregion 

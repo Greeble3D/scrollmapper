@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvdlml77qcu2m"]
+
+[ext_resource type="Script" path="res://scenes/modules/meta_editor/meta_elements/meta_key_browser_option.gd" id="1_iirps"]
+
+[node name="MetaKeyBrowserOption" type="MarginContainer" node_paths=PackedStringArray("meta_key_button", "meta_key_delete_button")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_iirps")
+meta_key_button = NodePath("HBoxContainer/MetaKeyButton")
+meta_key_delete_button = NodePath("HBoxContainer/MetaKeyDeleteButton")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="MetaKeyButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Select this meta key."
+text = "attribute-new-testament"
+flat = true
+alignment = 0
+
+[node name="MetaKeyDeleteButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "WARNING: This will delete ALL meta entries with keys matching this label. "
+text = "[delete]"
+flat = true
