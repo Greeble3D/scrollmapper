@@ -348,6 +348,41 @@ func initiate_text_search(scope: Types.SearchScope, translation: String = "", te
 			verses = verse_model.search_text(text, book, chapter)
 	propogate_search(translation, verses, meta)
 
+## Initiate a search based on an array of verse hashes.
+## This function searches for verses in the scripture based on the given hashes.
+## It supports different search scopes and translations.
+##
+## @param scope: The scope of the search, which determines the range of scriptures to search within.
+##               It can be one of the following:
+##               - Types.SearchScope.ALL_SCRIPTURE: Search in all scriptures.
+##               - Types.SearchScope.COMMON_CANNONICAL: Search in common canonical scriptures.
+##               - Types.SearchScope.EXTRA_CANNONICAL: Search in extra canonical scriptures.
+## @param translation: The translation of the scripture to search in.
+## @param verse_hashes: The array of verse hashes to search for within the scriptures.
+## @param meta: (Optional) Additional metadata for the search. Default is an empty dictionary.
+##
+## @return: void
+func initiate_hash_based_search(scope: Types.SearchScope, translation: String = "", verse_hashes: Array = [], meta: Dictionary = {}) -> void:
+	var verse_model = VerseModel.new(translation)
+	var verse_model_scrollmapper = VerseModel.new("scrollmapper")
+	var verses = []
+	match scope:
+		Types.SearchScope.ALL_SCRIPTURE:
+			if translation != "scrollmapper": # Or you will get two results from scrollmapper translation.
+				var verse_set_1 = verse_model.get_verses_by_verse_hashes(verse_hashes)
+				for v in verse_set_1:
+					verses.append(v)
+			var verse_set_2 = verse_model_scrollmapper.get_verses_by_verse_hashes(verse_hashes)
+			for v in verse_set_2:
+				verses.append(v)
+		Types.SearchScope.COMMON_CANNONICAL:
+			verses = verse_model.get_verses_by_verse_hashes(verse_hashes)
+		Types.SearchScope.EXTRA_CANNONICAL:
+			verses = verse_model_scrollmapper.get_verses_by_verse_hashes(verse_hashes)
+		_:
+			verses = verse_model.get_verses_by_verse_hashes(verse_hashes)
+	propogate_search(translation, verses, meta)
+
 ## Initiates a search for a single verse in a specified translation and propagates the search results.
 func initiate_verse_search(translation: String = "", book: String = "", chapter: int = -1, verse: int = -1, meta:Dictionary = {}):
 	var verses = get_verse(translation, book, chapter, verse)
@@ -504,6 +539,16 @@ func get_verse_meta(verse_hash: int, key: String) -> Dictionary:
 	var verse_meta_model = VerseMetaModel.new()
 	return verse_meta_model.get_verse_meta(verse_hash, key)
 
+## Gets all verse meta entries for a verse
+func get_all_verse_meta(verse_hash: int) -> Array:
+	var verse_meta_model = VerseMetaModel.new()
+	return verse_meta_model.get_all_verse_meta(verse_hash)
+
+## Gets all verse meta entries by key
+func get_all_verse_meta_by_key(key: String) -> Array:
+	var verse_meta_model = VerseMetaModel.new()
+	return verse_meta_model.get_all_verse_meta_by_key(key)
+
 ## Sets a verse meta entry
 func set_verse_meta(verse_hash: int, key: String, value: String):
 	var verse_meta_model = VerseMetaModel.new()
@@ -512,17 +557,39 @@ func set_verse_meta(verse_hash: int, key: String, value: String):
 	verse_meta_model.value = value
 	verse_meta_model.save()
 
-## Gets all verse meta entries for a verse
+## Deletes all verse meta entries for a verse
 func delete_verse_meta(verse_hash: int, key: String):
 	var verse_meta_model = VerseMetaModel.new()
 	verse_meta_model.verse_hash = verse_hash
 	verse_meta_model.key = key
 	verse_meta_model.delete()
 
+## Deletes all verse meta entries by key
+func delete_all_verse_meta(meta_key: String):
+	var verse_meta_entries = get_all_verse_meta_by_key(meta_key)
+	for entry in verse_meta_entries:
+		delete_verse_meta(entry["verse_hash"], meta_key)
+
+## Deletes a verse meta entry by id
+func delete_verse_meta_by_id(id: int):
+	var verse_meta_model = VerseMetaModel.new()
+	verse_meta_model.id = id
+	verse_meta_model.delete()
+
 ## Gets a book meta entry
 func get_book_meta(book_hash: int, key: String) -> Dictionary:
 	var book_meta_model = BookMetaModel.new()
 	return book_meta_model.get_book_meta(book_hash, key)
+
+## Gets all book meta entries for a book
+func get_all_book_meta(book_hash: int) -> Array:
+	var book_meta_model = BookMetaModel.new()
+	return book_meta_model.get_all_book_meta(book_hash)
+
+## Gets all book meta entries by key
+func get_all_book_meta_by_key(key: String) -> Array:
+	var book_meta_model = BookMetaModel.new()
+	return book_meta_model.get_all_book_meta_by_key(key)
 
 ## Sets a book meta entry
 func set_book_meta(book_hash: int, key: String, value: String):
@@ -539,10 +606,32 @@ func delete_book_meta(book_hash: int, key: String):
 	book_meta_model.key = key
 	book_meta_model.delete()
 
+## Deletes a book meta entry by id
+func delete_book_meta_by_id(id: int):
+	var book_meta_model = BookMetaModel.new()
+	book_meta_model.id = id
+	book_meta_model.delete()
+
+## Deletes all book meta entries by key
+func delete_all_book_meta(meta_key: String):
+	var book_meta_entries = get_all_book_meta_by_key(meta_key)
+	for entry in book_meta_entries:
+		delete_book_meta(entry["book_hash"], meta_key)
+
 ## Gets a translation meta entry
 func get_translation_meta(translation_hash: int, key: String) -> Dictionary:
 	var translation_meta_model = TranslationMetaModel.new()
 	return translation_meta_model.get_translation_meta(translation_hash, key)
+
+## Gets all translation meta entries for a translation
+func get_all_translation_meta(translation_hash: int) -> Array:
+	var translation_meta_model = TranslationMetaModel.new()
+	return translation_meta_model.get_all_translation_meta(translation_hash)
+
+## Gets all translation meta entries by key
+func get_all_translation_meta_by_key(key: String) -> Array:
+	var translation_meta_model = TranslationMetaModel.new()
+	return translation_meta_model.get_all_translation_meta_by_key(key)
 
 ## Sets a translation meta entry
 func set_translation_meta(translation_hash: int, key: String, value: String):
@@ -559,6 +648,18 @@ func delete_translation_meta(translation_hash: int, key: String):
 	translation_meta_model.key = key
 	translation_meta_model.delete()
 
+## Deletes all translation meta entries by key
+func delete_all_translation_meta(meta_key: String):
+	var translation_meta_entries = get_all_translation_meta_by_key(meta_key)
+	for entry in translation_meta_entries:
+		delete_translation_meta(entry["translation_hash"], meta_key)
+
+## Deletes a translation meta entry by id
+func delete_translation_meta_by_id(id: int):
+	var translation_meta_model = TranslationMetaModel.new()
+	translation_meta_model.id = id
+	translation_meta_model.delete()
+
 ## Gets unique verse meta entries for a verse
 func get_unique_verse_meta() -> Array:
 	var verse_meta_model = VerseMetaModel.new()
@@ -573,5 +674,23 @@ func get_unique_book_meta() -> Array:
 func get_unique_translation_meta() -> Array:
 	var translation_meta_model = TranslationMetaModel.new()
 	return translation_meta_model.get_unique_translation_meta()
+
+#endregion 
+
+#region meta search 
+
+## Gets verses by meta key.
+## First, it gets all verse meta by exactly matching meta key. 
+## Next, it gets all verses matching the verse_hashes found in meta rows.
+func get_verses_by_meta_key(translation:String, meta_key:String) -> Array:
+	var meta_results:Array = get_all_verse_meta_by_key(meta_key)
+	var hash_array:Array[int] = []
+	for result:Dictionary in meta_results:
+		hash_array.append(result["verse_hash"])
+	var verses:Array = []
+	if hash_array.size() > 0:
+		var verse_model = VerseModel.new(translation)
+		verses = verse_model.get_verses_by_verse_hashes(hash_array)
+	return verses
 
 #endregion 

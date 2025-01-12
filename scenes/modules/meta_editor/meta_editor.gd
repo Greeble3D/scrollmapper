@@ -5,6 +5,12 @@ class_name MetaEditor
 #region instantiatable objects
 const SCRIPTURE_META_LISTING = preload("res://scenes/modules/meta_editor/meta_elements/scripture_meta_listing.tscn")
 const META_KEY_BROWSER_OPTION = preload("res://scenes/modules/meta_editor/meta_elements/meta_key_browser_option.tscn")
+const META_ENTRY = preload("res://scenes/modules/meta_editor/meta_elements/meta_entry.tscn")
+#endregion 
+
+@export_category("Search Object")
+#region search
+@export var search: Search 
 #endregion 
 
 @export_category("Search Variables")
@@ -48,10 +54,8 @@ signal selections_updated
 @export var meta_value_text_edit: TextEdit
 @export var add_meta_button: Button 
 @export var delete_meta_button: Button
+@export var connected_meta_browser_v_box_container: VBoxContainer 
 #endregion 
-
-
-
 
 func _ready() -> void:
 	clear_listings()
@@ -83,13 +87,15 @@ func _on_search_mode_check_button_toggled(state:bool) -> void:
 		scripture_search_v_box_container.hide()
 		meta_search_v_box_container.show()
 
-func create_meta_listing(translation:String, book:String, chapter:int, verse:int, text:String) -> void:
+func create_meta_listing(translation:String, book:String, chapter:int, verse:int, text:String, verse_hash:int) -> void:
 	var meta_listing:MetaScriptureListing = SCRIPTURE_META_LISTING.instantiate()
 	meta_listing.apply_scripture_text(translation, book, chapter, verse, text)
+	meta_listing.verse_hash = verse_hash
 	meta_scripture_button_v_box_container.add_child(meta_listing)
 	meta_listing.select(false)
 	meta_listing.selected.connect(_on_meta_listing_selected)
-
+	
+	
 func _on_verses_searched(search_results:Array) -> void:
 	clear_listings()
 	for search_result in search_results:
@@ -98,7 +104,8 @@ func _on_verses_searched(search_results:Array) -> void:
 			search_result["book"]["book_name"], 
 			search_result["chapter"], 
 			search_result["verse"], 
-			search_result["text"]
+			search_result["text"],
+			search_result["verse_hash"],
 		)
 
 func update_selected_listings() -> void:
@@ -108,8 +115,9 @@ func update_selected_listings() -> void:
 		if meta_listing.is_selected:
 			selected_listings.append(meta_listing)
 
-func _on_meta_listing_selected(is_selected:bool) -> void:
+func _on_meta_listing_selected(is_selected:bool, verse_hash:int) -> void:
 	update_selected_listings()
+	populate_connected_meta_keys("verse", verse_hash)
 	selections_updated.emit()
 
 func clear_listings() -> void:
@@ -135,14 +143,68 @@ func _update_selected_listings_label() -> void:
 	selected_listings_rich_text_label.text = selected_text
 #endregion 
 
+#region connected meta browsing
+
+func populate_connected_meta_keys(meta_type:String, meta_hash:int) -> void:
+	for child in connected_meta_browser_v_box_container.get_children():
+		child.queue_free()
+
+	var results:Array = [] 
+	match meta_type:
+		"book":
+			results = ScriptureService.get_all_book_meta(meta_hash)
+		"translation":
+			results = ScriptureService.get_all_translation_meta(meta_hash)
+		"verse":
+			results = ScriptureService.get_all_verse_meta(meta_hash)
+		_:
+			print("META TYPE NOT FOUND")
+	for result:Dictionary in results:
+		var meta_entry:MetaEntry = META_ENTRY.instantiate()
+		meta_entry.id = result["id"]
+		meta_entry.meta_key = result["key"]
+		meta_entry.meta_value = result["value"]
+		connected_meta_browser_v_box_container.add_child(meta_entry)
+		meta_entry.search_meta_key.connect(_on_search_verse_meta_key_pressed)
+		meta_entry.delete_meta_entry.connect(_on_delete_meta_entry_pressed)
+
+func _on_search_verse_meta_key_pressed(meta_type:String, meta_key:String) -> void:
+	_on_meta_key_chosen(meta_key, meta_type)
+
+func _on_delete_meta_entry_pressed(meta_type:String, id:int) -> void:
+	match meta_type:
+		"book":
+			ScriptureService.delete_book_meta_by_id(id)
+		"translation":
+			ScriptureService.delete_translation_meta_by_id(id)
+		"verse":
+			ScriptureService.delete_verse_meta_by_id(id)
+		_:
+			print("META TYPE NOT FOUND")
+
+
+#endregion 
+
 #region meta search functionality (left panel)
 func _on_browse_meta_keys_button_pressed():
 	meta_browse_panel.show()
 	populate_meta_keys_to_meta_browse_panel()
 
 func _on_search_by_meta_button_pressed():
-	print("SEARCH META")
-	
+	var verses_canonical:Array = ScriptureService.get_verses_by_meta_key("KJV", meta_search_line_edit.text)
+	var verses_scrollmapper:Array = ScriptureService.get_verses_by_meta_key("scrollmapper", meta_search_line_edit.text)
+	var verse_hashes:Array = []
+
+	for verse in verses_canonical:
+		verse_hashes.append(verse["verse_hash"])
+	for verse in verses_scrollmapper:
+		verse_hashes.append(verse["verse_hash"])
+
+	var search_scope = search.get_search_scope()
+	var translation = search.get_translation_abbrev()
+
+	ScriptureService.initiate_hash_based_search(search_scope, translation, verse_hashes)
+
 func _on_close_meta_browse_button_pressed():
 	meta_browse_panel.hide()
 
@@ -159,7 +221,6 @@ func populate_meta_keys_to_meta_browse_panel():
 	var unique_book_meta = ScriptureService.get_unique_book_meta()
 	print(unique_book_meta)
 	for meta in unique_book_meta:
-		print(meta)
 		var meta_option = META_KEY_BROWSER_OPTION.instantiate()
 		meta_option.meta_key = meta["key"]
 		meta_option.is_book_meta = true
@@ -186,8 +247,15 @@ func populate_meta_keys_to_meta_browse_panel():
 		meta_option.delete_meta_key_chosen.connect(_on_delete_meta_key_chosen)
 
 func _on_delete_meta_key_chosen(meta_key:String, meta_type:String) -> void:
-	print("DELETE META KEY CHOSEN: %s" % meta_key)
-	print("META TYPE: %s" % meta_type)
+	match meta_type:
+		"book":
+			ScriptureService.delete_all_book_meta(meta_key)
+		"translation":
+			ScriptureService.delete_all_translation_meta(meta_key)
+		"verse":
+			ScriptureService.delete_all_verse_meta(meta_key)
+		_:
+			print("META TYPE NOT FOUND")
 	meta_browse_panel.hide()
 
 func _on_meta_key_chosen(meta_key:String, meta_type:String) -> void:

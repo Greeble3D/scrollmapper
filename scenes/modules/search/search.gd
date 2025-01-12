@@ -1,5 +1,7 @@
 extends MarginContainer
 
+class_name Search
+
 #region search / range
 @export_group("Search Type")
 @export var check_button_search_type: CheckButton 
@@ -314,3 +316,14 @@ func search_scripture_range():
 	if to_book_text == "-":
 		to_book_text = ""
 	ScriptureService.initiate_range_search(translation_text, book_text, chapter, verse, to_book_text, to_chapter, to_verse)
+
+## Getter for search scope
+func get_search_scope() -> Types.SearchScope:
+	return search_scope
+
+## Getter for translation abbreviation
+func get_translation_abbrev() -> String:
+	var translation_text = option_translation.get_item_text(option_translation.get_selected_id())
+	if translation_text == "-":
+		return ""
+	return translation_text

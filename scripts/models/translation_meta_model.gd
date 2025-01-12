@@ -67,6 +67,11 @@ func get_unique_translation_meta() -> Array:
 	var result = get_results(query)
 	return result
 
+func get_all_translation_meta_by_key(key: String) -> Array:
+	var query = "SELECT * FROM translation_meta WHERE key = ?;"
+	var result = get_results(query, [key])
+	return result
+
 func delete():
 	if id != 0:
 		var query = "DELETE FROM translation_meta WHERE id = ?;"

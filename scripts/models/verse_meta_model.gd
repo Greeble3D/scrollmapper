@@ -67,6 +67,11 @@ func get_unique_verse_meta() -> Array:
 	var result = get_results(query)
 	return result
 
+func get_all_verse_meta_by_key(key: String) -> Array:
+	var query = "SELECT * FROM verse_meta WHERE key = ?;"
+	var result = get_results(query, [key])
+	return result
+
 func delete():
 	if id != 0:
 		var query = "DELETE FROM verse_meta WHERE id = ?;"

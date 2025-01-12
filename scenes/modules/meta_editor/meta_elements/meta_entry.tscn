@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://ywsbth0d8r3q"]
+
+[ext_resource type="Script" path="res://scenes/modules/meta_editor/meta_elements/meta_entry.gd" id="1_273du"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7docc"]
+bg_color = Color(7.21961e-07, 0.389569, 0.57308, 1)
+
+[node name="MetaEntry" type="MarginContainer" node_paths=PackedStringArray("meta_key_rich_text_label", "meta_value_rich_text_label", "meta_key_search_button", "meta_delete_button")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 105.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_273du")
+meta_key_rich_text_label = NodePath("MarginContainer/VBoxContainer/MetaKeyRichTextLabel")
+meta_value_rich_text_label = NodePath("MarginContainer/VBoxContainer/MetaValueRichTextLabel")
+meta_key_search_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/MetaKeySearchButton")
+meta_delete_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/MetaDeleteButton")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7docc")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MetaKeyRichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "attribute-meta-key-example"
+fit_content = true
+
+[node name="MetaValueRichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "example content for meta value"
+fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="MetaKeySearchButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Initiates a search using this meta key. "
+text = "Search"
+flat = true
+
+[node name="MetaDeleteButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Deletes this individual meta entry connected with this verse."
+text = "Delete"
+flat = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://wsudt3gy208e"]
+[gd_scene load_steps=10 format=3 uid="uid://wsudt3gy208e"]
 
 [ext_resource type="Script" path="res://scenes/modules/meta_editor/meta_editor.gd" id="1_apfka"]
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="2_hvipb"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bp6wpif7dba1a" path="res://scenes/modules/meta_editor/meta_elements/scripture_meta_listing.tscn" id="4_7xfgp"]
 [ext_resource type="PackedScene" uid="uid://cboro7vr8pa53" path="res://scenes/modules/shared/exit_button.tscn" id="4_tcnqq"]
 [ext_resource type="PackedScene" uid="uid://dvdlml77qcu2m" path="res://scenes/modules/meta_editor/meta_elements/meta_key_browser_option.tscn" id="5_3v47g"]
+[ext_resource type="PackedScene" uid="uid://ywsbth0d8r3q" path="res://scenes/modules/meta_editor/meta_elements/meta_entry.tscn" id="6_ukw3j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lyxnh"]
 bg_color = Color(0.180005, 0.180005, 0.180005, 1)
@@ -25,7 +26,7 @@ func _on_visibility_changed():
 		print(\"NOT VISIBLE\")
 "
 
-[node name="MetaEditor" type="Control" node_paths=PackedStringArray("search_mode_check_button", "scripture_search_v_box_container", "meta_search_v_box_container", "meta_scripture_button_v_box_container", "select_all_button", "select_none_button", "selected_listings_rich_text_label", "meta_search_line_edit", "search_meta_fliter", "browse_meta_keys_button", "search_by_meta_button", "meta_browse_panel", "translation_meta_v_box_container", "book_meta_v_box_container", "verse_meta_v_box_container", "close_meta_browse_button", "meta_fliter", "meta_key_line_edit", "meta_value_text_edit", "add_meta_button", "delete_meta_button")]
+[node name="MetaEditor" type="Control" node_paths=PackedStringArray("search", "search_mode_check_button", "scripture_search_v_box_container", "meta_search_v_box_container", "meta_scripture_button_v_box_container", "select_all_button", "select_none_button", "selected_listings_rich_text_label", "meta_search_line_edit", "search_meta_fliter", "browse_meta_keys_button", "search_by_meta_button", "meta_browse_panel", "translation_meta_v_box_container", "book_meta_v_box_container", "verse_meta_v_box_container", "close_meta_browse_button", "meta_fliter", "meta_key_line_edit", "meta_value_text_edit", "add_meta_button", "delete_meta_button", "connected_meta_browser_v_box_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,6 +34,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_apfka")
+search = NodePath("VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/SearchVBoxContainer/VBoxContainer/ScriptureSearchVBoxContainer/VBoxContainer/Search")
 search_mode_check_button = NodePath("VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/SearchVBoxContainer/VBoxContainer/SearchModeCheckButton")
 scripture_search_v_box_container = NodePath("VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/SearchVBoxContainer/VBoxContainer/ScriptureSearchVBoxContainer")
 meta_search_v_box_container = NodePath("VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/SearchVBoxContainer/VBoxContainer/MetaSearchVBoxContainer")
@@ -54,6 +56,7 @@ meta_key_line_edit = NodePath("VBoxContainer/MarginContainer/HBoxContainer/Margi
 meta_value_text_edit = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/MetaValueTextEdit")
 add_meta_button = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/AddMetaButton")
 delete_meta_button = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/DeleteMetaButton")
+connected_meta_browser_v_box_container = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/ConnectedMetaBrowserScrollContainer/ConnectedMetaBrowserVBoxContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -190,6 +193,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="MetaBrowsePanel" type="Panel" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lyxnh")
 script = SubResource("GDScript_a68tc")
@@ -302,6 +306,21 @@ tooltip_text = "Deletes meta depending upon Meta Key assigned in editor.
 
 Applied to every scripture selected in search area. "
 text = "Delete Meta"
+
+[node name="ConnectedMetaBrowserScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ConnectedMetaBrowserVBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/ConnectedMetaBrowserScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MetaEntry" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/ConnectedMetaBrowserScrollContainer/ConnectedMetaBrowserVBoxContainer" instance=ExtResource("6_ukw3j")]
+layout_mode = 2
+
+[node name="MetaEntry2" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/ConnectedMetaBrowserScrollContainer/ConnectedMetaBrowserVBoxContainer" instance=ExtResource("6_ukw3j")]
+layout_mode = 2
 
 [node name="FooterMarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
