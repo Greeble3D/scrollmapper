@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://wsudt3gy208e"]
+[gd_scene load_steps=9 format=3 uid="uid://wsudt3gy208e"]
 
 [ext_resource type="Script" path="res://scenes/modules/meta_editor/meta_editor.gd" id="1_apfka"]
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="2_hvipb"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bp6wpif7dba1a" path="res://scenes/modules/meta_editor/meta_elements/scripture_meta_listing.tscn" id="4_7xfgp"]
 [ext_resource type="PackedScene" uid="uid://cboro7vr8pa53" path="res://scenes/modules/shared/exit_button.tscn" id="4_tcnqq"]
 [ext_resource type="PackedScene" uid="uid://dvdlml77qcu2m" path="res://scenes/modules/meta_editor/meta_elements/meta_key_browser_option.tscn" id="5_3v47g"]
-[ext_resource type="PackedScene" uid="uid://ywsbth0d8r3q" path="res://scenes/modules/meta_editor/meta_elements/meta_entry.tscn" id="6_ukw3j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lyxnh"]
 bg_color = Color(0.180005, 0.180005, 0.180005, 1)
@@ -315,12 +314,6 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="MetaEntry" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/ConnectedMetaBrowserScrollContainer/ConnectedMetaBrowserVBoxContainer" instance=ExtResource("6_ukw3j")]
-layout_mode = 2
-
-[node name="MetaEntry2" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/ConnectedMetaBrowserScrollContainer/ConnectedMetaBrowserVBoxContainer" instance=ExtResource("6_ukw3j")]
-layout_mode = 2
 
 [node name="FooterMarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2

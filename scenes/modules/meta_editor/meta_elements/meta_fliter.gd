@@ -16,6 +16,8 @@ func _ready() -> void:
 	translation_check_box.toggled.connect(_on_translation_check_box_toggled)
 	book_check_box.toggled.connect(_on_book_check_box_toggled)
 	verse_check_box.toggled.connect(_on_verse_check_box_toggled)
+	verse_check_box.button_pressed = true
+	verse_included = true
 
 func _on_translation_check_box_toggled(toggled_on: bool) -> void:
 	translation_included = toggled_on

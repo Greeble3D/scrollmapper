@@ -5,7 +5,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7docc"]
 bg_color = Color(7.21961e-07, 0.389569, 0.57308, 1)
 
-[node name="MetaEntry" type="MarginContainer" node_paths=PackedStringArray("meta_key_rich_text_label", "meta_value_rich_text_label", "meta_key_search_button", "meta_delete_button")]
+[node name="MetaEntry" type="MarginContainer" node_paths=PackedStringArray("meta_key_rich_text_label", "meta_value_rich_text_label", "meta_key_search_button", "meta_delete_button", "background_panel", "meta_type_rich_text_label")]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 105.0
@@ -16,6 +16,9 @@ meta_key_rich_text_label = NodePath("MarginContainer/VBoxContainer/MetaKeyRichTe
 meta_value_rich_text_label = NodePath("MarginContainer/VBoxContainer/MetaValueRichTextLabel")
 meta_key_search_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/MetaKeySearchButton")
 meta_delete_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/MetaDeleteButton")
+background_panel = NodePath("BackgroundPanel")
+meta_type_rich_text_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/MetaTypeRichTextLabel")
+verse_background_color = Color(0.294, 0.4361, 0.7, 1)
 
 [node name="BackgroundPanel" type="Panel" parent="."]
 layout_mode = 2
@@ -44,6 +47,13 @@ fit_content = true
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 2
+
+[node name="MetaTypeRichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Meta Type: VERSE"
+fit_content = true
 
 [node name="MetaKeySearchButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2

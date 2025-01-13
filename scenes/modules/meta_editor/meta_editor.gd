@@ -146,6 +146,7 @@ func _update_selected_listings_label() -> void:
 #region connected meta browsing
 
 func populate_connected_meta_keys(meta_type:String, meta_hash:int) -> void:
+	clear_meta_browser_listings()
 	for child in connected_meta_browser_v_box_container.get_children():
 		child.queue_free()
 
@@ -159,14 +160,21 @@ func populate_connected_meta_keys(meta_type:String, meta_hash:int) -> void:
 			results = ScriptureService.get_all_verse_meta(meta_hash)
 		_:
 			print("META TYPE NOT FOUND")
+	var translation = search.get_translation_abbrev()
 	for result:Dictionary in results:
 		var meta_entry:MetaEntry = META_ENTRY.instantiate()
+		if meta_type == "verse":
+			var verse_data:Dictionary = ScriptureService.get_verse_by_hash(translation, result["verse_hash"])
+			if not verse_data.is_empty():
+				meta_entry.label = "%s %d:%d [%s]" % [verse_data["book_name"], verse_data["chapter"], verse_data["verse"], verse_data["translation_abbr"]]
+		meta_entry.meta_type = meta_type
 		meta_entry.id = result["id"]
 		meta_entry.meta_key = result["key"]
 		meta_entry.meta_value = result["value"]
 		connected_meta_browser_v_box_container.add_child(meta_entry)
 		meta_entry.search_meta_key.connect(_on_search_verse_meta_key_pressed)
 		meta_entry.delete_meta_entry.connect(_on_delete_meta_entry_pressed)
+		
 
 func _on_search_verse_meta_key_pressed(meta_type:String, meta_key:String) -> void:
 	_on_meta_key_chosen(meta_key, meta_type)
@@ -191,19 +199,55 @@ func _on_browse_meta_keys_button_pressed():
 	populate_meta_keys_to_meta_browse_panel()
 
 func _on_search_by_meta_button_pressed():
-	var verses_canonical:Array = ScriptureService.get_verses_by_meta_key("KJV", meta_search_line_edit.text)
-	var verses_scrollmapper:Array = ScriptureService.get_verses_by_meta_key("scrollmapper", meta_search_line_edit.text)
-	var verse_hashes:Array = []
+	clear_listings()
+	clear_meta_browser_listings()
+	if search_meta_fliter.verse_included:
+		var search_scope = search.get_search_scope()
+		var translation = search.get_translation_abbrev()
+		var verses_canonical:Array = ScriptureService.get_verses_by_meta_key(translation, meta_search_line_edit.text)
+		var verses_scrollmapper:Array = ScriptureService.get_verses_by_meta_key("scrollmapper", meta_search_line_edit.text)
+		var verse_hashes:Array = []
 
-	for verse in verses_canonical:
-		verse_hashes.append(verse["verse_hash"])
-	for verse in verses_scrollmapper:
-		verse_hashes.append(verse["verse_hash"])
-
-	var search_scope = search.get_search_scope()
+		for verse in verses_canonical:
+			verse_hashes.append(verse["verse_hash"])
+		for verse in verses_scrollmapper:
+			verse_hashes.append(verse["verse_hash"])
+		ScriptureService.initiate_hash_based_search(search_scope, translation, verse_hashes)
+		return 
+	
+	var results:Array = []
+	var meta_type:String = ""
 	var translation = search.get_translation_abbrev()
 
-	ScriptureService.initiate_hash_based_search(search_scope, translation, verse_hashes)
+	if search_meta_fliter.book_included:
+		results = ScriptureService.get_all_book_meta_by_key(meta_search_line_edit.text)
+		meta_type = "book"
+
+	if search_meta_fliter.translation_included:
+		results = ScriptureService.get_all_translation_meta_by_key(meta_search_line_edit.text)
+		meta_type = "translation"
+	
+	for result:Dictionary in results:
+		var meta_entry:MetaEntry = META_ENTRY.instantiate()
+		meta_entry.meta_type = meta_type
+		meta_entry.id = result["id"]
+		meta_entry.meta_key = result["key"]
+		meta_entry.meta_value = result["value"]
+		connected_meta_browser_v_box_container.add_child(meta_entry)
+		meta_entry.search_meta_key.connect(_on_search_verse_meta_key_pressed)
+		meta_entry.delete_meta_entry.connect(_on_delete_meta_entry_pressed)
+		match meta_type:
+			"book":
+				var book_hash:int = result["book_hash"]
+				var book_data:Dictionary = ScriptureService.get_book_by_hash(translation, book_hash)
+				if book_data.is_empty():
+					book_data = ScriptureService.get_book_by_hash("scrollmapper", book_hash)
+				meta_entry.label = [book_data["book_name"]]
+			"translation":
+				var translation_hash:int = result["translation_hash"]
+				var translation_data:Dictionary = ScriptureService.get_translation_by_hash(translation_hash)
+				meta_entry.label = [translation_data["translation_abbr"]]
+		meta_entry.meta_type = meta_type
 
 func _on_close_meta_browse_button_pressed():
 	meta_browse_panel.hide()
@@ -219,7 +263,6 @@ func populate_meta_keys_to_meta_browse_panel():
 		child.queue_free()
 
 	var unique_book_meta = ScriptureService.get_unique_book_meta()
-	print(unique_book_meta)
 	for meta in unique_book_meta:
 		var meta_option = META_KEY_BROWSER_OPTION.instantiate()
 		meta_option.meta_key = meta["key"]
@@ -277,6 +320,10 @@ func _on_meta_key_chosen(meta_key:String, meta_type:String) -> void:
 #endregion 
 
 #region meta assignment functionality (right panel)
+
+func clear_meta_browser_listings() -> void:
+	for child in connected_meta_browser_v_box_container.get_children():
+		child.queue_free()
 
 func _on_add_meta_button_pressed():
 	if meta_key_line_edit.text.strip_edges().is_empty():

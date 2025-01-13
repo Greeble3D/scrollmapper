@@ -154,6 +154,29 @@ func get_verses_by_ids(verse_ids: Array) -> Array:
 
 	return get_results(query, verse_ids + verse_ids)
 
+# Function to get a verse by its hash
+func get_verse_by_hash(verse_hash: int) -> Dictionary:
+	var query = """
+	SELECT v.id AS verse_id, v.verse_hash, v.book_id, v.chapter, v.verse, v.text, 
+	b.id AS book_id, b.book_name, b.translation_id,
+	t.translation_abbr, t.title, t.license 
+	FROM %s_verses v
+	JOIN %s_books b ON v.book_id = b.id
+	JOIN translations t ON b.translation_id = t.id
+	WHERE v.verse_hash = ?
+	""" % [translation, translation]
+	var result = get_results(query, [verse_hash])
+	if result.size() > 0:
+		self.id = result[0]["verse_id"]
+		self.verse_hash = result[0]["verse_hash"]
+		self.book_id = result[0]["book_id"]
+		self.chapter = result[0]["chapter"]
+		self.verse = result[0]["verse"]
+		self.text = result[0]["text"]
+		return result[0]
+	else:
+		return {}
+
 # Function to get verses by verse hashes
 func get_verses_by_verse_hashes(verse_hashes: Array) -> Array:
 	if verse_hashes.is_empty():

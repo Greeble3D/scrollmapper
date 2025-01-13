@@ -694,3 +694,28 @@ func get_verses_by_meta_key(translation:String, meta_key:String) -> Array:
 	return verses
 
 #endregion 
+
+#region hash related getters
+
+func get_verse_by_hash(translation: String, verse_hash: int) -> Dictionary:
+	var verse_model = VerseModel.new(translation)
+	var verse = verse_model.get_verse_by_hash(verse_hash)
+	if verse == null:
+		return {}
+	return verse
+
+func get_book_by_hash(translation: String, book_hash: int) -> Dictionary:
+	var book_model = BookModel.new(translation)
+	var book = book_model.get_book_by_hash(book_hash)
+	if book == null:
+		return {}
+	return book
+
+func get_translation_by_hash(translation_hash: int) -> Dictionary:
+	var translation_model = BibleTranslationModel.new()
+	var translation = translation_model.get_translation_by_hash(translation_hash)
+	if translation == null:
+		return {}
+	return translation
+
+#endregion 

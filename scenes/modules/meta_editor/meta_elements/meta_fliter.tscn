@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c88o0hnxbt2a5"]
+[gd_scene load_steps=3 format=3 uid="uid://c88o0hnxbt2a5"]
 
 [ext_resource type="Script" path="res://scenes/modules/meta_editor/meta_elements/meta_fliter.gd" id="1_hyp0o"]
+[ext_resource type="ButtonGroup" uid="uid://cgxm8caagssi8" path="res://scenes/modules/meta_editor/meta_elements/meta_filter_button_group.tres" id="2_uacnf"]
 
 [node name="MetaFliter" type="HBoxContainer" node_paths=PackedStringArray("translation_check_box", "book_check_box", "verse_check_box")]
 size_flags_horizontal = 8
@@ -19,14 +20,17 @@ fit_content = true
 [node name="TranslationCheckBox" type="CheckBox" parent="."]
 layout_mode = 2
 size_flags_horizontal = 8
+button_group = ExtResource("2_uacnf")
 text = "Translation"
 
 [node name="BookCheckBox" type="CheckBox" parent="."]
 layout_mode = 2
 size_flags_horizontal = 8
+button_group = ExtResource("2_uacnf")
 text = "Book"
 
 [node name="VerseCheckBox" type="CheckBox" parent="."]
 layout_mode = 2
 size_flags_horizontal = 8
+button_group = ExtResource("2_uacnf")
 text = "Verse"

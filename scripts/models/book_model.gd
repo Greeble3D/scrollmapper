@@ -94,6 +94,17 @@ func find_book_by_name(_book_name: String):
 		self.translation_id = partial_result[0]["translation_id"]
 		self.translation = translation  # Assuming translation is already set
 
+# New method to get a book by hash
+func get_book_by_hash(_book_hash: int) -> Dictionary:
+	var query = "SELECT * FROM %s_books WHERE book_hash = ?;" % translation
+	var book_result = get_results(query, [_book_hash])
+	if book_result.size() > 0:
+		id = book_result[0]["id"]
+		book_name = book_result[0]["book_name"]
+		translation_id = book_result[0]["translation_id"]
+		translation = translation  # Assuming translation is already set
+		return book_result[0]
+	return {}
 func delete():
 	if id != null:
 		# Delete all verses connected with this book

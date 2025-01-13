@@ -152,7 +152,7 @@ func reset_scope_options():
 ## Resets the translation options.
 func reset_translation_options():
 	option_translation.clear()
-	option_translation.add_item("-")
+	#option_translation.add_item("-")
 
 ## Resets the book options.
 func reset_book_options():
@@ -323,7 +323,6 @@ func get_search_scope() -> Types.SearchScope:
 
 ## Getter for translation abbreviation
 func get_translation_abbrev() -> String:
-	var translation_text = option_translation.get_item_text(option_translation.get_selected_id())
-	if translation_text == "-":
-		return ""
+	var translation_text = option_translation.get_item_text(option_translation.get_item_index( option_translation.get_selected_id()))
+	print(option_translation.get_selected_id())
 	return translation_text
