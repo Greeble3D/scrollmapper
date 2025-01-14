@@ -192,7 +192,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="MetaBrowsePanel" type="Panel" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer"]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lyxnh")
 script = SubResource("GDScript_a68tc")
@@ -219,6 +218,7 @@ size_flags_vertical = 3
 
 [node name="TranslationMetaRichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/MetaBrowsePanel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/default_color = Color(1, 0.329412, 0.270588, 1)
 text = "Translation Meta"
 fit_content = true
 
@@ -230,6 +230,7 @@ layout_mode = 2
 
 [node name="BookMetaRichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/MetaBrowsePanel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/default_color = Color(0.270588, 1, 0.329412, 1)
 text = "Book Meta"
 fit_content = true
 
@@ -238,6 +239,7 @@ layout_mode = 2
 
 [node name="VerseMetaRichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/SearchMarginContainer/MetaBrowsePanel/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/default_color = Color(0.270588, 0.509804, 1, 1)
 text = "Verse Meta"
 fit_content = true
 

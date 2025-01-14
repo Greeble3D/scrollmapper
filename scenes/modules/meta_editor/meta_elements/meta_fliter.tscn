@@ -14,23 +14,37 @@ verse_check_box = NodePath("VerseCheckBox")
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+theme_override_colors/default_color = Color(0.63, 0.63, 0.63, 1)
 text = "Meta Group:"
 fit_content = true
 
 [node name="TranslationCheckBox" type="CheckBox" parent="."]
 layout_mode = 2
 size_flags_horizontal = 8
+tooltip_text = "Specifically meta attached to Translations / Versions. Coded Red. "
+theme_override_colors/font_pressed_color = Color(1, 0.541667, 0.5, 1)
+theme_override_colors/font_color = Color(1, 0.330833, 0.27, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
 button_group = ExtResource("2_uacnf")
 text = "Translation"
+flat = true
 
 [node name="BookCheckBox" type="CheckBox" parent="."]
 layout_mode = 2
 size_flags_horizontal = 8
+tooltip_text = "Specifically meta attached to individual books. Coded Green. "
+theme_override_colors/font_pressed_color = Color(0.5, 1, 0.541667, 1)
+theme_override_colors/font_color = Color(0.270588, 1, 0.329412, 1)
 button_group = ExtResource("2_uacnf")
 text = "Book"
+flat = true
 
 [node name="VerseCheckBox" type="CheckBox" parent="."]
 layout_mode = 2
 size_flags_horizontal = 8
+tooltip_text = "Specifically meta attached to individual verses. Most important in general use and marking for analytics. Coded Blue. "
+theme_override_colors/font_pressed_color = Color(0.5, 0.666667, 1, 1)
+theme_override_colors/font_color = Color(0.270588, 0.509804, 1, 1)
 button_group = ExtResource("2_uacnf")
 text = "Verse"
+flat = true
