@@ -190,7 +190,6 @@ func _on_delete_meta_entry_pressed(meta_type:String, id:int) -> void:
 		_:
 			print("META TYPE NOT FOUND")
 
-
 #endregion 
 
 #region meta search functionality (left panel)

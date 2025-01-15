@@ -36,11 +36,13 @@ layout_mode = 2
 
 [node name="MetaKeyRichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+bbcode_enabled = true
 text = "attribute-meta-key-example"
 fit_content = true
 
 [node name="MetaValueRichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+bbcode_enabled = true
 text = "example content for meta value"
 fit_content = true
 

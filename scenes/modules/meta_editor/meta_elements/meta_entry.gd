@@ -20,12 +20,12 @@ var id:int
 var meta_key:String:
 	set(value):
 		meta_key = value
-		meta_key_rich_text_label.text = value
+		meta_key_rich_text_label.text = "[b]Key:[/b] "+value
 ## Arbitrary string data for the value
 var meta_value:String:
 	set(value):
 		meta_value = value
-		meta_value_rich_text_label.text = value
+		meta_value_rich_text_label.text = "[b]Value:[/b] "+value
 ## The verse hash that the meta entry is connected to.
 var hash:int 
 var meta_type:String = "verse":

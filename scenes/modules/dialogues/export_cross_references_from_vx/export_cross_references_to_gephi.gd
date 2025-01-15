@@ -19,11 +19,12 @@ func setup(_base_dialogue:BaseDialogue) -> void:
 	base_dialogue.accepted.connect(_on_accepted)
 	base_dialogue.closed.connect(_on_closed)
 	base_dialogue.set_title(title)
+	base_dialogue.set_minimum_size(Vector2(600, 400))
 
 	# File ops 
 	file_select_button.pressed.connect(_on_file_select_button_pressed)
 	DialogueManager.file_selected.connect(_on_file_selected)
-
+	
 ## Required function for when the Accept button is pushed. 
 ## Functionality initiated here. 
 func _on_accepted() -> void:

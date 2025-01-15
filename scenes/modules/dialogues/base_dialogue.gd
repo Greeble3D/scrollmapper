@@ -40,6 +40,8 @@ signal accepted
 func _ready() -> void:
 	close_button.pressed.connect(_on_close_button_pressed)
 	accept_button.pressed.connect(_on_accept_button_pressed)
+	visibility_changed.connect(_on_visibility_changed)
+	VXGraph.lock_graph(true)
 
 func set_title(title: String) -> void:
 	title_rich_text_label.text = title
@@ -74,3 +76,8 @@ func emit_closed() -> void:
 func emit_opened() -> void:
 	opened.emit()
 	
+func _on_visibility_changed() -> void:
+	if visible:
+		VXGraph.lock_graph(true)
+	else:
+		VXGraph.lock_graph(false)

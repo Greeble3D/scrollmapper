@@ -186,7 +186,7 @@ func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
 	graph_changed.emit()
 
 ## Locks the graph if the search results are shown.
-func lock_graph(lock:bool) -> void:
+static func lock_graph(lock:bool) -> void:
 	is_graph_locked = lock
 
 ## Pushes a message to the feed_back_notes.

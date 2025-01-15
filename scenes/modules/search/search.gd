@@ -57,7 +57,8 @@ func _ready():
 	populate_translation_options()
 	populate_book_options()
 	populate_book_chapters()
-
+	populate_to_books_options()
+	
 	setup_initial_search_state()
 
 ## Initial setup
@@ -324,5 +325,4 @@ func get_search_scope() -> Types.SearchScope:
 ## Getter for translation abbreviation
 func get_translation_abbrev() -> String:
 	var translation_text = option_translation.get_item_text(option_translation.get_item_index( option_translation.get_selected_id()))
-	print(option_translation.get_selected_id())
 	return translation_text

@@ -69,7 +69,6 @@ item_count = 1
 popup/item_0/text = "-"
 
 [node name="OptionVerses" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 selected = 0
