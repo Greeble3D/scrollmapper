@@ -9,10 +9,10 @@ var target: int = 0
 var weight: float = 1.0
 
 func get_source() -> int:
-    return source
+	return source
 
 func get_target() -> int:
-    return target
+	return target
 
 func get_weight() -> float:
-    return weight
+	return weight

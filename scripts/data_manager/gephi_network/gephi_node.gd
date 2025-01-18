@@ -4,6 +4,7 @@ extends GephiObject
 
 class_name GephiNode
 
+var scripture_hash:int = -1
 var scripture_text: String = ""
 var scripture_location: String = ""
 var translation: String = ""
@@ -12,19 +13,19 @@ var chapter: int = 0
 var verse: int = 0
 
 func get_scripture_text() -> String:
-    return scripture_text
+	return scripture_text
 
 func get_scripture_location() -> String:
-    return scripture_location
+	return scripture_location
 
 func get_translation() -> String:
-    return translation
+	return translation
 
 func get_book() -> String:
-    return book
+	return book
 
 func get_chapter() -> int:
-    return chapter
+	return chapter
 
 func get_verse() -> int:
-    return verse
+	return verse

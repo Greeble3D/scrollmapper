@@ -6,7 +6,7 @@ var base_dialogue:BaseDialogue = null
 
 @export var file_destination_line_edit: LineEdit
 @export var file_select_button: Button
-
+@export var meta_selector: MarginSelector 
 @export var title:String = ""
 @export var file_path:String = ""
 #endregion
@@ -36,7 +36,7 @@ func _on_closed() -> void:
 	base_dialogue.release()
 
 func do_export() -> void:	
-	var exporter:ExporterCrossReferencesToGephi = ExporterCrossReferencesToGephi.new(file_path)
+	var exporter:ExporterCrossReferencesToGephi = ExporterCrossReferencesToGephi.new(file_path, meta_selector.get_selected_verse_meta_keys())
 	exporter.export()
 
 func _on_file_select_button_pressed() -> void:

@@ -21,18 +21,38 @@ var nodes: Dictionary = {}
 ## Accessed as <id>:<GephiEdge>
 var edges: Dictionary = {}
 
+## A list of verse meta keys.
+## This is used to create attributes, categories, etc, on export.
+var verse_meta_keys:Array = []
+
+## A dictionary containing verse meta.
+## Accessed as <verse_hash>:<meta_key>
+var verse_meta:Dictionary = {}
+
 ## The highest edge weight value in the network.
 var highest_edge_weight: float = 0.0
 ## The lowest edge weight value in the network.
 var lowest_edge_weight: float = 0.0
 
 ## Initialize the network with the last modified date, creator, description, nodes, and edges.
-func _init(_last_modified_date: String, _creator: String, _description: String, _nodes:Array, _edges:Array) -> void:
+func _init(_last_modified_date: String, _creator: String, _description: String, _nodes:Array, _edges:Array, _included_verse_meta:Array = []) -> void:
 	last_modified_date = _last_modified_date
 	creator = _creator
 	description = _description
+	
+	# First, set the verse meta keys...
+	verse_meta_keys = _included_verse_meta
+
+	# Next, add meta...
+	for verse_meta_key:String in _included_verse_meta:
+		var meta:Array = ScriptureService.get_all_verse_meta_by_key(verse_meta_key)
+		for meta_data:Dictionary in meta:
+			add_verse_meta(meta_data)
+
+	# Then, add nodes and edges...
 	for node in _nodes:
 		self.add_node(node)
+
 	for edge in _edges:
 		self.add_edge(edge)
 	adjust_edge_weights()
@@ -45,9 +65,18 @@ func get_nodes_array() -> Array:
 func get_edges_array() -> Array:
 	return edges.values()
 
+func add_verse_meta(_verse_meta:Dictionary) -> void:
+	var meta:GephiMeta = GephiMeta.new()
+	meta.verse_hash = _verse_meta.get("verse_hash")
+	meta.key = _verse_meta.get("key")
+	meta.value = _verse_meta.get("value")
+	verse_meta[meta.verse_hash] = {}
+	verse_meta[meta.verse_hash][meta.key] = meta
+
 ## Add a node to the network.
 func add_node(node_data: Dictionary) -> GephiNode:
 	var node = GephiNode.new()
+	node.scripture_hash = node_data.get("verse_hash", -1)
 	node.scripture_text = node_data.get("scripture_text", "")
 	node.scripture_location = node_data.get("scripture_location", "")
 	node.translation = node_data.get("translation", "")

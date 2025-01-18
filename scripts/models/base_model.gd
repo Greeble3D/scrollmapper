@@ -14,12 +14,15 @@ func _init() -> void:
 		cmd_style = load(CMD_STYLE_APP)
 	else:
 		cmd_style = load(CMD_STYLE_EDITOR)
+		
 	if not Engine.is_editor_hint():
+		# We are not in editor.
 		db = GlobalDB.get_db()
-	else:
-		# We are in editor.
+		
+	if Engine.is_editor_hint():
+		# We are in editor.		
 		db = CMDEditor.get_db()
-
+		
 func execute_query(query: String, params: Array = []):
 	db.query_with_bindings(query, params)
 	

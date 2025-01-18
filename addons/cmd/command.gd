@@ -35,6 +35,7 @@ func load_commands():
 			var file_name = dir.get_next()
 			while file_name != "":
 				if file_name.ends_with(".gd"):
+					print("Found command: %s"%file_name.replace(".gd", ""))
 					var command_name = file_name.substr(0, file_name.length() - 3)
 					var script = load(dir_path + file_name)
 					if script:

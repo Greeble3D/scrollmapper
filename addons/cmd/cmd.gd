@@ -10,6 +10,7 @@ var cmd_dock: VBoxContainer
 
 
 func _enter_tree() -> void:
+	
 	# Initialization of the plugin goes here.
 	var data_manager = DataManager.new()
 	data_manager.create_initial_directories()
@@ -34,6 +35,7 @@ func _enter_tree() -> void:
 	var commands = Command.new()
 	commands.initiate()
 	commands.load_commands()
+
 
 func _exit_tree() -> void:
 	# Clean-up of the plugin goes here.

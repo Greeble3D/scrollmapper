@@ -1,16 +1,18 @@
 extends BaseExporter
-## This class takes a VXGraph and exports it to Gephi format.
+## This class takes the cross_reference database and exports it to Gephi format.
 class_name ExporterCrossReferencesToGephi
 
 var gephi_network: GephiNetwork
 var save_path:String = ""
 var version_dict:Dictionary = {}
+var included_verse_meta:Array = []
 
-func _init(_save_path:String) -> void:
+func _init(_save_path:String, verse_meta_keys:Array=[]) -> void:
 	save_path = _save_path
+	included_verse_meta = verse_meta_keys
 	version_dict = ScriptureService.get_versions_as_book_chapter_verse_dictionary(["KJV", "scrollmapper"])
 	populate_export_data()
-	gephi_network = GephiNetwork.new("2025-1-01", "Scrollmapper", "Cross References Export", export_data["nodes"], export_data["connections"])
+	gephi_network = GephiNetwork.new("2025-1-01", "Scrollmapper", "Cross References Export", export_data["nodes"], export_data["connections"], included_verse_meta)
 
 func populate_export_data():
 	var cross_references:Array = ScriptureService.get_all_cross_references_simple()
@@ -34,6 +36,9 @@ func populate_export_data():
 		if to_verse_data.is_empty():
 			to_verse_data = get_verse_data("scrollmapper", cross_reference["to_book"], cross_reference["to_chapter_start"], cross_reference["to_verse_start"])
 
+		var from_verse_hash:int = ScriptureService.get_verse_hash(cross_reference["from_book"], cross_reference["from_chapter"], cross_reference["from_verse"])
+		var to_verse_hash:int = ScriptureService.get_verse_hash(cross_reference["to_book"], cross_reference["to_chapter_start"], cross_reference["to_verse_start"])
+
 		if not node_ids.has(from_node_id):
 			nodes.append({
 				"id": from_node_id,
@@ -42,7 +47,8 @@ func populate_export_data():
 				"translation": from_verse_data.get("translation_abbr", ""),
 				"book": cross_reference["from_book"],
 				"chapter": cross_reference["from_chapter"],
-				"verse": cross_reference["from_verse"]
+				"verse": cross_reference["from_verse"],
+				"verse_hash": from_verse_hash
 			})
 			node_ids[from_node_id] = true
 
@@ -54,7 +60,8 @@ func populate_export_data():
 				"translation": to_verse_data.get("translation_abbr", ""),
 				"book": cross_reference["to_book"],
 				"chapter": cross_reference["to_chapter_start"],
-				"verse": cross_reference["to_verse_start"]
+				"verse": cross_reference["to_verse_start"],
+				"verse_hash": to_verse_hash
 			})
 			node_ids[to_node_id] = true
 

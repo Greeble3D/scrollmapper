@@ -13,7 +13,10 @@ displays output in a RichTextLabel, and applies the appropriate command style.
 
 static var instance:CmdInterface = null
 
-@export var cmd_style_editor : CmdStyle
+const CMD_STYLE_APP = preload("res://addons/cmd/interface/styles/cmd_styles/cmd_style_app.tres")
+const CMD_STYLE_EDITOR = preload("res://addons/cmd/interface/styles/cmd_styles/cmd_style_editor.tres")
+
+@export var cmd_style_editor : CmdStyle 
 @export var cmd_style_app : CmdStyle
 
 @export var controls_container: VBoxContainer
@@ -21,14 +24,14 @@ static var instance:CmdInterface = null
 @export var cmd_input: LineEdit 
 
 # The current command style (abbreviated for easy coding use)
-var ccs:CmdStyle 
+var ccs:CmdStyle
+
+static func initiate() -> void:
+	var cmd_interface:CmdInterface = CmdInterface.new()
 
 # Called when the node is added to the scene.
 func _ready() -> void:
-	if instance == null:
-		instance = self
-	else:
-		return
+	instance = self
 	
 	# This is a temporary solution to a problem where this class
 	# instance variable sometimes becomes null, although in fact
@@ -103,5 +106,7 @@ func cycle_command_history(direction: int) -> void:
 
 	cmd_input.text = Command.command_history[history_index]
 
-func get_cmd_style():
-	return ccs
+static func get_cmd_style():
+	if instance == null:
+		instance = CmdInterface.new()
+	return instance.ccs

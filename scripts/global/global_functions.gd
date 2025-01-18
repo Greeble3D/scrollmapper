@@ -10,3 +10,4 @@ func slugify(text: String) -> String:
 	slug = regex.sub(slug, "-", true)
 	
 	return slug
+

@@ -2,7 +2,7 @@ extends Node
 class_name FormatText
 
 static func format_source_reference(source_reference: SourceReference) -> String:
-	var cmd_style: CmdStyle = CmdInterface.instance.get_cmd_style()
+	var cmd_style: CmdStyle = CmdInterface.get_cmd_style()
 	var book_formatted: String = cmd_style.color_quaternary_text(source_reference.book)
 	book_formatted = cmd_style.bold_text(book_formatted)
 	var title_formatted: String = cmd_style.color_tertiary_text(source_reference.title)
@@ -12,7 +12,7 @@ static func format_source_reference(source_reference: SourceReference) -> String
 	return output
 
 static func format_verse(book:String, chapter:int, verse:int, verse_text:String)->String:
-	var cmd_style: CmdStyle = CmdInterface.instance.get_cmd_style()
+	var cmd_style: CmdStyle = CmdInterface.get_cmd_style()
 	var book_formatted:String = cmd_style.color_quaternary_text(book)
 	var chapter_formatted:String = cmd_style.color_secondary_text(str(chapter))
 	var verse_formatted:String = cmd_style.color_secondary_text(str(verse))
