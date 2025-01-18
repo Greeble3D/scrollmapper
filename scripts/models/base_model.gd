@@ -21,7 +21,7 @@ func _init() -> void:
 		
 	if Engine.is_editor_hint():
 		# We are in editor.		
-		db = CMDEditor.get_db()
+		db = EditorDB.db
 		
 func execute_query(query: String, params: Array = []):
 	db.query_with_bindings(query, params)

@@ -5,17 +5,13 @@ class_name CMDEditor
 
 const INTERFACE = preload("res://addons/cmd/interface/cmd_interface.tscn")
 
-static var db:SQLite = SQLite.new()
 var cmd_dock: VBoxContainer
 
 
 func _enter_tree() -> void:
 	
 	# Initialization of the plugin goes here.
-	var data_manager = DataManager.new()
-	data_manager.create_initial_directories()
-	CMDEditor.db.path = data_manager.get_scrollmapper_db_dir().path_join("database.sqlite")
-	CMDEditor.db.open_db()
+	EditorDB.initiate()
 	
 	cmd_dock = VBoxContainer.new()
 	cmd_dock.name = "CMD"
@@ -40,7 +36,7 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	# Clean-up of the plugin goes here.
 	remove_control_from_bottom_panel(cmd_dock)
-	CMDEditor.db.close_db()
+	EditorDB.db.close_db()
 	
 static func get_db():
-	return CMDEditor.db
+	return EditorDB.db

@@ -34,14 +34,17 @@ func load_commands():
 			dir.list_dir_begin()
 			var file_name = dir.get_next()
 			while file_name != "":
-				if file_name.ends_with(".gd"):
-					print("Found command: %s"%file_name.replace(".gd", ""))
+				if file_name.ends_with(".gd") || file_name.ends_with(".gd.remap"):
+					file_name = file_name.replace(".remap", "")
+					print("Found command: %s"%file_name.replace(".gd", "").replace(".remap", ""))
 					var command_name = file_name.substr(0, file_name.length() - 3)
 					var script = load(dir_path + file_name)
 					if script:
 						commands[command_name] = script.new()
 				file_name = dir.get_next()
 			dir.list_dir_end()
+			for c in commands:
+				print(c)
 
 static func execute(command_string:String = ""):
 	log_command(command_string)
