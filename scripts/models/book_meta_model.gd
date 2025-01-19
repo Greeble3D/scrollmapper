@@ -24,6 +24,10 @@ func get_create_table_query() -> String:
 	"""
 
 func save():
+	# Strip edges of string-based variables
+	key = key.strip_edges()
+	value = value.strip_edges()
+	
 	# Check if meta entry already exists
 	var query = "SELECT id FROM book_meta WHERE book_hash = ? AND key = ?;"
 	var result = get_results(query, [book_hash, key])
