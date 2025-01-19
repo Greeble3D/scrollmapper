@@ -10,5 +10,6 @@ static func initiate() -> void:
 	db = SQLite.new()
 	var data_manager = DataManager.new()
 	data_manager.create_initial_directories()
+	data_manager.create_initial_database()
 	db.path = data_manager.get_scrollmapper_db_dir().path_join("database.sqlite")
 	db.open_db()

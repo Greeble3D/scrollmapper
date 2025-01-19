@@ -5,6 +5,7 @@ var db: SQLite = SQLite.new()
 func _ready():
 	var data_manager = DataManager.new()
 	data_manager.create_initial_directories()
+	data_manager.create_initial_database()
 	db.path = data_manager.get_scrollmapper_db_dir().path_join("database.sqlite")
 	db.open_db()
 
