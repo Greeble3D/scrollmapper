@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://blt4yrs8a7sa5"]
+[gd_scene load_steps=33 format=3 uid="uid://blt4yrs8a7sa5"]
 
 [ext_resource type="PackedScene" uid="uid://bhm7pe4gws2t2" path="res://scenes/home/scenes/desk.tscn" id="1_gt8ee"]
 [ext_resource type="Script" path="res://scripts/misc/home.gd" id="1_hy5ct"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://bqffsh43a6f3v" path="res://scenes/home/scenes/vx_panel.tscn" id="21_nkgc7"]
 [ext_resource type="PackedScene" path="res://scenes/home/scenes/closed_scroll_1.tscn" id="22_7ny2k"]
 [ext_resource type="Script" path="res://scripts/misc/launcher.gd" id="23_6fcio"]
+[ext_resource type="Script" path="res://scenes/home/module_hovered_rich_text_label.gd" id="23_tk0qm"]
 [ext_resource type="Script" path="res://scripts/misc/interaction_light.gd" id="24_vro7x"]
 
 [sub_resource type="Environment" id="Environment_7nxak"]
@@ -347,6 +348,7 @@ transform = Transform3D(1.075, 0, 0, 0, -4.69897e-08, -1.075, 0, 1.075, -4.69897
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.809713, 1.91856, -3.12021)
 script = ExtResource("23_6fcio")
 metadata/launcher = "vx_graph"
+metadata/launcher_name = "VX Graph / Scroll Mapping"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClickSensors/VXGraph"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.115088, -0.0793604)
@@ -356,6 +358,7 @@ shape = SubResource("BoxShape3D_ano20")
 transform = Transform3D(1, 0, 0, 0, 0.646377, -0.763018, 0, 0.763018, 0.646377, -0.790186, 1.04123, -2.29764)
 script = ExtResource("23_6fcio")
 metadata/launcher = "explorer"
+metadata/launcher_name = "Explorer"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClickSensors/Explorer"]
 shape = SubResource("BoxShape3D_svy2p")
@@ -364,22 +367,25 @@ shape = SubResource("BoxShape3D_svy2p")
 transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 3.82137e-15, 4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0.91833, 1.40882, -1.91769)
 script = ExtResource("23_6fcio")
 metadata/launcher = "book_library"
+metadata/launcher_name = "Book Library"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClickSensors/BookLibrary"]
 transform = Transform3D(1, 0, -5.54807e-20, 0, 1, -8.35165e-23, 0, -8.35187e-23, 1, 0.292099, -0.260742, -0.313721)
 shape = SubResource("BoxShape3D_ddw6c")
 
-[node name="Reader" type="Area3D" parent="ClickSensors"]
+[node name="Reader" type="Area3D" parent="ClickSensors" groups=["launchers"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.798379, 0.762635, -1.71903)
 script = ExtResource("23_6fcio")
 metadata/launcher = "reader"
+metadata/launcher_name = "Reader"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClickSensors/Reader"]
 shape = SubResource("BoxShape3D_k5xv0")
 
-[node name="MetaEditor" type="Area3D" parent="ClickSensors"]
+[node name="MetaEditor" type="Area3D" parent="ClickSensors" groups=["launchers"]]
 script = ExtResource("23_6fcio")
 metadata/launcher = "meta_editor"
+metadata/launcher_name = "Meta Editor"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClickSensors/MetaEditor"]
 transform = Transform3D(0.765045, 0, -0.643977, 0, 1, 0, 0.643977, 0, 0.765045, 0.0115313, 0.313006, -0.778517)
@@ -478,6 +484,39 @@ transform = Transform3D(-0.0510281, 6.19205e-09, -0.637421, 0.339553, -0.541178,
 
 [node name="ClosedScroll_24" parent="." instance=ExtResource("22_7ny2k")]
 transform = Transform3D(-0.0510281, 6.19205e-09, -0.637421, 0.339553, -0.541178, -0.0271826, -0.539452, -0.34064, 0.0431853, 1.31941, 2.09074, -1.15701)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ModuleHoveredRichTextLabel" type="RichTextLabel" parent="Control/MarginContainer" node_paths=PackedStringArray("home")]
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 0.658824)
+theme_override_font_sizes/normal_font_size = 36
+text = "Scrollmapper"
+fit_content = true
+script = ExtResource("23_tk0qm")
+home = NodePath("../../..")
 
 [editable path="Desk_/Books/Book4"]
 [editable path="Desk_/Files"]

@@ -1,2 +1,3 @@
-# scrollmapper
-A scripture exploration tool created in Godot. 
+# Scrollmapper - Scripture Analysis Tool
+
+A scripture analysis tool created in Godot 4.

@@ -4,6 +4,10 @@ extends Area3D
 ## object for it to work. See the full instructions in "res://scripts/misc/home.gd"
 class_name Launcher
 
+static var current_focused_launcher:String = "Scrollmapper"
+	
+signal current_focused_launcher_changed(launcher_name:String)
+
 var is_mouse_over:bool = false:
 	set(value):
 		is_mouse_over = value
@@ -19,9 +23,13 @@ func _ready() -> void:
 	
 func _on_mouse_entered() -> void:
 	is_mouse_over = true
+	current_focused_launcher = get_meta("launcher_name", "Scrollmapper")
+	current_focused_launcher_changed.emit(current_focused_launcher)
 	
 func _on_mouse_exited() -> void:
 	is_mouse_over = false
+	current_focused_launcher = ""
+	current_focused_launcher_changed.emit(current_focused_launcher)
 
 ## Launches the appropriate level according to the name in the launcher meta. 
 func do_launch() -> void:

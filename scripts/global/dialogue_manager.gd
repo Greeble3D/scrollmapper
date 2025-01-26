@@ -48,6 +48,14 @@ func show_progress_dialog() -> void:
 func hide_progress_dialog() -> void:
 	main_progress_dialogue_container.close()
 
+## Sets progress dialog to a given parent. Reparents to self if parent not supplied. 
+## Created for the situation when progress dialog is shown via this class, and 
+## must be shown in front of other elements.
+func reparent_progress_dialog(parent = null) -> void:
+	if parent == null:
+		parent = self
+	main_progress_dialogue_container.reparent(parent)
+
 func _on_file_selected(selected_file:String) -> void:
 	file_selected.emit(selected_file)
 	hide_file_save_dialog()

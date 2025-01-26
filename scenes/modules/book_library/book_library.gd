@@ -78,8 +78,6 @@ func syncronize_book_selections():
 		elif book_listing.is_installed and !book_listing.is_selected:
 			print("Uninstalling " + book_listing.book)
 			do_uninstall_book_process(book_listing)
-			
-	
 	do_install_queue()
 
 	
@@ -95,6 +93,7 @@ func do_install_queue() -> void:
 	do_install_book_process(next_install)
 
 func do_install_book_process(book_listing:BookListing):
+	move_progress_dialog_to_front(true)
 	is_processing_book = true
 	var install_book:InstallBook = InstallBook.new(book_listing.book)
 	if !install_book.is_book_file_available():
@@ -108,6 +107,13 @@ func do_install_book_process(book_listing:BookListing):
 	install_queue_processed.emit()
 	book_listing.is_installed = true
 	book_listing.set_current_status()
+	move_progress_dialog_to_front(false)
+
+func move_progress_dialog_to_front(front:bool = true) -> void:
+	if front:
+		DialogueManager.reparent_progress_dialog(self)
+	else:
+		DialogueManager.reparent_progress_dialog()
 
 func do_uninstall_book_process(book_listing:BookListing):
 	is_processing_book = true

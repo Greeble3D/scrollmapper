@@ -23,6 +23,8 @@ class_name Home
 @export var camera_3d:Camera3D 
 @export var launchers:Array[Area3D]
 
+signal launcher_focused(name:String)
+
 func _ready() -> void:
 	setup_launchers()
 
@@ -33,3 +35,7 @@ func setup_launchers() -> void:
 	for launcher in launcher_nodes:
 		if launcher is Area3D && launcher.has_meta("launcher"):
 			launchers.append(launcher)
+			launcher.current_focused_launcher_changed.connect(emit_launcher_focused)
+
+func emit_launcher_focused(name:String) -> void:
+	launcher_focused.emit(name)
