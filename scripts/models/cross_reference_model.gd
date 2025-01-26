@@ -109,7 +109,7 @@ func get_cross_reference(id: int) -> Dictionary:
 		return result[0]
 	return {}
 
-func get_cross_reference_exact(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter_start: int, to_chapter_end: int, to_verse_start: int, to_verse_end: int, votes: int) -> Dictionary:
+func get_cross_reference_exact(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter_start: int, to_chapter_end: int, to_verse_start: int, to_verse_end: int) -> Dictionary:
 	var query = """
 	SELECT * FROM cross_reference 
 	WHERE 
@@ -120,16 +120,15 @@ func get_cross_reference_exact(from_book: String, from_chapter: int, from_verse:
 		to_chapter_start = ? AND 
 		to_chapter_end = ? AND 
 		to_verse_start = ? AND 
-		to_verse_end = ? AND 
-		votes = ?;
+		to_verse_end = ?;
 	"""
-	var result = get_results(query, [from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes])
+	var result = get_results(query, [from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end])
 	if result.size() > 0:
 		return result[0]
 	return {}
 
-func cross_reference_exists(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter_start: int, to_chapter_end: int, to_verse_start: int, to_verse_end: int, votes: int) -> bool:
-	var result = get_cross_reference_exact(from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes)
+func cross_reference_exists(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter_start: int, to_chapter_end: int, to_verse_start: int, to_verse_end: int) -> bool:
+	var result = get_cross_reference_exact(from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end)
 	return result.size() > 0
 
 func delete():

@@ -205,7 +205,7 @@ func get_all_cross_references_simple() -> Array:
 ## Saves a cross reference to database. 
 func save_cross_reference(from_book: String, from_chapter: int, from_verse: int, to_book: String, to_chapter_start: int, to_chapter_end: int, to_verse_start: int, to_verse_end: int, votes: int, user_added: bool) -> void:
 	var cross_reference_model = CrossReferenceModel.new("scrollmapper")
-	if cross_reference_model.cross_reference_exists(from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes):
+	if cross_reference_model.cross_reference_exists(from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end):
 		return
 	cross_reference_model.from_book = from_book
 	cross_reference_model.from_chapter = from_chapter
