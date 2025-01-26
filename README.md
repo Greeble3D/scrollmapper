@@ -4,6 +4,8 @@ A scripture analysis tool created with Godot 4.
 
 *Presently in prototype phase. Major features are working.*
 
+This should work "out of the box" as a Godot 4 project. It should export as a running app without any issues. We will provide the actual package as a download after we have completed and polished the tool as a whole and completed the documentation.
+
 ## General Use
 
 This is a graphing software designed to establish cross-references between canonical scriptures and lost books.
