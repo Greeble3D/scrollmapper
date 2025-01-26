@@ -12,7 +12,7 @@ In **Scrollmapper**, you can:
 
 - Create graphs of connections between scriptures.
 - Export built cross-references to [Gephi](https://gephi.org/) for analysis.
-- Explore a large database of scripture cross-references.
+- Explore a large database of scripture cross-references while reading or working.
 - Use a general reader.
 
 ## Advanced Use
