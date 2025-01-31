@@ -277,7 +277,7 @@ func drag_node(pos: Vector2):
 		return
 	dragging_already_in_progress = true
 	var new_position: Vector2 = get_global_mouse_position() - size / 2 + placement_offset
-	new_position = snapped(new_position, Vector2(100, 100))
+	#new_position = snapped(new_position, Vector2(100, 100))
 	node_moved.emit(new_position)
 	node_dragged.emit(pos)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bmg34cgf1y4wo"]
+[gd_scene load_steps=13 format=3 uid="uid://bmg34cgf1y4wo"]
 
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="1_6rdk2"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_search_and_execute.gd" id="1_8olel"]
@@ -11,8 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://cbbgdcaygy14e" path="res://images/icons/editor/PageFirst.svg" id="8_gggap"]
 [ext_resource type="Texture2D" uid="uid://b865l5fuyubbq" path="res://images/icons/editor/PlaceholderTexture3D.svg" id="9_lfpp7"]
 [ext_resource type="Texture2D" uid="uid://ca03ylmq6fv3o" path="res://images/icons/Gephi-16.svg" id="10_1k00h"]
+[ext_resource type="Texture2D" uid="uid://b5i2nrntib2ua" path="res://images/icons/json.svg" id="12_nwu17"]
 
-[node name="VXSearchAndExecute" type="MarginContainer" node_paths=PackedStringArray("menu_button_graph", "menu_button_export")]
+[node name="VXSearchAndExecute" type="MarginContainer" node_paths=PackedStringArray("menu_button_graph", "menu_button_import", "menu_button_export")]
 custom_minimum_size = Vector2(0, 100)
 anchors_preset = 10
 anchor_right = 1.0
@@ -20,6 +21,7 @@ grow_horizontal = 2
 size_flags_horizontal = 3
 script = ExtResource("1_8olel")
 menu_button_graph = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonGraph")
+menu_button_import = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonImport")
 menu_button_export = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonExport")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -79,11 +81,19 @@ popup/item_5/text = "Exit"
 popup/item_5/icon = ExtResource("8_gggap")
 popup/item_5/id = 5
 
+[node name="MenuButtonImport" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Import"
+icon = ExtResource("6_75kp4")
+item_count = 1
+popup/item_0/text = "Import from JSON"
+popup/item_0/icon = ExtResource("12_nwu17")
+
 [node name="MenuButtonExport" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 text = "Export"
 icon = ExtResource("6_75kp4")
-item_count = 3
+item_count = 4
 popup/item_0/text = "Export to Cross References"
 popup/item_0/icon = ExtResource("9_lfpp7")
 popup/item_1/text = "Export Graph to Gephi"
@@ -92,3 +102,6 @@ popup/item_1/id = 1
 popup/item_2/text = "Export Cross-References Database to Gephi"
 popup/item_2/icon = ExtResource("10_1k00h")
 popup/item_2/id = 2
+popup/item_3/text = "Export as JSON"
+popup/item_3/icon = ExtResource("12_nwu17")
+popup/item_3/id = 3

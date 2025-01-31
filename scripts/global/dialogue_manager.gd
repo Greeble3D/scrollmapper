@@ -4,9 +4,12 @@ const BASE_DIALOGUE = preload("res://scenes/modules/dialogues/base_dialogue.tscn
 
 const FILE_SAVE_DIALOG = preload("res://scenes/modules/dialogues/file_save_dialog.tscn")
 
+const FILE_LOAD_DIALOG = preload("res://scenes/modules/dialogues/file_load_dialog.tscn")
+
 const PROGRESS_DIALOGUE = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/progress_dialogue.tscn")
 
 var file_save_dialog:FileDialog = null
+var file_load_dialog:FileDialog = null
 var progress_viewing_dialogue:ProgressDialogue = null
 var main_progress_dialogue_container:BaseDialogue = null
 
@@ -18,7 +21,12 @@ func _ready() -> void:
 	file_save_dialog = FILE_SAVE_DIALOG.instantiate()
 	file_save_dialog.file_selected.connect(_on_file_selected)	
 	add_child(file_save_dialog)
-	hide_file_save_dialog()	
+	hide_file_save_dialog()
+	# Set up the file load dialogue.
+	file_load_dialog = FILE_LOAD_DIALOG.instantiate()
+	file_load_dialog.file_selected.connect(_on_file_selected)
+	add_child(file_load_dialog)
+	hide_file_load_dialog()
 	create_progress_dialogue()
 
 func create_progress_dialogue():
@@ -42,6 +50,16 @@ func show_file_save_dialog() -> FileDialog:
 func hide_file_save_dialog() -> void:
 	file_save_dialog.hide()
 	
+
+## Will show the file load dialogue.
+func show_file_load_dialog() -> FileDialog:
+	file_load_dialog.show()
+	return file_load_dialog
+
+## Will hide the file load dialogue.
+func hide_file_load_dialog() -> void:
+	file_load_dialog.hide()
+
 func show_progress_dialog() -> void:
 	main_progress_dialogue_container.open()
 	

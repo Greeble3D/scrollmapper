@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dquy1wqkn5ufn"]
 
-[node name="FilesSaveDialog" type="FileDialog"]
+[node name="FilesLoadDialog" type="FileDialog"]
 initial_position = 2
 size = Vector2i(400, 400)
 visible = true

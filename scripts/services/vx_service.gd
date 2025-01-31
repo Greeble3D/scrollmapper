@@ -194,6 +194,68 @@ func get_saved_graph(id: int) -> Dictionary:
 		full_graph_data["graph_connections"].append(graph_connection)
 	return full_graph_data
 
+## Converts a saved JSON string to a graph dictionary.
+## This is used in vx_graph import_graph_from_json function.
+func get_saved_graph_from_json(json_string: String) -> Dictionary:
+	var json = JSON.new()
+	var error = json.parse(json_string)
+	if error != OK:
+		push_error("JSON Parse Error: " + json.get_error_message() + " at line " + str(json.get_error_line()))
+		return {}
+
+	var graph_data = json.data
+	if typeof(graph_data) != TYPE_DICTIONARY:
+		push_error("Unexpected data format in JSON string.")
+		return {}
+
+	var full_graph_data: Dictionary = get_graph_data_template()
+	full_graph_data["id"] = int(graph_data["id"])
+	full_graph_data["graph_name"] = graph_data["graph_name"]
+	full_graph_data["graph_description"] = graph_data["graph_description"]	
+
+	for node_data in graph_data["nodes"]:
+		var node:Dictionary = {
+			"id": int(node_data["id"]),
+			"book": node_data["book"],
+			"chapter": int(node_data["chapter"]),
+			"verse": int(node_data["verse"]),
+			"translation": node_data["translation"]
+		}
+		full_graph_data["nodes"].append(node)
+
+	for connection_data in graph_data["connections"]:
+		var connection:Dictionary = {
+			"id": int(connection_data["id"]),
+			"text": connection_data["text"],
+			"start_node_id": int(connection_data["start_node"]),
+			"end_node_id": int(connection_data["end_node"]),
+			"is_parallel": int(connection_data["is_parallel"])
+		}
+		full_graph_data["connections"].append(connection)
+
+	for graph_node_data in graph_data["nodes"]:
+		var graph_node:Dictionary = {
+			"node_id": int(graph_node_data["id"]),
+			"position_x": float(graph_node_data["position_x"]),
+			"position_y": float(graph_node_data["position_y"]),
+			"top_sockets_amount": int(graph_node_data["top_sockets_amount"]),
+			"bottom_sockets_amount": int(graph_node_data["bottom_sockets_amount"]),
+			"left_sockets_amount": int(graph_node_data["left_sockets_amount"]),
+			"right_sockets_amount": int(graph_node_data["right_sockets_amount"])
+		}
+		full_graph_data["graph_nodes"].append(graph_node)
+
+	for graph_connection_data in graph_data["connections"]:
+		var graph_connection:Dictionary = {
+			"connection_id": int(graph_connection_data["id"]),
+			"start_node_side": graph_connection_data["start_node_side"],
+			"end_node_side": graph_connection_data["end_node_side"],
+			"start_node_socket_index": int(graph_connection_data["start_socket_index"]),
+			"end_node_socket_index": int(graph_connection_data["end_socket_index"])
+		}
+		full_graph_data["graph_connections"].append(graph_connection)
+	return full_graph_data
+
 ## Creates a new empty graph and returns its data.
 func create_new_empty_graph() -> Dictionary:
 	var vx_graph: VXGraph = VXGraph.new()

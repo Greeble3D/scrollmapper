@@ -109,10 +109,13 @@ func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
 	for node in vx_nodes.values():
 		node.queue_free()
 	vx_nodes.clear()
+
 	for connection in vx_connections.values():
 		connection.queue_free()
 	vx_connections.clear()
-
+	
+	await get_tree().process_frame
+	
 	# Set graph properties
 	id = graph_data.get("id", 0)
 	graph_name = graph_data.get("graph_name", "")
@@ -157,12 +160,11 @@ func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
 	var connections_tmp:Dictionary = {}
 	for connection in graph_data.get("connections", []):
 		connections_tmp[connection["id"]] = connection
-
+	await get_tree().process_frame
 	# Restore connections
 	for connection_data in graph_data.get("graph_connections", []):
-		var is_parallel:bool = connection_data.get("is_parallel", true)
-
 		var connection_id:int = connection_data.get("connection_id", -1)
+
 		var start_node_id:int = connections_tmp[connection_id].get("start_node_id", -1)
 		var end_node_id:int = connections_tmp[connection_id].get("end_node_id", -1)
 
@@ -180,9 +182,7 @@ func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
 			var end_socket:VXSocket = end_node.get_socket_by_index(end_node_side, end_node_socket_index)
 			if start_socket and end_socket:
 				connect_node_sockets(start_socket, end_socket)
-
 	recalculate_connection_lines()
-
 	graph_changed.emit()
 
 ## Locks the graph if the search results are shown.
@@ -520,3 +520,18 @@ func recalculate_connection_lines():
 ## This is a relay function. 
 func open_node_control_dialogue(vx_node:VXNode) -> void:
 	node_control_opened.emit(vx_node)
+
+## This is called from a dialog window res://scenes/modules/dialogues/export_cross_references_from_vx/import_vx_graph_from_json.gd
+## It takes the source file string, loads it, and converts the json data into a graph.
+## Obviously it has to be a valid graph exported using the export feature. 
+func import_graph_from_json(file:String) -> void:
+	var file_obj = FileAccess.open(file, FileAccess.READ)
+	if file_obj:
+		var json_data = file_obj.get_as_text()
+		file_obj.close()
+		var prepared_graph_data:Dictionary = VXService.get_saved_graph_from_json(json_data)
+		set_full_graph_from_dictionary(prepared_graph_data)
+	else:
+		push_error("File does not exist: " + file)
+
+#endregion 

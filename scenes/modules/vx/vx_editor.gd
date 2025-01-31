@@ -209,6 +209,10 @@ func _on_graph_action_selected(action_tag:String) -> void:
 			export_graph_to_gephi()
 		"export_cross_references_to_gephi":
 			export_cross_references_to_gephi()
+		"export_cross_references_to_json":
+			export_cross_references_to_json()
+		"import_vx_from_json":
+			import_cross_references_from_json()
 		"exit":
 			exit_to_home()
 		_:
@@ -295,6 +299,18 @@ func export_cross_references_to_gephi() -> void:
 	var export_window:Node = EXPORT_CROSS_REFERENCES_TO_GEPHI.instantiate()
 	DialogueManager.create_dialogue(export_window, dialogues_anchor)
  
+func export_cross_references_to_json() -> void:
+	const EXPORT_CROSS_REFERENCES_TO_JSON = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/export_vx_graph_to_json.tscn")
+	var export_window:Node = EXPORT_CROSS_REFERENCES_TO_JSON.instantiate()
+	export_window.inititate(vx_graph)
+	DialogueManager.create_dialogue(export_window, dialogues_anchor)
+
+func import_cross_references_from_json() -> void:
+	const IMPORT_VX_GRAPH_FROM_JSON = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/import_vx_graph_from_json.tscn")
+	var import_window:Node = IMPORT_VX_GRAPH_FROM_JSON.instantiate()
+	import_window.inititate(vx_graph)
+	DialogueManager.create_dialogue(import_window, dialogues_anchor)
+	
 func exit_to_home() -> void:
 	const EXIT_TO_HOME = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/exit_to_home.tscn")
 	var exit_to_home_window:Node = EXIT_TO_HOME.instantiate()
