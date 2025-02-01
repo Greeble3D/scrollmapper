@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://dn2vjyy8ajkj6"]
 
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_socket.gd" id="1_rqvmn"]
-[ext_resource type="Texture2D" uid="uid://dxs10vrgsr60g" path="res://images/icons/editor/Node.svg" id="2_ho0k3"]
+[ext_resource type="Texture2D" uid="uid://b6vuvgnjjfc2u" path="res://theme/backgrounds/anchor.png" id="2_222st"]
 
 [node name="VXSocket" type="Control" groups=["sockets"]]
-custom_minimum_size = Vector2(10, 10)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -28,4 +28,5 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_ho0k3")
+texture = ExtResource("2_222st")
+expand_mode = 3

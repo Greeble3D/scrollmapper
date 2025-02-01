@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bh1iyds4cy28s"]
+[gd_scene load_steps=15 format=3 uid="uid://bh1iyds4cy28s"]
 
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_graph.gd" id="1_sckcm"]
 [ext_resource type="PackedScene" uid="uid://cfxi6tibdx3cp" path="res://scenes/modules/vx/vx_canvas.tscn" id="2_jc8ca"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://juvfgmrln8tf" path="res://scenes/modules/vx/dialogues/dialogue_new_graph.tscn" id="7_4fwow"]
 [ext_resource type="PackedScene" uid="uid://bt43vy44qgas7" path="res://scenes/modules/vx/dialogues/dialogue_load_graphs.tscn" id="8_3crsv"]
 [ext_resource type="PackedScene" uid="uid://bxvpvgnaquqyu" path="res://scenes/modules/vx/dialogues/dialogue_node_control.tscn" id="9_uamg3"]
+[ext_resource type="Texture2D" uid="uid://bg8b5ll2jxntu" path="res://theme/backgrounds/main.png" id="14_1dq5u"]
 
 [node name="VXGraph" type="Control" node_paths=PackedStringArray("vx_canvas", "vx_editor", "vx_search_results", "camera_2d", "nodes_info", "connections_info", "selection_info", "feed_back_notes")]
 layout_mode = 3
@@ -33,6 +34,17 @@ nodes_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer
 connections_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/ConnectionsInfo")
 selection_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/SelectedInfo")
 feed_back_notes = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/FeedBackNotes")
+
+[node name="Background" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(10000, 10000)
+layout_mode = 0
+offset_left = -5000.0
+offset_top = -5000.0
+offset_right = 5000.0
+offset_bottom = 5000.0
+mouse_filter = 2
+texture = ExtResource("14_1dq5u")
+stretch_mode = 1
 
 [node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor", "dialogues", "dialogues_anchor", "blocker_panel", "settings_dialog", "delete_graph_dialogue", "new_graph_dialogue", "load_graphs_dialogue", "node_control_dialogue")]
 script = ExtResource("2_jscly")

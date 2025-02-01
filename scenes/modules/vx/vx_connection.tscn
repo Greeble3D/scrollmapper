@@ -3,7 +3,10 @@
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_connection.gd" id="1_fj7it"]
 
 [node name="Line2D" type="Line2D"]
-width = 2.0
+width = 4.0
+default_color = Color(0.73, 0.174592, 0.1241, 0.709804)
 joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
 antialiased = true
 script = ExtResource("1_fj7it")

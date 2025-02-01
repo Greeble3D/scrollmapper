@@ -291,6 +291,7 @@ func finalize_connection_points():
 
 	create_node_curve_by_connection()
 	connection_finalized.emit(start_node, end_node)
+	move_to_front()
 
 ## Update connection points during mouse drag
 func update_connection_points_mouse_drag():
