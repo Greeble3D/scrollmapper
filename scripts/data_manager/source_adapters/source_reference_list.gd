@@ -7,6 +7,8 @@ func _init():
 	var data_manager:DataManager = DataManager.new()
 	var source_list_path = data_manager.get_source_list_path()
 	var source_list:FileAccess = FileAccess.open(source_list_path, FileAccess.READ)
+	if source_list == null:
+		return
 	var source_list_text:String = source_list.get_as_text()
 	var json:JSON = JSON.new()
 	var error = json.parse(source_list_text)

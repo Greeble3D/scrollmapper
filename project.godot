@@ -42,6 +42,7 @@ folder_colors={
 "res://scenes/home/": "teal",
 "res://scripts/": "green",
 "res://sources/": "orange",
+"res://theme/": "gray",
 "res://tmp/": "pink"
 }
 
