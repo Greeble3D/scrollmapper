@@ -62,9 +62,11 @@ func _on_close_button_pressed() -> void:
 
 func open():
 	show()
+	VXGraph.lock_graph(true)
 	
 func close():
 	hide()
+	VXGraph.lock_graph(false)
 
 ## This is called from the child dialogues to close the dialogue
 func release() -> void:

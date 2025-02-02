@@ -530,6 +530,8 @@ func recalculate_socket_positions_and_node_dimensions():
 
 ## Determines of the node can be edited. 
 func can_edit() -> bool:
+	if VXGraph.is_graph_locked:
+		return false
 	if VXConnection.connection_drag_active:
 		return false
 	if current_node_dragging == id && dragging_already_in_progress:

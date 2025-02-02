@@ -19,6 +19,12 @@ func _ready() -> void:
 	menu_button_import.get_popup().id_pressed.connect(_on_menu_button_import_pressed)
 	menu_button_export.get_popup().id_pressed.connect(_on_button_export_pressed)
 
+	menu_button_graph.toggled.connect(_on_menu_button_graph_toggled)
+	menu_button_import.toggled.connect(_on_menu_button_import_toggled)
+	menu_button_export.toggled.connect(_on_menu_button_export_toggled)
+
+
+
 func _on_menu_button_graph_pressed(id:int) -> void:
 	match id:
 		0:
@@ -51,3 +57,22 @@ func _on_button_export_pressed(id:int) -> void:
 			operation_selected.emit("export_cross_references_to_gephi")
 		3:
 			operation_selected.emit("export_cross_references_to_json")
+
+func _on_menu_button_graph_toggled(on:bool) -> void:
+	if on:
+		VXGraph.lock_graph(true)
+	else:
+		VXGraph.lock_graph(false)
+	
+
+func _on_menu_button_import_toggled(on:bool) -> void:
+	if on:
+		VXGraph.lock_graph(true)
+	else:
+		VXGraph.lock_graph(false)
+	
+func _on_menu_button_export_toggled(on:bool) -> void:
+	if on:
+		VXGraph.lock_graph(true)
+	else:
+		VXGraph.lock_graph(false)
