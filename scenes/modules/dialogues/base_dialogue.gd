@@ -70,7 +70,9 @@ func close():
 
 ## This is called from the child dialogues to close the dialogue
 func release() -> void:
+	VXGraph.lock_graph(false)
 	queue_free()
+	
 	
 func emit_closed() -> void:
 	closed.emit()

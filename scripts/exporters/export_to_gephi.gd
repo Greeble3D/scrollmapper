@@ -48,5 +48,7 @@ func export() -> void:
 
 func save_to_file(content: String) -> void:
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
+	if file == null:
+		return
 	file.store_string(content)
 	file.close()
