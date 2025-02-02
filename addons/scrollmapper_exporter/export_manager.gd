@@ -22,6 +22,9 @@ func _export_begin(features: PackedStringArray, is_debug: bool, path: String, fl
 	# Copy README.md file...
 	copy(install_sources_folder+"README.md", export_folder+"sources/README.md")
 
+	# Copy book_list.json file...
+	copy(install_sources_folder+"book_list.json", export_folder+"sources/book_list.json")
+
 ## Get the directory of target file.
 func get_directory_of_file(export_path:String)->String:
 	var split_export_path:Array = export_path.split("/")

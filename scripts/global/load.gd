@@ -4,6 +4,7 @@ func _ready() -> void:
 	# Create initial directories
 	var data_manager = DataManager.new()
 	data_manager.create_initial_directories()
+	data_manager.create_initial_book_list()
 
 	# This is necessary for runtime. 
 	# In the editor, however, it is instantiated in the res://addons/cmd/cmd.gd editor script.

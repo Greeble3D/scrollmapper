@@ -16,6 +16,7 @@ func create_initial_directories():
 	dir.make_dir_recursive(get_scrollmapper_user_dir())
 	dir.make_dir_recursive(get_scrollmapper_db_dir())
 
+
 ## Create initial database
 func create_initial_database(overwrite: bool = false):
 	var db_path = get_scrollmapper_db_dir().path_join("database.sqlite")
@@ -30,6 +31,23 @@ func create_initial_database(overwrite: bool = false):
 
 	if FileAccess.file_exists(default_db_path):
 		copy(default_db_path, db_path)
+
+## Create initial book list
+func create_initial_book_list(overwrite: bool = false):
+	var book_list_path = get_source_list_path()
+	if not overwrite and FileAccess.file_exists(book_list_path):
+		return
+
+	var default_book_list_path:String = get_executable_sources_dir().path_join("book_list.json")
+
+	if Engine.is_editor_hint():
+		## We are running from the editor. So copy from res:// instead.
+		default_book_list_path = "res://sources/book_list.json"
+	print(default_book_list_path)
+	if FileAccess.file_exists(default_book_list_path):
+		copy(default_book_list_path, book_list_path)
+	else:
+		print("Book list not found...")
 
 ## Main scrollmapper data directory
 func get_scrollmapper_data_dir() -> String:
