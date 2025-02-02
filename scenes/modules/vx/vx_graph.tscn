@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bh1iyds4cy28s"]
+[gd_scene load_steps=17 format=3 uid="uid://bh1iyds4cy28s"]
 
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_graph.gd" id="1_sckcm"]
 [ext_resource type="PackedScene" uid="uid://cfxi6tibdx3cp" path="res://scenes/modules/vx/vx_canvas.tscn" id="2_jc8ca"]
@@ -13,7 +13,15 @@
 [ext_resource type="PackedScene" uid="uid://juvfgmrln8tf" path="res://scenes/modules/vx/dialogues/dialogue_new_graph.tscn" id="7_4fwow"]
 [ext_resource type="PackedScene" uid="uid://bt43vy44qgas7" path="res://scenes/modules/vx/dialogues/dialogue_load_graphs.tscn" id="8_3crsv"]
 [ext_resource type="PackedScene" uid="uid://bxvpvgnaquqyu" path="res://scenes/modules/vx/dialogues/dialogue_node_control.tscn" id="9_uamg3"]
-[ext_resource type="Texture2D" uid="uid://bg8b5ll2jxntu" path="res://theme/backgrounds/main.png" id="14_1dq5u"]
+
+[sub_resource type="Theme" id="Theme_wu5qn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7kvkb"]
+bg_color = Color(0.34902, 0.290196, 0.211765, 1)
+
+[sub_resource type="Theme" id="Theme_tyyt6"]
+default_font_size = 18
+RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 
 [node name="VXGraph" type="Control" node_paths=PackedStringArray("vx_canvas", "vx_editor", "vx_search_results", "camera_2d", "nodes_info", "connections_info", "selection_info", "feed_back_notes")]
 layout_mode = 3
@@ -25,26 +33,24 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
+theme = SubResource("Theme_wu5qn")
 script = ExtResource("1_sckcm")
 vx_canvas = NodePath("VXCanvas")
 vx_editor = NodePath("VXEditor")
 vx_search_results = NodePath("VXEditor/EditorUI/VBoxContainer/VXSearchResults")
 camera_2d = NodePath("VXCamera2D")
-nodes_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/NodesInfo")
-connections_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/ConnectionsInfo")
-selection_info = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/SelectedInfo")
-feed_back_notes = NodePath("VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer/FeedBackNotes")
+nodes_info = NodePath("VXEditor/EditorUI/VBoxContainer/MarginContainer/VXGraphInfo/HBoxContainer/NodesInfo")
+connections_info = NodePath("VXEditor/EditorUI/VBoxContainer/MarginContainer/VXGraphInfo/HBoxContainer/ConnectionsInfo")
+selection_info = NodePath("VXEditor/EditorUI/VBoxContainer/MarginContainer/VXGraphInfo/HBoxContainer/SelectedInfo")
+feed_back_notes = NodePath("VXEditor/EditorUI/VBoxContainer/MarginContainer/VXGraphInfo/HBoxContainer/FeedBackNotes")
 
-[node name="Background" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(10000, 10000)
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = -5000.0
-offset_top = -5000.0
-offset_right = 5000.0
-offset_bottom = 5000.0
-mouse_filter = 2
-texture = ExtResource("14_1dq5u")
-stretch_mode = 1
+offset_left = -50000.0
+offset_top = -50000.0
+offset_right = 50000.0
+offset_bottom = 50000.0
+color = Color(0.54902, 0.486275, 0.368627, 1)
 
 [node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor", "dialogues", "dialogues_anchor", "blocker_panel", "settings_dialog", "delete_graph_dialogue", "new_graph_dialogue", "load_graphs_dialogue", "node_control_dialogue")]
 script = ExtResource("2_jscly")
@@ -94,39 +100,47 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="VXGraphInfo" type="MarginContainer" parent="VXEditor/EditorUI/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VXEditor/EditorUI/VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="VXEditor/EditorUI/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7kvkb")
+
+[node name="VXGraphInfo" type="MarginContainer" parent="VXEditor/EditorUI/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VXEditor/EditorUI/VBoxContainer/MarginContainer/VXGraphInfo"]
 layout_mode = 2
 size_flags_vertical = 4
+theme = SubResource("Theme_tyyt6")
 
-[node name="NodesInfo" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer"]
+[node name="NodesInfo" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/MarginContainer/VXGraphInfo/HBoxContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Nodes: 0"
 fit_content = true
 
-[node name="ConnectionsInfo" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer"]
+[node name="ConnectionsInfo" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/MarginContainer/VXGraphInfo/HBoxContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Connections: 0"
 fit_content = true
 
-[node name="SelectedInfo" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer"]
+[node name="SelectedInfo" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/MarginContainer/VXGraphInfo/HBoxContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Selected: 0"
 fit_content = true
 
-[node name="FeedBackNotes" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/VXGraphInfo/HBoxContainer"]
+[node name="FeedBackNotes" type="RichTextLabel" parent="VXEditor/EditorUI/VBoxContainer/MarginContainer/VXGraphInfo/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 

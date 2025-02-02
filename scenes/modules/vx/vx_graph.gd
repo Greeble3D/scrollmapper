@@ -54,6 +54,7 @@ func _ready():
 	ScriptureService.verses_searched.connect(_on_verses_searched)
 	graph_changed.connect(_on_graph_changed)
 	vx_search_results.search_results_toggled.connect(lock_graph)
+	lock_graph(false)
 	
 
 func _exit_tree() -> void:

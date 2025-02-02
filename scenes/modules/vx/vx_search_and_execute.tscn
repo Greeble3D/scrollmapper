@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bmg34cgf1y4wo"]
+[gd_scene load_steps=14 format=3 uid="uid://bmg34cgf1y4wo"]
 
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="1_6rdk2"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_search_and_execute.gd" id="1_8olel"]
@@ -13,6 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://ca03ylmq6fv3o" path="res://images/icons/Gephi-16.svg" id="10_1k00h"]
 [ext_resource type="Texture2D" uid="uid://b5i2nrntib2ua" path="res://images/icons/json.svg" id="12_nwu17"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8o4w"]
+bg_color = Color(0.34902, 0.290196, 0.211765, 1)
+
 [node name="VXSearchAndExecute" type="MarginContainer" node_paths=PackedStringArray("menu_button_graph", "menu_button_import", "menu_button_export")]
 custom_minimum_size = Vector2(0, 100)
 anchors_preset = 10
@@ -23,6 +26,10 @@ script = ExtResource("1_8olel")
 menu_button_graph = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonGraph")
 menu_button_import = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonImport")
 menu_button_export = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonExport")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t8o4w")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2

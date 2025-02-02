@@ -32,6 +32,9 @@ class_name VXConnection
 ## Indicates if the connection is parallel. Assumed linear if not.
 @export var is_parallel: bool = false
 
+@export var color_linear:Color 
+@export var color_parallel:Color 
+
 #endregion
 
 ## Indicates if the connection is being edited.
@@ -406,7 +409,11 @@ func create_node_curve():
 		var t = float(i) / float(points_per_meter)
 		var curve_point = cubic_bezier(start_point, start_control, end_control, end_point, t)
 		add_point(curve_point)
-
+	if is_parallel:
+		default_color = color_parallel
+	else:
+		default_color = color_linear
+	
 ## Recalculates the connection curve.
 func recalculate_connection_curve():
 	create_node_curve()
