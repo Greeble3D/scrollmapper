@@ -11,6 +11,7 @@ const READER_CHAPTER_BUTTON = preload("res://scenes/modules/reader/reader_chapte
 @export var cross_refs_button: Button 
 @export var next_chapter_button: Button 
 
+@export var browser_margin_container: MarginContainer 
 @export var chapters_v_box_container: VBoxContainer 
 @export var reading_v_box_container: VBoxContainer 
 @export var cross_referencing_margin_container: MarginContainer
@@ -21,6 +22,8 @@ const READER_CHAPTER_BUTTON = preload("res://scenes/modules/reader/reader_chapte
 @export var reading_scroll_container: ScrollContainer 
 @export var cross_referencing_scroll_container: ScrollContainer 
 
+@export var distraction_free_button: Button 
+@export var font_size_spin_box: SpinBox 
 
 var current_translation:String = "KJV"
 var current_book:String = "Genesis"
@@ -35,8 +38,10 @@ func _ready() -> void:
 	reader_book_selector.book_chosen.connect(_on_book_chosen)
 	cross_refs_button.pressed.connect(toggle_cross_references)
 	previous_chapter_button.pressed.connect(previous_chapter)
-	next_chapter_button.pressed.connect(next_chapter)
-	
+	next_chapter_button.pressed.connect(next_chapter)	
+	distraction_free_button.toggled.connect(_on_distraction_free_button_toggled)
+	font_size_spin_box.value_changed.connect(_on_font_size_spin_box_changed)
+	font_size_spin_box.value = 20
 	hide_reader_book_selector()
 	show_chapter("KJV", "Genesis", 1)
 	hide_cross_referencing_browser()
@@ -142,6 +147,12 @@ func hide_cross_referencing_browser():
 func show_cross_referencing_browser():
 	cross_referencing_margin_container.show()
 
+func hide_chapters_browser() -> void:
+	browser_margin_container.hide()
+	
+func show_chapters_browser() -> void:
+	browser_margin_container.show()
+
 ## Create a reading scripture object
 ## This is the scripture for reading.
 ## It is for reading a scripture.
@@ -177,3 +188,16 @@ func create_reader_chapter_button(translation:String, book:String, chapter:int) 
 	
 func _on_book_chosen(translation_abbr:String, book:String) -> void:
 	show_chapter(translation_abbr, book, 1)
+
+func _on_distraction_free_button_toggled(toggled:bool) -> void:
+	if toggled:
+		hide_chapters_browser()
+	else:
+		show_chapters_browser()
+		
+	
+func _on_font_size_spin_box_changed(value:float) -> void:
+	var default_font := get_theme_default_font()
+	if default_font:
+		default_font.fixed_size = int(value)
+		add_theme_font_override("font", default_font)

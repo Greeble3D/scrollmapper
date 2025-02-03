@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://clb8a32uo7n2i"]
+[gd_scene load_steps=3 format=3 uid="uid://clb8a32uo7n2i"]
 
 [ext_resource type="Script" path="res://scenes/modules/book_library/grid_elements/book_listing.gd" id="1_sctw2"]
+[ext_resource type="Texture2D" uid="uid://cc2yvt5ki7rk0" path="res://theme/icons/scroll_sprites/64/scrolls_pack_1_33.png" id="2_1nfda"]
 
-[node name="BookListing" type="GridContainer" node_paths=PackedStringArray("include_checkbox", "book_rich_text_label", "language_rich_text_label", "title_rich_text_label", "content_type_rich_text_label")]
+[node name="BookListing" type="GridContainer" node_paths=PackedStringArray("scroll_icon", "include_checkbox", "book_rich_text_label", "language_rich_text_label", "title_rich_text_label", "content_type_rich_text_label")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -10,37 +11,91 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
-columns = 5
+columns = 6
 script = ExtResource("1_sctw2")
-include_checkbox = NodePath("IncludeCheckbox")
-book_rich_text_label = NodePath("BookRichTextLabel")
-language_rich_text_label = NodePath("LanguageRichTextLabel")
-title_rich_text_label = NodePath("TitleRichTextLabel")
-content_type_rich_text_label = NodePath("ContentTypeRichTextLabel")
+scroll_icon = NodePath("ScrollIconContainer/MarginContainer/ScrollIcon")
+include_checkbox = NodePath("IncludeCheckboxContainer/MarginContainer/IncludeCheckbox")
+book_rich_text_label = NodePath("BookRichTextLabelContainer/MarginContainer/BookRichTextLabel")
+language_rich_text_label = NodePath("LanguageRichTextLabelContainer/MarginContainer/LanguageRichTextLabel")
+title_rich_text_label = NodePath("TitleRichTextLabelVBoxContainer/MarginContainer/TitleRichTextLabel")
+content_type_rich_text_label = NodePath("ContentTypeRichTextLabelVBoxContainer/MarginContainer/ContentTypeRichTextLabel")
 
-[node name="IncludeCheckbox" type="CheckBox" parent="."]
+[node name="IncludeCheckboxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="IncludeCheckboxContainer"]
+layout_mode = 2
+
+[node name="IncludeCheckbox" type="CheckBox" parent="IncludeCheckboxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
+size_flags_vertical = 4
 
-[node name="BookRichTextLabel" type="RichTextLabel" parent="."]
+[node name="ScrollIconContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollIconContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="ScrollIcon" type="TextureRect" parent="ScrollIconContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("2_1nfda")
+
+[node name="BookRichTextLabelContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="BookRichTextLabelContainer"]
+layout_mode = 2
+
+[node name="BookRichTextLabel" type="RichTextLabel" parent="BookRichTextLabelContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Abbreviation"
 fit_content = true
 
-[node name="LanguageRichTextLabel" type="RichTextLabel" parent="."]
+[node name="LanguageRichTextLabelContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="LanguageRichTextLabelContainer"]
+layout_mode = 2
+
+[node name="LanguageRichTextLabel" type="RichTextLabel" parent="LanguageRichTextLabelContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Language"
 fit_content = true
 
-[node name="TitleRichTextLabel" type="RichTextLabel" parent="."]
+[node name="TitleRichTextLabelVBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TitleRichTextLabelVBoxContainer"]
+layout_mode = 2
+
+[node name="TitleRichTextLabel" type="RichTextLabel" parent="TitleRichTextLabelVBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Book Title"
 fit_content = true
 
-[node name="ContentTypeRichTextLabel" type="RichTextLabel" parent="."]
+[node name="ContentTypeRichTextLabelVBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ContentTypeRichTextLabelVBoxContainer"]
+layout_mode = 2
+
+[node name="ContentTypeRichTextLabel" type="RichTextLabel" parent="ContentTypeRichTextLabelVBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Content Type"

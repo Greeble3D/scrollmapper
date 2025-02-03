@@ -4,6 +4,9 @@ class_name BookListing
 
 const BOOK_LISTING_INSTALLED = preload("res://scenes/modules/book_library/grid_elements/themes/book_listing_installed.tres")
 
+## The icon that gets assigned to the books for appearance. 
+@export var scroll_icon:TextureRect
+
 ## Will this be included into the database?
 @export var include_checkbox: CheckBox 
 
@@ -79,3 +82,6 @@ func truncate_text(text: String, max_length: int) -> String:
 	if text.length() > max_length:
 		return text.substr(0, max_length) + "..."
 	return text
+
+func set_scroll_icon(icon:Texture2D) -> void:
+	scroll_icon.texture = icon

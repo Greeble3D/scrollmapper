@@ -3,10 +3,11 @@ extends Control
 class_name BookLibrary
 
 const BOOK_LISTING = preload("res://scenes/modules/book_library/grid_elements/book_listing.tscn")
+const DIVIDER = preload("res://scenes/modules/book_library/grid_elements/divider.tscn")
 
 ## The main book list container. 
 @export var book_list: VBoxContainer
-
+@export var scroll_list:Array[Texture]
 ## Button to queue the update from a list online at github 
 ## https://raw.githubusercontent.com/scrollmapper/book_list/refs/heads/main/book_list.json
 @export var update_list_button: Button
@@ -54,6 +55,10 @@ func add_listing(source_reference:SourceReference) -> void:
 	new_book_listing.set_current_status()
 	book_list.add_child(new_book_listing)
 	listings[new_book_listing.book] = new_book_listing
+	var icon:Texture2D = get_scroll_icon(new_book_listing.book)
+	new_book_listing.set_scroll_icon(icon)
+	var divider:Panel = DIVIDER.instantiate()
+	book_list.add_child(divider)
 
 func _on_update_list_button_pressed():
 	LibraryManager.update_source_list()
@@ -126,3 +131,11 @@ func do_uninstall_book_process(book_listing:BookListing):
 	book_process_complete.emit()
 	book_listing.is_installed = false
 	book_listing.set_current_status()
+
+## Gets a specific random (lol) scroll icon based on a seed string.
+func get_scroll_icon(seed_string:String) -> Texture2D:
+	seed(seed_string.hash()+1)
+	if scroll_list.size() == 0:
+		return null
+	var random_index = randi() % scroll_list.size()
+	return scroll_list[random_index]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5aq6u6sn6q1x"]
+[gd_scene load_steps=11 format=3 uid="uid://b5aq6u6sn6q1x"]
 
 [ext_resource type="Script" path="res://scenes/modules/reader/reader.gd" id="1_qr023"]
 [ext_resource type="Texture2D" uid="uid://b1ql3scu2dyyt" path="res://images/icons/editor/ArrowLeft.svg" id="2_n0qoh"]
@@ -6,12 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://cn2b8usxom1ce" path="res://images/icons/editor/ArrowRight.svg" id="3_omuql"]
 [ext_resource type="Texture2D" uid="uid://bruahuvo5ngj5" path="res://images/icons/editor/MirrorX.svg" id="4_6rmyb"]
 [ext_resource type="PackedScene" uid="uid://ngk4ft07vtvp" path="res://scenes/modules/reader/reader_books_selector/reader_book_selector.tscn" id="5_ueijh"]
+[ext_resource type="Texture2D" uid="uid://b6bcrf1rf2jcq" path="res://images/icons/editor/DistractionFree.svg" id="6_53t8h"]
 [ext_resource type="PackedScene" uid="uid://cboro7vr8pa53" path="res://scenes/modules/shared/exit_button.tscn" id="6_w6xnn"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f53hr"]
-bg_color = Color(0.233925, 0.233925, 0.233925, 1)
+[sub_resource type="Theme" id="Theme_v725r"]
+default_font_size = 20
 
-[node name="Reader" type="Control" node_paths=PackedStringArray("books_button", "previous_chapter_button", "cross_refs_button", "next_chapter_button", "chapters_v_box_container", "reading_v_box_container", "cross_referencing_margin_container", "cross_referencing_v_box_container", "reader_book_selector", "chapers_scroll_container", "reading_scroll_container", "cross_referencing_scroll_container")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f53hr"]
+bg_color = Color(0.431373, 0.384314, 0.34902, 1)
+
+[node name="Reader" type="Control" node_paths=PackedStringArray("books_button", "previous_chapter_button", "cross_refs_button", "next_chapter_button", "browser_margin_container", "chapters_v_box_container", "reading_v_box_container", "cross_referencing_margin_container", "cross_referencing_v_box_container", "reader_book_selector", "chapers_scroll_container", "reading_scroll_container", "cross_referencing_scroll_container", "distraction_free_button", "font_size_spin_box")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,11 +24,13 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = SubResource("Theme_v725r")
 script = ExtResource("1_qr023")
 books_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/BooksButton")
 previous_chapter_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/PreviousChapterButton")
 cross_refs_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/CrossRefsButton")
 next_chapter_button = NodePath("MarginContainer/VBoxContainer/NavigatorMarginContainer/HBoxContainer/NextChapterButton")
+browser_margin_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer")
 chapters_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/ChapersScrollContainer/MarginContainer/ChaptersVBoxContainer")
 reading_v_box_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ReadingScrollContainer/MarginContainer/ReadingVBoxContainer")
 cross_referencing_margin_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer")
@@ -33,6 +39,8 @@ reader_book_selector = NodePath("ReaderBookSelector")
 chapers_scroll_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BrowserMarginContainer/ChapersScrollContainer")
 reading_scroll_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/ReadingMarginContainer/ReadingScrollContainer")
 cross_referencing_scroll_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer/CrossReferencingMarginContainer/CrossReferencingScrollContainer")
+distraction_free_button = NodePath("MarginContainer/VBoxContainer/FooterMarginContainer/HBoxContainer/HBoxContainer/DistractionFreeButton")
+font_size_spin_box = NodePath("MarginContainer/VBoxContainer/FooterMarginContainer/HBoxContainer/HBoxContainer/FontSizeSpinBox")
 
 [node name="BackgroundPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -154,10 +162,30 @@ layout_mode = 2
 
 [node name="FooterMarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/margin_top = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/FooterMarginContainer"]
 layout_mode = 2
 alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/FooterMarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DistractionFreeButton" type="Button" parent="MarginContainer/VBoxContainer/FooterMarginContainer/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+toggle_mode = true
+icon = ExtResource("6_53t8h")
+icon_alignment = 1
+
+[node name="FontSizeSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/FooterMarginContainer/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = 12.0
+value = 12.0
+prefix = "Font Size:"
 
 [node name="ExitButton" parent="MarginContainer/VBoxContainer/FooterMarginContainer/HBoxContainer" instance=ExtResource("6_w6xnn")]
 layout_mode = 2
