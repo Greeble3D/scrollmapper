@@ -197,6 +197,8 @@ func get_saved_graph(id: int) -> Dictionary:
 ## Converts a saved JSON string to a graph dictionary.
 ## This is used in vx_graph import_graph_from_json function.
 func get_saved_graph_from_json(json_string: String) -> Dictionary:
+	var vx_graph_tmp:VXGraphModel = VXGraphModel.new()
+	var next_graph_id:int = vx_graph_tmp.get_next_graph_id()
 	var json = JSON.new()
 	var error = json.parse(json_string)
 	if error != OK:
@@ -209,7 +211,7 @@ func get_saved_graph_from_json(json_string: String) -> Dictionary:
 		return {}
 
 	var full_graph_data: Dictionary = get_graph_data_template()
-	full_graph_data["id"] = int(graph_data["id"])
+	full_graph_data["id"] = next_graph_id
 	full_graph_data["graph_name"] = graph_data["graph_name"]
 	full_graph_data["graph_description"] = graph_data["graph_description"]	
 

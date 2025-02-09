@@ -34,7 +34,6 @@ func save() -> int:
 		execute_query(update_query, [graph_name, graph_description, id])
 		return result[0]["id"]
 	else:
-		# Insert new graph
 		var insert_query = "INSERT INTO vx_graphs (graph_name, graph_description) VALUES (?, ?);"
 		execute_query(insert_query, [graph_name, graph_description])
 		id = get_last_inserted_id()
@@ -66,3 +65,12 @@ func delete():
 	var query = "DELETE FROM vx_graphs WHERE id = ?;"
 	print("Deleting graph with id: ", id)
 	execute_query(query, [id])
+
+func get_next_graph_id() -> int:
+	var query = "SELECT MAX(id) AS max_id FROM vx_graphs;"
+	var result = get_results(query)
+	
+	if result.size() > 0 and result[0]["max_id"] != null:
+		return result[0]["max_id"] + 1
+	else:
+		return 1

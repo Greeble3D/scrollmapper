@@ -3,7 +3,7 @@ class_name VXNode
 
 # Main Attributes
 @export_group("Main Attributes")
-## The ID is the same found in the database.
+## The ID is the same found in the translation verse database.
 @export var id: int
 ## The book of the Bible or collection.
 @export var book: String

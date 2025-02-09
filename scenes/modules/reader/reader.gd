@@ -200,4 +200,4 @@ func _on_font_size_spin_box_changed(value:float) -> void:
 	var default_font := get_theme_default_font()
 	if default_font:
 		default_font.fixed_size = int(value)
-		add_theme_font_override("font", default_font)
+		self.add_theme_font_override("font", default_font)

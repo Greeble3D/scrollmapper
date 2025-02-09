@@ -20,7 +20,7 @@ func _init(_translation: String):
 func get_create_table_query() -> String:
 	return """
 	CREATE TABLE IF NOT EXISTS %s_verses (
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		id INTEGER PRIMARY KEY,
 		verse_hash INTEGER UNIQUE,
 		book_id INTEGER,
 		chapter INTEGER,
@@ -34,13 +34,14 @@ func bulk_save(verses: Array):
 	if verses.size() == 0:
 		return
 	
-	var insert_query = "INSERT INTO %s_verses (verse_hash, book_id, chapter, verse, text) VALUES " % translation
+	var insert_query = "INSERT INTO %s_verses (id, verse_hash, book_id, chapter, verse, text) VALUES " % translation
 	var values = []
 	var params = []
 	
 	for verse in verses:
 		verse_hash = verse.get_verse_hash()
-		values.append("(?, ?, ?, ?, ?)")
+		values.append("(?, ?, ?, ?, ?, ?)")
+		params.append(verse_hash)
 		params.append(verse_hash)
 		params.append(verse.book_id)
 		params.append(verse.chapter)
@@ -61,8 +62,9 @@ func save():
 		execute_query(update_query, [text, get_verse_hash(), book_id, chapter, verse])
 	else:
 		# Insert new verse
-		var insert_query = "INSERT INTO %s_verses (verse_hash, book_id, chapter, verse, text) VALUES (?, ?, ?, ?, ?);" % translation
-		execute_query(insert_query, [get_verse_hash(), book_id, chapter, verse, text])
+		var insert_query = "INSERT INTO %s_verses (id, verse_hash, book_id, chapter, verse, text) VALUES (?, ?, ?, ?, ?, ?);" % translation
+		get_verse_hash() 
+		execute_query(insert_query, [verse_hash, verse_hash, book_id, chapter, verse, text])
 
 func get_all_verses() -> Array:
 	var query = """
