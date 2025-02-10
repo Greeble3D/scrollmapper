@@ -25,6 +25,8 @@ const READER_CHAPTER_BUTTON = preload("res://scenes/modules/reader/reader_chapte
 @export var distraction_free_button: Button 
 @export var font_size_spin_box: SpinBox 
 
+var original_font_size:float = 20
+
 var current_translation:String = "KJV"
 var current_book:String = "Genesis"
 var current_chapter:int = 1
@@ -42,9 +44,13 @@ func _ready() -> void:
 	distraction_free_button.toggled.connect(_on_distraction_free_button_toggled)
 	font_size_spin_box.value_changed.connect(_on_font_size_spin_box_changed)
 	font_size_spin_box.value = 20
+	original_font_size = get_font_size()
 	hide_reader_book_selector()
 	show_chapter("KJV", "Genesis", 1)
 	hide_cross_referencing_browser()
+
+func _exit_tree() -> void:
+	set_font_size(original_font_size)
 
 ## Show the chapter for the given translation, book, and chapter
 ## The main chapter display function. Use it for the reader from any 
@@ -195,9 +201,19 @@ func _on_distraction_free_button_toggled(toggled:bool) -> void:
 	else:
 		show_chapters_browser()
 		
-	
-func _on_font_size_spin_box_changed(value:float) -> void:
+
+func get_font_size() -> float:
+	var default_font := get_theme_default_font()
+	if default_font:
+		return default_font.fixed_size 
+	return 20
+		
+
+func set_font_size(value:float) -> void:
 	var default_font := get_theme_default_font()
 	if default_font:
 		default_font.fixed_size = int(value)
 		self.add_theme_font_override("font", default_font)
+
+func _on_font_size_spin_box_changed(value:float) -> void:
+	set_font_size(value)
