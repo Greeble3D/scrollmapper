@@ -50,6 +50,7 @@ func _ready() -> void:
 	hide_cross_referencing_browser()
 
 func _exit_tree() -> void:
+	# Font size should be reset to original size on exit. 
 	set_font_size(original_font_size)
 
 ## Show the chapter for the given translation, book, and chapter
