@@ -80,6 +80,7 @@ var is_selected_plus:bool = false:
 var placement_offset: Vector2 = Vector2.ZERO
 var last_set_global_position:Vector2 = Vector2.ZERO
 static var current_node_dragging:int = -1
+static var last_selected_node:VXNode = null 
 
 ## Is called from the setter is_selected:bool
 ## The purpose is to change whatever mechanisms are needed for the node's 
@@ -225,6 +226,10 @@ func set_preview_text():
 func get_node_id()->int:
 	return id
 
+## Returns the size of the node as a Vector2.
+func get_node_size() -> Vector2:
+	return size
+
 ## Delete the node. 
 func delete_node():
 	if not can_edit():
@@ -253,7 +258,10 @@ func delete_node():
 func select_node():
 	if not can_edit() || is_selected:
 		return
+	if UserInput.is_shift_pressed() && last_selected_node != null:
+		node_selected_plus.emit(last_selected_node)	
 	node_selected.emit(self)
+	last_selected_node = self
 
 ## Unselects the node set in VXGraph
 func unselect_node_set() ->void:
@@ -276,7 +284,8 @@ func drag_node(pos: Vector2):
 	if not can_edit():
 		return
 	dragging_already_in_progress = true
-	var new_position: Vector2 = get_global_mouse_position() - size / 2 + placement_offset
+
+	var new_position: Vector2 = get_global_mouse_position() - size / 2 + placement_offset 
 	#new_position = snapped(new_position, Vector2(100, 100))
 	node_moved.emit(new_position)
 	node_dragged.emit(pos)
@@ -285,7 +294,7 @@ func drag_node(pos: Vector2):
 func move_node(pos: Vector2):
 	position = pos
 	show_node()
-	node_moved.emit(pos)
+	node_moved.emit(pos + placement_offset)
 
 ## Deprecated. Use move_node instead.
 func move_to_preview_node(pos: Vector2):

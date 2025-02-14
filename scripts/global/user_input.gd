@@ -49,6 +49,7 @@ signal space_bar_pressed
 signal escape_key_pressed
 #endregion keyboard variables
 
+var mouse_position = Vector2.ZERO
 var is_dragging = false
 var drag_start_position = Vector2()
 
@@ -68,7 +69,7 @@ func detect_mouse_events(event):
 			shift_clicked.emit(event.position)
 		if event.is_action_pressed("ctrl_click"):
 			ctrl_clicked.emit()
-		if event.is_released():
+		if event.is_released() and event.button_index != MOUSE_BUTTON_WHEEL_UP and event.button_index != MOUSE_BUTTON_WHEEL_DOWN:
 			click_released.emit()
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.is_pressed():
@@ -85,13 +86,14 @@ func detect_mouse_events(event):
 			else:
 				if is_dragging:
 					is_dragging = false
+					drag_start_position = Vector2.ZERO
 					mouse_drag_ended.emit(event.position)
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			mouse_wheel_increased.emit()
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			mouse_wheel_decreased.emit()
-
 	elif event is InputEventMouseMotion:
+		mouse_position = event.position
 		if is_dragging:
 			# Handle mouse dragging logic here if needed
 			mouse_dragged.emit(event.position)
@@ -107,3 +109,12 @@ func detect_keyboard_events(event):
 		else:
 			# Handle key release logic here if needed
 			pass
+
+func is_shift_pressed() -> bool:
+	return Input.is_key_pressed(KEY_SHIFT)
+
+func get_mouse_position() -> Vector2:
+	return mouse_position
+
+func get_drag_start_position() -> Vector2:
+	return drag_start_position

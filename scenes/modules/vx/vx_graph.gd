@@ -290,7 +290,7 @@ func set_selected_node(node:VXNode) -> void:
 ## Adds a node to the selection set. 
 ## If the node is already in the selection set, it will be removed.
 func add_node_to_selection_set(node:VXNode) -> void:
-	if node in selected_nodes:
+	if node in selected_nodes && node != VXNode.last_selected_node:
 		selected_nodes.erase(node)
 		node.is_selected_plus = false
 	else:

@@ -24,7 +24,7 @@ class_name VXEditor
 @export var node_control_dialogue: MarginContainer 
 
 
-var drag_start_position: Vector2 = Vector2()
+static var drag_start_position: Vector2 = Vector2()
 var is_dragging: bool = false
 var is_dragging_allowed: bool = false
 var starting_drag_position: Vector2 = Vector2.ZERO
