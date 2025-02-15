@@ -1,0 +1,112 @@
+[gd_scene load_steps=60 format=3 uid="uid://dy38u7aepqhkl"]
+
+[ext_resource type="Script" path="res://cross_referenced_books_selector.gd" id="1_gtjhh"]
+[ext_resource type="Texture2D" uid="uid://b5mpvku1gxyg3" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_33.png" id="2_6irab"]
+[ext_resource type="Texture2D" uid="uid://h15aucjggn6p" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_94.png" id="3_e7bsp"]
+[ext_resource type="Texture2D" uid="uid://sy8ryyrb3xh5" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_39.png" id="3_ly48s"]
+[ext_resource type="Texture2D" uid="uid://brd7ja8oc5lhw" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_40.png" id="4_uvu2p"]
+[ext_resource type="Texture2D" uid="uid://dh8rqnxgimqn6" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_41.png" id="5_vn8ni"]
+[ext_resource type="Texture2D" uid="uid://bi3nbvj4y87fj" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_50.png" id="6_7r2so"]
+[ext_resource type="Texture2D" uid="uid://cf7abetf8ipqk" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_57.png" id="7_afub7"]
+[ext_resource type="Texture2D" uid="uid://b5x5ggbaeou6f" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_68.png" id="8_gsjps"]
+[ext_resource type="Texture2D" uid="uid://bnaisf1qskg7p" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_76.png" id="9_vnjne"]
+[ext_resource type="Texture2D" uid="uid://b245ahrhbht8i" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_87.png" id="10_4fvn0"]
+[ext_resource type="Texture2D" uid="uid://lycjes0tsnd" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_92.png" id="11_hlfw8"]
+[ext_resource type="Texture2D" uid="uid://cr3gpdax7ln5w" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_93.png" id="12_4peef"]
+[ext_resource type="Texture2D" uid="uid://crjsjiaawimee" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_106.png" id="14_hns4f"]
+[ext_resource type="Texture2D" uid="uid://du3e5kub20fk" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_108.png" id="15_14b8j"]
+[ext_resource type="Texture2D" uid="uid://blb3gvaxluqdp" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_117.png" id="16_4vodv"]
+[ext_resource type="Texture2D" uid="uid://45qqxyggmktl" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_118.png" id="17_3f13k"]
+[ext_resource type="Texture2D" uid="uid://bmfjao5ue652i" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_123.png" id="18_7rx7g"]
+[ext_resource type="Texture2D" uid="uid://cpq084jqsir3o" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_125.png" id="19_o3tet"]
+[ext_resource type="Texture2D" uid="uid://bgiatuwaare80" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_127.png" id="20_n64b3"]
+[ext_resource type="Texture2D" uid="uid://cly78nvhu53t5" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_140.png" id="21_5fjnk"]
+[ext_resource type="Texture2D" uid="uid://djnjxktubodi1" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_147.png" id="22_yatst"]
+[ext_resource type="Texture2D" uid="uid://ckllgq1wi1mnk" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_148.png" id="23_e0ml8"]
+[ext_resource type="Texture2D" uid="uid://c0fbkrjp0n1h4" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_151.png" id="24_vhadt"]
+[ext_resource type="Texture2D" uid="uid://cm52263qpspwi" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_152.png" id="25_hbiou"]
+[ext_resource type="Texture2D" uid="uid://bvdtuda1okydp" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_161.png" id="26_gcadr"]
+[ext_resource type="Texture2D" uid="uid://dpg0bhpqwf44e" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_163.png" id="27_40xad"]
+[ext_resource type="Texture2D" uid="uid://cmebggb183dku" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_182.png" id="28_v3uks"]
+[ext_resource type="Texture2D" uid="uid://cu1kgm2e1ndkg" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_206.png" id="29_cxjwl"]
+[ext_resource type="Texture2D" uid="uid://ctwc2507kif5d" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_213.png" id="30_xfayy"]
+[ext_resource type="Texture2D" uid="uid://d1mdb60agqo2u" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_214.png" id="31_qe840"]
+[ext_resource type="Texture2D" uid="uid://fy58amfru2mg" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_215.png" id="32_tnujh"]
+[ext_resource type="Texture2D" uid="uid://wcsc17ikdd6k" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_224.png" id="33_qj5qr"]
+[ext_resource type="Texture2D" uid="uid://djrtbdj7yulm1" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_229.png" id="34_thmwt"]
+[ext_resource type="Texture2D" uid="uid://dikywa5m8xhgl" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_257.png" id="35_p43p7"]
+[ext_resource type="Texture2D" uid="uid://dchf2basjlpxv" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_296.png" id="36_0nl7w"]
+[ext_resource type="Texture2D" uid="uid://bd65b0qoih7fn" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_298.png" id="37_wwopf"]
+[ext_resource type="Texture2D" uid="uid://c1v851rlxjx1j" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_327.png" id="38_irlr2"]
+[ext_resource type="Texture2D" uid="uid://dn31bfn6upmu2" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_343.png" id="39_f00tr"]
+[ext_resource type="Texture2D" uid="uid://bq64hpeeuj2hk" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_360.png" id="40_ejh40"]
+[ext_resource type="Texture2D" uid="uid://c8m8ho3i12wg6" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_365.png" id="41_5pa74"]
+[ext_resource type="Texture2D" uid="uid://db6s1huwc7bsf" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_377.png" id="42_fvo2o"]
+[ext_resource type="Texture2D" uid="uid://b14k081rw6byv" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_379.png" id="43_fdfb3"]
+[ext_resource type="Texture2D" uid="uid://cewqqv652ew0k" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_380.png" id="44_l0gbm"]
+[ext_resource type="Texture2D" uid="uid://btworbwiiipm5" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_396.png" id="45_ittqc"]
+[ext_resource type="Texture2D" uid="uid://bakho8b8lgjih" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_397.png" id="46_6er2l"]
+[ext_resource type="Texture2D" uid="uid://hos3mjrb8xny" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_402.png" id="47_vbc1o"]
+[ext_resource type="Texture2D" uid="uid://dhiaej6cirh6r" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_404.png" id="48_c2cwa"]
+[ext_resource type="Texture2D" uid="uid://cxij3l1g6t4lh" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_407.png" id="49_6x7a7"]
+[ext_resource type="Texture2D" uid="uid://bxfq8jh7w8gun" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_408.png" id="50_p1a10"]
+[ext_resource type="Texture2D" uid="uid://bamvgb8xlwndl" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_409.png" id="51_aejax"]
+[ext_resource type="Texture2D" uid="uid://bim2bajl5m61p" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_434.png" id="52_87ssp"]
+[ext_resource type="Texture2D" uid="uid://brheclnqqec52" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_436.png" id="53_io73a"]
+[ext_resource type="Texture2D" uid="uid://dej3250d544f6" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_450.png" id="54_3b6vq"]
+[ext_resource type="Texture2D" uid="uid://bfcaxop1t0w0g" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_451.png" id="55_r31p2"]
+[ext_resource type="Texture2D" uid="uid://dpect21aihn80" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_554.png" id="56_bqneu"]
+[ext_resource type="Texture2D" uid="uid://4pr4yot3pl1g" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_571.png" id="57_3g0dj"]
+[ext_resource type="Texture2D" uid="uid://dka5rbpsti1fk" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_572.png" id="58_cdjo8"]
+[ext_resource type="Texture2D" uid="uid://bqcgomdsdvj2f" path="res://theme/icons/scroll_sprites/32/scrolls_pack_1_580.png" id="59_wvawh"]
+
+[node name="CrossReferencedBooksSelector" type="MarginContainer" node_paths=PackedStringArray("book_item_list", "selected_count_rich_text_label", "select_all_button", "select_none_button")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gtjhh")
+book_item_list = NodePath("VBoxContainer/ScrollContainer/BookItemList")
+scroll_icons = Array[Texture2D]([ExtResource("2_6irab"), ExtResource("3_ly48s"), ExtResource("4_uvu2p"), ExtResource("5_vn8ni"), ExtResource("6_7r2so"), ExtResource("7_afub7"), ExtResource("8_gsjps"), ExtResource("9_vnjne"), ExtResource("10_4fvn0"), ExtResource("11_hlfw8"), ExtResource("12_4peef"), ExtResource("3_e7bsp"), ExtResource("14_hns4f"), ExtResource("15_14b8j"), ExtResource("16_4vodv"), ExtResource("17_3f13k"), ExtResource("18_7rx7g"), ExtResource("19_o3tet"), ExtResource("20_n64b3"), ExtResource("21_5fjnk"), ExtResource("22_yatst"), ExtResource("23_e0ml8"), ExtResource("24_vhadt"), ExtResource("25_hbiou"), ExtResource("26_gcadr"), ExtResource("27_40xad"), ExtResource("28_v3uks"), ExtResource("29_cxjwl"), ExtResource("30_xfayy"), ExtResource("31_qe840"), ExtResource("32_tnujh"), ExtResource("33_qj5qr"), ExtResource("34_thmwt"), ExtResource("35_p43p7"), ExtResource("36_0nl7w"), ExtResource("37_wwopf"), ExtResource("38_irlr2"), ExtResource("39_f00tr"), ExtResource("40_ejh40"), ExtResource("41_5pa74"), ExtResource("42_fvo2o"), ExtResource("43_fdfb3"), ExtResource("44_l0gbm"), ExtResource("45_ittqc"), ExtResource("46_6er2l"), ExtResource("47_vbc1o"), ExtResource("48_c2cwa"), ExtResource("49_6x7a7"), ExtResource("50_p1a10"), ExtResource("51_aejax"), ExtResource("52_87ssp"), ExtResource("53_io73a"), ExtResource("54_3b6vq"), ExtResource("55_r31p2"), ExtResource("56_bqneu"), ExtResource("57_3g0dj"), ExtResource("58_cdjo8"), ExtResource("59_wvawh")])
+selected_count_rich_text_label = NodePath("VBoxContainer/HBoxContainer/SelectedCountRichTextLabel")
+select_all_button = NodePath("VBoxContainer/HBoxContainer/SelectAllButton")
+select_none_button = NodePath("VBoxContainer/HBoxContainer/SelectNoneButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BookItemList" type="ItemList" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+select_mode = 1
+item_count = 2
+item_0/text = "First Item"
+item_0/icon = ExtResource("2_6irab")
+item_1/text = "Second Item"
+item_1/icon = ExtResource("3_e7bsp")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SelectAllButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Select All"
+flat = true
+
+[node name="SelectNoneButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Select None"
+flat = true
+
+[node name="SelectedCountRichTextLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Books Selected: 3"
+fit_content = true

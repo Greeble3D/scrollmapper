@@ -38,8 +38,9 @@ func get_create_table_query() -> String:
 	"""
 
 func save():
-	var query = "INSERT INTO cross_reference (from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes, user_added) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
-	execute_query(query, [from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes, user_added])
+	if not cross_reference_exists(from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end):
+		var query = "INSERT INTO cross_reference (from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes, user_added) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+		execute_query(query, [from_book, from_chapter, from_verse, to_book, to_chapter_start, to_chapter_end, to_verse_start, to_verse_end, votes, user_added])
 
 func get_all_cross_references():
 	var query = "SELECT * FROM cross_reference;"
@@ -137,3 +138,28 @@ func delete():
 		execute_query(query, [id])
 	else:
 		print("Cross-reference ID is not set, cannot delete the entry.")
+
+func get_unique_books() -> Array:
+	var query = "SELECT DISTINCT from_book FROM cross_reference;"
+	var results = get_results(query)
+	var books = []
+	for result in results:
+		books.append(result["from_book"])
+	return books
+
+func get_cross_references_by_books(from_books: Array, _user_added: bool = false) -> Array:
+	if from_books.is_empty():
+		return []
+	
+	var placeholders = PackedStringArray()
+	var params = []
+	for book in from_books:
+		placeholders.append("?")
+		params.append(book)
+	
+	var query = "SELECT * FROM cross_reference WHERE from_book IN (%s)" % ", ".join(placeholders)
+	if _user_added:
+		query += " AND user_added = ?"
+		params.append(true)
+	
+	return get_results(query, params)

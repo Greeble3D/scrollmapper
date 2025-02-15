@@ -45,7 +45,8 @@ func _on_menu_button_import_pressed(id:int) -> void:
 		0:
 			# Import graph from json
 			operation_selected.emit("import_vx_from_json")
-
+		1: 
+			operation_selected.emit("import_user_created_cross_references_from_csv")
 
 func _on_button_export_pressed(id:int) -> void:
 	match id:
@@ -57,6 +58,8 @@ func _on_button_export_pressed(id:int) -> void:
 			operation_selected.emit("export_cross_references_to_gephi")
 		3:
 			operation_selected.emit("export_cross_references_to_json")
+		4: 
+			operation_selected.emit("export_user_created_cross_references_to_csv")
 
 func _on_menu_button_graph_toggled(on:bool) -> void:
 	if on:

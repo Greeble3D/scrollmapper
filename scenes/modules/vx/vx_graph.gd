@@ -189,6 +189,8 @@ func set_full_graph_from_dictionary(graph_data:Dictionary) -> void:
 ## Locks the graph if the search results are shown.
 static func lock_graph(lock:bool) -> void:
 	is_graph_locked = lock
+	if lock:
+		UserInput.force_release_drag() # This addresses a dragging bug in the UserInput.
 
 ## Pushes a message to the feed_back_notes.
 func print_feedback_note(note:String) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmg34cgf1y4wo"]
+[gd_scene load_steps=15 format=3 uid="uid://bmg34cgf1y4wo"]
 
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="1_6rdk2"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_search_and_execute.gd" id="1_8olel"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cbbgdcaygy14e" path="res://images/icons/editor/PageFirst.svg" id="8_gggap"]
 [ext_resource type="Texture2D" uid="uid://b865l5fuyubbq" path="res://images/icons/editor/PlaceholderTexture3D.svg" id="9_lfpp7"]
 [ext_resource type="Texture2D" uid="uid://ca03ylmq6fv3o" path="res://images/icons/Gephi-16.svg" id="10_1k00h"]
+[ext_resource type="Texture2D" uid="uid://cxb078crfdto2" path="res://images/icons/editor/PlaceholderTexture2D.svg" id="11_05qnt"]
 [ext_resource type="Texture2D" uid="uid://b5i2nrntib2ua" path="res://images/icons/json.svg" id="12_nwu17"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8o4w"]
@@ -92,16 +93,19 @@ popup/item_5/id = 5
 layout_mode = 2
 text = "Import"
 icon = ExtResource("6_75kp4")
-item_count = 1
+item_count = 2
 popup/item_0/text = "Import from JSON"
 popup/item_0/icon = ExtResource("12_nwu17")
+popup/item_1/text = "Import  User-created Cross References from CSV"
+popup/item_1/icon = ExtResource("11_05qnt")
+popup/item_1/id = 1
 
 [node name="MenuButtonExport" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 text = "Export"
 icon = ExtResource("6_75kp4")
-item_count = 4
-popup/item_0/text = "Export to Cross References"
+item_count = 5
+popup/item_0/text = "Export to Cross References (Save to Database)"
 popup/item_0/icon = ExtResource("9_lfpp7")
 popup/item_1/text = "Export Graph to Gephi"
 popup/item_1/icon = ExtResource("10_1k00h")
@@ -112,3 +116,6 @@ popup/item_2/id = 2
 popup/item_3/text = "Export as JSON"
 popup/item_3/icon = ExtResource("12_nwu17")
 popup/item_3/id = 3
+popup/item_4/text = "Export User-created Cross References to CSV"
+popup/item_4/icon = ExtResource("11_05qnt")
+popup/item_4/id = 4

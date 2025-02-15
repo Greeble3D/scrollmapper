@@ -213,6 +213,10 @@ func _on_graph_action_selected(action_tag:String) -> void:
 			export_cross_references_to_json()
 		"import_vx_from_json":
 			import_cross_references_from_json()
+		"export_user_created_cross_references_to_csv":
+			export_user_created_cross_references_to_csv()
+		"import_user_created_cross_references_from_csv":
+			import_user_created_cross_references_from_csv()
 		"exit":
 			exit_to_home()
 		_:
@@ -315,3 +319,14 @@ func exit_to_home() -> void:
 	const EXIT_TO_HOME = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/exit_to_home.tscn")
 	var exit_to_home_window:Node = EXIT_TO_HOME.instantiate()
 	DialogueManager.create_dialogue(exit_to_home_window, dialogues_anchor)
+
+func export_user_created_cross_references_to_csv() -> void:
+	const EXPORT_USER_CREATED_CROSS_REFERENCES_TO_CSV = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/export_user_created_cross_references_to_csv.tscn")
+	var export_window:Node = EXPORT_USER_CREATED_CROSS_REFERENCES_TO_CSV.instantiate()
+	DialogueManager.create_dialogue(export_window, dialogues_anchor)
+
+func import_user_created_cross_references_from_csv() -> void:
+	const IMPORT_USER_CREATED_CROSS_REFERENCES_FROM_CSV = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/import_user_created_cross_references_from_csv.tscn")
+	var import_window:ImportUserCreatedCrossReferencesFromCsv = IMPORT_USER_CREATED_CROSS_REFERENCES_FROM_CSV.instantiate()
+	import_window.initiate(vx_graph)
+	DialogueManager.create_dialogue(import_window, dialogues_anchor)

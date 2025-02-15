@@ -283,6 +283,7 @@ func select_node_multiple(pos:Vector2):
 func drag_node(pos: Vector2):
 	if not can_edit():
 		return
+		
 	dragging_already_in_progress = true
 
 	var new_position: Vector2 = get_global_mouse_position() - size / 2 + placement_offset 

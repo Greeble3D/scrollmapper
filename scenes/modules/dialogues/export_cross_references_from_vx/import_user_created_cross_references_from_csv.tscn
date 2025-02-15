@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcv1kyvv5s1r2"]
+
+[ext_resource type="Script" path="res://scenes/modules/dialogues/export_cross_references_from_vx/import_user_created_cross_references_from_csv.gd" id="1_w7dg7"]
+[ext_resource type="Texture2D" uid="uid://x4tw0i4unywe" path="res://images/icons/editor/FolderBrowse.svg" id="2_pj2lt"]
+
+[node name="ImportUserCreatedCrossReferencesFromCsv" type="Control" node_paths=PackedStringArray("file_destination_line_edit", "file_select_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w7dg7")
+file_destination_line_edit = NodePath("VBoxContainer/MarginContainer/FileDestinationLineEdit")
+file_select_button = NodePath("VBoxContainer/MarginContainer/FileSelectButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PromptRichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "This will import cross-references from a CSV file of a [b]standard structure[/b] into the cross-references database, which can be used internally by Scrollmapper and for user collaboration."
+fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="FileDestinationLineEdit" type="LineEdit" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "..."
+
+[node name="FileSelectButton" type="Button" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+icon = ExtResource("2_pj2lt")

@@ -118,3 +118,6 @@ func get_mouse_position() -> Vector2:
 
 func get_drag_start_position() -> Vector2:
 	return drag_start_position
+
+func force_release_drag() -> void:
+	is_dragging = false

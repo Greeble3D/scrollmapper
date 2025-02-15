@@ -1,0 +1,75 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgspyd1oq1sf7"]
+
+[ext_resource type="Script" path="res://scenes/modules/dialogues/export_cross_references_from_vx/export_user_created_cross_references_to_csv.gd" id="1_8dmde"]
+[ext_resource type="PackedScene" uid="uid://dy38u7aepqhkl" path="res://scenes/modules/shared/cross_referenced_books_selector.tscn" id="3_k6qdv"]
+[ext_resource type="Texture2D" uid="uid://x4tw0i4unywe" path="res://images/icons/editor/FolderBrowse.svg" id="4_cpoci"]
+
+[node name="ExportUserCreatedCrossReferencesToCsv" type="Control" node_paths=PackedStringArray("file_destination_line_edit", "file_select_button", "cross_referenced_books_selector", "csv_format_option_button", "user_generated_check_box")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 152.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_8dmde")
+file_destination_line_edit = NodePath("VBoxContainer/MarginContainer/FileDestinationLineEdit")
+file_select_button = NodePath("VBoxContainer/MarginContainer/FileSelectButton")
+cross_referenced_books_selector = NodePath("VBoxContainer/CrossReferencedBooksSelector")
+csv_format_option_button = NodePath("VBoxContainer/HBoxContainer/CSVFormatOptionButton")
+user_generated_check_box = NodePath("VBoxContainer/HBoxContainer/UserGeneratedCheckBox")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PromptRichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+text = "This will export all of the selected books as a CSV of cross-references, which can be imported by other users or supporting systems."
+fit_content = true
+
+[node name="CrossReferencedBooksSelector" parent="VBoxContainer" instance=ExtResource("3_k6qdv")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="FormatRichTextLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CSV Format:"
+fit_content = true
+
+[node name="CSVFormatOptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 2
+popup/item_0/text = "Scrollmapper"
+popup/item_1/text = "OpenBible"
+popup/item_1/id = 1
+
+[node name="UserGeneratedCheckBox" type="CheckBox" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "User Generated Only"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="FileDestinationLineEdit" type="LineEdit" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "..."
+
+[node name="FileSelectButton" type="Button" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+icon = ExtResource("4_cpoci")
