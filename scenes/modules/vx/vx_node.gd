@@ -218,6 +218,14 @@ func get_last_linear_node_for_export():
 func get_verse_string() -> String:
 	return "%s-%s-%s" % [book.replace(" ", "_"), str(chapter), str(verse)]
 
+# Returns the verse string without formatting.
+func get_verse_string_pretty() -> String:
+	return "%s %s:%s" % [book, str(chapter), str(verse)]
+
+# Returns the verse text with the verse string.
+func get_verse_text_pretty() -> String:
+	return "%s - %s" % [get_verse_string_pretty(), text]
+
 ## Sets the preview text of the node.
 func set_preview_text():
 	preview_text.bbcode_text = "[b]%s %s:%s[/b] - %s" % [book, str(chapter), str(verse), text]

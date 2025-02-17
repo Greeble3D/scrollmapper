@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://dedffxldjfm5g"]
+
+[ext_resource type="Script" path="res://scenes/modules/meta_editor/meta_elements/meta_entry_vx.gd" id="1_3xdm8"]
+[ext_resource type="Texture2D" uid="uid://cop5q0vsd2m8r" path="res://images/icons/editor/GuiClose.svg" id="1_5yt7y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m6uki"]
+bg_color = Color(0.294118, 0.435294, 0.701961, 1)
+
+[node name="MetaEntryVX" type="MarginContainer" node_paths=PackedStringArray("meta_key_rich_text_label", "meta_delete_button")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 432.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 3
+script = ExtResource("1_3xdm8")
+meta_key_rich_text_label = NodePath("MarginContainer/MetaEntryElements/MetaKeyRichTextLabel")
+meta_delete_button = NodePath("MarginContainer/MetaEntryElements/MetaDeleteButton")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m6uki")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="MetaEntryElements" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MetaKeyRichTextLabel" type="RichTextLabel" parent="MarginContainer/MetaEntryElements"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "attribute-meta-key"
+fit_content = true
+
+[node name="MetaDeleteButton" type="Button" parent="MarginContainer/MetaEntryElements"]
+layout_mode = 2
+tooltip_text = "Delete Meta Key for this verse."
+icon = ExtResource("1_5yt7y")
