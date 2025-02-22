@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bh1iyds4cy28s"]
+[gd_scene load_steps=18 format=3 uid="uid://bh1iyds4cy28s"]
 
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_graph.gd" id="1_sckcm"]
 [ext_resource type="PackedScene" uid="uid://cfxi6tibdx3cp" path="res://scenes/modules/vx/vx_canvas.tscn" id="2_jc8ca"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://juvfgmrln8tf" path="res://scenes/modules/vx/dialogues/dialogue_new_graph.tscn" id="7_4fwow"]
 [ext_resource type="PackedScene" uid="uid://bt43vy44qgas7" path="res://scenes/modules/vx/dialogues/dialogue_load_graphs.tscn" id="8_3crsv"]
 [ext_resource type="PackedScene" uid="uid://bxvpvgnaquqyu" path="res://scenes/modules/vx/dialogues/dialogue_node_control.tscn" id="9_uamg3"]
+[ext_resource type="PackedScene" uid="uid://8m2hmqh70q4q" path="res://scenes/modules/vx/dialogues/meta_control_dialogue.tscn" id="10_tyroj"]
 
 [sub_resource type="Theme" id="Theme_wu5qn"]
 
@@ -52,7 +53,7 @@ offset_right = 50000.0
 offset_bottom = 50000.0
 color = Color(0.54902, 0.486275, 0.368627, 1)
 
-[node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor", "dialogues", "dialogues_anchor", "blocker_panel", "settings_dialog", "delete_graph_dialogue", "new_graph_dialogue", "load_graphs_dialogue", "node_control_dialogue")]
+[node name="VXEditor" type="CanvasLayer" parent="." node_paths=PackedStringArray("vx_graph", "vx_camera_2d", "vx_search_and_execute", "cursor", "dialogues", "dialogues_anchor", "blocker_panel", "settings_dialog", "delete_graph_dialogue", "new_graph_dialogue", "load_graphs_dialogue", "node_control_dialogue", "meta_control_dialogue")]
 script = ExtResource("2_jscly")
 vx_graph = NodePath("..")
 vx_camera_2d = NodePath("../VXCamera2D")
@@ -66,6 +67,7 @@ delete_graph_dialogue = NodePath("Dialogues/DeleteGraphDialogue")
 new_graph_dialogue = NodePath("Dialogues/NewGraphDialogue")
 load_graphs_dialogue = NodePath("Dialogues/LoadGraphsDialogue")
 node_control_dialogue = NodePath("Dialogues/NodeControlDialogue")
+meta_control_dialogue = NodePath("Dialogues/MetaControlDialogue")
 
 [node name="EditorUI" type="Control" parent="VXEditor"]
 layout_mode = 3
@@ -193,6 +195,11 @@ vx_editor = NodePath("../..")
 visible = false
 layout_mode = 2
 vx_editor = NodePath("../..")
+
+[node name="MetaControlDialogue" parent="VXEditor/Dialogues" node_paths=PackedStringArray("vx_graph") instance=ExtResource("10_tyroj")]
+visible = false
+layout_mode = 2
+vx_graph = NodePath("../../..")
 
 [node name="VXCanvas" parent="." instance=ExtResource("2_jc8ca")]
 layout_mode = 1

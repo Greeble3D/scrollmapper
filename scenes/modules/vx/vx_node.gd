@@ -218,6 +218,10 @@ func get_last_linear_node_for_export():
 func get_verse_string() -> String:
 	return "%s-%s-%s" % [book.replace(" ", "_"), str(chapter), str(verse)]
 
+## Gets the hash for the verse represented by this node.
+func get_verse_hash() -> int:
+	return ScriptureService.get_verse_hash(book, chapter, verse)
+
 # Returns the verse string without formatting.
 func get_verse_string_pretty() -> String:
 	return "%s %s:%s" % [book, str(chapter), str(verse)]

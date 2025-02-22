@@ -9,6 +9,7 @@ class_name VXSearchAndExute
 @export var menu_button_graph: MenuButton
 @export var menu_button_import: MenuButton
 @export var menu_button_export: MenuButton
+@export var edit_meta_button: Button
 
 ## When an operation is selected, this signal will be emitted.
 ## The op_tag will be the tag of the operation selected.
@@ -22,7 +23,8 @@ func _ready() -> void:
 	menu_button_graph.toggled.connect(_on_menu_button_graph_toggled)
 	menu_button_import.toggled.connect(_on_menu_button_import_toggled)
 	menu_button_export.toggled.connect(_on_menu_button_export_toggled)
-
+	
+	edit_meta_button.pressed.connect(_on_edit_meta_button_pressed)
 
 
 func _on_menu_button_graph_pressed(id:int) -> void:
@@ -79,3 +81,6 @@ func _on_menu_button_export_toggled(on:bool) -> void:
 		VXGraph.lock_graph(true)
 	else:
 		VXGraph.lock_graph(false)
+
+func _on_edit_meta_button_pressed() -> void:
+	operation_selected.emit("edit_meta")

@@ -22,7 +22,7 @@ class_name VXEditor
 @export var new_graph_dialogue: MarginContainer
 @export var load_graphs_dialogue: LoadGraphsDialogue 
 @export var node_control_dialogue: MarginContainer 
-
+@export var meta_control_dialogue: MetaControlDialogue 
 
 static var drag_start_position: Vector2 = Vector2()
 var is_dragging: bool = false
@@ -217,6 +217,8 @@ func _on_graph_action_selected(action_tag:String) -> void:
 			export_user_created_cross_references_to_csv()
 		"import_user_created_cross_references_from_csv":
 			import_user_created_cross_references_from_csv()
+		"edit_meta":
+			show_meta_control_dialogue()
 		"exit":
 			exit_to_home()
 		_:
@@ -314,7 +316,10 @@ func import_cross_references_from_json() -> void:
 	var import_window:Node = IMPORT_VX_GRAPH_FROM_JSON.instantiate()
 	import_window.inititate(vx_graph)
 	DialogueManager.create_dialogue(import_window, dialogues_anchor)
-	
+
+func show_meta_control_dialogue() -> void:
+	meta_control_dialogue.show()
+
 func exit_to_home() -> void:
 	const EXIT_TO_HOME = preload("res://scenes/modules/dialogues/export_cross_references_from_vx/exit_to_home.tscn")
 	var exit_to_home_window:Node = EXIT_TO_HOME.instantiate()

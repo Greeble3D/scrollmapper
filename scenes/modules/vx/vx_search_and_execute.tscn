@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bmg34cgf1y4wo"]
+[gd_scene load_steps=16 format=3 uid="uid://bmg34cgf1y4wo"]
 
 [ext_resource type="PackedScene" uid="uid://b47hcwlb6la61" path="res://scenes/modules/search/search.tscn" id="1_6rdk2"]
 [ext_resource type="Script" path="res://scenes/modules/vx/vx_search_and_execute.gd" id="1_8olel"]
@@ -13,20 +13,22 @@
 [ext_resource type="Texture2D" uid="uid://ca03ylmq6fv3o" path="res://images/icons/Gephi-16.svg" id="10_1k00h"]
 [ext_resource type="Texture2D" uid="uid://cxb078crfdto2" path="res://images/icons/editor/PlaceholderTexture2D.svg" id="11_05qnt"]
 [ext_resource type="Texture2D" uid="uid://b5i2nrntib2ua" path="res://images/icons/json.svg" id="12_nwu17"]
+[ext_resource type="Texture2D" uid="uid://b66frwatqu7i8" path="res://images/icons/editor/NodeInfo.svg" id="14_b7et8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8o4w"]
 bg_color = Color(0.34902, 0.290196, 0.211765, 1)
 
-[node name="VXSearchAndExecute" type="MarginContainer" node_paths=PackedStringArray("menu_button_graph", "menu_button_import", "menu_button_export")]
+[node name="VXSearchAndExecute" type="MarginContainer" node_paths=PackedStringArray("menu_button_graph", "menu_button_import", "menu_button_export", "edit_meta_button")]
 custom_minimum_size = Vector2(0, 100)
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 script = ExtResource("1_8olel")
-menu_button_graph = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonGraph")
-menu_button_import = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonImport")
-menu_button_export = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer/MenuButtonExport")
+menu_button_graph = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/VBoxContainer/MenusHBoxContainer/MenuButtonGraph")
+menu_button_import = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/VBoxContainer/MenusHBoxContainer/MenuButtonImport")
+menu_button_export = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/VBoxContainer/MenusHBoxContainer/MenuButtonExport")
+edit_meta_button = NodePath("HBoxContainer/Ops/VBoxContainer/MarginContainer/VBoxContainer/ButtonsHBoxContainer/EditMetaButton")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
@@ -61,12 +63,15 @@ fit_content = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MenusHBoxContainer" type="HBoxContainer" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="MenuButtonGraph" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="MenuButtonGraph" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/VBoxContainer/MenusHBoxContainer"]
 layout_mode = 2
 text = "Graph"
 icon = ExtResource("3_nllwr")
@@ -89,7 +94,7 @@ popup/item_5/text = "Exit"
 popup/item_5/icon = ExtResource("8_gggap")
 popup/item_5/id = 5
 
-[node name="MenuButtonImport" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="MenuButtonImport" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/VBoxContainer/MenusHBoxContainer"]
 layout_mode = 2
 text = "Import"
 icon = ExtResource("6_75kp4")
@@ -100,7 +105,7 @@ popup/item_1/text = "Import  User-created Cross References from CSV"
 popup/item_1/icon = ExtResource("11_05qnt")
 popup/item_1/id = 1
 
-[node name="MenuButtonExport" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="MenuButtonExport" type="MenuButton" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/VBoxContainer/MenusHBoxContainer"]
 layout_mode = 2
 text = "Export"
 icon = ExtResource("6_75kp4")
@@ -119,3 +124,11 @@ popup/item_3/id = 3
 popup/item_4/text = "Export User-created Cross References to CSV"
 popup/item_4/icon = ExtResource("11_05qnt")
 popup/item_4/id = 4
+
+[node name="ButtonsHBoxContainer" type="HBoxContainer" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="EditMetaButton" type="Button" parent="HBoxContainer/Ops/VBoxContainer/MarginContainer/VBoxContainer/ButtonsHBoxContainer"]
+layout_mode = 2
+text = "Edit Meta"
+icon = ExtResource("14_b7et8")
