@@ -11,6 +11,8 @@ signal node_selected(node:VXNode)
 @export var close_button: Button 
 @export var selected_node_info_rich_text_label: RichTextLabel 
 
+@export var selected_nodes_rich_text_label: RichTextLabel 
+
 @export var add_meta_key_line_edit: LineEdit 
 @export var add_meta_value_line_edit: LineEdit
 @export var add_meta_button: Button 
@@ -49,6 +51,10 @@ func populate_node_list() -> void:
 		vx_node_item_list.set_item_tooltip_enabled(i, false)
 		vx_node_item_list_key[i]=node
 		
+		if node.is_selected || node.is_selected_plus:
+			vx_node_item_list.select(i, false)
+	update_selected_nodes_amount()
+		
 func _sort_nodes_alphabetically(a:VXNode, b:VXNode) -> bool:
 	return a.get_verse_string_pretty() < b.get_verse_string_pretty()
 
@@ -59,6 +65,7 @@ func clear_node_list() -> void:
 func _on_vx_node_item_list_item_selected(index:int, selected:bool) -> void:
 	node_selected.emit(vx_node_item_list_key[index])
 	current_selected_verse_hash = vx_node_item_list_key[index].get_verse_hash()
+	update_selected_nodes_amount()
 
 func _on_visibility_changed() -> void:
 	if visible:
@@ -69,6 +76,10 @@ func _on_visibility_changed() -> void:
 func update_selected_node_info_rich_text_label(vx_node:VXNode) -> void:
 	var updated_text:String = "[b]%s[/b]\n%s"%[vx_node.get_verse_string_pretty(), vx_node.text]
 	selected_node_info_rich_text_label.text = updated_text
+
+func update_selected_nodes_amount() -> void:
+	var selected_nodes:Array[VXNode] = get_selected_nodes()
+	selected_nodes_rich_text_label.text = "Selected Nodes: %s"%[str(selected_nodes.size())]
 
 func update_selected_node_meta(vx_node:VXNode) -> void:
 	populate_meta_list(vx_node.get_verse_hash())
@@ -106,6 +117,7 @@ func populate_meta_list(verse_hash:int) -> void:
 		var meta_entry_vx:MetaEntryVX = META_ENTRY_VX.instantiate()
 		meta_entry_vx.initiate(meta)
 		meta_entries_v_box_container.add_child(meta_entry_vx)
+
 
 func add_meta_entry(verse_hash:int, key:String, value:String) -> void:
 	ScriptureService.set_verse_meta(verse_hash, key.strip_edges(), value.strip_edges())

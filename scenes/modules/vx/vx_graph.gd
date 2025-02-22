@@ -302,8 +302,11 @@ func add_node_to_selection_set(node:VXNode) -> void:
 
 ## Clears the selection set.
 func clear_selection_set() ->void:
+	if !vx_editor.is_mouse_over_any_element(false):
+		return
 	for selected_node in selected_nodes:
-		selected_node.is_selected_plus = false
+		if is_instance_valid(selected_node):
+			selected_node.is_selected_plus = false
 	selected_nodes.clear()
 	graph_changed.emit()
 

@@ -133,17 +133,16 @@ func _process(_delta: float):
 
 ## Will return true of the mouse is over a VXNode or VXSocket
 ## Note: This implementation uses a loop, which can be improved to avoid relying on loops.
-func is_mouse_over_any_element() -> bool:
-
+func is_mouse_over_any_element(include_vx_search_element:bool = true) -> bool:
 	for node:VXNode in get_tree().get_nodes_in_group("nodes"):
 		if node.is_mouse_over_node:
 			return true
 	for socket:VXSocket in get_tree().get_nodes_in_group("sockets"):
 		if socket.is_mouse_over_socket:
 			return true
-
-	if get_viewport().get_mouse_position().y < vx_search_and_execute.size.y:
-		return true
+	if include_vx_search_element:
+		if get_viewport().get_mouse_position().y < vx_search_and_execute.size.y:
+			return true
 	return false
 
 ## Gets the camera 2D from the VXGraph
