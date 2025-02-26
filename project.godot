@@ -37,6 +37,7 @@ enabled=PackedStringArray("res://addons/cmd/plugin.cfg", "res://addons/godot-sql
 
 folder_colors={
 "res://addons/": "yellow",
+"res://documentation/": "orange",
 "res://images/": "blue",
 "res://scenes/": "red",
 "res://scenes/home/": "teal",
