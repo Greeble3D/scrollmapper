@@ -39,8 +39,6 @@ The **Update Book List** button will refresh the main book list from the Scrollm
 
 ## Reader 
 
-## Reader 
-
 ![Reader](../images/reader-1.png)
 
 The reader allows you to read the books in-app. This is useful because there are quite a few extra-biblical books that you may wish to review. When reading the main canonical books, you will also be able to see cross-references to the scriptures by double-clicking verses in the reader.
