@@ -14,6 +14,8 @@ Scrollmapper can export thousands of cross-references to Gephi for deep analysis
 
 Scrollmapper comes pre-populated with 34,000 cross-references from [openbible.info](https://www.openbible.info/labs/cross-references/), allowing immediate exploration and analysis without additional data entry.
 
+> **Note:** Gephi is the leading visualization and exploration software for all kinds of graphs and networks. Gephi is open-source and free.
+
 ![Ezekiel Scrollmap](../images/ezekiel.png)
 
 ## Made in Godot
