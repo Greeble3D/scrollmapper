@@ -16,11 +16,13 @@ Scrollmapper imports books directly from the main Scrollmapper databases on GitH
 - https://github.com/scrollmapper/bible_databases
 - https://github.com/scrollmapper/bible_databases_deuterocanonical
 
-Scrollmapper includes a basic reader so that you can read any of the biblical or lost books you wish. It also contains a well-established cross-referencing database from [openbible.info](https://www.openbible.info/labs/cross-references/), which allows for some pretty depthy connections research out of the box. 
+Scrollmapper includes a basic reader so that you can read any of the biblical or lost books you wish. It also contains a well-established cross-referencing database from [openbible.info](https://www.openbible.info/labs/cross-references/), which allows for some fairly depthy connections research out of the box. 
 
 ![Book List](../images/books-list.png)
 
 > **Note** At the time of this writing, the app is still in prototype phase. Secondary features and presentation are a bit basic. 
+
+![Reader](../images/reader.png)
 
 ## Meta Editing 
 

@@ -22,4 +22,6 @@ Scrollmapper comes pre-populated with 34,000 cross-references from [openbible.in
 
 Scrollmapper is built using the game engine [Godot](https://godotengine.org/), which enables it to feature visually appealing graphical interactions.
 
-We hope to include more features such as flash cards, slide shows, and more.
+We hope to include more features such as flash cards, slide shows, and more. 
+ 
+ 
