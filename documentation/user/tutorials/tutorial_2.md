@@ -12,3 +12,39 @@ With Scrollmapper's extensive dataset, you can leverage Gephi's advanced graph a
 
 For those familiar with Gephi, the potential is vast. You can visualize and analyze the connections between different parts of the Bible, identify central themes, and explore the structure of biblical narratives. Gephi's capabilities allow for in-depth exploration of canonical scriptures, revealing patterns and insights that might not be immediately apparent through traditional study methods.
 
+## Scrollmapper -> Gephi Basics 
+
+Scrollmapper exports to Gephi using the **[.gexf](https://gexf.net/)** format. Opening the .gexf file will reveal an entire network of connected verses ready for Gephi editing and analysis. 
+
+Using the simple example from [Tutorial 1](tutorial_2.md), let us export a basic graph to Gephi. 
+
+Here it is in Scrollmapper:
+
+![From Scrollmapper, Prepared for Gephi:](../../images/enoch-job-wisdom-connection.png)
+
+And choosing Export -> Export Graph to Gephi, and importing in Gephi, you get this:
+
+![Exported Scrollmapper Graph in Gephi](../../images/job-enoch-gephi.png)
+
+This small graph provides you quite a bit of information:
+
+![Gephi Data Laboratory](../../images/gephi-scrollmapper-data-laboratory.png)
+
+Here are the default attributes that are available for every node in Gephi:
+
+- Id
+- Label
+- scripture_text
+- scripture_location
+- translation
+- book
+- chapter
+- verse
+
+If you export from Scrollmapper with Custom attributes (using Scrollmapper's verse meta feature) you can have even more attributes to filter / work with in Gephi. 
+
+For example, by having the verse text available, you can search all nodes according to the text the scriptures contain:
+
+![Verse Search](../../images/verse-search-gephi.png)
+
+This might not seem like much, but with a dataset of thousands of connected verses, Gephi becomes very useful for analyzing data.
