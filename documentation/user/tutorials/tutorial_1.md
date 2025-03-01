@@ -15,9 +15,10 @@
     - [When Designing for Cross-References](#when-designing-for-cross-references)
 - [Now that you know the basics...](#now-that-you-know-the-basics)
 
+## Overview of Graph Options
+
 In the main graphing area, you will find a canvas where you can create connected nodes. You will also have various options for saving, exporting, and working with the nodes.
 
-## Overview of Graph Options
 ![Graph Options](../../images/graph-options.png)
 
 List of graph control functions and operations:
