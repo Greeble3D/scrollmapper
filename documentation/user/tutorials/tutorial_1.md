@@ -2,6 +2,19 @@
 
 > **NOTE** This is the most important tutorial document in Scrollmapper. Read it carefully.
 
+## Table of Contents
+- [Overview of Graph Options](#overview-of-graph-options)
+- [Graph Dropdown](#graph-dropdown)
+- [Import Dropdown](#import-dropdown)
+- [Export Dropdown](#export-dropdown)
+- [Edit Meta](#edit-meta)
+- [Working with Nodes](#working-with-nodes)
+    - [Adding and Connecting Nodes](#adding-and-connecting-nodes)
+    - [Dragging Nodes, Navigating Graph](#dragging-nodes-navigating-graph)
+    - [Linear and Parallel Connections](#linear-and-parallel-connections)
+    - [When Designing for Cross-References](#when-designing-for-cross-references)
+- [Now that you know the basics...](#now-that-you-know-the-basics)
+
 In the main graphing area, you will find a canvas where you can create connected nodes. You will also have various options for saving, exporting, and working with the nodes.
 
 ## Overview of Graph Options
@@ -30,7 +43,7 @@ List of graph control functions and operations:
 ![Import](../../images/import.png)
 
 - **Import from JSON** When a user exports a graph, it is exported as a JSON object. This can re-import a graph from JSON.
-    - > **Note** If a user creates a graph using a book not currently in your library, then the nodes for that book will not import. Collaboration and communication between users and projects are necessary here.
+        - > **Note** If a user creates a graph using a book not currently in your library, then the nodes for that book will not import. Collaboration and communication between users and projects are necessary here.
 - **Import User-created Cross References from CSV** If a user exports a list of cross-references they had created (in the export options), it can be re-imported here. These will be imported to the database (not to a graph).
 
 ### Export Dropdown
@@ -66,13 +79,21 @@ In the above example, you see a verse about to be added.
 - The green plus icon will add the verse for a multiple-selection operation, which will add multiple verses to the graph (This operation is completed by choosing the Add Verses button below). 
 - You can save time by adding nodes in linear to the selected node, or in parallel to the selected node. 
 
+### Dragging Nodes, Navigating Graph
+
+- **Move a Node** Click on the node and drag it. 
+- **Move multiple nodes** Shift-click multiple nodes then drag them (without releasing Shift button). 
+- **Pan Graph** Simply click an empty area of the graph and drag. This will pan the view. 
+- **Zoom in / out** Use the mouse-wheel to zoom in and out. 
+- **View node info** Double click a node to bring up it's info panel. Here meta can be assigned as well. 
+
 ### Linear and Parallel Connections
 
 - **Linear Connections** flow top to bottom. They represent linear progression of text, such as shown in **Job 28:12-13** and **Enoch 42:1-3** in this graph.
 - **Parallel Connections** flow left to right. They are connections between scriptures, classically known as cross-references. In the graph, you see these parallel relationships:
-  - **Job 28:12** connects to **Enoch 42:1**
-  - **Job 28:13** connects to **Enoch 42:2**
-  - **Job 15:16** connects to **Enoch 42:3**
+    - **Job 28:12** connects to **Enoch 42:1**
+    - **Job 28:13** connects to **Enoch 42:2**
+    - **Job 15:16** connects to **Enoch 42:3**
 
 > **NOTE** It is very important to recognize how node-flow works, as it affects how data is exported in some cases. 
 
@@ -125,3 +146,4 @@ Simply stated, in this graph, one verse in Job was connected to another verse in
 You are able to use Scrollmapper's basic graphing techniques. 
 
 Scrollmapper was created to allow users to create cross-reference databases for the lost books, such as Enoch used in this example. 
+
