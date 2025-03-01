@@ -78,7 +78,7 @@ So remember:
 
 ### When Designing for Cross-References
 
-When / if you are designing a graph that will save it's relationships as cross-references, you must keep in mind some important points. 
+When / if you are designing a graph that will save its relationships as cross-references, you must keep in mind some important points. 
 
 Look at how this graph exports to the database:
 
@@ -105,3 +105,10 @@ In the **OpenBible** format:
 | Job.15.16  | I Enoch.42.3              | 0     |
 | Job.28.12  | I Enoch.42.1-I Enoch.42.3 | 0     |
 | Job.28.13  | I Enoch.42.2-I Enoch.42.3 | 0     |
+
+Here you can clearly see one-to-one and one-to-many relationships in both exported **.csv** files. 
+
+Simply stated, in this graph, one verse in Job was connected to another verse in Enoch. A second verse in Job was connected to a passage in Enoch, same area. 
+
+> **NOTE** As Scrollmapper continues to grow in its use with other applications, these rules will become more important. 
+
