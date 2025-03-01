@@ -54,6 +54,18 @@ To explain the basics of the node system, here is a **network** we've created co
 
 > **Note** This simple graph shows the importance of this system in graphing relationships in the inspired word.
 
+### Adding and Connecting Nodes
+
+To add nodes, simply search them in the bar above, and use the add options to add them to the graph. 
+
+![Select verse for node...](../../images/select-verse-for-node.png)
+
+In the above example, you see a verse about to be added.
+
+- The blue arrow will add the verse as a node to the graph. 
+- The green plus icon will add the verse for a multiple-selection operation, which will add multiple verses to the graph (This operation is completed by choosing the Add Verses button below). 
+- You can save time by adding nodes in linear to the selected node, or in parallel to the selected node. 
+
 ### Linear and Parallel Connections
 
 - **Linear Connections** flow top to bottom. They represent linear progression of text, such as shown in **Job 28:12-13** and **Enoch 42:1-3** in this graph.
@@ -69,8 +81,8 @@ To explain the basics of the node system, here is a **network** we've created co
 - Parallel connections flow left to right. 
 
 **Remember:**
-- Linear connections represent the progression of text, such as reading an account linearly.
-- Parallel connections represent parallel thoughts or connected accounts, especially symbolically.
+- Linear connections (top to bottom) represent the progression of text, such as reading an account linearly.
+- Parallel connections (left to right) represent parallel thoughts or connected accounts, especially symbolically.
 
 ### When Designing for Cross-References
 
@@ -108,3 +120,8 @@ Simply stated, in this graph, one verse in Job was connected to another verse in
 
 > **NOTE** As Scrollmapper continues to grow in its use with other applications, these rules will become more important. 
 
+## Now that you know the basics...
+
+You are able to use Scrollmapper's basic graphing techniques. 
+
+Scrollmapper was created to allow users to create cross-reference databases for the lost books, such as Enoch used in this example. 
