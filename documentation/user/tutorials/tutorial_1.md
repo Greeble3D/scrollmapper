@@ -44,7 +44,7 @@ List of graph control functions and operations:
 ![Import](../../images/import.png)
 
 - **Import from JSON** When a user exports a graph, it is exported as a JSON object. This can re-import a graph from JSON.
-        - > **Note** If a user creates a graph using a book not currently in your library, then the nodes for that book will not import. Collaboration and communication between users and projects are necessary here.
+   - > **Note** If a user creates a graph using a book not currently in your library, then the nodes for that book will not import. Collaboration and communication between users and projects are necessary here.
 - **Import User-created Cross References from CSV** If a user exports a list of cross-references they had created (in the export options), it can be re-imported here. These will be imported to the database (not to a graph).
 
 ### Export Dropdown
