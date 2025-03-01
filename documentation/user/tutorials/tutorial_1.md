@@ -97,3 +97,13 @@ In the Scrollmapper format, a CSV can be exported that takes this format:
 | Job       | 28           | 13         | I Enoch | 42               | 42             | 2              | 3            | 0     | 1          |
 
 This can, in turn, be used in Google Docs, Excel, etc. 
+
+In the **OpenBible** format:
+
+| From Verse | To Verse                  | Votes | #www.openbible.info format - https://www.openbible.info/labs/cross-references/ |
+|------------|---------------------------|-------|--------------------------------------------------------------------------------|
+| Job.15.16  | I Enoch.42.3              | 0     |                                                                                |
+| Job.28.12  | I Enoch.42.1-I Enoch.42.3 | 0     |                                                                                |
+| Job.28.13  | I Enoch.42.2-I Enoch.42.3 | 0     |                                                                                |
+
+
