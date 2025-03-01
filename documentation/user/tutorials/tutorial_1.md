@@ -53,7 +53,7 @@ List of graph control functions and operations:
 
 - **Export to Cross-References** Saves your graph to the cross-references database. This is technically an export operation, which is why it is named such.
 - **Export Graph to Gephi** Will export the graph as a **[.gexf](https://gexf.net/)** file for use in **[Gephi](https://gephi.org/)**.
-- **Export Cross-References Database to Gephi** This will export the ENTIRE cross-reference database to **[Gephi](https://gephi.org/)**. This will make an extremely large graph/dataset as Scrollmapper already contains 34,000 cross-references to start. Whatever you have exported to the cross-reference database will also be included.
+- **Export Cross-References Database to Gephi** This will export the ENTIRE cross-reference database to **[Gephi](https://gephi.org/)**. This will make an extremely large graph/dataset as Scrollmapper already contains 340,000 cross-references to start. Whatever you have exported to the cross-reference database will also be included.
 - **Export as JSON** Will export the graph as a JSON object, which other users may import again. This is useful for collaboration.
 - **Export User-Created Cross References to CSV** Will export chosen sets of cross-references to CSV format, which can be used in other apps or databases.
 
