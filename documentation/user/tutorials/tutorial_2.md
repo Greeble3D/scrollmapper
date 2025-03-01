@@ -49,9 +49,12 @@ For example, by having the verse text available, you can search all nodes accord
 
 This might not seem like much, but with a dataset of thousands of connected verses, Gephi becomes very useful for analyzing data.
 
-Here is a graph of the *minor prophets* and their relationships to each other:
+Here is a quick-generated graph of the *minor prophets* and their relationships to each other:
+
 
 ![Minor prophets, Gephi Graph](../../images/gephi-render-2.png)
+
+> **NOTE** Organizing and isolating node groups is a huge focus in Gephi. However in this case, we've run some auto-layouts for a quick result. 
 
 And the corresponding data laboratory:
 
