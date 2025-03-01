@@ -4,10 +4,10 @@
 
 ## Table of Contents
 - [Overview of Graph Options](#overview-of-graph-options)
-- [Graph Dropdown](#graph-dropdown)
-- [Import Dropdown](#import-dropdown)
-- [Export Dropdown](#export-dropdown)
-- [Edit Meta](#edit-meta)
+   - [Graph Dropdown](#graph-dropdown)
+   - [Import Dropdown](#import-dropdown)
+   - [Export Dropdown](#export-dropdown)
+   - [Edit Meta](#edit-meta)
 - [Working with Nodes](#working-with-nodes)
     - [Adding and Connecting Nodes](#adding-and-connecting-nodes)
     - [Dragging Nodes, Navigating Graph](#dragging-nodes-navigating-graph)
