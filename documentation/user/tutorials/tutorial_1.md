@@ -1,5 +1,7 @@
 # Scrollmapper - Tutorial 1: Using the Node System
 
+> **NOTE** This is the most important tutorial document in Scrollmapper. Read it carefully.
+
 In the main graphing area, you will find a canvas where you can create connected nodes. You will also have various options for saving, exporting, and working with the nodes.
 
 ## Overview of Graph Options
@@ -44,3 +46,54 @@ List of graph control functions and operations:
 ### Edit Meta
 This is an advanced option for editing meta keys. These are used for isolating data later in **[Gephi](https://gephi.org/)**. 
 
+## Working with Nodes
+
+To explain the basics of the node system, here is a **network** we've created connecting two important wisdom books: Job and Enoch. 
+
+![Where is wisdom found?](../../images/enoch-job-wisdom-connection.png)
+
+> **Note** This simple graph shows the importance of this system in graphing relationships in the inspired word.
+
+### Linear and Parallel Connections
+
+- **Linear Connections** flow top to bottom. They represent linear progression of text, such as shown in **Job 28:12-13** and **Enoch 42:1-3** in this graph.
+- **Parallel Connections** flow left to right. They are connections between scriptures, classically known as cross-references. In the graph, you see these parallel relationships:
+  - **Job 28:12** connects to **Enoch 42:1**
+  - **Job 28:13** connects to **Enoch 42:2**
+  - **Job 15:16** connects to **Enoch 42:3**
+
+> **NOTE** It is very important to recognize how node-flow works, as it affects how data is exported in some cases. 
+
+So remember:
+- Linear connections flow top to bottom. 
+- Parallel connections flow left to right. 
+
+**Remember:**
+- Linear connections flow top to bottom. 
+- Parallel connections flow left to right. 
+
+**Remember:**
+- Linear connections represent the progression of text, such as reading an account linearly.
+- Parallel connections represent parallel thoughts or connected accounts, especially symbolically.
+
+### When Designing for Cross-References
+
+When / if you are designing a graph that will save it's relationships as cross-references, you must keep in mind some important points. 
+
+Look at how this graph exports to the database:
+
+![Exported to Database](../../images/exported-cross-references-job-enoch.png)
+
+Notice how there is a ONE-to-ONE or ONE-to-MANY relationship between scripture connections. Specifically, *one verse* can connect to another verse, or a passage of verses. 
+
+> **NOTE** This was decided based on how [openbible.info](https://www.openbible.info/labs/cross-references/) prepared their data. It is also more portable to stick to this convention. 
+
+In the Scrollmapper format, a CSV can be exported that takes this format: 
+
+| from_book | from_chapter | from_verse | to_book | to_chapter_start | to_chapter_end | to_verse_start | to_verse_end | votes | user_added |
+|-----------|--------------|------------|---------|------------------|----------------|----------------|--------------|-------|------------|
+| Job       | 15           | 16         | I Enoch | 42               | 42             | 3              | 3            | 0     | 1          |
+| Job       | 28           | 12         | I Enoch | 42               | 42             | 1              | 3            | 0     | 1          |
+| Job       | 28           | 13         | I Enoch | 42               | 42             | 2              | 3            | 0     | 1          |
+
+This can, in turn, be used in Google Docs, Excel, etc. 
