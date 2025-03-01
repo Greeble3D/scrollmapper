@@ -64,10 +64,6 @@ To explain the basics of the node system, here is a **network** we've created co
 
 > **NOTE** It is very important to recognize how node-flow works, as it affects how data is exported in some cases. 
 
-So remember:
-- Linear connections flow top to bottom. 
-- Parallel connections flow left to right. 
-
 **Remember:**
 - Linear connections flow top to bottom. 
 - Parallel connections flow left to right. 
