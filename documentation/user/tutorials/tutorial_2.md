@@ -22,7 +22,7 @@ Here it is in Scrollmapper:
 
 ![From Scrollmapper, Prepared for Gephi:](../../images/enoch-job-wisdom-connection.png)
 
-By choosing Export -> Export Graph to Gephi, and importing it into Gephi, you get this:
+By choosing `Export -> Export Graph to Gephi`, and importing it into Gephi, you get this:
 
 ![Exported Scrollmapper Graph in Gephi](../../images/job-enoch-gephi.png)
 
@@ -63,3 +63,6 @@ And the corresponding data laboratory:
 You can see that Gephi editing and analysis adds many new metrics to study the data on. This is a specialized subject that can go as deep as you want it to.
 
 So let's give a small tutorial on how to productively analyze scripture data exported from Scrollmapper.
+
+## A Basic Scrollmapper to Gephi Project 
+
