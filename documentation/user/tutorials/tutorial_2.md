@@ -308,11 +308,38 @@ The answer is it makes it easier to identify stronger and/or more significant co
 
 Our graph looks a bit better, now. But let's make the Edges a bit more noticeable, shall we?
 
-As you can see, the Edges are a bit dim at the moment. Which is better than how it was before, but not quite what we want. We can change this a few different ways. You can try tweaking the overal `Thickness`, which will scale the Edges relative to their weights, or you can change the `Min/Max Rescaled Weight` parameters. Let's do the latter.
+As you can see, the Edges are a bit dim at the moment. Which is better than how it was before, but not quite what we want. We can change this a few different ways. You can either tweak the overall `Thickness`, which will scale the Edges relative to their weights, or you can change the `Min/Max Rescaled Weight` parameters. Let's do the former.
 
-![Min/Max Rescaled Weights](https://github.com/user-attachments/assets/7283111c-1d58-474a-8164-ed5805e656bd)
+Leave the `Min/Max Rescaled Weight` parameters as is. Set the `Thickness` value to 100 and click `Refresh`.
 
-By default, these values are 0.1 for the `Min. Rescaled Weight`, and 1.0 for the `Max. Rescaled Weight`. Meaning Edge thicknesses will range between 0.1 for Edges with the lowest Weight, and 1.0 for Edges with the highest Weight.
+![Thickness Value](https://github.com/user-attachments/assets/c4f2248f-a345-41bc-8f9e-8f1ade468e9d)
+
+
+
+### Bonus:
+
+I won't bore you with the mathematics behind it, but this essentially means that Edges will vary in thickness between the `Min Rescaled Weight` and `Max Rescaled Weight` based on the `Thickness` value. Let me explain:
+
+For this situation, we have the `Min/Max Rescaled Weight` values set to 0.1 and 1.0 respectively. This means Edge Thickness will vary between 10 and 100. If the `Max Rescaled Weight` was set to 2.5, Thicknesses would now vary between 10 and 250. To make this logic easier to understand, you just need to add a 0 to the end of the `Min/Max Rescaled Weight` value decimals, then remove the decimal point. If our Thickness was 200, Edge Thicknesses would now vary between 20 and 500.
+
+I said I wouldn't bore you with the math. I lied, here's the basic formula.
+
+*M = Min. Scaled Value
+W = Max. Scaled Value
+T = Thickness
+mV = Minimum Value
+wV = Maximum Value*
+
+*M x T = mV
+W x T = wV*
+
+Or, in this case:
+
+*0.1 x 200 = 20
+2.5 x 200 = 500*
+
+Thus, Edge Thicknesses - if we follow this formula - will vary between 20 and 500 based on the Edge Weights. But in this case, our Thickness will vary between 10 and 100, as our `Min/Max Rescaled Weight` values are set to 0.1 and 1.0.
+
 
 ### Why do we choose OpenOrd layout?
 
