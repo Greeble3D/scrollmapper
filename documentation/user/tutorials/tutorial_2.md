@@ -284,6 +284,9 @@ As you can see, it's not very appealing to look at for a few different reasons. 
 
 Now click the Refresh button at the bottom of the `Preview Panel` again.
 
+![Graph Preview Rescale Weight](https://github.com/user-attachments/assets/c958123d-b097-481f-a1fe-c5d0bf5b7276)
+
+
 ##### Bonus
 
 What did checking that box do? Well I'm glad you asked! (Yes you did, I heard you. Stop lying.) 
@@ -310,9 +313,9 @@ Our graph looks a bit better, now. But let's make the Edges a bit more noticeabl
 
 As you can see, the Edges are a bit dim at the moment. Which is better than how it was before, but not quite what we want. We can change this a few different ways. You can either tweak the overall `Thickness`, which will scale the Edges relative to their weights, or you can change the `Min/Max Rescaled Weight` parameters. Let's do the former.
 
-Leave the `Min/Max Rescaled Weight` parameters as is. Set the `Thickness` value to 100 and click `Refresh`.
+Leave the `Min Rescaled Weight` parameter as is, but set the `Max Rescaled Weight` parameter to 3.0. Set the `Thickness` value to 100 and click `Refresh`.
 
-![Thickness Value](https://github.com/user-attachments/assets/c4f2248f-a345-41bc-8f9e-8f1ade468e9d)
+![Thickness Value/Graph Preview](https://github.com/user-attachments/assets/90d48426-20ea-4061-ba9e-d6da56004a86)
 
 
 
@@ -364,7 +367,12 @@ Navigate to the `Appearance` panel and select `Label Size` as the desired Tab. I
 
 ![Label Size](https://github.com/user-attachments/assets/0715d8aa-7775-4d3d-9504-0ccbba9e6b32)
 
-Once you have done this, hit apply, head back to the `Preview` tab and click "Refresh" once more. You should see that your labels have rescaled. They look small from far away, so zoom in to get a better look. You can see that the biggest Labels belong to the biggest Nodes. Or, more specifically, the Nodes with the highest Degree. Or, even more specifically, the Nodes with the most in/out connections. Remember, 'Degree' in this case is not to be confused with that thing you get for finishing a study course at college.
+Once you have done this, hit apply, head back to the `Preview` tab and click "Refresh" once more.
+
+![Labels Preview](https://github.com/user-attachments/assets/96cc2ee0-8658-450c-8c78-2c9f17bb3095)
+
+
+You should see that your labels have rescaled. They look small from far away, so zoom in to get a better look. You can see that the biggest Labels belong to the biggest Nodes. Or, more specifically, the Nodes with the highest Degree. Or, even more specifically, the Nodes with the most in/out connections. Remember, 'Degree' in this case is not to be confused with that thing you get for finishing a study course at college.
 
 #### Exporting your Graph!
 
