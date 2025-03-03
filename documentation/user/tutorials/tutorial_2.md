@@ -228,7 +228,9 @@ This will take a long time. Especially on a slow computer. (You can use the `Exp
 The `Noverlap` Layout option - if used - will most likely do one of three things due to the amount of Nodes within this graph:
 
 **A:** "Hang" and seemingly stop running (or not look like it is running at all).
+
 **B:** Take an extremely long time to run if it does not "Hang".
+
 **C:** Force you to shut down Gephi if you try to cancel the operation.
 
 Because of this, we may use another Layout option that handles the laying out of Nodes just as well as the `OpenOrd` Layout. The `Yifan Hu` Layout.
