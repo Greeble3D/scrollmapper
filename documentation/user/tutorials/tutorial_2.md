@@ -320,7 +320,7 @@ Leave the `Min/Max Rescaled Weight` parameters as is. Set the `Thickness` value 
 
 I won't bore you with the mathematics behind it, but this essentially means that Edges will vary in thickness between the `Min Rescaled Weight` and `Max Rescaled Weight` based on the `Thickness` value. Let me explain:
 
-For this situation, we have the `Min/Max Rescaled Weight` values set to 0.1 and 1.0 respectively. This means Edge Thickness will vary between 10 and 100. If the `Max Rescaled Weight` was set to 2.5, Thicknesses would now vary between 10 and 250. To make this logic easier to understand, you just need to add a 0 to the end of the `Min/Max Rescaled Weight` value decimals, then remove the decimal point. If our Thickness was 200, Edge Thicknesses would now vary between 20 and 500.
+For this situation, we have the `Min/Max Rescaled Weight` values set to 0.1 and 3.0 respectively. This means Edge Thickness will vary between 10 and 300. If the `Max Rescaled Weight` was set to 2.5, Thicknesses would now vary between 10 and 250. To make this logic easier to understand, you just need to add a 0 to the end of the `Min/Max Rescaled Weight` value decimals, then remove the decimal point. If our Thickness was 200, Edge Thicknesses would now vary between 20 and 500 - twice that of before.
 
 I said I wouldn't bore you with the math. I lied, here's the basic formula.
 
