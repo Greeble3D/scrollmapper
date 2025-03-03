@@ -346,6 +346,19 @@ Or, in this case:
 
 Thus, Edge Thicknesses - if we follow this formula - will vary between 20 and 500 based on the Edge Weights. But in this case, our Thickness will vary between 10 and 300, as our `Min/Max Rescaled Weight` values are set to 0.1 and 3.0.
 
+#### Edge Arrows: Optional
+
+This will only be visible if you zoom in on the graph, but to keep it uncluttered, move one tab down and look at `Edge Arrows`. Set this Value to 0.5.
+
+![Edge Arrows](https://github.com/user-attachments/assets/f64b3ae7-02f2-4c32-be04-577135bb16a4)
+
+#### Node Labels
+
+Finally, let's slap some Labels onto our Nodes. We briefly covered them earlier within the Overview tab, but they work a bit differently here. Scroll up to the `Node Labels` tab and click the 'Show Labels' checkbox to turn them on, then click "Refresh" again.
+
+![Show Labels](https://github.com/user-attachments/assets/df54b0c2-86de-474f-8c1b-61601f286518)
+
+Your graph should be populated with Labels now. By default, the Labels will show the Book and Verse a node refers to. For example, Romans 8:31. You won't be able to rescale the nodes from the Preview tab. This is done within the Overview. So let's swap back to the Overview and rescale these Labels.
 
 ### Why do we choose OpenOrd layout?
 
