@@ -260,6 +260,59 @@ When you finish running the Layout, you should end up with something like this..
 
 The Layout has pushed Nodes away from each other, while simultaneously keeping related Nodes close to eachother. This ensures that Nodes with the least amount of connections have been placed on the outer part of the graph, with the others closer to the middle. (You can tell because the Nodes with a greater amount of connections are larger than the rest, and are concentrated *mostly* in the middle.
 
+### Wrapping it up.
+
+If you got this far, congratulations! You took a giant black box of messy Nodes just a few steps short of resembling Abstract Artist Jackson Pollock's "Autumn Rythm #30" and weaved it into an easier to read, colorful graph more suitable for displaying relationships in God's words. If you're happy with your graph, navigate over to the `Preview` tab so we can put a bow on this new graph of yours!
+
+![Preview Tab](https://github.com/user-attachments/assets/ab733ebd-b3b1-49bd-ac9b-94356286b5b9)
+
+#### Rescale Weight
+
+> **NOTE:** Have you saved your graph? Now would be a good time to do it! Press Ctrl + S to save. If you have not saved it previously, you will need to select a location to save it to on your computer.
+
+You will be greeted by a bit of information on the left under `Preview Settings`, and a large `Preview Panel` on the right... which is currently empty. At the bottom right of the `Preview Settings` panel, click the `Refresh` button and wait for the graph to load into the `Preview` panel.
+
+![Refresh Preview Button](https://github.com/user-attachments/assets/c286b52a-90af-4951-a8f7-3feeca80a18c)
+
+You should now be able to see a *Preview* of your graph, which will look something like this:
+
+![Graph Preview](https://github.com/user-attachments/assets/92843019-69ce-4b7a-bcbb-3bef3e31ede6)
+
+As you can see, it's not very appealing to look at for a few different reasons. Let's fix that. First, we'll resize the Edges (the lines connecting the Nodes). In the `Preview Settings` tab, scroll down to the Edges dropdown and turn `Rescale Weight` on by clicking the box.
+
+![Rescale Weight](https://github.com/user-attachments/assets/8900e494-266d-4398-91a6-fcd29c6fe71e)
+
+Now click the Refresh button at the bottom of the `Preview Panel` again.
+
+##### Bonus
+
+What did checking that box do? Well I'm glad you asked! (Yes you did, I heard you. Stop lying.) 
+
+Checking this box has rescaled the Edges according to their 'Weight'. Remember the Data Laboratory? Pop back in there for a minute so I can show you what I mean.
+
+![Data Laboratory](https://github.com/user-attachments/assets/cb7c9390-a2ab-491d-8188-f9dd052b94a2)
+
+In the `Data Table` panel, click the Edges tab to swap from the Node list to the Edges list.
+
+![Edges table](https://github.com/user-attachments/assets/13d2c4e1-b73e-47fd-931b-8098822f8f41)
+
+Now there's a lot of numbers here, but right now the only ones you need to focus on are at the far right under the `Weight` column. If you click on 'Weight', it will toggle between sorting the edges from those with the highest Weight to the lowest, and vice versa. Here, the highest weight is 1268.0.
+
+![Weight Column](https://github.com/user-attachments/assets/7f1285d7-7fe0-4123-9881-d7e26ec37342)
+
+When we ticked the 'Rescale Weights' box, we visually rescaled all of the edges according to their weight. The higher the weight, the thicker the line. 'How is this helpful', I hear you ask again? (You did, stop denying it. It's a good thing, it means you're paying attention!).
+
+The answer is it makes it easier to identify stronger and/or more significant connections in our graph! Plus it just looks nicer. Had we kept this box unchecked, all of the edges would have been one size. Now let's go back to the preview tab so we can continue.
+
+#### Rescaling Edges
+
+Our graph looks a bit better, now. But let's make the Edges a bit more noticeable, shall we?
+
+As you can see, the Edges are a bit dim at the moment. Which is better than how it was before, but not quite what we want. We can change this a few different ways. You can try tweaking the overal `Thickness`, which will scale the Edges relative to their weights, or you can change the `Min/Max Rescaled Weight` parameters. Let's do the latter.
+
+![Min/Max Rescaled Weights](https://github.com/user-attachments/assets/7283111c-1d58-474a-8164-ed5805e656bd)
+
+By default, these values are 0.1 for the `Min. Rescaled Weight`, and 1.0 for the `Max. Rescaled Weight`. Meaning Edge thicknesses will range between 0.1 for Edges with the lowest Weight, and 1.0 for Edges with the highest Weight.
 
 ### Why do we choose OpenOrd layout?
 
