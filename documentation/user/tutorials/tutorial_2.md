@@ -324,19 +324,25 @@ For this situation, we have the `Min/Max Rescaled Weight` values set to 0.1 and 
 
 I said I wouldn't bore you with the math. I lied, here's the basic formula.
 
-*M = Min. Scaled Value
-W = Max. Scaled Value
-T = Thickness
-mV = Minimum Value
-wV = Maximum Value*
+*M = Min. Scaled Value*
 
-*M x T = mV
-W x T = wV*
+*W = Max. Scaled Value*
+
+*T = Thickness*
+
+*mV = Minimum Value*
+
+*wV = Maximum Value*
+
+*M x T = mV*
+
+*W x T = wV*
 
 Or, in this case:
 
-*0.1 x 200 = 20
-2.5 x 200 = 500*
+*0.1 x 200 = 20*
+
+*2.5 x 200 = 500*
 
 Thus, Edge Thicknesses - if we follow this formula - will vary between 20 and 500 based on the Edge Weights. But in this case, our Thickness will vary between 10 and 100, as our `Min/Max Rescaled Weight` values are set to 0.1 and 1.0.
 
