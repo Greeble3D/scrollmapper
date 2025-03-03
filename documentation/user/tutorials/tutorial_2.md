@@ -223,6 +223,41 @@ Press `Run` and let it process.
 
 This will take a long time. Especially on a slow computer. (You can use the `Expansion` algorithm a few times before this, and it may help the time a bit.)
 
+### An alternative method.
+
+The `Noverlap` Layout option - if used - will most likely do one of three things due to the amount of Nodes within this graph:
+
+**A:** "Hang" and seemingly stop running (or not look like it is running at all).
+**B:** Take an extremely long time to run if it does not "Hang".
+**C:** Force you to shut down Gephi if you try to cancel the operation.
+
+Because of this, we may use another Layout option that handles the laying out of Nodes just as well as the `OpenOrd` Layout. The `Yifan Hu` Layout.
+
+> **NOTE** No Layout option is better than another. One Layout may excel in certain situations where others will not work so great. Some are more efficient for a given graph or situation, but no one Layout is better than another.
+
+The `Yifan Hu` Layout is a force-directed layout algorithm designed to visualize large-scale graphs efficiently, and works by simulating physical forces between nodes, where nodes repel each other while edges act as springs pulling connected nodes together. This will ultimately give us a visually appealing, easy to understand graph Layout.
+
+![Yifan Hu Layout Option](https://github.com/user-attachments/assets/e0681fd4-a3a4-47f6-9d8c-1043aabbeeb4)
+
+
+> **NOTE** There is also another type of `Yifan Hu` Layout called `Proportional Yifan Hu` (Pictured in the image above). This one adjusts the repulsion force based on the `degree` of the nodes.
+
+Select the `Yifan Hu` option in the Layout panel, but don't run it just yet. First, we need to adjust a few of the properties. Namely the `Optimal Distance` and `Relative Strength` parameters.
+
+The `Optimal Distance` property dictates the preferred distance between nodes in your graph. Adjusting this property can help in creating a more readable and well-distributed layout for this graph with less overlapping Nodes. Something between 300 and 500 is good for this case. 
+
+> **NOTE:** Higher values place nodes further apart, while lower values bring them closer together. The latter is good for small, sparse graphs, or when trying to highlight relationships. However, in our case, the graph is very large, and will look messy with so many nodes bunched together.
+
+Next is `Relative Strength`. This adjusts the strength of the attractive and repulsive forces (the edges) between nodes. Higher values increase the influence of *attractive forces* (edges), pulling connected nodes together. Lower values increase the influence of *repulsive forces*, pushing nodes away from one another.
+
+In this case, we have found that a value between 4.0 and 7.0 for this parameter works well, though the latter is likely to push Nodes to the borders. This is not exactly bad, as those Nodes will most likely be the Nodes with the least connections.
+
+When you finish running the Layout, you should end up with something like this...
+
+![Yifan Hu Result](https://github.com/user-attachments/assets/9634ec72-a551-45fe-bea0-9e827783b1a8)
+
+The Layout has pushed Nodes away from each other, while simultaneously keeping related Nodes close to eachother. This ensures that Nodes with the least amount of connections have been placed on the outer part of the graph, with the others closer to the middle. (You can tell because the Nodes with a greater amount of connections are larger than the rest, and are concentrated *mostly* in the middle.
+
 
 ### Why do we choose OpenOrd layout?
 
