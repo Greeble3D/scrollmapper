@@ -126,102 +126,26 @@ Now go back to the **Overview** tab so we can make the graph more visually sensi
 
 ![Layout options, Gephi](../../images/t2-layout-options.png)
 
-Because of the huge amount of data, we need to distribute the nodes in a way that is efficient. A good layout option in this case is the "OpenOrd" layout. Choose "OpenOrd" from the Layout dropdown menu. 
+Because of the huge amount of data, we need to distribute the nodes in a way that is efficient. 
 
-> **NOTE** See [Why do we choose OpenOrd layout?](#why-do-we-choose-openord-layout)
+We can use the `ForceAtlas 2` layout algorithm to achieve this. 
 
-![OpenOrd, no Edge Cut](../../images/t2-no-openord-edge-cut.png)
+The end result will look something like this: 
 
-The default values for this OpenOrd layout are fine. But set the **Edge Cut** value to 0. We do not want to lose any cross-references (edges).
+![Force Atlas 2](../../images/t2-force-atlas-2.png)
 
-> **NOTE** It may seem odd seeing a few node groups floating separate from the network when you run it. That is because some cross-references are isolated. 
+Notice larger nodes are clustered together, and the colors are somewhat separated. 
 
-**Run the layout algorithm** and let it go through the process. It may take a few minutes. 
+**Remember:**
 
-It will gradually distribute the nodes. You should end up with something like this:
+- Books are assigned unique colors.
+- Node sizes are based on number of connections to other verses. 
 
-![OpenOrd layout complete...](../../images/t2-layout-complete.png)
+So in this layout we have visual queues on how various scriptures relate to eachother between books. While there are *many* ways to explore and visualize graphs, we are using this as an introduction because it is simple and fast. 
 
-Click the black "T" button below the graph (bottom toolbar) and you should see the Verse labels: 
+Here is a zoomed-in preview of what we are about to do:
 
-![Verse labels](../../images/t2-graph-labels.png)
-
-At first the labels may seem too large, and running into each-other. Use the sliders in the bottom toolbar to change the label size. It should appear somewhat like the preview above. 
-
-Now the fun part! We are going to make the graph more readable, colorful, and visually useful. 
-
-For now, turn off the labels. We only wish to see the nodes at this time. 
-
-Here is what we will do:
-
-- Set node colors based on the book they belong to. (This is recognized as a "partition" in Gephi)
-- Then we will set the node size based on degree (or relevance). This is judged by how many connects / edges a given node has. 
-- Lastly we will run a layout algorithm to reduce node overlapping and deal with clutter. 
-
-#### Set Node Colors by Book
-
-![Partition by book](../../images/t2-color-partitions.png)
-
-`Appearance -> Nodes -> Partition` and choose `Book` for the attribute. 
-
-If you scroll down, you will notice that the colors desaturate to gray. We do not want this, but rather all the books should have unique colors. 
-
-Choose `Palette` at the bottom of the `Appearance` panel. 
-
-![Palette](../../images/t2-choose-pallete.png)
-
-At the **top right** of this dialog, make sure `Limit number of colors` is unchecked. 
-
-You will want to select `Generate` at the bottom. `Default` color scheme / preset is sufficient for this case. 
-
-Next, push `Ok` and the new book colors will generate. Verify them if you wish. 
-
-Lastly, push `Apply` at the bottom of the **Appearance** panel. 
-
-Turn off the labels if you haven't already. 
-
-In the toolbar left of the graph window, you can see a little magnifying glass. Click that. It will recenter the graph. 
-
-The graph should now look something like this:
-
-![Improved Gephi graph with colored nodes.](../../images/t2-improved-graph.png)
-
-> **NOTE** I zoomed in using the mouse-wheel for this capture...it was zoomed out much more initially, due to outlying nodes. 
-
-#### Set Node Size Based on Degree
-
-Now choose `Appearance -> Nodes -> Ranking` and select `Degree` from the Attributes dropdown. 
-
-It seems that the 10 for min, and 100 for max provide for a decent node size range in this case. You may experiment and change the values how you wish. 
-
-
-![Node size by degree](../../images/t2-node-size-by-degree.png)
-
-Here is how it should look now...
-
-![Nodes resized](../../images/t2-nodes-resized.png)
-
-#### Minimize Overlapping / Reduce Clutter 
-
-This next operation may take a bit of time to process due to the large number of nodes. 
-
-In the `Layout` panel, select `Expansion` in the dropdown. 
-
-![Expansion algorithm](../../images/t2-scaling.png)
-
-Set the Scale Factor to 2 and run that a few times. (I ran it 3 times.)
-
-**Save** the graph. 
-
-This next step (**Noverlap**) is optional, because it can take a long time. 
-
-In the `Layout` panel, select `Noverlap` in the dropdown. 
-
-Press `Run` and let it process. 
-
-![Noverlap algorithm](../../images/t2-no-overlap.png)
-
-This will take a long time. Especially on a slow computer. (You can use the `Expansion` algorithm a few times before this, and it may help the time a bit.)
+![Force Atlas 2 Preview](../../images/t2-force-atlas-2-preview.png)
 
 ### An alternative method.
 
