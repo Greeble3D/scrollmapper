@@ -344,7 +344,7 @@ Or, in this case:
 
 *2.5 x 200 = 500*
 
-Thus, Edge Thicknesses - if we follow this formula - will vary between 20 and 500 based on the Edge Weights. But in this case, our Thickness will vary between 10 and 100, as our `Min/Max Rescaled Weight` values are set to 0.1 and 1.0.
+Thus, Edge Thicknesses - if we follow this formula - will vary between 20 and 500 based on the Edge Weights. But in this case, our Thickness will vary between 10 and 300, as our `Min/Max Rescaled Weight` values are set to 0.1 and 3.0.
 
 
 ### Why do we choose OpenOrd layout?
