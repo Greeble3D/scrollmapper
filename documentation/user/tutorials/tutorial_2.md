@@ -223,6 +223,159 @@ Press `Run` and let it process.
 
 This will take a long time. Especially on a slow computer. (You can use the `Expansion` algorithm a few times before this, and it may help the time a bit.)
 
+### An alternative method.
+
+The `Noverlap` Layout option - if used - will most likely do one of three things due to the amount of Nodes within this graph:
+
+**A:** "Hang" and seemingly stop running (or not look like it is running at all).
+
+**B:** Take an extremely long time to run if it does not "Hang".
+
+**C:** Force you to shut down Gephi if you try to cancel the operation.
+
+Because of this, we may use another Layout option that handles the laying out of Nodes just as well as the `OpenOrd` Layout. The `Yifan Hu` Layout.
+
+> **NOTE** No Layout option is better than another. One Layout may excel in certain situations where others will not work so great. Some are more efficient for a given graph or situation, but no one Layout is better than another.
+
+The `Yifan Hu` Layout is a force-directed layout algorithm designed to visualize large-scale graphs efficiently, and works by simulating physical forces between nodes, where nodes repel each other while edges act as springs pulling connected nodes together. This will ultimately give us a visually appealing, easy to understand graph Layout.
+
+![Yifan Hu Layout Option](https://github.com/user-attachments/assets/e0681fd4-a3a4-47f6-9d8c-1043aabbeeb4)
+
+
+> **NOTE** There is also another type of `Yifan Hu` Layout called `Proportional Yifan Hu` (Pictured in the image above). This one adjusts the repulsion force based on the `degree` of the nodes.
+
+Select the `Yifan Hu` option in the Layout panel, but don't run it just yet. First, we need to adjust a few of the properties. Namely the `Optimal Distance` and `Relative Strength` parameters.
+
+The `Optimal Distance` property dictates the preferred distance between nodes in your graph. Adjusting this property can help in creating a more readable and well-distributed layout for this graph with less overlapping Nodes. Something between 300 and 500 is good for this case. 
+
+> **NOTE:** Higher values place nodes further apart, while lower values bring them closer together. The latter is good for small, sparse graphs, or when trying to highlight relationships. However, in our case, the graph is very large, and will look messy with so many nodes bunched together.
+
+Next is `Relative Strength`. This adjusts the strength of the attractive and repulsive forces (the edges) between nodes. Higher values increase the influence of *attractive forces* (edges), pulling connected nodes together. Lower values increase the influence of *repulsive forces*, pushing nodes away from one another.
+
+In this case, we have found that a value between 4.0 and 7.0 for this parameter works well, though the latter is likely to push Nodes to the borders. This is not exactly bad, as those Nodes will most likely be the Nodes with the least connections.
+
+When you finish running the Layout, you should end up with something like this...
+
+![Yifan Hu Result](https://github.com/user-attachments/assets/9634ec72-a551-45fe-bea0-9e827783b1a8)
+
+The Layout has pushed Nodes away from each other, while simultaneously keeping related Nodes close to eachother. This ensures that Nodes with the least amount of connections have been placed on the outer part of the graph, with the others closer to the middle. (You can tell because the Nodes with a greater amount of connections are larger than the rest, and are concentrated *mostly* in the middle.
+
+### Wrapping it up.
+
+If you got this far, congratulations! You took a giant black box of messy Nodes just a few steps short of resembling Abstract Artist Jackson Pollock's "Autumn Rythm #30" and weaved it into an easier to read, colorful graph more suitable for displaying relationships in God's words. If you're happy with your graph, navigate over to the `Preview` tab so we can put a bow on this new graph of yours!
+
+![Preview Tab](https://github.com/user-attachments/assets/ab733ebd-b3b1-49bd-ac9b-94356286b5b9)
+
+#### Rescale Weight
+
+> **NOTE:** Have you saved your graph? Now would be a good time to do it! Press Ctrl + S to save. If you have not saved it previously, you will need to select a location to save it to on your computer.
+
+You will be greeted by a bit of information on the left under `Preview Settings`, and a large `Preview Panel` on the right... which is currently empty. At the bottom right of the `Preview Settings` panel, click the `Refresh` button and wait for the graph to load into the `Preview` panel.
+
+![Refresh Preview Button](https://github.com/user-attachments/assets/c286b52a-90af-4951-a8f7-3feeca80a18c)
+
+You should now be able to see a *Preview* of your graph, which will look something like this:
+
+![Graph Preview](https://github.com/user-attachments/assets/92843019-69ce-4b7a-bcbb-3bef3e31ede6)
+
+As you can see, it's not very appealing to look at for a few different reasons. Let's fix that. First, we'll resize the Edges (the lines connecting the Nodes). In the `Preview Settings` tab, scroll down to the Edges dropdown and turn `Rescale Weight` on by clicking the box.
+
+![Rescale Weight](https://github.com/user-attachments/assets/8900e494-266d-4398-91a6-fcd29c6fe71e)
+
+Now click the Refresh button at the bottom of the `Preview Panel` again.
+
+##### Bonus
+
+What did checking that box do? Well I'm glad you asked! (Yes you did, I heard you. Stop lying.) 
+
+Checking this box has rescaled the Edges according to their 'Weight'. Remember the Data Laboratory? Pop back in there for a minute so I can show you what I mean.
+
+![Data Laboratory](https://github.com/user-attachments/assets/cb7c9390-a2ab-491d-8188-f9dd052b94a2)
+
+In the `Data Table` panel, click the Edges tab to swap from the Node list to the Edges list.
+
+![Edges table](https://github.com/user-attachments/assets/13d2c4e1-b73e-47fd-931b-8098822f8f41)
+
+Now there's a lot of numbers here, but right now the only ones you need to focus on are at the far right under the `Weight` column. If you click on 'Weight', it will toggle between sorting the edges from those with the highest Weight to the lowest, and vice versa. Here, the highest weight is 1268.0.
+
+![Weight Column](https://github.com/user-attachments/assets/7f1285d7-7fe0-4123-9881-d7e26ec37342)
+
+When we ticked the 'Rescale Weights' box, we visually rescaled all of the edges according to their weight. The higher the weight, the thicker the line. 'How is this helpful', I hear you ask again? (You did, stop denying it. It's a good thing, it means you're paying attention!).
+
+The answer is it makes it easier to identify stronger and/or more significant connections in our graph! Plus it just looks nicer. Had we kept this box unchecked, all of the edges would have been one size. Now let's go back to the preview tab so we can continue.
+
+#### Rescaling Edges
+
+Our graph looks a bit better, now. But let's make the Edges a bit more noticeable, shall we?
+
+As you can see, the Edges are a bit dim at the moment. Which is better than how it was before, but not quite what we want. We can change this a few different ways. You can either tweak the overall `Thickness`, which will scale the Edges relative to their weights, or you can change the `Min/Max Rescaled Weight` parameters. Let's do the former.
+
+Leave the `Min/Max Rescaled Weight` parameters as is. Set the `Thickness` value to 100 and click `Refresh`.
+
+![Thickness Value](https://github.com/user-attachments/assets/c4f2248f-a345-41bc-8f9e-8f1ade468e9d)
+
+
+
+### Bonus:
+
+I won't bore you with the mathematics behind it, but this essentially means that Edges will vary in thickness between the `Min Rescaled Weight` and `Max Rescaled Weight` based on the `Thickness` value. Let me explain:
+
+For this situation, we have the `Min/Max Rescaled Weight` values set to 0.1 and 3.0 respectively. This means Edge Thickness will vary between 10 and 300. If the `Max Rescaled Weight` was set to 2.5, Thicknesses would now vary between 10 and 250. To make this logic easier to understand, you just need to add a 0 to the end of the `Min/Max Rescaled Weight` value decimals, then remove the decimal point. If our Thickness was 200, Edge Thicknesses would now vary between 20 and 500 - twice that of before.
+
+I said I wouldn't bore you with the math. I lied, here's the basic formula.
+
+*M = Min. Scaled Value*
+
+*W = Max. Scaled Value*
+
+*T = Thickness*
+
+*mV = Minimum Value*
+
+*wV = Maximum Value*
+
+*M x T = mV*
+
+*W x T = wV*
+
+Or, in this case:
+
+*0.1 x 200 = 20*
+
+*2.5 x 200 = 500*
+
+Thus, Edge Thicknesses - if we follow this formula - will vary between 20 and 500 based on the Edge Weights. But in this case, our Thickness will vary between 10 and 300, as our `Min/Max Rescaled Weight` values are set to 0.1 and 3.0.
+
+#### Edge Arrows: Optional
+
+This will only be visible if you zoom in on the graph, but to keep it uncluttered, move one tab down and look at `Edge Arrows`. Set this Value to 0.5.
+
+![Edge Arrows](https://github.com/user-attachments/assets/f64b3ae7-02f2-4c32-be04-577135bb16a4)
+
+#### Node Labels
+
+Finally, let's slap some Labels onto our Nodes. We briefly covered them earlier within the Overview tab, but they work a bit differently here. Scroll up to the `Node Labels` tab and click the 'Show Labels' checkbox to turn them on, then click "Refresh" again.
+
+![Show Labels](https://github.com/user-attachments/assets/df54b0c2-86de-474f-8c1b-61601f286518)
+
+Your graph should be populated with Labels now. By default, the Labels will show the Book and Verse a node refers to. For example, Romans 8:31. You won't be able to rescale the nodes from the Preview tab. This is done within the Overview, so let's swap back there and rescale these Labels. Make sure to turn them on using the bottom toolbar once you get to the Overview tab.
+
+Navigate to the `Appearance` panel and select `Label Size` as the desired Tab. It's the button with the two T's at the far right. Then switch from the tab labeled `Unique` to the one labeled `Ranking`. Set the `Attribute` to Degree, and tweak the values as you wish. Here I chose a Min/Max of 0.5 and 1.2 respectively.
+
+![Label Size](https://github.com/user-attachments/assets/0715d8aa-7775-4d3d-9504-0ccbba9e6b32)
+
+Once you have done this, hit apply, head back to the `Preview` tab and click "Refresh" once more. You should see that your labels have rescaled. They look small from far away, so zoom in to get a better look. You can see that the biggest Labels belong to the biggest Nodes. Or, more specifically, the Nodes with the highest Degree. Or, even more specifically, the Nodes with the most in/out connections. Remember, 'Degree' in this case is not to be confused with that thing you get for finishing a study course at college.
+
+#### Exporting your Graph!
+
+Congratulations! You've made your first cross-reference database in Gephi. In the bottom left corner of the Preview Settings panel, You'll see a `Preview Ratio` slider, and an `Export` button.
+
+![Export and Preview Ratio](https://github.com/user-attachments/assets/8eaa2ffb-28cb-4c04-b50f-d28809bc73fe)
+
+The `Preview Ratio` slider will decrease the amount of Nodes shown in the Preview Graph the lower you go. We don't really want that, so leave it as is and click `Export: SVG/PDF/PNG`. From there, all you need to do is select the file location you want to export it to, the file extension (SVG/PDF/PNG), and Export it.
+
+
+
 
 ### Why do we choose OpenOrd layout?
 
