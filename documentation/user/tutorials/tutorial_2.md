@@ -358,7 +358,24 @@ Finally, let's slap some Labels onto our Nodes. We briefly covered them earlier 
 
 ![Show Labels](https://github.com/user-attachments/assets/df54b0c2-86de-474f-8c1b-61601f286518)
 
-Your graph should be populated with Labels now. By default, the Labels will show the Book and Verse a node refers to. For example, Romans 8:31. You won't be able to rescale the nodes from the Preview tab. This is done within the Overview. So let's swap back to the Overview and rescale these Labels.
+Your graph should be populated with Labels now. By default, the Labels will show the Book and Verse a node refers to. For example, Romans 8:31. You won't be able to rescale the nodes from the Preview tab. This is done within the Overview, so let's swap back there and rescale these Labels. Make sure to turn them on using the bottom toolbar once you get to the Overview tab.
+
+Navigate to the `Appearance` panel and select `Label Size` as the desired Tab. It's the button with the two T's at the far right. Then switch from the tab labeled `Unique` to the one labeled `Ranking`. Set the `Attribute` to Degree, and tweak the values as you wish. Here I chose a Min/Max of 0.5 and 1.2 respectively.
+
+![Label Size](https://github.com/user-attachments/assets/0715d8aa-7775-4d3d-9504-0ccbba9e6b32)
+
+Once you have done this, hit apply, head back to the `Preview` tab and click "Refresh" once more. You should see that your labels have rescaled. They look small from far away, so zoom in to get a better look. You can see that the biggest Labels belong to the biggest Nodes. Or, more specifically, the Nodes with the highest Degree. Or, even more specifically, the Nodes with the most in/out connections. Remember, 'Degree' in this case is not to be confused with that thing you get for finishing a study course at college.
+
+#### Exporting your Graph!
+
+Congratulations! You've made your first cross-reference database in Gephi. In the bottom left corner of the Preview Settings panel, You'll see a `Preview Ratio` slider, and an `Export` button.
+
+![Export and Preview Ratio](https://github.com/user-attachments/assets/8eaa2ffb-28cb-4c04-b50f-d28809bc73fe)
+
+The `Preview Ratio` slider will decrease the amount of Nodes shown in the Preview Graph the lower you go. We don't really want that, so leave it as is and click `Export: SVG/PDF/PNG`. From there, all you need to do is select the file location you want to export it to, the file extension (SVG/PDF/PNG), and Export it.
+
+
+
 
 ### Why do we choose OpenOrd layout?
 
