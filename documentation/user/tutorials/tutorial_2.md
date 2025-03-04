@@ -180,7 +180,7 @@ Now we will resize the nodes according to how many verses they connect to in cro
 Study the above picture. Choose: `Nodes -> Size -> Ranking` panel. 
 
 - Choose `Degree` as the *attribute*. (This is the amount of connections a node has)
-- For `Min Size` and `Max Size` enter the values 5 (min) and 50 (max).
+- For `Min Size` and `Max Size` enter the values **5** (min) and **50** (max).
 - Press `Apply`
 
 Now the size of the nodes represent their importance in terms of cross-references. 
@@ -200,6 +200,7 @@ We will be working in two steps:
 
 So for **step 1** change the following values:
 
+- Ensure `Approximate Repulsion` is **checked**.
 - Scaling: 100
 - Gravity: 7
 
@@ -235,21 +236,32 @@ Zooming out, we see the entire graph is much more clear and organized.
 
 In the above left-right comparison, the nodes on the left are dimmed (white) and the nodes on the right are colored (normal). When you hover over a given node, all other nodes **except** the **one you are hovering, and it's connected neighbors**, will dim. This allows you to focus over and see connection relationships with your mouse. 
 
+In the left image, you can see that one small node with some dark lines radiating from it to other nodes. That is the one I hovered before the screenshot. 
+
+**Next** we will show the **Labels** over the nodes (This setting can be toggled **off** and **on**).
+
+![Text Values](../../images/t2-text-values.png)
+
+See the screenshot above. Note the changes made in the red boxes. 
+
+Select the `Nodes -> Label Size -> Ranking` panel as shown by the red boxes in the screenshot. 
+
+- In the **dropdown** choose `Degree`. 
+- **Min** and **Max** values should be **.1** and **1.2** for this graph. 
+
+> **NOTE** See the **T** icon below the graph. Labels can be easily toggled Off and On. 
+
+Now if you zoom in and hover over nodes, you can isolate them and their connections for easy studying...
+
+![Focusing labels and connections](../../images/t2-focused-labels.png)
+
+This was a simple tutorial on your first large graph. 
+
+This only scratches the surface of how Gephi is used. There are lots of methods for isolating data and patterns using Gephi -- this tutorial was enough to show you the most basic features. 
+
+Here are some more beginner tutorials on Gephi networks: https://www.youtube.com/playlist?list=PLk_jmmkw5S2BqnYBqF2VNPcszY93-ze49
+
 ### An alternative method.
-
-
-
-The `Noverlap` Layout option - if used - will most likely do one of three things due to the amount of Nodes within this graph:
-
-**A:** "Hang" and seemingly stop running (or not look like it is running at all).
-
-**B:** Take an extremely long time to run if it does not "Hang".
-
-**C:** Force you to shut down Gephi if you try to cancel the operation.
-
-Because of this, we may use another Layout option that handles the laying out of Nodes just as well as the `OpenOrd` Layout. The `Yifan Hu` Layout.
-
-> **NOTE** No Layout option is better than another. One Layout may excel in certain situations where others will not work so great. Some are more efficient for a given graph or situation, but no one Layout is better than another.
 
 The `Yifan Hu` Layout is a force-directed layout algorithm designed to visualize large-scale graphs efficiently, and works by simulating physical forces between nodes, where nodes repel each other while edges act as springs pulling connected nodes together. This will ultimately give us a visually appealing, easy to understand graph Layout.
 
