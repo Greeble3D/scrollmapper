@@ -147,7 +147,16 @@ Here is a zoomed-in preview of what we are about to do:
 
 ![Force Atlas 2 Preview](../../images/t2-force-atlas-2-preview.png)
 
+First, let us color-coordinate the nodes according to which bible book they are in. 
+
+In the upper right panel, **Appearance**, choose `Nodes`, `partition`, and select `Book` from the dropdown.
+
+![Nodes - Partition - by Book](../../images/t2-nodes-partition-book.png)
+
+
 ### An alternative method.
+
+
 
 The `Noverlap` Layout option - if used - will most likely do one of three things due to the amount of Nodes within this graph:
 
