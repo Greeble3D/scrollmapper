@@ -51,10 +51,9 @@ This might not seem like much, but with a dataset of thousands of connected vers
 
 Here is a quick-generated graph of the *minor prophets* and their relationships to each other:
 
-
 ![Minor prophets, Gephi Graph](../../images/gephi-render-2.png)
 
-> **NOTE** Organizing and isolating node groups is a huge focus in Gephi. However in this case, we've run some auto-layouts for a quick result. 
+> **NOTE** Organizing and isolating node groups is a huge focus in Gephi. However, in this case, we've run some auto-layouts for a quick result.
 
 And the corresponding data laboratory:
 
@@ -64,7 +63,7 @@ You can see that Gephi editing and analysis adds many new metrics to study the d
 
 So let's give a small tutorial on how to productively analyze scripture data exported from Scrollmapper.
 
-## A Basic Scrollmapper to Gephi Project 
+## A Basic Scrollmapper to Gephi Project
 
 Let's not start small. To quote Tony Stark from Iron Man:
 
@@ -76,39 +75,39 @@ To get a sense of working with data in Gephi, let us first export ALL of the def
 
 We will be performing these steps:
 
-- Export cross-references as a graph / network from Scrollmapper.
+- Export cross-references as a graph/network from Scrollmapper.
 - Import the cross-references graph into Gephi.
-- Clean up the graph for easy viewing and analysis. 
+- Clean up the graph for easy viewing and analysis.
 
-### Export Cross References from Scrollmapper 
+### Export Cross References from Scrollmapper
 
 ![Export Cross References from Gephi](../../images/t2-export.png)
 
-To export the cross-references, simply choose the `Export Cross References Database to Gephi` option under `Export`. 
+To export the cross-references, simply choose the `Export Cross References Database to Gephi` option under `Export`.
 
 Save it to your desktop, or wherever you wish. You will notice some options for Meta items to attach. Ignore this for now.
 
-The default filename will be `cross-references-graph.gexf`. You may change it if you wish. 
+The default filename will be `cross-references-graph.gexf`. You may change it if you wish.
 
-Depending on your computer, this could take a few minutes. It is taking 340,000 cross-refernces and building a `.gexf` `xml` document from them. 
+Depending on your computer, this could take a few minutes. It is taking 340,000 cross-references and building a `.gexf` `xml` document from them.
 
-### Import Cross References to Gephi 
+### Import Cross References to Gephi
 
-If you have already [installed Gephi](https://gephi.org/), simply double-clicking the exported file should open it in Gephi. If not, then open Gephi and **Open**  the `.gexf` file you created.
+If you have already [installed Gephi](https://gephi.org/), simply double-clicking the exported file should open it in Gephi. If not, then open Gephi and **Open** the `.gexf` file you created.
 
-> **NOTE** Importing it is not the method here. **Open** is the valid workflow here. 
+> **NOTE** Importing it is not the method here. **Open** is the valid workflow here.
 
 ![Open .gexf, not Import](../../images/t2-open-gexf.png)
 
-Now you should see something like this: 
+Now you should see something like this:
 
-![Importing Scrollmapper nodes / edges to Gephi.](../../images/t2-import-gephi.png)
+![Importing Scrollmapper nodes/edges to Gephi.](../../images/t2-import-gephi.png)
 
-The numbers may be different if you've already saved some of your own Scrollmapper node networks to the cross-reference database. 
+The numbers may be different if you've already saved some of your own Scrollmapper node networks to the cross-reference database.
 
-Push **Ok** and the graph should populate. 
+Push **Ok** and the graph should populate.
 
-![Newly imported nodes / edges from Scrollmapper.](../../images/t2-newly-imported.png)
+![Newly imported nodes/edges from Scrollmapper.](../../images/t2-newly-imported.png)
 
 What you are now seeing is a square of densely packed nodes and connections, or as they are called in Gephi, **nodes** and **edges**.
 
@@ -118,53 +117,53 @@ Push the **"Data Laboratory"** button, which is beside the **"Overview"** button
 
 ![Gephi Data Laboratory from Scrollmapper](../../images/t2-data-laboratory.png)
 
-This is the starting tables that were imported from the `.gexf` file Scrollmapper generated. 
+This is the starting tables that were imported from the `.gexf` file Scrollmapper generated.
 
-Notice there is a **Nodes** and **Edges** table. As you work with the data, you will be using these tables a lot. 
+Notice there is a **Nodes** and **Edges** table. As you work with the data, you will be using these tables a lot.
 
-Now go back to the **Overview** tab so we can make the graph more visually sensible and easy to work with. 
+Now go back to the **Overview** tab so we can make the graph more visually sensible and easy to work with.
 
 ![Layout options, Gephi](../../images/t2-layout-options.png)
 
 #### Node Coloring and Distribution...
 
-Because of the huge amount of data, we need to distribute the nodes in a way that is efficient. 
+Because of the huge amount of data, we need to distribute the nodes in a way that is efficient.
 
-We can use the `ForceAtlas 2` layout algorithm to achieve this. 
+We can use the `ForceAtlas 2` layout algorithm to achieve this.
 
-The end result will look something like this: 
+The end result will look something like this:
 
 ![Force Atlas 2](../../images/t2-force-atlas-2.png)
 
-Notice larger nodes are clustered together, and the colors are somewhat separated. 
+Notice larger nodes are clustered together, and the colors are somewhat separated.
 
 **Remember:**
 
 - Books are assigned unique colors.
-- Node sizes are based on number of connections to other verses. 
+- Node sizes are based on the number of connections to other verses.
 
-So in this layout we have visual queues on how various scriptures relate to eachother between books. While there are *many* ways to explore and visualize graphs, we are using this as an introduction because it is simple and fast. 
+So in this layout, we have visual cues on how various scriptures relate to each other between books. While there are *many* ways to explore and visualize graphs, we are using this as an introduction because it is simple and fast.
 
 Here is a zoomed-in preview of what we are about to do:
 
 ![Force Atlas 2 Preview](../../images/t2-force-atlas-2-preview.png)
 
-First, let us color-coordinate the nodes according to which bible book they are in. 
+First, let us color-coordinate the nodes according to which bible book they are in.
 
 In the upper right panel, **Appearance**, choose `Nodes`, `partition`, and select `Book` from the dropdown.
 
 ![Nodes - Partition - by Book](../../images/t2-nodes-partition-book.png)
 
-The default option will color alot of the books gray. We have to create a palette. Click the `Palette..` option. 
+The default option will color a lot of the books gray. We have to create a palette. Click the `Palette..` option.
 
-![Choose Pallete](../../images/t2-choose-pallete.png)
+![Choose Palette](../../images/t2-choose-pallete.png)
 
 When the menu comes up:
 
 - Uncheck `Limit number of colors`
 - `Presets` dropdown should remain default. (Or choose a palette you like)
 - Press `Generate`
-- Verify the colors. Check that they do not desaturate to gray. 
+- Verify the colors. Check that they do not desaturate to gray.
 - Press `Ok`
 
 The window closes. Back on the **Appearance** panel press `Apply`
@@ -173,19 +172,19 @@ The node cluster should now look like this:
 
 ![Colored book nodes.](../../images/t2-colored-books.png)
 
-Now we will resize the nodes according to how many verses they connect to in cross-referencing. 
+Now we will resize the nodes according to how many verses they connect to in cross-referencing.
 
 ![Node size by Degree](../../images/t2-node-size-by-degree.png)
 
-Study the above picture. Choose: `Nodes -> Size -> Ranking` panel. 
+Study the above picture. Choose: `Nodes -> Size -> Ranking` panel.
 
-- Choose `Degree` as the *attribute*. (This is the amount of connections a node has)
+- Choose `Degree` as the *attribute*. (This is the number of connections a node has)
 - For `Min Size` and `Max Size` enter the values **5** (min) and **50** (max).
 - Press `Apply`
 
-Now the size of the nodes represent their importance in terms of cross-references. 
+Now the size of the nodes represents their importance in terms of cross-references.
 
-You should now be seeing something like this: 
+You should now be seeing something like this:
 
 ![Nodes resized.](../../images/t2-resized-nodes.png)
 
@@ -193,10 +192,10 @@ Now we will apply the `ForceAtlas 2` algorithm...
 
 ![Force Atlas 2 Values](../../images/t2-force-atlas-values.png)
 
-We will be working in two steps: 
+We will be working in two steps:
 
 1. Spatialize the graph.
-2. Prevent node overlaps. 
+2. Prevent node overlaps.
 
 So for **step 1** change the following values:
 
@@ -212,7 +211,7 @@ It should now look something like this:
 
 ![Force Atlas 2 Distributed](../../images/t2-force-atlas-2-distributed.png)
 
-Yours will be a bit different, but should still have a similar general appearance. 
+Yours will be a bit different, but should still have a similar general appearance.
 
 If you zoom in, you can see that the nodes overlap and are a bit jumbled:
 
@@ -224,42 +223,43 @@ We will fix this by running this same algorithm again, but with a few settings c
 - Scroll down to `Behavior Alternatives` and check `Prevent Overlap`
 - Press `Run` again...
 
-And wait a while for the adjustments to occur. I find that zooming out runs the algorithm faster. 
+And wait a while for the adjustments to occur. I find that zooming out runs the algorithm faster.
 
-See the difference: 
+See the difference:
 
 ![No overlap](../../images/t2-nodes-no-overlap.png)
 
-Zooming out, we see the entire graph is much more clear and organized.
+Zooming out, we see the entire graph is much clearer and organized.
 
 ![Nodes Comparison](../../images/t2-node-comparison.png)
 
-In the above left-right comparison, the nodes on the left are dimmed (white) and the nodes on the right are colored (normal). When you hover over a given node, all other nodes **except** the **one you are hovering, and it's connected neighbors**, will dim. This allows you to focus over and see connection relationships with your mouse. 
+In the above left-right comparison, the nodes on the left are dimmed (white) and the nodes on the right are colored (normal). When you hover over a given node, all other nodes **except** the **one you are hovering, and its connected neighbors**, will dim. This allows you to focus over and see connection relationships with your mouse.
 
-In the left image, you can see that one small node with some dark lines radiating from it to other nodes. That is the one I hovered before the screenshot. 
+In the left image, you can see that one small node with some dark lines radiating from it to other nodes. That is the one I hovered before the screenshot.
 
 **Next** we will show the **Labels** over the nodes (This setting can be toggled **off** and **on**).
 
 ![Text Values](../../images/t2-text-values.png)
 
-See the screenshot above. Note the changes made in the red boxes. 
+See the screenshot above. Note the changes made in the red boxes.
 
-Select the `Nodes -> Label Size -> Ranking` panel as shown by the red boxes in the screenshot. 
+Select the `Nodes -> Label Size -> Ranking` panel as shown by the red boxes in the screenshot.
 
-- In the **dropdown** choose `Degree`. 
-- **Min** and **Max** values should be **.1** and **1.2** for this graph. 
+- In the **dropdown** choose `Degree`.
+- **Min** and **Max** values should be **.1** and **1.2** for this graph.
 
-> **NOTE** See the **T** icon below the graph. Labels can be easily toggled Off and On. 
+> **NOTE** See the **T** icon below the graph. Labels can be easily toggled Off and On.
 
 Now if you zoom in and hover over nodes, you can isolate them and their connections for easy studying...
 
 ![Focusing labels and connections](../../images/t2-focused-labels.png)
 
-This was a simple tutorial on your first large graph. 
+This was a simple tutorial on your first large graph.
 
-This only scratches the surface of how Gephi is used. There are lots of methods for isolating data and patterns using Gephi -- this tutorial was enough to show you the most basic features. 
+This only scratches the surface of how Gephi is used. There are lots of methods for isolating data and patterns using Gephi -- this tutorial was enough to show you the most basic features.
 
-Here are some more beginner tutorials on Gephi networks: https://www.youtube.com/playlist?list=PLk_jmmkw5S2BqnYBqF2VNPcszY93-ze49
+Here are some more beginner tutorials on Gephi networks: https://www.youtube.com/playlist?list=PLk_jmmkw5S2
+
 
 ### An alternative method.
 
@@ -411,11 +411,3 @@ The `Preview Ratio` slider will decrease the amount of Nodes shown in the Previe
 
 
 
-### Why do we choose OpenOrd layout?
-
-- **Scalability**: It is designed to handle large-scale graphs, making it suitable for big data visualization.
-- **Cluster Detection**: OpenOrd emphasizes clustering by adjusting the position of nodes to reveal community structures within the graph.
-- **Parallel Processing**: The algorithm can run in parallel, utilizing multiple cores to speed up the computation and enhance performance.
-- **Phases**: OpenOrd operates in five distinct phases (liquid, expansion, cool-down, crunch, and simmer), each fine-tuning parameters like temperature and attraction to achieve an optimized layout.
-- **Edge Cutting**: It uses edge cutting to promote clustering. This can be adjusted to either preserve or reduce edges, aiding in the visualization of densely connected groups.
-- **Versatility**: OpenOrd's flexibility allows for both preserving all edges (setting edge cutting to 0) and aggressive clustering (increasing edge cutting).
