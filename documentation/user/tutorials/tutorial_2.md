@@ -126,6 +126,8 @@ Now go back to the **Overview** tab so we can make the graph more visually sensi
 
 ![Layout options, Gephi](../../images/t2-layout-options.png)
 
+#### Node Coloring and Distribution...
+
 Because of the huge amount of data, we need to distribute the nodes in a way that is efficient. 
 
 We can use the `ForceAtlas 2` layout algorithm to achieve this. 
@@ -153,6 +155,85 @@ In the upper right panel, **Appearance**, choose `Nodes`, `partition`, and selec
 
 ![Nodes - Partition - by Book](../../images/t2-nodes-partition-book.png)
 
+The default option will color alot of the books gray. We have to create a palette. Click the `Palette..` option. 
+
+![Choose Pallete](../../images/t2-choose-pallete.png)
+
+When the menu comes up:
+
+- Uncheck `Limit number of colors`
+- `Presets` dropdown should remain default. (Or choose a palette you like)
+- Press `Generate`
+- Verify the colors. Check that they do not desaturate to gray. 
+- Press `Ok`
+
+The window closes. Back on the **Appearance** panel press `Apply`
+
+The node cluster should now look like this:
+
+![Colored book nodes.](../../images/t2-colored-books.png)
+
+Now we will resize the nodes according to how many verses they connect to in cross-referencing. 
+
+![Node size by Degree](../../images/t2-node-size-by-degree.png)
+
+Study the above picture. Choose: `Nodes -> Size -> Ranking` panel. 
+
+- Choose `Degree` as the *attribute*. (This is the amount of connections a node has)
+- For `Min Size` and `Max Size` enter the values 5 (min) and 50 (max).
+- Press `Apply`
+
+Now the size of the nodes represent their importance in terms of cross-references. 
+
+You should now be seeing something like this: 
+
+![Nodes resized.](../../images/t2-resized-nodes.png)
+
+Now we will apply the `ForceAtlas 2` algorithm...
+
+![Force Atlas 2 Values](../../images/t2-force-atlas-values.png)
+
+We will be working in two steps: 
+
+1. Spatialize the graph.
+2. Prevent node overlaps. 
+
+So for **step 1** change the following values:
+
+- Scaling: 100
+- Gravity: 7
+
+Press `Run` (It is just above the values you just set)
+
+The graph will widen out very quickly. Use the mouse wheel to zoom out. Let it continue running until it seems nicely distributed. Then press `Stop`.
+
+It should now look something like this:
+
+![Force Atlas 2 Distributed](../../images/t2-force-atlas-2-distributed.png)
+
+Yours will be a bit different, but should still have a similar general appearance. 
+
+If you zoom in, you can see that the nodes overlap and are a bit jumbled:
+
+![Jumbled Nodes](../../images/t2-jumbled-nodes.png)
+
+We will fix this by running this same algorithm again, but with a few settings changed:
+
+- Uncheck `Approximate Repulsion` (Important)
+- Scroll down to `Behavior Alternatives` and check `Prevent Overlap`
+- Press `Run` again...
+
+And wait a while for the adjustments to occur. I find that zooming out runs the algorithm faster. 
+
+See the difference: 
+
+![No overlap](../../images/t2-nodes-no-overlap.png)
+
+Zooming out, we see the entire graph is much more clear and organized.
+
+![Nodes Comparison](../../images/t2-node-comparison.png)
+
+In the above left-right comparison, the nodes on the left are dimmed (white) and the nodes on the right are colored (normal). When you hover over a given node, all other nodes **except** the **one you are hovering, and it's connected neighbors**, will dim. This allows you to focus over and see connection relationships with your mouse. 
 
 ### An alternative method.
 
