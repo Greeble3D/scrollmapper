@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bqdbt8yvdox5p"]
+
+[ext_resource type="Texture2D" uid="uid://c2sj6knwo2tl1" path="res://scenes/home/models/SIT-90_Frame_BaseColor.png" id="1_c6fg0"]
+[ext_resource type="Texture2D" uid="uid://c5fdy73gvpa5f" path="res://scenes/home/models/SIT-90_Frame_Metallic.png" id="2_vobew"]
+[ext_resource type="Texture2D" uid="uid://c08p0gji63dq0" path="res://scenes/home/models/SIT-90_Frame_Normal.png" id="3_a6rdq"]
+[ext_resource type="Texture2D" uid="uid://dxscb5nw1yeq3" path="res://scenes/home/models/SIT-90_Frame_Roughness.png" id="4_cey03"]
+
+[resource]
+albedo_texture = ExtResource("1_c6fg0")
+metallic = 1.0
+metallic_texture = ExtResource("2_vobew")
+roughness_texture = ExtResource("4_cey03")
+normal_enabled = true
+normal_texture = ExtResource("3_a6rdq")

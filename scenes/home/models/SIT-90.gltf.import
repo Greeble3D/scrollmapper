@@ -1,0 +1,73 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://bqec1mdi5fu7f"
+path="res://.godot/imported/SIT-90.gltf-091ff791e3a858ad8cee1ae460a310c9.scn"
+
+[deps]
+
+source_file="res://scenes/home/models/SIT-90.gltf"
+dest_files=["res://.godot/imported/SIT-90.gltf-091ff791e3a858ad8cee1ae460a310c9.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"Doodads": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://scenes/home/materials/SIT-90_Doodads.tres",
+"use_external/path": "uid://ccyf2ggby3tiy"
+},
+"Frame": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://scenes/home/materials/SIT-90_Frame.tres",
+"use_external/path": "uid://bqdbt8yvdox5p"
+},
+"Plate": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://scenes/home/materials/SIT-90_Plate.tres",
+"use_external/path": "uid://dj42rtr2x4ydu"
+},
+"Scanners": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://scenes/home/materials/SIT-90_Scanners.tres",
+"use_external/path": "uid://bnt25hq65qb80"
+},
+"Screen": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://scenes/home/materials/SIT-90_Screen.tres",
+"use_external/path": "uid://b4sr4648nrb3q"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1
+gltf/texture_map_mode=1

@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bnt25hq65qb80"]
+
+[ext_resource type="Texture2D" uid="uid://clc3fqxaejkt5" path="res://scenes/home/models/SIT-90_Scanners_BaseColor.png" id="1_5acsx"]
+[ext_resource type="Texture2D" uid="uid://by3uakxqso3rs" path="res://scenes/home/models/SIT-90_Scanners_Emissive.png" id="2_rotkf"]
+[ext_resource type="Texture2D" uid="uid://q53pjchwgrnd" path="res://scenes/home/models/SIT-90_Scanners_Metallic.png" id="3_ckd8d"]
+[ext_resource type="Texture2D" uid="uid://duggn6n1ffm6i" path="res://scenes/home/models/SIT-90_Scanners_Normal.png" id="4_e2q6j"]
+[ext_resource type="Texture2D" uid="uid://b33ew4hpe5ewa" path="res://scenes/home/models/SIT-90_Scanners_Roughness.png" id="5_an173"]
+
+[resource]
+albedo_texture = ExtResource("1_5acsx")
+metallic = 1.0
+metallic_texture = ExtResource("3_ckd8d")
+roughness_texture = ExtResource("5_an173")
+emission_enabled = true
+emission_texture = ExtResource("2_rotkf")
+normal_enabled = true
+normal_texture = ExtResource("4_e2q6j")

@@ -1,9 +1,19 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b0vff672i7g0a"]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b0vff672i7g0a"]
 
-[ext_resource type="Texture2D" uid="uid://cdvb32fk62fjy" path="res://scenes/home/models/ClosedScroll.png" id="1_tblah"]
+[ext_resource type="Texture2D" uid="uid://dmyw0uhgjoii2" path="res://scenes/home/models/Scroll_Scroll_BaseColor.png" id="1_3exj8"]
+[ext_resource type="Texture2D" uid="uid://ddhnte6wttpmf" path="res://scenes/home/models/Scroll_Scroll_Height.png" id="2_gviua"]
+[ext_resource type="Texture2D" uid="uid://c73cdxk30j4gw" path="res://scenes/home/models/Scroll_Scroll_Metallic.png" id="3_55w76"]
+[ext_resource type="Texture2D" uid="uid://3ucwmj674sf2" path="res://scenes/home/models/Scroll_Scroll_Normal.png" id="4_3oth0"]
+[ext_resource type="Texture2D" uid="uid://blp6uolljkueo" path="res://scenes/home/models/Scroll_Scroll_Roughness.png" id="5_tug1c"]
 
 [resource]
 resource_name = "Scroll_Closed"
 cull_mode = 2
-albedo_texture = ExtResource("1_tblah")
-roughness = 0.5
+albedo_texture = ExtResource("1_3exj8")
+metallic = 1.0
+metallic_texture = ExtResource("3_55w76")
+roughness_texture = ExtResource("5_tug1c")
+normal_enabled = true
+normal_texture = ExtResource("4_3oth0")
+heightmap_scale = 0.5
+heightmap_texture = ExtResource("2_gviua")

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://hsgnd3v3en4w"
+path="res://.godot/imported/Beyond the Lows - The Whole Other.mp3-da0b63d2f04d038cdf47392272080299.mp3str"
+
+[deps]
+
+source_file="res://Music/Beyond the Lows - The Whole Other.mp3"
+dest_files=["res://.godot/imported/Beyond the Lows - The Whole Other.mp3-da0b63d2f04d038cdf47392272080299.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

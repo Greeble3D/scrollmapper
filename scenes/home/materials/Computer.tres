@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bw5cnt5s0w7vr"]
+
+[ext_resource type="Texture2D" uid="uid://cvm3tk1hcw85o" path="res://scenes/home/models/retro_computer_setup_Mat_baseColor.png" id="1_tcrik"]
+[ext_resource type="Texture2D" uid="uid://cxyh7lefekkn6" path="res://scenes/home/models/retro_computer_setup_Mat_emissive.png" id="2_f8x0l"]
+[ext_resource type="Texture2D" uid="uid://bdx5c8pj242n2" path="res://scenes/home/models/retro_computer_setup_Mat_normal.png" id="3_usjob"]
+[ext_resource type="Texture2D" uid="uid://b1fh3p2kixcys" path="res://scenes/home/models/retro_computer_setup_Mat_metallicRoughness.png" id="4_ydlhg"]
+
+[resource]
+albedo_texture = ExtResource("1_tcrik")
+roughness_texture = ExtResource("4_ydlhg")
+emission_enabled = true
+emission_energy_multiplier = 3.0
+emission_texture = ExtResource("2_f8x0l")
+normal_enabled = true
+normal_texture = ExtResource("3_usjob")

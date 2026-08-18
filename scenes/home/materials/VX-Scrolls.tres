@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dph6ouy66t7r0"]
+
+[ext_resource type="Texture2D" uid="uid://cbli0juwy2upi" path="res://scenes/home/models/VXScrolls.png" id="1_qs0o8"]
+
+[resource]
+transparency = 1
+albedo_texture = ExtResource("1_qs0o8")

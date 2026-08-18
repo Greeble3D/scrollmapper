@@ -1,6 +1,17 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bewfg2ovxttiu"]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bewfg2ovxttiu"]
 
-[ext_resource type="Texture2D" uid="uid://uo83uo816wv" path="res://scenes/home/models/VX_Panel.png" id="1_4jqqo"]
+[ext_resource type="Texture2D" uid="uid://b4ws7kxpfhkwc" path="res://scenes/home/models/VX-Graph_VX-Graph_BaseColor.png" id="1_lscri"]
+[ext_resource type="Texture2D" uid="uid://eaidtqnp7utd" path="res://scenes/home/models/VX-Graph_VX-Graph_Height.png" id="2_upo8q"]
+[ext_resource type="Texture2D" uid="uid://cbryo764l71ls" path="res://scenes/home/models/VX-Graph_VX-Graph_Metallic.png" id="3_2nvg0"]
+[ext_resource type="Texture2D" uid="uid://cu5pg0ecgxgys" path="res://scenes/home/models/VX-Graph_VX-Graph_Normal.png" id="4_507je"]
+[ext_resource type="Texture2D" uid="uid://bfbenasokgqnp" path="res://scenes/home/models/VX-Graph_VX-Graph_Roughness.png" id="5_3to02"]
 
 [resource]
-albedo_texture = ExtResource("1_4jqqo")
+albedo_texture = ExtResource("1_lscri")
+metallic = 1.0
+metallic_texture = ExtResource("3_2nvg0")
+roughness_texture = ExtResource("5_3to02")
+normal_enabled = true
+normal_texture = ExtResource("4_507je")
+heightmap_enabled = true
+heightmap_texture = ExtResource("2_upo8q")

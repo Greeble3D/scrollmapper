@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dj42rtr2x4ydu"]
+
+[ext_resource type="Texture2D" uid="uid://bhlpsxcfo6pca" path="res://scenes/home/models/SIT-90_Plate_BaseColor.png" id="1_jqy3x"]
+[ext_resource type="Texture2D" uid="uid://dqltmpp815npd" path="res://scenes/home/models/SIT-90_Plate_Metallic.png" id="2_1q1ht"]
+[ext_resource type="Texture2D" uid="uid://uwyaknmcucly" path="res://scenes/home/models/SIT-90_Plate_Normal.png" id="3_gne4f"]
+[ext_resource type="Texture2D" uid="uid://dptiwssubw76q" path="res://scenes/home/models/SIT-90_Plate_Roughness.png" id="4_mcyht"]
+
+[resource]
+albedo_texture = ExtResource("1_jqy3x")
+metallic = 1.0
+metallic_texture = ExtResource("2_1q1ht")
+roughness_texture = ExtResource("4_mcyht")
+normal_enabled = true
+normal_texture = ExtResource("3_gne4f")

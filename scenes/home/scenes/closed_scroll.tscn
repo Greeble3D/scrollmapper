@@ -1,5 +1,3 @@
-[gd_scene load_steps=2 format=3 uid="uid://olr8yjl3ofsh"]
+[gd_scene format=3 uid="uid://bltyqpt0qq3mr"]
 
-[ext_resource type="PackedScene" uid="uid://3e3tnf85obg8" path="res://scenes/home/models/ClosedScroll.gltf" id="1_hnmbo"]
-
-[node name="ClosedScroll" instance=ExtResource("1_hnmbo")]
+[node name="ClosedScroll" unique_id=1117668452]
