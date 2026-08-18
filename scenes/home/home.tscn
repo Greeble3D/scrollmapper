@@ -127,9 +127,8 @@ stream_4/stream = ExtResource("78_nt5wt")
 stream_5/stream = ExtResource("79_b0v7v")
 stream_6/stream = ExtResource("80_e47q1")
 
-[node name="Home" type="Node3D" unique_id=1967492287 node_paths=PackedStringArray("camera_3d")]
+[node name="Home" type="Node3D" unique_id=1967492287]
 script = ExtResource("1_hy5ct")
-camera_3d = NodePath("")
 
 [node name="SIT-90" parent="." unique_id=615867408 instance=ExtResource("9_g8e2b")]
 transform = Transform3D(0.28359133, 0, 0.09785656, 0, 0.2999999, 0, -0.09785656, 0, 0.28359133, -1.467079, 0.8044924, -2.2377262)
