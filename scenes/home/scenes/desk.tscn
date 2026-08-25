@@ -1,5 +1,5 @@
 [gd_scene format=3 uid="uid://bhm7pe4gws2t2"]
 
-[ext_resource type="PackedScene" uid="uid://dmnhotb1e8kef" path="res://scenes/home/models/Desk.gltf" id="1_1lj4t"]
+[ext_resource type="PackedScene" uid="uid://mlcy03ae7n5g" path="res://scenes/home/models/scene.gltf" id="1_l7ktp"]
 
-[node name="Desk" unique_id=49068393 instance=ExtResource("1_1lj4t")]
+[node name="Sketchfab_Scene" unique_id=1257209807 instance=ExtResource("1_l7ktp")]

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c0tqhtoj4kunf"
-path="res://.godot/imported/Shelf.gltf-349cb20a9e59a7918b9616849f4c245a.scn"
+uid="uid://mlcy03ae7n5g"
+path="res://.godot/imported/scene.gltf-d4b902ed0f9c8703e6dafa2cca6949df.scn"
 
 [deps]
 
-source_file="res://scenes/home/models/Shelf.gltf"
-dest_files=["res://.godot/imported/Shelf.gltf-349cb20a9e59a7918b9616849f4c245a.scn"]
+source_file="res://scenes/home/models/scene.gltf"
+dest_files=["res://.godot/imported/scene.gltf-d4b902ed0f9c8703e6dafa2cca6949df.scn"]
 
 [params]
 
@@ -41,15 +41,10 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
-"Misc": {
+"Scene_-_Root": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://scenes/home/materials/Misc.tres",
-"use_external/path": "uid://c3j4ypon71bt7"
-},
-"Shelf": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://scenes/home/materials/Shelf.tres",
-"use_external/path": "uid://dw7u8bt15f6s7"
+"use_external/fallback_path": "res://scenes/home/materials/Desk.tres",
+"use_external/path": "uid://dcgasfv4et3l3"
 }
 }
 }
